@@ -12,5 +12,5 @@ function openDatabase(dbFilePath) {
     });
 }
 module.exports = {
-    connectToDatabase
+    openDatabase
 };
