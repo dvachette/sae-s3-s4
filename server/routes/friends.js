@@ -134,9 +134,52 @@ function acceptFriendRequest(request, response) {
     return response.status(200).send({ message: 'Demande d\'amitié acceptée avec succès' });
 }
 
+function rejectFriendRequest(request, response) {
+    // Vérifier que la méthode est POST
+    if (request.method !== 'POST') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+    // Vérifier que l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    const userId = request.session.userId;
+    const friendId = request.body.friendId;
+
+    // Vérifier que l'ID de l'ami est fourni
+    if (!friendId) {
+        return response.status(400).send({ error: 'ID de l\'ami manquant' });
+    }
+
+    const db = new Database('database.db');
+
+    // Vérifier si la demande d'amitié existe
+    const getRequest = db.prepare('SELECT * FROM friends WHERE senderId = ? AND receiverId = ? AND status = ?');
+    const friendRequest = getRequest.get(friendId, userId, 'pending');
+    if (!friendRequest) {
+        return response.status(404).send({ error: 'Demande d\'amitié non trouvée' });
+    }
+
+    // Mettre à jour le statut de la demande d'amitié
+    const updateRequest = db.prepare('UPDATE friends SET status = ? WHERE senderId = ? AND receiverId = ?');
+    updateRequest.run('rejected', friendId, userId);
+
+    return response.status(200).send({ message: 'Demande d\'amitié rejetée avec succès' });
+}
+
+
+
+
+
+
+
+
+
 module.exports = {
     requestFriend,
     getFriendsList,
     getPendingRequests,
-    acceptFriendRequest
+    acceptFriendRequest,
+    rejectFriendRequest
 };

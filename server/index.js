@@ -33,15 +33,19 @@ app.use(express.urlencoded({ extended: true })); // Outil pour parser les donné
 // Routes pour la gestion des amis
 app.post('/friends/request', friendsRoutes.requestFriend);
 app.get('/friends/requests', friendsRoutes.getPendingRequests);
+
 app.post('/friends/accept', friendsRoutes.acceptFriendRequest);
+app.post('/friends/reject', friendsRoutes.rejectFriendRequest);
+
 app.get('/friends', friendsRoutes.getFriendsList);
 
 
 // Routes pour les utilisateurs
 app.post('/user', userRoutes.createAccount);
+app.put('/user', userRoutes.editAccount);
+
 app.post('/login', userRoutes.login);
 app.get('/logout', userRoutes.logout);
-app.put('/user', userRoutes.editAccount);
 
 
 // Démarrer le serveur
