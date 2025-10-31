@@ -38,6 +38,7 @@ app.post('/friends/accept', friendsRoutes.acceptFriendRequest);
 app.post('/friends/reject', friendsRoutes.rejectFriendRequest);
 
 app.get('/friends', friendsRoutes.getFriendsList);
+app.delete('/friends', friendsRoutes.removeFriend);
 
 
 // Routes pour les utilisateurs

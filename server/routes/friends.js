@@ -169,7 +169,39 @@ function rejectFriendRequest(request, response) {
 }
 
 
+function removeFriend(request, response) {
+    // Vérifier que la méthode est DELETE
+    if (request.method !== 'DELETE') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+    // Vérifier que l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
 
+    const userId = request.session.userId;
+    const friendId = request.body.friendId;
+
+    // Vérifier que l'ID de l'ami est fourni
+    if (!friendId) {
+        return response.status(400).send({ error: 'ID de l\'ami manquant' });
+    }
+
+    const db = new Database('database.db');
+
+    // Vérifier si l'amitié existe
+    const getFriendship = db.prepare('SELECT * FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
+    const friendship = getFriendship.get(userId, friendId, friendId, userId, 'accepted');
+    if (!friendship) {
+        return response.status(404).send({ error: 'Amitié non trouvée' });
+    }
+
+    // Supprimer l'amitié
+    const deleteFriendship = db.prepare('DELETE FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
+    deleteFriendship.run(userId, friendId, friendId, userId, 'accepted');
+
+    return response.status(200).send({ message: 'Amitié supprimée avec succès' });
+}
 
 
 
@@ -181,5 +213,6 @@ module.exports = {
     getFriendsList,
     getPendingRequests,
     acceptFriendRequest,
-    rejectFriendRequest
+    rejectFriendRequest,
+    removeFriend
 };
