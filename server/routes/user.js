@@ -32,6 +32,35 @@ function createAccount(request, response) {
     
 }
 
+function login(request, response) {
+    // Forcer l'utilisation de la méthode POST
+    if (request.method !== 'POST') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    const mail = request.body.email;
+    const password = request.body.password;
+
+    // Vérifier que les champs email et password sont présents
+    if (!mail || !password) {
+        return response.status(400).send({ error: 'Information manquante' });
+    }
+
+    const db = new Database('database.db');
+
+    const getUserQuery = db.prepare('SELECT userid, password FROM user WHERE email = ?');
+    const user = getUserQuery.get(mail);
+
+    // Vérifier si l'utilisateur existe et si le mot de passe est correct
+    if (!user || user.password !== password) {
+        return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
+    }
+
+    // Initialiser la session utilisateur
+    request.session.userId = user.userid;
+
+    return response.status(200).send({ message: 'Connexion réussie' });
+}
 
 
 module.exports = { 
