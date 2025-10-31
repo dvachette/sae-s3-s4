@@ -1,4 +1,5 @@
 const Database = require('better-sqlite3');
+const session = require('express-session');
 
 
 function createAccount(request, response) {
@@ -57,13 +58,19 @@ function login(request, response) {
     }
 
     // Initialiser la session utilisateur
-    request.session.userId = user.userid;
+    request.session.userId = user.userId;
 
     return response.status(200).send({ message: 'Connexion réussie' });
 }
 
+async function logout(request, response) { // Fonction asynchrone pour gérer la déconnexion
+    // Détruire la session utilisateur
+    await request.session.destroy(); // await permet d'attendre la fin de la destruction de la session avant de continuer
+    return response.status(200).send({ message: 'Déconnexion réussie' });
+}
 
 module.exports = { 
     createAccount,
-    login
+    login,
+    logout
 };
