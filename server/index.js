@@ -1,13 +1,18 @@
 const express = require('express'); // Importation du framework Express
 const session = require('express-session'); // Importation de l'outil de gestion de sessions
-
-const userRoutes = require('./routes/user.js'); // Importation des routes utilisateur
 const cors = require('cors'); // Importation de l'outil CORS pour gérer les requêtes multi-origines
+
+const friendsRoutes = require('./routes/friends.js'); // Importation des routes d'amis
+const userRoutes = require('./routes/user.js'); // Importation des routes utilisateur
+
+
+
 
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
 const app = express(); // Création de l'application Express
 
+// Configuration de l'application Express
 app.use(
     session({
         // TODO: CHANGER LA CLÉ SECRÈTE AVANT DE METTRE EN PRODUCTION 
@@ -24,6 +29,10 @@ app.use(
 app.use(cors()); // Activation de CORS pour toutes les routes
 app.use(express.json()); // Outil pour parser le JSON dans les requêtes entrantes
 app.use(express.urlencoded({ extended: true })); // Outil pour parser les données URL-encoded
+
+// Routes pour la gestion des amis
+app.post('/friends/request', friendsRoutes.requestFriend);
+app.get('/friends', friendsRoutes.getFriendsList);
 
 
 // Routes pour les utilisateurs
