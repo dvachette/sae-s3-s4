@@ -76,7 +76,33 @@ function getFriendsList(request, response) {
     return response.status(200).send({ friends: friends });
 }
 
+function getPendingRequests(request, response) {
+    //  Vérifier que la méthode est GET
+    if (request.method !== 'GET') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+    // Vérifier que l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    const userId = request.session.userId;
+    const db = new Database('database.db');
+
+    const getRequestsQuery = db.prepare(`
+        SELECT u.userid, u.name, u.email 
+        FROM user u
+        JOIN friends f ON u.userid = f.senderId
+        WHERE f.receiverId = ? AND f.status = 'pending'
+    `);
+    const requests = getRequestsQuery.all(userId);
+
+    return response.status(200).send({ requests: requests });
+}
+
+
 module.exports = {
     requestFriend,
-    getFriendsList
+    getFriendsList,
+    getPendingRequests
 };

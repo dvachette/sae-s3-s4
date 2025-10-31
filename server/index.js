@@ -32,6 +32,7 @@ app.use(express.urlencoded({ extended: true })); // Outil pour parser les donné
 
 // Routes pour la gestion des amis
 app.post('/friends/request', friendsRoutes.requestFriend);
+app.get('/friends/requests', friendsRoutes.getPendingRequests);
 app.get('/friends', friendsRoutes.getFriendsList);
 
 
