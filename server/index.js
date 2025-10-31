@@ -30,6 +30,8 @@ app.use(express.urlencoded({ extended: true })); // Outil pour parser les donné
 app.post('/user', userRoutes.createAccount);
 app.post('/login', userRoutes.login);
 app.get('/logout', userRoutes.logout);
+app.put('/user', userRoutes.editAccount);
+
 
 // Démarrer le serveur
 app.listen(PORT, () => {

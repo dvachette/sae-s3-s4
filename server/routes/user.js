@@ -68,10 +68,68 @@ async function logout(request, response) { // Fonction asynchrone pour gérer la
     return response.status(200).send({ message: 'Déconnexion réussie' });
 }
 
+function editAccount(request, response) {
+    // Vérifier la methode HTTP
+    if (request.method !== 'PUT') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    // Vérifier si l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    // Récupérer les nouvelles informations
+    const userId = request.session.userId;
+    if (!request.body) {
+        return response.status(400).send({ error: 'Aucune donnée fournie' });
+    }
+    const newMail = request.body.email || null;
+    const newPassword = request.body.password || null;
+    const newUsername = request.body.name || null;
+    
+    // Vérifier qu'au moins une information est fournie
+    if (!newMail && !newPassword && !newUsername) {
+        return response.status(400).send({ error: 'Aucune information à mettre à jour' });
+    }
+
+
+    const db = new Database('database.db');
+    
+    const getUserQuery = db.prepare('SELECT * FROM user WHERE userid = ?');
+    const user = getUserQuery.get(userId);
+    
+    // Vérifier si l'utilisateur existe
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
+
+    // Mettre à jour les informations de l'utilisateur
+    // Mettre à jour l'email si fourni
+    if (newMail) {
+        user.email = newMail;
+    }
+    // Mettre à jour le mot de passe si fourni
+    if (newPassword) {
+        user.password = newPassword;
+    }
+    // Mettre à jour le nom d'utilisateur si fourni
+    if (newUsername) {
+        user.name = newUsername;
+    }
+
+    const updateUserQuery = db.prepare('UPDATE user SET email = ?, password = ?, name = ? WHERE userid = ?');
+    updateUserQuery.run(user.email, user.password, user.name, userId);
+
+    return response.status(200).send({ message: 'Compte mis à jour avec succès' });
+
+
+}
 
 
 module.exports = { 
     createAccount,
     login,
-    logout
+    logout,
+    editAccount
 };
