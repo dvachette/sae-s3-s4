@@ -64,5 +64,6 @@ function login(request, response) {
 
 
 module.exports = { 
-    createAccount
+    createAccount,
+    login
 };
