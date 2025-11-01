@@ -40,7 +40,7 @@ function requestFriend(request, response) {
     }
 
     // Vérifier que l'utilisateur n'essaie pas de s'ajouter lui-même
-    if (userId === friendId) {
+    if (userId == friendId) {
         return response.status(400).send({ error: 'Impossible de s\'ajouter soi-même en ami' });
     }
 
