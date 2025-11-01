@@ -50,6 +50,7 @@ app.delete('/friends', friendsRoutes.removeFriend);
 
 
 // Routes pour les utilisateurs
+app.delete('/user', userRoutes.deleteAccount);
 app.post('/user', userRoutes.createAccount);
 app.put('/user', userRoutes.editAccount);
 app.post('/login', userRoutes.login);

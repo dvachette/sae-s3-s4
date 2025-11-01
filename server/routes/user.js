@@ -97,10 +97,11 @@ function login(request, response) {
     const db = new Database('database.db');
 
     // Vérifier les informations d'identification de l'utilisateur
-    const getUserQuery = db.prepare('SELECT userid, password FROM user WHERE email = ?');
+    const getUserQuery = db.prepare('SELECT userid, password, profileType FROM user WHERE email = ?');
     const user = getUserQuery.get(mail);
+    // Si l'utilisateur est supprimé, refuser la connexio,
     // Vérifier si l'utilisateur existe et si le mot de passe est correct
-    if (!user || user.password !== password) { // TODO : Ajouter le hachage des mots de passe
+    if (!user || user.password !== password || user.profileType === 'deleted') { // TODO : Ajouter le hachage des mots de passe
         return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
     }
 
@@ -194,9 +195,55 @@ function editAccount(request, response) {
 }
 
 
+/**
+ * @brief Supprime le compte utilisateur.
+ * @returns response - Résultat de la requête.
+ * @returns status 200 - Compte supprimé avec succès. 
+ * @returns status 401 - Utilisateur non authentifié.
+ * @returns status 405 - Méthode non autorisée.
+ */
+function deleteAccount(request, response) {
+    // Vérifier que la méthode HTTP est DELETE
+    if (request.method !== 'DELETE') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    // Vérifier si l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    const userId = request.session.userId;
+
+    // Connexion à la base de données
+    const db = new Database('database.db');
+
+    // Supprimer les données associées à l'utilisateur (ex: amis, messages, etc.) si nécessaire
+
+    // Supprimer ses liens d'amitié
+    const deleteFriendsQuery = db.prepare('DELETE FROM friends WHERE senderId = ? OR receiverId = ?');
+    deleteFriendsQuery.run(userId, userId);
+
+    // Remplacer son mail par <id>@DELETED
+    const deletedEmail = `${userId}@DELETED`;
+    // Remplacer son nom par DELETED_user_<id>
+    const deletedName = `DELETED_user_${userId}`;
+    // Remplaces son mot de passe par DELETED
+    const deletedPassword = 'DELETED';
+    // Remplacer son type de profil par 'deleted'
+    const updateEmailQuery = db.prepare("UPDATE user SET email = ?, name = ?, password = ?, profileType = 'deleted' WHERE userid = ?");
+    updateEmailQuery.run(deletedEmail, deletedName, deletedPassword, userId);
+    // Détruire la session utilisateur
+    request.session.destroy();
+
+    return response.status(200).send({ message: 'Compte supprimé avec succès' });
+}
+
+
 module.exports = { 
     createAccount,
     login,
     logout,
-    editAccount
+    editAccount,
+    deleteAccount
 };
