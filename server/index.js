@@ -12,7 +12,7 @@ const cors = require('cors'); // Importation de l'outil CORS pour gérer les req
 // Modules internes
 const friendsRoutes = require('./routes/friends.js'); // Importation des routes d'amis
 const userRoutes = require('./routes/user.js'); // Importation des routes utilisateur
-
+const boosterRoutes = require('./routes/booster.js'); // Importation des routes booster
 
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
@@ -55,6 +55,10 @@ app.post('/user', userRoutes.createAccount);
 app.put('/user', userRoutes.editAccount);
 app.post('/login', userRoutes.login);
 app.get('/logout', userRoutes.logout);
+
+// Routes pour les boosters
+app.post('/booster/open', boosterRoutes.openBooster);
+
 
 
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
