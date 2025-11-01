@@ -1,0 +1,82 @@
+@font-face {
+  font-family: 'Lusitana';
+  src: url('../fonts/Lusitana-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mako';
+  src: url('../fonts/Mako-Regular.ttf') format('truetype');
+}
+
+#mainConnexion {
+  display :flex;
+  justify-content :center;
+  align-items: center;
+  flex : 1; /*prend l'espace restant du body, donc l'espace restant visible sous le header*/
+}
+
+.pageConnexion {
+  display : flex;
+  flex-direction: column;
+  flex-wrap : wrap;
+  background-color: var(--jaune200);
+  width: 46%;
+  height: 70%;
+  border-radius: 1%;
+  padding : 2.5%
+}
+
+
+
+#headerConnexion {
+    display: grid;
+    grid-template-columns: 12.5vh 1fr 12.5vh;
+    align-items : center;
+}
+
+#headerConnexion > img {
+    grid-column: 1;
+    width : 100%;
+    justify-self: start;
+}
+
+#headerConnexion > h1 {
+    grid-column: 2;
+    justify-self: center;
+}
+
+h2 {
+  align-self: center;
+  font-family: 'Lusitana';
+  font-weight: normal;
+  flex : 1;
+  align-items : center;
+}
+
+form {
+  display : flex;
+  flex-direction: column;
+  flex-wrap : wrap;
+  flex : 3;
+}
+
+form > label, input {
+  flex : 1;
+}
+
+form > button {
+  flex:2;
+}
+
+label {
+  font-family: 'Mako';
+}
+
+.pageConnexion > button {
+  flex : 1;
+}
+
+button {
+  align-self: center;
+  font-family: 'Lusitana';
+}

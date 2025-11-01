@@ -1,29 +1,34 @@
 <template>
-  <div>
-    <header>
+    <header id="headerConnexion">
+      <img src="@/assets/imgs/logoTCG.png" alt="Logo du site">
       <h1>Bienvenue sur BDE INFO TCG</h1>
     </header>
-    <div class="page connexion">
-      <h2>Connexion :</h2>
-      <form @submit="connexion">
-        <div>
-          <label>
-            <input type="text" v-model="id_utilisateur" />Nom d'utilisateur ou
-            email
+
+    <main id="mainConnexion">
+      <div class="pageConnexion">
+        <h2>Connexion</h2>
+        <form @submit="connexion">
+          <label for="userName">
+            Nom d'utilisateur ou email
           </label>
-        </div>
-        <div>
-          <label>
-            <input type="password" v-model="mdp_utilisateur" />Mot de passe
+          <input type="text" id="userName" v-model="id_utilisateur" />
+          
+          <label for="password">
+            Mot de passe
           </label>
-        </div>
-        <button type="submit">Se Connecter</button>
-      </form>
-      <button>Créer un compte</button>
-    </div>
-  </div>
+          <input type="password" id ="password" v-model="mdp_utilisateur" />
+            
+          <button type="submit">Se Connecter</button>
+        </form>
+        <button>Créer un compte</button>
+      </div>
+    </main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 </script>
+
+<style scoped>
+  @import "./assets/css/styleConnexion.css";
+</style>
