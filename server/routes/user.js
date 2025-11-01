@@ -1,43 +1,89 @@
-const Database = require('better-sqlite3');
+/**
+ * @file server/routes/user.js
+ * @author Elise FOUR, Donatien VACHETTE
+ * @brief Routes pour la gestion des utilisateurs.
+ * @description Définit les routes pour la création de compte, la connexion, la déconnexion et la modification du compte utilisateur.
+ */
 
+// Modules NPM
+const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
 
+/**
+ * @brief Crée un nouveau compte utilisateur.
+ * @param email L'email de l'utilisateur.
+ * @param password Le mot de passe de l'utilisateur.
+ * @param name Le nom d'utilisateur.
+ * @returns response - Résultat de la requête.
+ * @returns status 201 - Compte créé avec succès.
+ * @returns status 400 - Informations manquantes.
+ * @returns status 409 - Mail ou pseudo déjà utilisé.
+ * @returns status 405 - Méthode non autorisée.
+ */
 function createAccount(request, response) {
+    // Forcer l'utilisation de la méthode POST
     if (request.method !== 'POST') {
         return response.status(405).send({ error: 'Methode non autorisée' });
     }
 
+    // Sécurité si le body est vide, sinon le serveur plante
+    if (!request.body) {
+        return response.status(400).send({ error: 'Informations manquantes' });
+    }
+    // Récupérer les informations de l'utilisateur depuis le corps de la requête
     const mail = request.body.email;
-    const password = request.body.password;
+    const password = request.body.password; // TODO : Ajouter le hachage des mots de passe
     const username = request.body.name;
 
+    // Vérifier que les champs email, password et name sont présents, et refuser la requête si un manque
     if (!mail || !password || !username) {
-        return response.status(400).send({ error: 'Information manquante' });
+        return response.status(400).send({ error: 'Informations manquantes' });
     }
-    const db = new Database('database.db')
 
-    const checkMailPseudo = db.prepare('SELECT * FROM user WHERE email = ? OR name = ?');
-    const existingUser = checkMailPseudo.get(mail, username);
+    // Connexion à la base de données
+    const db = new Database('database.db')
+    // Vérifier si l'email ou le nom d'utilisateur existe déjà
+    const checkMailPseudoQuery = db.prepare('SELECT * FROM user WHERE email = ? OR name = ?');
+    const existingUser = checkMailPseudoQuery.get(mail, username);
     
     if (existingUser) {
         return response.status(409).send({ error: 'Mail ou pseudo déjà utilisé' });
     }
 
+    // Insérer le nouvel utilisateur dans la base de données
     const insertUser = db.prepare('INSERT INTO user (email, password, name) VALUES (?, ?, ?)');
     insertUser.run(mail, password, username);
 
     const newUser = db.prepare('SELECT userid, email, name FROM user WHERE email = ?').get(mail);
+
+    // Connecter automatiquement l'utilisateur après la création du compte
+    request.session.userId = newUser.userid;
 
     return response.status(201).send({ message: 'Compte créé avec succès', user: newUser });
     
     
 }
 
+
+/**
+ * @brief Connecte un utilisateur.
+ * @param email L'email de l'utilisateur.
+ * @param password Le mot de passe de l'utilisateur.
+ * @returns response - Résultat de la requête.
+ * @returns status 200 - Connexion réussie.
+ * @returns status 400 - Informations manquantes.
+ * @returns status 401 - Email ou mot de passe incorrect.
+ * @returns status 405 - Méthode non autorisée.
+ */
 function login(request, response) {
     // Forcer l'utilisation de la méthode POST
     if (request.method !== 'POST') {
         return response.status(405).send({ error: 'Methode non autorisée' });
     }
-
+    // Sécurité si le body est vide, sinon le serveur plante
+    if (!request.body) {
+        return response.status(400).send({ error: 'Informations manquantes' });
+    }
+    // Récupérer les informations de l'utilisateur depuis le corps de la requête
     const mail = request.body.email;
     const password = request.body.password;
 
@@ -46,13 +92,15 @@ function login(request, response) {
         return response.status(400).send({ error: 'Information manquante' });
     }
 
+
+    // Connexion à la base de données
     const db = new Database('database.db');
 
+    // Vérifier les informations d'identification de l'utilisateur
     const getUserQuery = db.prepare('SELECT userid, password FROM user WHERE email = ?');
     const user = getUserQuery.get(mail);
-
     // Vérifier si l'utilisateur existe et si le mot de passe est correct
-    if (!user || user.password !== password) {
+    if (!user || user.password !== password) { // TODO : Ajouter le hachage des mots de passe
         return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
     }
 
@@ -62,12 +110,30 @@ function login(request, response) {
     return response.status(200).send({ message: 'Connexion réussie' });
 }
 
+/**
+ * @brief Déconnecte un utilisateur.
+ * @detail La fonction est asynchrone pour permettre l'utilisation de 'await' lors de la destruction de la session.
+ * @returns response - Résultat de la requête.
+ * @returns status 200 - Déconnexion réussie.
+ */
 async function logout(request, response) { // Fonction asynchrone pour gérer la déconnexion
     // Détruire la session utilisateur
     await request.session.destroy(); // await permet d'attendre la fin de la destruction de la session avant de continuer
     return response.status(200).send({ message: 'Déconnexion réussie' });
 }
 
+/**
+ * @brief Modifie les informations du compte utilisateur.
+ * @param email (optionnel) Le nouvel email de l'utilisateur.
+ * @param password (optionnel) Le nouveau mot de passe de l'utilisateur.
+ * @param name (optionnel) Le nouveau nom d'utilisateur.
+ * @returns response - Résultat de la requête.
+ * @returns status 200 - Compte mis à jour avec succès.
+ * @returns status 400 - Aucune information à mettre à jour ou données manquantes.
+ * @returns status 401 - Utilisateur non authentifié.
+ * @returns status 404 - Utilisateur non trouvé.
+ * @returns status 405 - Méthode non autorisée.
+ */
 function editAccount(request, response) {
     // Vérifier la methode HTTP
     if (request.method !== 'PUT') {
@@ -93,9 +159,10 @@ function editAccount(request, response) {
         return response.status(400).send({ error: 'Aucune information à mettre à jour' });
     }
 
-
+    // Connexion à la base de données
     const db = new Database('database.db');
     
+    // Récupérer l'utilisateur actuel
     const getUserQuery = db.prepare('SELECT * FROM user WHERE userid = ?');
     const user = getUserQuery.get(userId);
     
@@ -111,13 +178,13 @@ function editAccount(request, response) {
     }
     // Mettre à jour le mot de passe si fourni
     if (newPassword) {
-        user.password = newPassword;
+        user.password = newPassword; // TODO : Ajouter le hachage des mots de passe
     }
     // Mettre à jour le nom d'utilisateur si fourni
     if (newUsername) {
         user.name = newUsername;
     }
-
+    // Exécuter la requête de mise à jour
     const updateUserQuery = db.prepare('UPDATE user SET email = ?, password = ?, name = ? WHERE userid = ?');
     updateUserQuery.run(user.email, user.password, user.name, userId);
 
