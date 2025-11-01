@@ -13,6 +13,7 @@ const Database = require('better-sqlite3'); // Importation de la bibliothèque S
  * @returns status 200 - Booster acheté avec succès.
  * @returns status 401 - Utilisateur non authentifié.
  * @returns status 405 - Méthode non autorisée.
+ * @returns status 500 - Erreur lors de l'ouverture du booster.
  */
 function openBooster(request, response) {
     // Forcer l'utilisation de la methode POST
@@ -42,7 +43,7 @@ function openBooster(request, response) {
     if (lastBoosterOppening && (currentTime - lastBoosterOppening) < 3 * 3600) {
         const timeLeft = 3 * 3600 - (currentTime - lastBoosterOppening);
         // TODO: Améliorer le message pour afficher en heures/minutes/secondes
-        return response.status(429).send({ error: `Vous devez attendre ${Math.floor(timeLeft / 60)} minutes avant d'ouvrir un nouveau booster.` });
+        return response.status(429).send({ error: `Vous devez attendre ${Math.floor(timeLeft / 3600)} heures ${Math.floor((timeLeft % 3600) / 60)} minutes avant d'ouvrir un nouveau booster.` });
     }
 
     // Récupérer toutes les cartes disponibles
