@@ -13,6 +13,7 @@ const cors = require('cors'); // Importation de l'outil CORS pour gérer les req
 const friendsRoutes = require('./routes/friends.js'); // Importation des routes d'amis
 const userRoutes = require('./routes/user.js'); // Importation des routes utilisateur
 const boosterRoutes = require('./routes/booster.js'); // Importation des routes booster
+const collectionRoutes= require('./routes/collection.js');// Importation des routes collection
 
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
@@ -59,6 +60,8 @@ app.get('/logout', userRoutes.logout);
 // Routes pour les boosters
 app.post('/booster/open', boosterRoutes.openBooster);
 
+// Routes pour la collection
+app.get('/collection',collectionRoutes.getCollection);
 
 
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
