@@ -25,9 +25,25 @@ function openBooster(request, response) {
         return response.status(401).send({ error: 'Utilisateur non authentifié' });
     }
 
+
+
     const userId = request.session.userId;
 
     const db = new Database('database.db');
+
+    // Récuperer la date de dernier ouverture de booster
+    const getLastBoosterOppeningQuery = db.prepare('SELECT lastBoosterOppening FROM user WHERE userid = ?');
+    const userData = getLastBoosterOppeningQuery.get(userId);
+    const lastBoosterOppening = userData.lastBoosterOppening;
+
+    const currentTime = Math.floor(Date.now() / 1000); // Temps actuel en secondes
+
+    // On peut ouvrir un booster toutes les 3 heures (10800 secondes) 
+    if (lastBoosterOppening && (currentTime - lastBoosterOppening) < 3 * 3600) {
+        const timeLeft = 3 * 3600 - (currentTime - lastBoosterOppening);
+        // TODO: Améliorer le message pour afficher en heures/minutes/secondes
+        return response.status(429).send({ error: `Vous devez attendre ${Math.floor(timeLeft / 60)} minutes avant d'ouvrir un nouveau booster.` });
+    }
 
     // Récupérer toutes les cartes disponibles
     const getAllCardsQuery = db.prepare('SELECT cardId, weight FROM card');
@@ -35,7 +51,13 @@ function openBooster(request, response) {
 
     // Faire un tirage par poids pour obtenir 5 cartes
     const drawnCards = [];
-    const totalWeight = allCards.reduce((sum, card) => sum + card.weight, 0); // Fait la somme des poids
+    let totalWeight = allCards.reduce((sum, card) => sum + card.weight, 0); // Fait la somme des poids
+
+    // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
+    if (totalWeight === 0) {
+        // Renvoyer une erreur
+        return response.status(500).send({ error: 'Erreur lors de l\'ouverture du booster, aucunes cartes disponibles. Veuillez réessayer plus tard.' });
+    }
 
     for (let i = 0; i < 5; i++) { // Tirer 5 cartes
         let randomNum = Math.random() * totalWeight; // Nombre aléatoire entre 0 et le poids total
@@ -46,6 +68,16 @@ function openBooster(request, response) {
                 break;
             }
         }
+        // Si c'est le premier tirage de cartes de l'utilisateur, on s'assure d'avoir des cartes différentes
+        if (lastBoosterOppening === null) {
+            // Retirer la carte tirée de la liste des cartes disponibles pour le prochain tirage
+            const drawnCardIndex = allCards.findIndex(c => c.cardId === drawnCards[i]);
+            if (drawnCardIndex !== -1) {
+                totalWeight -= allCards[drawnCardIndex].weight; // Mettre à jour le poids total
+                allCards.splice(drawnCardIndex, 1); // Retirer la carte tirée
+            }
+        }
+
     }
 
     // Insérer les cartes tirées dans la collection de l'utilisateur
