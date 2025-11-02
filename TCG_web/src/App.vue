@@ -18,7 +18,7 @@
           </label>
           <input type="password" id ="password" v-model="mdp_utilisateur" />
             
-          <button type="submit">Se Connecter</button>
+          <button type="submit">Se connecter</button>
         </form>
         <button>Créer un compte</button>
       </div>
