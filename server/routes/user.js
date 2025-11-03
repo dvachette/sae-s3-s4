@@ -239,11 +239,47 @@ function deleteAccount(request, response) {
     return response.status(200).send({ message: 'Compte supprimé avec succès' });
 }
 
+/**
+ * @brief Récupère les informations de l'utilisateur connecté.
+ * @returns response - Résultat de la requête.
+ * @returns status 200 - Informations utilisateur récupérées avec succès.
+ * @returns status 401 - Utilisateur non authentifié.
+ * @returns status 404 - Utilisateur non trouvé.
+ * @returns status 405 - Méthode non autorisée.
+ */
+function getUserData(request, response) {
+    // Vérifier que la méthode HTTP est GET
+    if (request.method !== 'GET') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    // Vérifier si l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    const userId = request.session.userId;
+
+    // Connexion à la base de données
+    const db = new Database('database.db');
+
+    // Récupérer les informations de l'utilisateur
+    const getUserQuery = db.prepare('SELECT userid, email, name, profileType FROM user WHERE userid = ?');
+    const user = getUserQuery.get(userId);
+
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
+
+    return response.status(200).send({ user: user });
+}
+
 
 module.exports = { 
     createAccount,
     login,
     logout,
     editAccount,
-    deleteAccount
+    deleteAccount,
+    getUserData
 };
