@@ -6,5 +6,5 @@
 </template>
 
 <script setup>
-import '@/Composants/style_clef.css';
+import '@/assets/css/style_clef.css';
 </script>
