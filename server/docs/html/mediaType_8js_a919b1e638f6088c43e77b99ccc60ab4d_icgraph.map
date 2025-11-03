@@ -1,5 +1,0 @@
-<map id="isQuality" name="isQuality">
-<area shape="rect" id="Node000001" title="Check if a spec has any quality." alt="" coords="212,5,292,31"/>
-<area shape="rect" id="Node000002" href="$mediaType_8js.html#a4c46e16326bcc4b85146b62416270a99" title="Get the preferred media types from an Accept header." alt="" coords="5,5,164,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,21,164,21,164,15,198,15"/>
-</map>

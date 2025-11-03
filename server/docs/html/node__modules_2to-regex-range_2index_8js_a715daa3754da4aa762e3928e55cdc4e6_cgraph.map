@@ -1,7 +1,0 @@
-<map id="rangeToPattern" name="rangeToPattern">
-<area shape="rect" id="Node000001" title="Convert a range to a regex pattern." alt="" coords="5,31,124,56"/>
-<area shape="rect" id="Node000002" href="$node__modules_2to-regex-range_2index_8js.html#a433f7237b54aef004521f45b0464affd" title=" " alt="" coords="172,5,305,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,32,158,27,159,32,124,37"/>
-<area shape="rect" id="Node000003" href="$node__modules_2to-regex-range_2index_8js.html#a2f0548500aa29a3448de09b75c8cf3ca" title="Zip strings." alt="" coords="218,55,259,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="124,49,205,60,204,65,124,54"/>
-</map>

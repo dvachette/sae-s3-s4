@@ -1,5 +1,0 @@
-<map id="getcookie" name="getcookie">
-<area shape="rect" id="Node000001" title="Get the session ID cookie from request." alt="" coords="5,5,92,31"/>
-<area shape="rect" id="Node000002" href="$node__modules_2express-session_2index_8js.html#a5aff455fd9d08250d3c91e4e7eea7543" title="Verify and decode the given val with secrets." alt="" coords="140,5,248,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,15,126,15,126,21,92,21"/>
-</map>

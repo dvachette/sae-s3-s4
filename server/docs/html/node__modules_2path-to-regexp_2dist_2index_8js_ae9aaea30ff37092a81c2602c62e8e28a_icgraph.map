@@ -1,6 +1,0 @@
-<map id="tokenToFunction" name="tokenToFunction">
-<area shape="rect" id="Node000001" title="Convert a single token into a path building function." alt="" coords="188,5,315,31"/>
-<area shape="rect" id="Node000002" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#a924306653669885e7910c73055a50637" title=" " alt="" coords="5,5,140,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,30,140,29,140,24,174,24"/>
-<area shape="poly" id="edge2_Node000002_Node000001" title=" " alt="" coords="154,6,188,7,188,12,154,12"/>
-</map>

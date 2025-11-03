@@ -1,8 +1,0 @@
-<map id="isOriginAllowed" name="isOriginAllowed">
-<area shape="rect" id="Node000001" title=" " alt="" coords="272,29,396,55"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="364,19,355,11,334,8,316,10,307,15,305,20,310,28,305,31,299,21,303,11,315,5,334,3,357,6,367,15"/>
-<area shape="rect" id="Node000002" href="$node__modules_2cors_2lib_2index_8js.html#a9756f99b07b428a841cb0010a5dbd7ee" title=" " alt="" coords="103,29,224,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="258,45,224,45,224,39,258,39"/>
-<area shape="rect" id="Node000003" href="$node__modules_2cors_2lib_2index_8js.html#a10a68fce9db730423ebdec1e8eda23bc" title=" " alt="" coords="5,29,55,55"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="89,45,55,45,55,39,89,39"/>
-</map>

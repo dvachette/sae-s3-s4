@@ -1,7 +1,0 @@
-<map id="execFromPackage" name="execFromPackage">
-<area shape="rect" id="Node000001" title="Reads the cwd/package.json file and looks to see if it can load a script and possibly an exec first f..." alt="" coords="5,5,144,31"/>
-<area shape="rect" id="Node000002" href="$__stream__duplex_8js.html#a472985ef50ed84466f5fce48a490c29b" title=" " alt="" coords="192,5,260,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,15,178,15,178,21,144,21"/>
-<area shape="rect" id="Node000003" href="$nodemon_2lib_2utils_2log_8js.html#ad3e8b43fdd8b9fc4485d4e6f0e378802" title=" " alt="" coords="308,5,360,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="260,15,294,15,294,21,260,21"/>
-</map>

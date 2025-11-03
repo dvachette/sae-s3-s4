@@ -1,7 +1,0 @@
-<map id="findAppScript" name="findAppScript">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,113,31"/>
-<area shape="rect" id="Node000002" href="$__stream__duplex_8js.html#a472985ef50ed84466f5fce48a490c29b" title=" " alt="" coords="161,5,229,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,15,148,15,148,21,113,21"/>
-<area shape="rect" id="Node000003" href="$nodemon_2lib_2utils_2log_8js.html#ad3e8b43fdd8b9fc4485d4e6f0e378802" title=" " alt="" coords="277,5,329,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="229,15,264,15,264,21,229,21"/>
-</map>

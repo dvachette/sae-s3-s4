@@ -1,7 +1,0 @@
-<map id="compare" name="compare">
-<area shape="rect" id="Node000001" title="compare raw data to hash" alt="" coords="5,29,84,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="25,30,21,21,23,12,31,5,45,3,60,6,67,14,63,18,58,11,45,8,33,10,28,14,26,20,30,28"/>
-<area shape="rect" id="Node000002" href="$bcrypt_8js.html#a2a94c79e22a46d1dbcdb24d1e4f846a6" title="hash data using a salt" alt="" coords="132,29,185,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="84,39,119,39,119,45,84,45"/>
-<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="139,30,135,21,137,12,145,5,159,3,174,6,181,14,177,18,172,11,159,8,147,10,142,14,140,20,144,28"/>
-</map>

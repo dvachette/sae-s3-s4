@@ -1,5 +1,0 @@
-<map id="nodemonOption" name="nodemonOption">
-<area shape="rect" id="Node000001" title="Given an argument (ie." alt="" coords="112,5,239,31"/>
-<area shape="rect" id="Node000002" href="$nodemon_2lib_2cli_2parse_8js.html#aed2fbe335a35c0184e069ae316ac16d0" title="Parses the command line arguments process.argv and returns the nodemon options, the user script and t..." alt="" coords="5,5,64,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,21,64,21,64,15,98,15"/>
-</map>

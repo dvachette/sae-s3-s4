@@ -1,9 +1,0 @@
-<map id="if" name="if">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,44,56"/>
-<area shape="rect" id="Node000002" href="$conversion_8js.html#ad5a8851b18f5b1433ccf37d91782094f" title=" " alt="" coords="107,5,145,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="43,36,92,24,94,29,45,41"/>
-<area shape="rect" id="Node000003" href="$__stream__duplex_8js.html#a472985ef50ed84466f5fce48a490c29b" title=" " alt="" coords="92,55,160,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="45,45,79,54,78,59,43,50"/>
-<area shape="rect" id="Node000004" href="$nodemon_2lib_2utils_2log_8js.html#ad3e8b43fdd8b9fc4485d4e6f0e378802" title=" " alt="" coords="208,55,260,80"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="160,65,194,65,194,70,160,70"/>
-</map>

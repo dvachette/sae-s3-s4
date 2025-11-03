@@ -1,8 +1,0 @@
-<map id="compare" name="compare">
-<area shape="rect" id="Node000001" title="compare raw data to hash" alt="" coords="331,29,409,55"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="394,18,387,11,370,8,355,10,348,15,346,20,351,28,346,30,341,21,344,11,354,5,370,3,390,6,398,15"/>
-<area shape="rect" id="Node000002" href="$node__modules_2to-regex-range_2index_8js.html#a6e8509924fe4af6de6805266446920aa" title=" " alt="" coords="171,29,283,55"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="317,45,283,45,283,39,317,39"/>
-<area shape="rect" id="Node000003" href="$node__modules_2to-regex-range_2index_8js.html#ab2cfd6af0f07ef7b6afbdfbc9778feae" title=" " alt="" coords="5,29,123,55"/>
-<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="157,45,123,45,123,39,157,39"/>
-</map>

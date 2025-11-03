@@ -1,8 +1,0 @@
-<map id="selectColor" name="selectColor">
-<area shape="rect" id="Node000001" title="Select a color." alt="" coords="265,31,360,56"/>
-<area shape="rect" id="Node000002" href="$express-session_2node__modules_2debug_2src_2debug_8js.html#a09a3f614b4bd6474a64bf881359575f8" title="Create a debugger with the given namespace." alt="" coords="112,5,217,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="251,36,217,30,218,24,252,30"/>
-<area shape="rect" id="Node000003" href="$common_8js.html#acd81b1ff28db66283da16cb47a517f8c" title="This is the common logic for both the Node.js and web browser implementations of debug()." alt="" coords="5,31,64,56"/>
-<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="252,46,64,46,64,41,252,41"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="99,33,65,40,64,35,98,28"/>
-</map>

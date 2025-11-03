@@ -1,7 +1,0 @@
-<map id="specify" name="specify">
-<area shape="rect" id="Node000001" title="Get the specificity of the media type." alt="" coords="420,5,488,31"/>
-<area shape="rect" id="Node000002" href="$mediaType_8js.html#a34f468e2c873610da2afd54984ce69d6" title="Get the priority of a media type." alt="" coords="212,5,372,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="406,21,372,21,372,15,406,15"/>
-<area shape="rect" id="Node000003" href="$mediaType_8js.html#a4c46e16326bcc4b85146b62416270a99" title="Get the preferred media types from an Accept header." alt="" coords="5,5,164,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,21,164,21,164,15,198,15"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="destroyer" name="destroyer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,89,31"/>
-<area shape="rect" id="Node000002" href="$__stream__duplex_8js.html#a472985ef50ed84466f5fce48a490c29b" title=" " alt="" coords="137,5,205,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,15,124,15,124,21,89,21"/>
-<area shape="rect" id="Node000003" href="$nodemon_2lib_2utils_2log_8js.html#ad3e8b43fdd8b9fc4485d4e6f0e378802" title=" " alt="" coords="253,5,305,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="205,15,240,15,240,21,205,21"/>
-</map>

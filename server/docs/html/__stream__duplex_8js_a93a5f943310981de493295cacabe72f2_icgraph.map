@@ -1,9 +1,0 @@
-<map id="onend" name="onend">
-<area shape="rect" id="Node000001" title=" " alt="" coords="127,55,189,80"/>
-<area shape="rect" id="Node000002" href="$__stream__duplex_8js.html#a9d1597c19055324ff8961f6ee71c861f" title=" " alt="" coords="8,5,76,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,52,72,33,74,28,116,47"/>
-<area shape="rect" id="Node000003" href="$end-of-stream_8js.html#a1c1f398937e6cf181bd7e081a81933e4" title=" " alt="" coords="19,55,65,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="113,70,65,70,65,65,113,65"/>
-<area shape="rect" id="Node000004" href="$response_8js.html#aa21dc3ce9630dbea7fa83bbdeee0176f" title=" " alt="" coords="5,104,79,129"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="116,88,74,106,72,101,114,83"/>
-</map>

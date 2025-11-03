@@ -1,5 +1,0 @@
-<map id="NodeFsHandler::_handleFile" name="NodeFsHandler::_handleFile">
-<area shape="rect" id="Node000001" title="Watch a file and emit add event if warranted." alt="" coords="5,13,209,38"/>
-<area shape="rect" id="Node000002" href="$classNodeFsHandler.html#a43b26b2286c9bda6d85973c9d6e465de" title="Watch file for changes with fs_watchFile or fs_watch." alt="" coords="257,5,464,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,23,243,23,243,28,210,28"/>
-</map>

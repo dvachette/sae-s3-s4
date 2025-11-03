@@ -1,5 +1,0 @@
-<map id="fastparse" name="fastparse">
-<area shape="rect" id="Node000001" title="Parse the str url with fast&#45;path short&#45;cut." alt="" coords="141,5,224,31"/>
-<area shape="rect" id="Node000002" href="$node__modules_2parseurl_2index_8js.html#a4cb8c6d8ea0504ff5413650aa6083fa6" title="Parse the req original url with fallback and memoization." alt="" coords="5,5,93,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,21,94,21,94,15,128,15"/>
-</map>

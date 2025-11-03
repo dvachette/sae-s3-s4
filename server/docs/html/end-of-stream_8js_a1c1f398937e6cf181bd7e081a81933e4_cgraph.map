@@ -1,9 +1,0 @@
-<map id="eos" name="eos">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,51,56"/>
-<area shape="rect" id="Node000002" href="$end-of-stream_8js.html#a7988acb4c69d8bb23c6d54b7850f3c64" title=" " alt="" coords="103,5,157,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="50,35,89,25,90,31,52,40"/>
-<area shape="rect" id="Node000003" href="$__stream__duplex_8js.html#a93a5f943310981de493295cacabe72f2" title=" " alt="" coords="99,55,161,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="52,46,86,54,85,59,50,51"/>
-<area shape="rect" id="Node000004" href="$__stream__duplex_8js.html#a2ef75529b1a1a9bfa639dc001255ccee" title=" " alt="" coords="209,55,289,80"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="161,65,196,65,196,70,161,70"/>
-</map>

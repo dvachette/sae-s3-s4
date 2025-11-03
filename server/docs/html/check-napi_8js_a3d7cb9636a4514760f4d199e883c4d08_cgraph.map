@@ -1,9 +1,0 @@
-<map id="checkFileUNIX" name="checkFileUNIX">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,121,31"/>
-<area shape="rect" id="Node000002" href="$check-napi_8js.html#ac04980d6e5329ef5a5a39935850eafab" title=" " alt="" coords="169,5,252,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,15,156,15,156,21,121,21"/>
-<area shape="rect" id="Node000003" href="$__stream__duplex_8js.html#a472985ef50ed84466f5fce48a490c29b" title=" " alt="" coords="300,5,368,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="252,15,287,15,287,21,252,21"/>
-<area shape="rect" id="Node000004" href="$nodemon_2lib_2utils_2log_8js.html#ad3e8b43fdd8b9fc4485d4e6f0e378802" title=" " alt="" coords="416,5,468,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="368,15,402,15,402,21,368,21"/>
-</map>

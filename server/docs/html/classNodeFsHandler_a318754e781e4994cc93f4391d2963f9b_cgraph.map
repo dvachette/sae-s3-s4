@@ -1,6 +1,0 @@
-<map id="NodeFsHandler::_handleRead" name="NodeFsHandler::_handleRead">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,220,55"/>
-<area shape="poly" id="edge2_Node000001_Node000001" title=" " alt="" coords="70,31,60,21,65,11,83,5,113,3,151,7,161,12,165,18,160,20,158,16,149,12,113,8,84,10,69,15,66,20,73,27"/>
-<area shape="rect" id="Node000002" href="$classNodeFsHandler.html#a5c2a1bf84a479e6b482f7dfe311d3291" title="Handle added file, directory, or glob pattern." alt="" coords="268,29,492,55"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="220,39,254,39,254,45,220,45"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="FSWatcher::_emit" name="FSWatcher::_emit">
-<area shape="rect" id="Node000001" title="Normalize and emit events." alt="" coords="5,55,140,80"/>
-<area shape="rect" id="Node000002" href="$classFSWatcher.html#a130310bcf15dc621073dd5ad6e021fcc" title="Awaits write operation to finish." alt="" coords="188,5,403,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,52,224,31,225,36,131,57"/>
-<area shape="rect" id="Node000003" href="$classFSWatcher.html#a55d6cd0033e274e7cb40e7bf6e3c742f" title="Helper utility for throttling." alt="" coords="219,55,372,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="140,65,205,65,205,70,140,70"/>
-<area shape="rect" id="Node000004" href="$classFSWatcher.html#a1160c0e48754c3b937a4d13cfc52d1b5" title=" " alt="" coords="208,104,383,129"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="131,77,225,98,224,104,130,83"/>
-</map>

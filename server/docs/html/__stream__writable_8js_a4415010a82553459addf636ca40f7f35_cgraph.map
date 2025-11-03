@@ -1,9 +1,0 @@
-<map id="clearBuffer" name="clearBuffer">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,99,56"/>
-<area shape="rect" id="Node000002" href="$__stream__writable_8js.html#a98785115fa0483fc92e973b77e2fafa4" title=" " alt="" coords="147,5,267,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,33,132,27,133,33,99,38"/>
-<area shape="rect" id="Node000004" href="$__stream__writable_8js.html#a204f77be07e382a330eb522069dc6eb7" title=" " alt="" coords="170,55,243,80"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="99,48,157,57,156,62,99,53"/>
-<area shape="rect" id="Node000003" href="$__stream__writable_8js.html#a5fdb25dceb7006af04a0a086614a3ddd" title=" " alt="" coords="315,5,436,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="267,15,301,15,301,21,267,21"/>
-</map>

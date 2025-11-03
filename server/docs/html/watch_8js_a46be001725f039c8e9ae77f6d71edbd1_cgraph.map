@@ -1,7 +1,0 @@
-<map id="filterAndRestart" name="filterAndRestart">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,129,56"/>
-<area shape="rect" id="Node000002" href="$watch_8js.html#ae1ffca272e6932a266e1d29205a9842e" title=" " alt="" coords="179,5,265,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="129,31,165,24,166,30,130,36"/>
-<area shape="rect" id="Node000003" href="$watch_8js.html#acf998174ba9f0c127fb003645512e601" title=" " alt="" coords="177,55,267,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,50,164,56,163,61,129,56"/>
-</map>

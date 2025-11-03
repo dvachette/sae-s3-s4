@@ -1,7 +1,0 @@
-<map id="specify" name="specify">
-<area shape="rect" id="Node000001" title="Get the specificity of the charset." alt="" coords="380,5,448,31"/>
-<area shape="rect" id="Node000002" href="$charset_8js.html#a5579b22ba509a76cf713761860c4ea05" title="Get the priority of a charset." alt="" coords="192,5,332,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="366,21,332,21,332,15,366,15"/>
-<area shape="rect" id="Node000003" href="$charset_8js.html#a05cf029cad1845f0fad1b0de99800666" title="Get the preferred charsets from an Accept&#45;Charset header." alt="" coords="5,5,144,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="179,21,144,21,144,15,179,15"/>
-</map>
