@@ -6,7 +6,7 @@
  */
 
 const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
-
+const {addCardToCollection}=require("../fonctions-utile/request");
 /**
  * @brief Achète un booster pour l'utilisateur connecté.
  * @returns response - Résultat de la requête.
@@ -83,19 +83,7 @@ function openBooster(request, response) {
 
     // Insérer les cartes tirées dans la collection de l'utilisateur
     for (const cardId of drawnCards) {
-        // Vérifier si l'utilisateur possède déjà la carte
-        const checkCardQuery = db.prepare('SELECT * FROM collection WHERE userId = ? AND cardId = ?');
-        const existingCard = checkCardQuery.get(userId, cardId);
-
-        if (existingCard) {
-            // Si la carte existe déjà, incrémenter la quantité
-            const updateCardQuantity = db.prepare('UPDATE collection SET quantity = quantity + 1 WHERE userId = ? AND cardId = ?');
-            updateCardQuantity.run(userId, cardId);
-        } else {
-            // Sinon, insérer la nouvelle carte avec une quantité de 1
-            const insertNewCard = db.prepare('INSERT INTO collection (userId, cardId, level, quantity) VALUES (?, ?, 1, 1)');
-            insertNewCard.run(userId, cardId);
-        }
+        addCardToCollection(userId,cardId);
     }
 
     // Ajouter un nombre de clé à l'utilisateur
