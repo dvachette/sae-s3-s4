@@ -1,7 +1,7 @@
 <template>
   <div class="clef">
     <p>1212</p>
-    <img src="/lot_de_clefs.png" alt="Lot de clefs" />
+    <img src="@/assets/imgs/Clef.png" alt="Lot de clefs" />
   </div>
 </template>
 

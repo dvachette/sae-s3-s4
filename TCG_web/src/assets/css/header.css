@@ -1,0 +1,44 @@
+@import './style.css';
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  height: 100%;
+}
+
+a:has(> h1) {
+  display: flex;
+  text-decoration: none;
+  width: 15vw;
+  flex: 1;
+  align-self: center;
+  height: 100%;
+}
+
+a:hover {
+  background-color: rgba(var(--jaune200), 0.2);
+}
+
+header .link.active {
+  background-color: rgba(var(--jaune300), 0.5);
+  color: rgb(var(--rouge700));
+}
+
+h1 {
+  font-size: 2rem;
+  margin: auto;
+}
+
+a > img {
+  padding-top: 5%;
+  width: 12.5vh;
+}
+
+h1 {
+  font-weight: normal;
+}

@@ -1,23 +1,23 @@
 :root {
-  --blanc50: #fefde8;
-  --jaune100: #fffcc2;
-  --jaune200: #fff687;
-  --jaune300: #ffe943;
-  --jaune400: #ffda22;
-  --orange400: #ffb332;
-  --orange500: #ff9a0a;
-  --orange600: #ff8201;
-  --orange700: #cc5e02;
-  --orange800: #a1490b;
-  --orange900: #823e0c;
-  --rouge400: #ff6464;
-  --rouge500: #ff4949;
-  --rouge600: #ed1515;
-  --rouge700: #c80d0d;
-  --rouge800: #a50f0f;
-  --rouge900: #881414;
-  --onyx: #32373b;
-  --vert: #179d10;
+  --blanc50: 254, 253, 232;
+  --jaune100: 255, 252, 194;
+  --jaune200: 255, 252, 135;
+  --jaune300: 255, 233, 67;
+  --jaune400: 255, 218, 34;
+  --orange400: 255, 179, 50;
+  --orange500: 255, 154, 10;
+  --orange600: 255, 130, 1;
+  --orange700: 204, 94, 2;
+  --orange800: 161, 73, 11;
+  --orange900: 130, 62, 12;
+  --rouge400: 255, 100, 100;
+  --rouge500: 255, 73, 73;
+  --rouge600: 237, 21, 21;
+  --rouge700: 200, 13, 13;
+  --rouge800: 165, 15, 15;
+  --rouge900: 136, 20, 20;
+  --onyx: 50, 55, 59;
+  --vert: 23, 157, 16;
 }
 
 @font-face {
@@ -31,47 +31,50 @@
 }
 
 body {
-  height : 100vh;
-  margin : 0;
-  padding : 0
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-#app { /*vise la div implentée par vueJS, équivalent du body en html classique*/
-  background-color: var(--blanc50);
-  color: var(--onyx);
-  display :flex;
+#app {
+  /*vise la div implentée par vueJS, équivalent du body en html classique*/
+  background-color: rgb(var(--blanc50));
+  color: rgb(var(--onyx));
+  display: flex;
   flex-direction: column;
-  height : 100%;
+  height: 100%;
 }
-
 
 /*jusque aside, permet de prendre tout l'espace dispo en dessous du header
 pour cela il faut avoir, une div contenant le aside et main (mais pas le header !)*/
 #app > div {
-  display : flex;
-  flex : 1;
+  display: flex;
+  flex: 1;
 }
 
 main {
-  flex : 1;
+  flex: 1;
 }
 
 aside {
-  background-color: var(--jaune200);
-  color: var(--onyx);
-  flex : 1;
+  background-color: rgb(var(--jaune200));
+  color: rgb(var(--onyx));
+  flex: 1;
 }
 
 header {
-  background: linear-gradient(90deg, var(--orange400), var(--orange500));
+  background: linear-gradient(
+    90deg,
+    rgb(var(--orange400)),
+    rgb(var(--orange500))
+  );
   transition: width 0.3s ease;
-  height : 12.5%;
+  height: 12.5%;
 }
 
 header > * {
-  color: var(--onyx);
+  color: rgb(var(--onyx));
   text-align: center;
   font-family: 'Lusitana', sans-serif;
   font-weight: normal;
 }
-
