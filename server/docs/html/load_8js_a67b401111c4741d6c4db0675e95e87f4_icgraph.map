@@ -1,0 +1,7 @@
+<map id="loadFile" name="loadFile">
+<area shape="rect" id="Node000001" title="Looks for a config in the current working directory, and a config in the user&#39;s home directory,..." alt="" coords="188,31,261,56"/>
+<area shape="rect" id="Node000002" href="$load_8js.html#a27fefc375932c01fb41a930553bb05c6" title="Load the nodemon config, first reading the global root/nodemon.json, then the local nodemon...." alt="" coords="47,5,98,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,38,98,25,99,20,175,32"/>
+<area shape="rect" id="Node000003" href="$load_8js.html#ac0a46912effd649ce44acc2ed8e9dc15" title=" " alt="" coords="5,55,140,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,54,141,59,140,54,174,49"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="getCharsetPriority" name="getCharsetPriority">
+<area shape="rect" id="Node000001" title="Get the priority of a charset." alt="" coords="5,5,145,31"/>
+<area shape="rect" id="Node000002" href="$charset_8js.html#af6a36773bb94d7c4049d45d42e68b89d" title="Get the specificity of the charset." alt="" coords="193,5,261,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,15,180,15,180,21,146,21"/>
+</map>

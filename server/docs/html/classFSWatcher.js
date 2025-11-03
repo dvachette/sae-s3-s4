@@ -1,0 +1,25 @@
+var classFSWatcher =
+[
+    [ "_addPathCloser", "classFSWatcher.html#ad762956b65d9917723eca1fae3c38193", null ],
+    [ "_awaitWriteFinish", "classFSWatcher.html#a130310bcf15dc621073dd5ad6e021fcc", null ],
+    [ "_closeFile", "classFSWatcher.html#a3437399c26536e273b340de1ee5fed70", null ],
+    [ "_closePath", "classFSWatcher.html#ac316da418f05fe8ff59e6563e0c55083", null ],
+    [ "_emit", "classFSWatcher.html#abe7b93609ce75a2d4eb8883f35422b4c", null ],
+    [ "_getGlobIgnored", "classFSWatcher.html#a153cf8c511150b49fa0adda6a37ff11e", null ],
+    [ "_getWatchedDir", "classFSWatcher.html#aa8518dc299aaf4f8d63072baec605121", null ],
+    [ "_getWatchHelpers", "classFSWatcher.html#a5dc03ccbae57a7b2fc70742f86da6600", null ],
+    [ "_handleError", "classFSWatcher.html#a2de7ed877a734645b451db1b6a8796bb", null ],
+    [ "_hasReadPermissions", "classFSWatcher.html#afce9e4fa72046f6a3c2c1b1d562ce823", null ],
+    [ "_incrReadyCount", "classFSWatcher.html#a5378a0e7c299dd1e5ae5f29afe06267c", null ],
+    [ "_isIgnored", "classFSWatcher.html#aa6e7e1434f456206952855f5298451be", null ],
+    [ "_isntIgnored", "classFSWatcher.html#a0a753fa9e952856fa54d1124a4363b19", null ],
+    [ "_readdirp", "classFSWatcher.html#a139c9f9462bd517ca9e7cdee028e1ec5", null ],
+    [ "_remove", "classFSWatcher.html#a23c993cf7beaf8797eb970a775017eaf", null ],
+    [ "_throttle", "classFSWatcher.html#a55d6cd0033e274e7cb40e7bf6e3c742f", null ],
+    [ "add", "classFSWatcher.html#ab00e6139c8a2b4123bc1362ad9973668", null ],
+    [ "close", "classFSWatcher.html#aec978b27fa3a58a5c065f410680ed070", null ],
+    [ "constructor", "classFSWatcher.html#a87579f753bbd2d9d7943a4144fb460ea", null ],
+    [ "emitWithAll", "classFSWatcher.html#a1160c0e48754c3b937a4d13cfc52d1b5", null ],
+    [ "getWatched", "classFSWatcher.html#a60fb0a136ff0e2feded161f59b5d21ea", null ],
+    [ "unwatch", "classFSWatcher.html#a8465b16fd192111a384cc90607c9cf87", null ]
+];

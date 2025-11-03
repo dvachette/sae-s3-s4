@@ -1,0 +1,14 @@
+<map id="FSWatcher::_isIgnored" name="FSWatcher::_isIgnored">
+<area shape="rect" id="Node000001" title="Determines whether user has asked to ignore this path." alt="" coords="696,43,861,68"/>
+<area shape="rect" id="Node000002" href="$classFSWatcher.html#a0a753fa9e952856fa54d1124a4363b19" title=" " alt="" coords="469,5,648,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="689,43,633,33,634,28,690,38"/>
+<area shape="rect" id="Node000003" href="$classFSWatcher.html#a23c993cf7beaf8797eb970a775017eaf" title="Handles emitting unlink events for files and directories, and via recursion, for files and directorie..." alt="" coords="481,79,636,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="688,73,637,81,636,76,687,68"/>
+<area shape="poly" id="edge7_Node000003_Node000003" title=" " alt="" coords="598,69,587,61,559,57,535,59,523,64,520,70,527,77,523,80,515,70,519,60,534,54,559,52,589,56,601,65"/>
+<area shape="rect" id="Node000004" href="$classFSWatcher.html#aa8518dc299aaf4f8d63072baec605121" title="Provides directory tracking objects." alt="" coords="220,79,421,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="467,103,422,103,422,98,467,97"/>
+<area shape="poly" id="edge6_Node000004_Node000003" title=" " alt="" coords="435,80,481,80,481,86,435,85"/>
+<area shape="rect" id="Node000005" href="$classFSWatcher.html#ac316da418f05fe8ff59e6563e0c55083" title="Closes all watchers for a path." alt="" coords="5,104,172,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="207,106,173,110,172,105,206,101"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="186,118,299,119,421,113,498,101,498,107,422,118,299,124,186,123"/>
+</map>

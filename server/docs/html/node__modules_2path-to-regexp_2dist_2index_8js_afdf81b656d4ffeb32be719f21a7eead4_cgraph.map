@@ -1,0 +1,12 @@
+<map id="stringify" name="stringify">
+<area shape="rect" id="Node000001" title="Stringify token data into a path string." alt="" coords="5,55,80,80"/>
+<area shape="rect" id="Node000002" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#a7b9a8d28c90d0ff63c8ed264a1cdd2fc" title="Stringify an array of tokens into a path string." alt="" coords="128,55,247,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,65,114,65,114,70,80,70"/>
+<area shape="poly" id="edge5_Node000002_Node000002" title=" " alt="" coords="163,56,158,46,160,37,171,30,187,28,207,32,216,40,212,44,205,36,187,33,172,35,165,40,163,46,167,53"/>
+<area shape="rect" id="Node000003" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#a65a3d581284b62db69f9801173c45eea" title="Escape text for stringify to path." alt="" coords="313,5,408,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="232,52,301,32,303,37,233,57"/>
+<area shape="rect" id="Node000004" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#aa06e381600819d4751080032c20e2d44" title="Validate the parameter name contains valid ID characters." alt="" coords="310,55,411,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="247,65,296,65,296,70,247,70"/>
+<area shape="rect" id="Node000005" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#a065218b91a8a2c0c7578098a3f9cb5bf" title="Validate the next token does not interfere with the current param name." alt="" coords="295,104,427,129"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="233,77,303,98,301,103,232,83"/>
+</map>

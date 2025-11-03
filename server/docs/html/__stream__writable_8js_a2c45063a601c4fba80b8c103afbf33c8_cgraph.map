@@ -1,0 +1,13 @@
+<map id="afterWrite" name="afterWrite">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,92,80"/>
+<area shape="rect" id="Node000002" href="$__stream__writable_8js.html#a63a6b5bda92cb8f19ba4676980d1b3c4" title=" " alt="" coords="143,29,244,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,57,128,51,129,56,93,62"/>
+<area shape="rect" id="Node000006" href="$__stream__writable_8js.html#a460b39fcfa4924c1632c1ae6e1b9f1b3" title=" " alt="" coords="140,79,247,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="93,72,127,78,126,83,92,77"/>
+<area shape="rect" id="Node000003" href="$__stream__writable_8js.html#a5df5d92f936dd7531caa130f6d0be0c3" title=" " alt="" coords="295,5,387,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="244,31,281,25,281,30,244,36"/>
+<area shape="rect" id="Node000004" href="$__stream__transform_8js.html#ac76689de348fb76ed627b99bdbff50d7" title=" " alt="" coords="301,55,380,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="245,48,288,56,287,61,244,53"/>
+<area shape="rect" id="Node000005" href="$__stream__transform_8js.html#a0accdbea4b9980323ccb1ff45d9522f0" title=" " alt="" coords="435,55,489,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="380,65,421,65,421,70,380,70"/>
+</map>

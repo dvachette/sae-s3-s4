@@ -1,0 +1,8 @@
+<map id="createDebug" name="createDebug">
+<area shape="rect" id="Node000001" title="Create a debugger with the given namespace." alt="" coords="5,29,111,55"/>
+<area shape="rect" id="Node000002" href="$express-session_2node__modules_2debug_2src_2debug_8js.html#a7058c83f9e4c8b8b407ca9f00ec3096e" title="Select a color." alt="" coords="159,29,253,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="111,39,145,39,145,45,111,45"/>
+<area shape="rect" id="Node000003" href="$bcrypt_8js.html#a2a94c79e22a46d1dbcdb24d1e4f846a6" title="hash data using a salt" alt="" coords="301,29,355,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="253,39,288,39,288,45,253,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="307,30,303,21,305,11,314,5,328,3,345,6,352,14,348,18,342,11,328,8,316,10,310,14,308,20,312,28"/>
+</map>

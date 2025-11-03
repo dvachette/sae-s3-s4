@@ -1,0 +1,7 @@
+<map id="parse" name="parse">
+<area shape="rect" id="Node000001" title="Parses the command line arguments process.argv and returns the nodemon options, the user script and t..." alt="" coords="5,5,64,31"/>
+<area shape="rect" id="Node000002" href="$nodemon_2lib_2cli_2parse_8js.html#a46594e971f04ea91841b3f422d8a17fa" title="Given an argument (ie." alt="" coords="112,5,239,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="64,15,98,15,98,21,64,21"/>
+<area shape="rect" id="Node000003" href="$nodemon_2lib_2cli_2parse_8js.html#ae5ee548e5f8bccf6dadc652e3d9c4102" title="Given an argument (ie." alt="" coords="287,5,383,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="239,15,273,15,273,21,239,21"/>
+</map>

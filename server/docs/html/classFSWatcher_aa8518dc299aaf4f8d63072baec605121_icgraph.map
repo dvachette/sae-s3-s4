@@ -1,0 +1,10 @@
+<map id="FSWatcher::_getWatchedDir" name="FSWatcher::_getWatchedDir">
+<area shape="rect" id="Node000001" title="Provides directory tracking objects." alt="" coords="423,68,624,93"/>
+<area shape="rect" id="Node000002" href="$classFSWatcher.html#ac316da418f05fe8ff59e6563e0c55083" title="Closes all watchers for a path." alt="" coords="208,5,375,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="462,67,339,33,340,28,463,62"/>
+<area shape="rect" id="Node000003" href="$classFSWatcher.html#a23c993cf7beaf8797eb970a775017eaf" title="Handles emitting unlink events for files and directories, and via recursion, for files and directorie..." alt="" coords="5,68,160,93"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="409,91,160,90,160,85,409,86"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="236,37,127,70,125,65,234,32"/>
+<area shape="poly" id="edge3_Node000003_Node000001" title=" " alt="" coords="174,71,423,70,423,76,174,76"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="120,58,110,50,83,47,61,49,49,53,46,59,53,66,49,70,41,60,45,50,59,44,83,41,112,45,123,54"/>
+</map>

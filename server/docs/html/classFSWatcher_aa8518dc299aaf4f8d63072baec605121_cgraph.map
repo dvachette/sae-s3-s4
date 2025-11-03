@@ -1,0 +1,25 @@
+<map id="FSWatcher::_getWatchedDir" name="FSWatcher::_getWatchedDir">
+<area shape="rect" id="Node000001" title="Provides directory tracking objects." alt="" coords="5,116,207,141"/>
+<area shape="rect" id="Node000002" href="$classFSWatcher.html#a23c993cf7beaf8797eb970a775017eaf" title="Handles emitting unlink events for files and directories, and via recursion, for files and directorie..." alt="" coords="255,116,409,141"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,135,241,135,241,140,207,140"/>
+<area shape="poly" id="edge9_Node000002_Node000001" title=" " alt="" coords="254,123,221,122,221,117,254,117"/>
+<area shape="poly" id="edge12_Node000002_Node000002" title=" " alt="" coords="298,118,291,108,294,98,309,92,332,89,361,93,372,102,369,106,359,98,332,95,310,97,298,101,296,107,302,114"/>
+<area shape="rect" id="Node000003" href="$classFSWatcher.html#ac316da418f05fe8ff59e6563e0c55083" title="Closes all watchers for a path." alt="" coords="457,41,624,67"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="368,113,491,69,493,74,370,118"/>
+<area shape="rect" id="Node000005" href="$classFSWatcher.html#abe7b93609ce75a2d4eb8883f35422b4c" title="Normalize and emit events." alt="" coords="473,103,608,128"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="409,121,459,118,460,123,410,126"/>
+<area shape="rect" id="Node000007" href="$classFSWatcher.html#a55d6cd0033e274e7cb40e7bf6e3c742f" title="Helper utility for throttling." alt="" coords="703,153,856,179"/>
+<area shape="poly" id="edge13_Node000002_Node000007" title=" " alt="" coords="410,133,458,137,689,156,689,161,457,142,409,138"/>
+<area shape="rect" id="Node000009" href="$classFSWatcher.html#aa6e7e1434f456206952855f5298451be" title="Determines whether user has asked to ignore this path." alt="" coords="458,204,623,229"/>
+<area shape="poly" id="edge10_Node000002_Node000009" title=" " alt="" coords="362,139,458,182,494,197,492,202,456,187,360,144"/>
+<area shape="poly" id="edge4_Node000003_Node000001" title=" " alt="" coords="457,59,360,66,255,82,201,96,152,114,150,109,199,91,254,77,359,61,457,54"/>
+<area shape="rect" id="Node000004" href="$classFSWatcher.html#a3437399c26536e273b340de1ee5fed70" title="Closes only file&#45;specific watchers." alt="" coords="698,5,861,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="624,39,684,30,685,35,625,44"/>
+<area shape="rect" id="Node000006" href="$classFSWatcher.html#a130310bcf15dc621073dd5ad6e021fcc" title="Awaits write operation to finish." alt="" coords="672,55,887,80"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="604,100,702,80,703,85,605,105"/>
+<area shape="poly" id="edge7_Node000005_Node000007" title=" " alt="" coords="602,126,706,148,705,153,601,131"/>
+<area shape="rect" id="Node000008" href="$classFSWatcher.html#a1160c0e48754c3b937a4d13cfc52d1b5" title=" " alt="" coords="692,104,867,129"/>
+<area shape="poly" id="edge8_Node000005_Node000008" title=" " alt="" coords="608,113,678,113,678,119,608,118"/>
+<area shape="rect" id="Node000010" href="$classFSWatcher.html#a153cf8c511150b49fa0adda6a37ff11e" title=" " alt="" coords="677,204,882,229"/>
+<area shape="poly" id="edge11_Node000009_Node000010" title=" " alt="" coords="624,214,663,214,663,219,624,219"/>
+</map>

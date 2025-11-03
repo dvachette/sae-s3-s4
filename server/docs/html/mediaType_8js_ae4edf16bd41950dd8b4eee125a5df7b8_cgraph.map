@@ -1,0 +1,7 @@
+<map id="splitMediaTypes" name="splitMediaTypes">
+<area shape="rect" id="Node000001" title="Split an Accept header into media types." alt="" coords="5,5,132,31"/>
+<area shape="rect" id="Node000002" href="$mediaType_8js.html#a97cd04b128a9b6b19f89afc419107b4d" title="Count the number of quotes in a string." alt="" coords="180,5,277,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,15,166,15,166,21,132,21"/>
+<area shape="rect" id="Node000003" href="$__stream__readable_8js.html#a68d7a69def043c17acbce4b1b552e522" title=" " alt="" coords="325,5,399,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="278,15,312,15,312,21,278,21"/>
+</map>

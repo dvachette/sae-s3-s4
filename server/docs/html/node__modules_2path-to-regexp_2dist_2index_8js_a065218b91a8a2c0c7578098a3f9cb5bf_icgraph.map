@@ -1,0 +1,8 @@
+<map id="isNextNameSafe" name="isNextNameSafe">
+<area shape="rect" id="Node000001" title="Validate the next token does not interfere with the current param name." alt="" coords="295,29,427,55"/>
+<area shape="rect" id="Node000002" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#a7b9a8d28c90d0ff63c8ed264a1cdd2fc" title="Stringify an array of tokens into a path string." alt="" coords="128,29,247,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="281,45,247,45,247,39,281,39"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="212,18,205,11,187,8,172,10,165,15,163,20,167,28,163,30,158,21,160,11,171,5,187,3,207,6,216,15"/>
+<area shape="rect" id="Node000003" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#afdf81b656d4ffeb32be719f21a7eead4" title="Stringify token data into a path string." alt="" coords="5,29,80,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,45,80,45,80,39,114,39"/>
+</map>

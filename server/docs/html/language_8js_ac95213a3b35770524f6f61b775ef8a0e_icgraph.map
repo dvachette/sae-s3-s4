@@ -1,0 +1,7 @@
+<map id="specify" name="specify">
+<area shape="rect" id="Node000001" title="Get the specificity of the language." alt="" coords="407,5,475,31"/>
+<area shape="rect" id="Node000002" href="$language_8js.html#ac28d5744214c58f59f58c46384d33535" title="Get the priority of a language." alt="" coords="205,5,359,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="393,21,359,21,359,15,393,15"/>
+<area shape="rect" id="Node000003" href="$language_8js.html#a3333738f57aad85ca925e9c6c2f10004" title="Get the preferred languages from an Accept&#45;Language header." alt="" coords="5,5,157,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="192,21,158,21,158,15,192,15"/>
+</map>

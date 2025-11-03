@@ -1,0 +1,23 @@
+<map id="hash" name="hash">
+<area shape="rect" id="Node000001" title="hash data using a salt" alt="" coords="489,128,543,153"/>
+<area shape="poly" id="edge7_Node000001_Node000001" title=" " alt="" coords="538,117,531,109,516,107,503,109,496,113,495,119,499,127,494,129,489,120,492,110,501,104,516,101,534,105,542,113"/>
+<area shape="rect" id="Node000002" href="$bcrypt_8js.html#a1e286d405ba233bd936a863c3a40a927" title="compare raw data to hash" alt="" coords="347,29,425,55"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="494,119,469,93,440,68,420,57,423,53,443,64,473,89,497,115"/>
+<area shape="rect" id="Node000005" href="$bcrypt_8js.html#a35d7de01ccd274ed18da28352eb9dc55" title="compare raw data to hash" alt="" coords="331,79,441,104"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="475,128,419,107,421,102,477,123"/>
+<area shape="rect" id="Node000006" href="$bcrypt_8js.html#a6bda150b73e2b35d32d3e3765a660737" title=" " alt="" coords="341,128,431,153"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="475,143,432,143,432,138,475,138"/>
+<area shape="rect" id="Node000007" href="$express-session_2node__modules_2debug_2src_2debug_8js.html#a7058c83f9e4c8b8b407ca9f00ec3096e" title="Select a color." alt="" coords="339,177,433,203"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="477,158,421,180,419,175,475,153"/>
+<area shape="rect" id="Node000009" href="$common_8js.html#acd81b1ff28db66283da16cb47a517f8c" title="This is the common logic for both the Node.js and web browser implementations of debug()." alt="" coords="35,177,93,203"/>
+<area shape="poly" id="edge12_Node000001_Node000009" title=" " alt="" coords="501,167,476,195,442,218,395,233,345,240,295,241,246,238,158,221,93,203,94,198,159,216,247,232,295,236,345,235,394,228,440,213,473,191,497,163"/>
+<area shape="poly" id="edge2_Node000002_Node000002" title=" " alt="" coords="408,18,401,11,386,8,373,10,366,14,365,20,369,28,364,30,359,21,362,11,371,5,386,3,404,6,412,14"/>
+<area shape="rect" id="Node000003" href="$node__modules_2to-regex-range_2index_8js.html#a6e8509924fe4af6de6805266446920aa" title=" " alt="" coords="171,29,283,55"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="333,45,283,45,283,39,333,39"/>
+<area shape="rect" id="Node000004" href="$node__modules_2to-regex-range_2index_8js.html#ab2cfd6af0f07ef7b6afbdfbc9778feae" title=" " alt="" coords="5,29,123,55"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="157,45,123,45,123,39,157,39"/>
+<area shape="rect" id="Node000008" href="$express-session_2node__modules_2debug_2src_2debug_8js.html#a09a3f614b4bd6474a64bf881359575f8" title="Create a debugger with the given namespace." alt="" coords="174,127,279,152"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="332,176,267,155,268,150,333,171"/>
+<area shape="poly" id="edge11_Node000007_Node000009" title=" " alt="" coords="325,193,93,193,93,187,325,187"/>
+<area shape="poly" id="edge10_Node000008_Node000009" title=" " alt="" coords="173,159,94,184,93,179,171,154"/>
+</map>

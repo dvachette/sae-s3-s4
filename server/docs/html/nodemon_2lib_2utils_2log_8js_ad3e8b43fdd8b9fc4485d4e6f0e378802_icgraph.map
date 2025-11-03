@@ -1,0 +1,72 @@
+<map id="keys" name="keys">
+<area shape="rect" id="Node000001" title=" " alt="" coords="753,376,805,401"/>
+<area shape="rect" id="Node000002" href="$__stream__duplex_8js.html#a9e82bf3944db47375a3183ad3e4bd0ad" title=" " alt="" coords="621,203,661,228"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="769,364,746,302,728,270,704,241,683,228,661,221,662,216,685,224,707,237,732,267,751,300,774,362"/>
+<area shape="rect" id="Node000003" href="$node__modules_2minimist_2index_8js.html#afdc71bbd8032705612ffd80d7308e9db" title=" " alt="" coords="607,252,676,277"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="763,365,739,327,704,291,675,276,678,271,707,287,743,324,768,362"/>
+<area shape="rect" id="Node000004" href="$debug_2src_2node_8js.html#a5ab64ad63a3b56ca48e94e51e644cb85" title="Init logic for debug instances." alt="" coords="620,301,663,327"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="750,370,704,340,662,323,664,318,707,336,753,365"/>
+<area shape="rect" id="Node000005" href="$buffer__list_8js.html#a677e648b70b68fde505199b11fa82c99" title=" " alt="" coords="601,351,681,376"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="740,384,681,373,682,368,741,379"/>
+<area shape="rect" id="Node000007" href="$__stream__duplex_8js.html#a472985ef50ed84466f5fce48a490c29b" title=" " alt="" coords="607,400,675,425"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="740,398,676,409,675,404,739,393"/>
+<area shape="rect" id="Node000030" href="$response_8js.html#aa21dc3ce9630dbea7fa83bbdeee0176f" title=" " alt="" coords="605,449,678,475"/>
+<area shape="poly" id="edge32_Node000001_Node000030" title=" " alt="" coords="751,412,707,439,679,452,677,447,704,434,748,407"/>
+<area shape="rect" id="Node000031" href="$mediaType_8js.html#add0e9e664cc68e108a2e7903a5abff49" title="Get the specificity of the media type." alt="" coords="607,499,675,524"/>
+<area shape="poly" id="edge33_Node000001_Node000031" title=" " alt="" coords="767,415,742,452,707,488,677,504,674,499,704,484,738,449,762,412"/>
+<area shape="rect" id="Node000034" href="$node__modules_2path-to-regexp_2dist_2index_8js.html#afef143c004dca0210c3fb2afa9e9843d" title="Transform a flat sequence of tokens into a regular expression." alt="" coords="577,548,705,573"/>
+<area shape="poly" id="edge36_Node000001_Node000034" title=" " alt="" coords="774,416,751,476,732,508,707,537,688,550,685,546,704,533,727,505,746,473,769,414"/>
+<area shape="rect" id="Node000006" href="$buffer__list_8js.html#a2288a284b22df3546be98787e3bf7ab8" title=" " alt="" coords="373,5,487,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="587,350,575,340,553,300,545,262,547,224,553,187,560,151,561,115,552,80,527,44,509,30,487,23,488,18,511,26,531,40,556,77,566,115,565,151,559,188,552,225,550,261,558,298,579,336,591,346"/>
+<area shape="rect" id="Node000008" href="$bindings_8js.html#a07f3fbcc64950d31cc295e6208c2bc86" title="The main bindings() function loads the compiled bindings for a given module." alt="" coords="391,55,469,80"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="592,403,575,389,553,350,545,311,547,273,553,237,560,200,561,165,552,129,527,93,515,83,500,76,468,70,469,64,502,71,518,79,531,90,556,127,566,164,565,201,559,237,552,274,550,311,558,348,579,386,596,399"/>
+<area shape="rect" id="Node000009" href="$check-napi_8js.html#ac04980d6e5329ef5a5a39935850eafab" title=" " alt="" coords="389,104,471,129"/>
+<area shape="poly" id="edge8_Node000007_Node000009" title=" " alt="" coords="593,403,575,389,556,356,548,324,549,293,553,262,557,231,557,202,548,172,527,143,501,126,471,119,472,114,503,121,531,139,553,170,562,201,562,232,558,262,554,293,553,324,561,354,579,386,596,398"/>
+<area shape="rect" id="Node000013" href="$express-session_2node__modules_2debug_2src_2node_8js.html#a8e077e3f98409ad80f618d527096dba4" title="Copied from node/src/node.js." alt="" coords="331,153,529,179"/>
+<area shape="poly" id="edge14_Node000007_Node000013" title=" " alt="" coords="593,403,575,389,559,363,551,337,550,312,552,287,554,262,553,239,545,215,527,192,513,181,516,177,531,188,550,213,558,238,560,263,558,287,556,312,557,336,563,361,579,386,596,398"/>
+<area shape="rect" id="Node000014" href="$database_8js.html#a34ea1a3525626be6a54c348f4989e003" title=" " alt="" coords="388,203,472,228"/>
+<area shape="poly" id="edge15_Node000007_Node000014" title=" " alt="" coords="593,402,575,389,561,370,554,350,552,312,549,276,542,259,528,241,501,226,472,219,473,214,503,221,531,237,546,256,554,275,557,312,560,349,566,367,579,385,596,398"/>
+<area shape="rect" id="Node000015" href="$pipeline_8js.html#adc99514598a97792215a884e51b90912" title=" " alt="" coords="388,252,472,277"/>
+<area shape="poly" id="edge16_Node000007_Node000015" title=" " alt="" coords="593,401,575,389,558,363,552,338,545,313,539,302,528,291,501,276,471,269,473,264,503,271,531,287,543,299,550,311,557,336,563,361,579,385,596,397"/>
+<area shape="rect" id="Node000017" href="$exec_8js.html#ad7e496fa80d66394dd96e27869e79e95" title="Reads the cwd/package.json file and looks to see if it can load a script and possibly an exec first f..." alt="" coords="361,301,499,327"/>
+<area shape="poly" id="edge18_Node000007_Node000017" title=" " alt="" coords="593,399,576,390,561,376,552,364,543,352,528,340,499,328,501,323,531,336,546,348,556,360,565,373,579,385,596,395"/>
+<area shape="rect" id="Node000019" href="$load_8js.html#a804cbb9a6f6f4dad19a24b4675cc47f3" title=" " alt="" coords="376,351,484,376"/>
+<area shape="poly" id="edge20_Node000007_Node000019" title=" " alt="" coords="593,404,484,378,485,373,594,399"/>
+<area shape="rect" id="Node000021" href="$conversion_8js.html#a1a863d1ee2323e76b376e227beeee5b6" title=" " alt="" coords="411,400,449,425"/>
+<area shape="poly" id="edge22_Node000007_Node000021" title=" " alt="" coords="594,415,449,415,449,410,594,410"/>
+<area shape="rect" id="Node000022" href="$bin_2nodemon_8js.html#aa99b22a4de333b85235adabc7e3efe69" title=" " alt="" coords="411,449,449,475"/>
+<area shape="poly" id="edge23_Node000007_Node000022" title=" " alt="" coords="594,426,450,460,449,455,593,421"/>
+<area shape="rect" id="Node000023" href="$node__modules_2express-session_2node__modules_2debug_2src_2index_8js.html#ab3e790cd8ffa4e474e76393bbb320008" title="Detect Electron renderer process, which is node, but we should treat as a browser." alt="" coords="411,499,449,524"/>
+<area shape="poly" id="edge24_Node000007_Node000023" title=" " alt="" coords="595,430,579,439,565,451,556,463,546,476,531,488,488,505,450,512,449,507,487,500,528,484,542,472,552,460,561,448,576,434,593,425"/>
+<area shape="rect" id="Node000024" href="$node__modules_2debug_2src_2index_8js.html#a867c288afe941683ece89caf81d3afb2" title="Detect Electron renderer / nwjs process, which is node, but we should treat as a browser." alt="" coords="411,548,449,573"/>
+<area shape="poly" id="edge25_Node000007_Node000024" title=" " alt="" coords="596,428,579,439,569,451,562,463,557,487,550,513,543,525,531,537,511,549,490,557,450,563,449,558,488,552,509,545,528,533,539,522,545,511,551,486,557,461,564,448,576,435,593,423"/>
+<area shape="rect" id="Node000025" href="$clang-format_8js.html#a600e4c459e2e3b1eba1cfb1e418ceaf1" title=" " alt="" coords="403,621,457,647"/>
+<area shape="poly" id="edge26_Node000007_Node000025" title=" " alt="" coords="596,427,579,439,566,457,559,475,555,511,552,548,545,568,531,588,515,603,496,615,458,630,456,625,493,610,512,599,527,584,540,565,547,547,550,510,553,473,561,454,575,435,593,422"/>
+<area shape="rect" id="Node000027" href="$common_8js.html#acd81b1ff28db66283da16cb47a517f8c" title="This is the common logic for both the Node.js and web browser implementations of debug()." alt="" coords="401,671,459,696"/>
+<area shape="poly" id="edge29_Node000007_Node000027" title=" " alt="" coords="596,426,579,438,562,466,555,494,554,522,558,549,561,577,560,605,551,633,531,661,515,673,497,681,460,687,459,681,495,676,513,669,527,657,547,631,555,604,556,577,552,550,549,522,549,493,557,464,575,435,593,422"/>
+<area shape="rect" id="Node000028" href="$version_8js.html#a9d1dfcab9957767ddaee041f4c8fa986" title=" " alt="" coords="395,720,465,745"/>
+<area shape="poly" id="edge30_Node000007_Node000028" title=" " alt="" coords="596,426,579,438,559,473,551,507,553,540,558,574,563,608,564,642,555,676,531,710,517,722,500,729,466,736,465,731,499,724,514,717,527,707,550,674,559,641,558,608,553,575,547,541,546,506,554,471,575,435,593,422"/>
+<area shape="rect" id="Node000029" href="$view_8js.html#ad2ae2eaf978972e5da25d50e31a24132" title="Initialize a new View with the given name." alt="" coords="403,769,457,795"/>
+<area shape="poly" id="edge31_Node000007_Node000029" title=" " alt="" coords="597,425,579,438,565,459,556,479,548,520,551,559,559,599,566,639,568,679,558,719,547,740,531,760,515,773,496,780,458,786,457,780,494,775,512,768,527,756,543,737,553,717,563,678,561,639,553,600,545,560,543,519,551,478,561,456,575,435,593,421"/>
+<area shape="rect" id="Node000010" href="$check-napi_8js.html#a3d7cb9636a4514760f4d199e883c4d08" title=" " alt="" coords="145,80,261,105"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="375,114,261,101,262,96,375,108"/>
+<area shape="rect" id="Node000012" href="$check-napi_8js.html#af85b744877e2499998541e96a09cddca" title=" " alt="" coords="141,129,265,155"/>
+<area shape="poly" id="edge12_Node000009_Node000012" title=" " alt="" coords="375,125,266,138,265,132,375,120"/>
+<area shape="rect" id="Node000011" href="$check-napi_8js.html#a772f08ca50dc058f4d623de233ad5802" title=" " alt="" coords="5,105,76,131"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="132,106,77,115,76,110,132,101"/>
+<area shape="poly" id="edge11_Node000011_Node000011" title=" " alt="" coords="69,95,61,87,41,84,24,86,15,91,13,96,18,104,13,107,8,97,11,87,22,81,41,79,63,82,73,91"/>
+<area shape="poly" id="edge13_Node000012_Node000011" title=" " alt="" coords="127,133,76,126,77,121,128,128"/>
+<area shape="rect" id="Node000016" href="$pipeline_8js.html#a5e54819dfde57a6d8c298d9b8dc5b741" title=" " alt="" coords="166,252,241,277"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="374,267,241,267,241,262,374,262"/>
+<area shape="rect" id="Node000018" href="$exec_8js.html#a028cf4b18b21bfcfd3be074a8467d37c" title="Discovers all the options required to run the script and if a custom exec has been passed in,..." alt="" coords="177,301,229,327"/>
+<area shape="poly" id="edge19_Node000017_Node000018" title=" " alt="" coords="346,317,230,317,230,311,346,311"/>
+<area shape="rect" id="Node000020" href="$load_8js.html#a27fefc375932c01fb41a930553bb05c6" title="Load the nodemon config, first reading the global root/nodemon.json, then the local nodemon...." alt="" coords="178,351,229,376"/>
+<area shape="poly" id="edge21_Node000019_Node000020" title=" " alt="" coords="362,366,229,366,229,361,362,361"/>
+<area shape="poly" id="edge28_Node000025_Node000025" title=" " alt="" coords="466,615,466,609,462,605,430,600,406,602,395,608,394,614,404,622,401,626,389,616,390,605,405,597,430,595,464,600,472,608,471,616"/>
+<area shape="rect" id="Node000026" href="$clang-format_8js.html#a0a19c65298714aed6dcfe4d9bb71b36c" title=" " alt="" coords="184,621,223,647"/>
+<area shape="poly" id="edge27_Node000025_Node000026" title=" " alt="" coords="389,637,223,637,223,631,389,631"/>
+<area shape="rect" id="Node000032" href="$mediaType_8js.html#a34f468e2c873610da2afd54984ce69d6" title="Get the priority of a media type." alt="" coords="350,819,510,844"/>
+<area shape="poly" id="edge34_Node000031_Node000032" title=" " alt="" coords="596,524,579,537,559,572,551,605,553,639,558,673,563,707,564,741,555,775,531,809,512,823,509,819,527,805,550,773,559,740,558,707,553,674,547,640,546,605,554,570,575,534,593,520"/>
+<area shape="rect" id="Node000033" href="$mediaType_8js.html#a4c46e16326bcc4b85146b62416270a99" title="Get the preferred media types from an Accept header." alt="" coords="124,819,283,844"/>
+<area shape="poly" id="edge35_Node000032_Node000033" title=" " alt="" coords="336,834,283,834,283,829,336,829"/>
+</map>
