@@ -50,7 +50,7 @@ function openBooster(request, response) {
    
 
     // Faire un tirage par poids pour obtenir 5 cartes
-    const drawnCards = [];
+    let drawnCards = [];
 
     // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
 
