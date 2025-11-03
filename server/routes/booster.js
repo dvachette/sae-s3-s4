@@ -6,7 +6,7 @@
  */
 
 const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
-const {addCardToCollection}=require("../fonctions-utile/request");
+const {addCardToCollection,pullCardsNoRepeat,pullCardsRepeat}=require("../fonctions-utile/request");
 /**
  * @brief Achète un booster pour l'utilisateur connecté.
  * @returns response - Résultat de la requête.
@@ -46,40 +46,22 @@ function openBooster(request, response) {
         return response.status(429).send({ error: `Vous devez attendre ${Math.floor(timeLeft / 3600)} heures ${Math.floor((timeLeft % 3600) / 60)} minutes avant d'ouvrir un nouveau booster.` });
     }
 
-    // Récupérer toutes les cartes disponibles
-    const getAllCardsQuery = db.prepare('SELECT cardId, weight FROM card');
-    const allCards = getAllCardsQuery.all();
+  
+   
 
     // Faire un tirage par poids pour obtenir 5 cartes
     const drawnCards = [];
-    let totalWeight = allCards.reduce((sum, card) => sum + card.weight, 0); // Fait la somme des poids
 
     // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
-    if (totalWeight === 0) {
-        // Renvoyer une erreur
-        return response.status(500).send({ error: 'Erreur lors de l\'ouverture du booster, aucunes cartes disponibles. Veuillez réessayer plus tard.' });
-    }
 
-    for (let i = 0; i < 5; i++) { // Tirer 5 cartes
-        let randomNum = Math.random() * totalWeight; // Nombre aléatoire entre 0 et le poids total
-        for (const card of allCards) { // Parcourir les cartes jusqu'a atteindre le nombre aléatoire
-            randomNum -= card.weight;
-            if (randomNum <= 0) {
-                drawnCards.push(card.cardId); // Ajouter la carte tirée
-                break;
-            }
-        }
-        // Si c'est le premier tirage de cartes de l'utilisateur, on s'assure d'avoir des cartes différentes
-        if (lastBoosterOppening === null) {
-            // Retirer la carte tirée de la liste des cartes disponibles pour le prochain tirage
-            const drawnCardIndex = allCards.findIndex(c => c.cardId === drawnCards[i]);
-            if (drawnCardIndex !== -1) {
-                totalWeight -= allCards[drawnCardIndex].weight; // Mettre à jour le poids total
-                allCards.splice(drawnCardIndex, 1); // Retirer la carte tirée
-            }
-        }
 
+    if(lastBoosterOppening===null){
+        drawnCards=pullCardsNoRepeat(5);
     }
+    else
+        drawnCards=pullCardsRepeat(5);
+    if(drawnCards.length===0)
+        return response.status(500).send({error:"trop de cartes demandées"});
 
     // Insérer les cartes tirées dans la collection de l'utilisateur
     for (const cardId of drawnCards) {

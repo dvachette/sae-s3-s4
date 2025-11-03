@@ -31,4 +31,76 @@ function addCardToCollection(userId,cardId){
 
     
 }
-module.exports={userExisting, addCardToCollection};
+function getAllCards(){
+    const db=new Database("database.db");
+    const getAllCardsQuery = db.prepare('SELECT cardId, weight FROM card');
+    const allCards = getAllCardsQuery.all();
+    db.close()
+
+    return allCards;
+}
+
+function pullCardsRepeat(nb){
+    // Récupérer toutes les cartes disponibles
+
+    const allCards = getAllCards();
+
+    // Faire un tirage par poids pour obtenir 5 cartes
+    const drawnCards = [];
+    let totalWeight = allCards.reduce((sum, card) => sum + card.weight, 0); // Fait la somme des poids
+
+    // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
+    if (totalWeight === 0) {
+        // Renvoyer une erreur
+        return [];
+    }
+
+    for (let i = 0; i < nb; i++) { // Tirer nb cartes
+        let randomNum = Math.random() * totalWeight; // Nombre aléatoire entre 0 et le poids total
+        for (const card of allCards) { // Parcourir les cartes jusqu'a atteindre le nombre aléatoire
+            randomNum -= card.weight;
+            if (randomNum <= 0) {
+                drawnCards.push(card.cardId); // Ajouter la carte tirée
+                break;
+            }
+        }
+    }
+    return drawnCards;
+}
+
+function pullCardsNoRepeat(nb){
+    // Récupérer toutes les cartes disponibles
+
+    const allCards = getAllCards();
+    if(allCards.length<nb){
+        return [];
+    }
+    // Faire un tirage par poids pour obtenir 5 cartes
+    const drawnCards = [];
+    let totalWeight = allCards.reduce((sum, card) => sum + card.weight, 0); // Fait la somme des poids
+
+    // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
+    if (totalWeight === 0) {
+        // Renvoyer une erreur
+        return [];
+    }
+
+    for (let i = 0; i < nb; i++) { // Tirer nb cartes
+        let randomNum = Math.random() * totalWeight; // Nombre aléatoire entre 0 et le poids total
+        for (const card of allCards) { // Parcourir les cartes jusqu'a atteindre le nombre aléatoire
+            randomNum -= card.weight;
+            if (randomNum <= 0) {
+                drawnCards.push(card.cardId); // Ajouter la carte tirée
+                break;
+            }
+        }
+        const drawnCardIndex = allCards.findIndex(c => c.cardId === drawnCards[i]);
+        if (drawnCardIndex !== -1) {
+            totalWeight -= allCards[drawnCardIndex].weight; // Mettre à jour le poids total
+            allCards.splice(drawnCardIndex, 1); // Retirer la carte tirée
+        }
+    }
+    return drawnCards;
+}
+
+module.exports={userExisting, addCardToCollection, getAllCards,pullCardsRepeat,pullCardsNoRepeat};
