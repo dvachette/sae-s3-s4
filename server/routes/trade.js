@@ -102,8 +102,42 @@ function getTrades(request, response) {
 }
 
 
+/*
+*
+*/
+function acceptTrade(request, response) {
+    if (request.method !== 'POST') {
+        return response.status(405).send({ error: 'Méthode non autorisée. Utilisez POST.' });
+    }
+    if (!request.session || !request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié.' });
+    }
 
+    const { tradeRequestId, acceptedCardId } = request.body;
 
+    if (!tradeRequestId || !acceptedCardId) {
+        return response.status(400).send({ error: 'Paramètres manquants.' });
+    }
+    
+    const db = new Database('database.db');
+    const userId = request.session.userId;
+
+    // Vérifier que l'échange existe et est valide
+    const getTradeQuery = db.prepare(`
+        SELECT * FROM traderequest WHERE tradeRequestId = ?
+    `);
+    const trade = getTradeQuery.get(tradeRequestId);
+
+    if (!trade) {
+        return response.status(404).send({ error: 'Proposition d\'échange non trouvée.' });
+    }
+    // Vérifier que l'échange n'a pas expiré
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    if (trade.expirationDate < currentTimestamp) {
+        return response.status(400).send({ error: 'La proposition d\'échange a expiré.' });
+    }
+
+}
 module.exports = {
     proposeTrade,
     getTrades
