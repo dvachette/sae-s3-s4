@@ -8,6 +8,8 @@
 // Modules NPM
 const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
 
+const {userExisting}=require("../fonctions-utile/request");
+
 /**
  * @brief Crée un nouveau compte utilisateur.
  * @param email L'email de l'utilisateur.
@@ -41,11 +43,12 @@ function createAccount(request, response) {
 
     // Connexion à la base de données
     const db = new Database('database.db')
-    // Vérifier si l'email ou le nom d'utilisateur existe déjà
-    const checkMailPseudoQuery = db.prepare('SELECT * FROM user WHERE email = ? OR name = ?');
-    const existingUser = checkMailPseudoQuery.get(mail, username);
+
     
-    if (existingUser) {
+    // Vérifier si l'email ou le nom d'utilisateur existe déjà
+    
+    
+    if (userExisting(mail,username)) {
         return response.status(409).send({ error: 'Mail ou pseudo déjà utilisé' });
     }
 
