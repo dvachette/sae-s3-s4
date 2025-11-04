@@ -103,4 +103,12 @@ function pullCardsNoRepeat(nb){
     return drawnCards;
 }
 
-module.exports={userExisting, addCardToCollection, getAllCards,pullCardsRepeat,pullCardsNoRepeat};
+function areFriends(userId1,userId2){
+    const db=new Database("database.db");
+    const checkFriendshipQuery = db.prepare('SELECT * FROM friends WHERE (userId1 = ? AND userId2 = ?) OR (userId1 = ? AND userId2 = ?)');
+    const friendship = checkFriendshipQuery.get(userId1, userId2, userId2, userId1);
+    db.close()
+    return friendship? true:false;
+}
+
+module.exports={userExisting, addCardToCollection, getAllCards,pullCardsRepeat,pullCardsNoRepeat, areFriends};

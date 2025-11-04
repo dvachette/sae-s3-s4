@@ -6,6 +6,7 @@
 
 const Database = require('better-sqlite3');
 
+const {addCardToCollection} = require('../fonctions-utile/request');
 
 /**
  * 
@@ -122,7 +123,7 @@ function acceptTrade(request, response) {
     const db = new Database('database.db');
     const userId = request.session.userId;
 
-    // Vérifier que l'échange existe et est valide
+    // Vérifier que l'échange existe
     const getTradeQuery = db.prepare(`
         SELECT * FROM traderequest WHERE tradeRequestId = ?
     `);
@@ -138,6 +139,8 @@ function acceptTrade(request, response) {
     }
 
 }
+
+
 module.exports = {
     proposeTrade,
     getTrades
