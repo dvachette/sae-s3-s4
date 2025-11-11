@@ -302,14 +302,14 @@ function removeFriendRequest(request, response){
 
     // Vérifier si la demande d'amitié existe
     const getRequest = db.prepare('SELECT * FROM friends WHERE senderId = ? AND receiverId = ? AND status = ?');
-    const friendRequest = getRequest.get(friendId, userId, 'pending');
+    const friendRequest = getRequest.get(userId, friendId, 'pending');
     if (!friendRequest) {
         return response.status(404).send({ error: 'Demande d\'amitié non trouvée' });
     }
 
     // Supprime de la demande d'amitié
     const deleteFriendship = db.prepare('DELETE FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
-    deleteFriendship.run(userId, friendId, friendId, userId, 'accepted');
+    deleteFriendship.run(userId, friendId, friendId, userId, 'pending');
 
     return response.status(200).send({ message: 'Demande d\'amitié supprimée avec succès' });
 

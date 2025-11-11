@@ -182,9 +182,6 @@ function acceptTrade(request, response) {
     return response.status(200).send({ message: 'Échange accepté avec succès.' });
 }
 
-<<<<<<< HEAD
-
-=======
 function deleteTrade(request,response){
     // Vérification de la méthode HTTP
     if (request.method !== 'GET') {
@@ -204,7 +201,6 @@ function deleteTrade(request,response){
 
 
 }
->>>>>>> f863c818f1f2ae602e12657c0573cd14a57b1ec5
 module.exports = {
     proposeTrade,
     getTrades,
