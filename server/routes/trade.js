@@ -6,7 +6,7 @@
 
 const Database = require('better-sqlite3');
 
-const {addCardToCollection} = require('../fonctions-utile/request');
+const {addCardToCollection, areFriends} = require('../fonctions-utile/request');
 
 /**
  * 
@@ -114,7 +114,8 @@ function acceptTrade(request, response) {
         return response.status(401).send({ error: 'Utilisateur non authentifié.' });
     }
 
-    const { tradeRequestId, acceptedCardId } = request.body;
+    const tradeRequestId = request.body.tradeRequestId;
+    const acceptedCardId = Number(request.body.acceptedCardId);
 
     if (!tradeRequestId || !acceptedCardId) {
         return response.status(400).send({ error: 'Paramètres manquants.' });
@@ -127,21 +128,63 @@ function acceptTrade(request, response) {
     const getTradeQuery = db.prepare(`
         SELECT * FROM traderequest WHERE tradeRequestId = ?
     `);
+
     const trade = getTradeQuery.get(tradeRequestId);
 
     if (!trade) {
         return response.status(404).send({ error: 'Proposition d\'échange non trouvée.' });
+    }
+    // Vérifier que l'utilisateur est ami avec l'expéditeur
+    if (!areFriends(userId, trade.senderId)) {
+        return response.status(403).send({ error: 'Vous n\'êtes pas ami avec l\'expéditeur de cette proposition d\'échange.' });
     }
     // Vérifier que l'échange n'a pas expiré
     const currentTimestamp = Math.floor(Date.now() / 1000);
     if (trade.expirationDate < currentTimestamp) {
         return response.status(400).send({ error: 'La proposition d\'échange a expiré.' });
     }
+    // Vérifier que la carte acceptée est bien l'une des cartes offertes
+    let offeredCards = [trade.offeredCard1Id, trade.offeredCard2Id, trade.offeredCard3Id]
+    
+    if (!offeredCards.includes(acceptedCardId)) {
+        return response.status(400).send({ error: 'La carte acceptée n\'est pas parmi les cartes offertes.' });
+    }
+    // Vérifier que l'utilisateur possède la carte acceptée
+    const checkCardOwnership = db.prepare(`
+        SELECT COUNT(*) AS count FROM collection 
+        WHERE userId = ? AND cardId = ? AND quantity > 0
+    `);
+    const ownershipResult = checkCardOwnership.get(userId, trade.askedCardId);
 
+    if (ownershipResult.count < 1) {
+        return response.status(400).send({ error: 'Vous ne possédez pas la carte demandée.' });
+    }
+    // Effectuer l'échange
+    addCardToCollection(userId, acceptedCardId)
+    addCardToCollection(trade.senderId, trade.askedCardId)
+    offeredCards = offeredCards.filter(cardId => cardId !== acceptedCardId);
+    addCardToCollection(trade.senderId, offeredCards[0])
+    addCardToCollection(trade.senderId, offeredCards[1])
+
+    // Retirer les cartes de la collection des utilisateurs
+    const removeCardQuery = db.prepare(`
+        UPDATE collection SET quantity = quantity - 1 
+        WHERE userId = ? AND cardId = ? AND quantity > 0
+    `);
+    removeCardQuery.run(userId, trade.askedCardId);
+
+    // Supprimer la proposition d'échange
+    const deleteTradeQuery = db.prepare(`
+        DELETE FROM traderequest WHERE tradeRequestId = ?
+    `);
+    deleteTradeQuery.run(tradeRequestId);
+
+    return response.status(200).send({ message: 'Échange accepté avec succès.' });
 }
 
 
 module.exports = {
     proposeTrade,
-    getTrades
+    getTrades,
+    acceptTrade
 };

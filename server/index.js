@@ -68,6 +68,7 @@ app.get('/collection',collectionRoutes.getCollection);
 // Routes pour les échanges
 app.post('/trade/request', tradeRoutes.proposeTrade);
 app.get('/trade/requests', tradeRoutes.getTrades);
+app.post('/trade/accept', tradeRoutes.acceptTrade);
 
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
 app.listen(PORT, () => {

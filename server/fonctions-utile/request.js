@@ -105,10 +105,13 @@ function pullCardsNoRepeat(nb){
 
 function areFriends(userId1,userId2){
     const db=new Database("database.db");
-    const checkFriendshipQuery = db.prepare('SELECT * FROM friends WHERE (userId1 = ? AND userId2 = ?) OR (userId1 = ? AND userId2 = ?)');
+    const checkFriendshipQuery = db.prepare('SELECT * FROM friends WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)');
     const friendship = checkFriendshipQuery.get(userId1, userId2, userId2, userId1);
     db.close()
     return friendship? true:false;
 }
 
+function isTradeValid(){
+
+}
 module.exports={userExisting, addCardToCollection, getAllCards,pullCardsRepeat,pullCardsNoRepeat, areFriends};
