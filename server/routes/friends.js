@@ -269,6 +269,55 @@ function removeFriend(request, response) {
     return response.status(200).send({ message: 'Amitié supprimée avec succès' });
 }
 
+/**
+ * @brief Supprime une demande d'amitié.
+ * @param friendId int - ID de l'ami à qui la demande à supprimé a été faite
+ * @returns response - Résultat de la requête
+ * @returns status 200 - Demande d'amitié supprimée avec succès
+ * @returns status 400 - ID de l'ami manquant
+ * @returns status 401 - Utilisateur non authentifié
+ * @returns status 404 - Demande d'amitié non trouvée
+ * @returns status 405 - Méthode non autorisée (DELETE uniquement)
+ */
+function removeFriendRequest(request, response){
+    // Vérifier que la méthode est DELETE
+    if (request.method !== 'DELETE') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    // Vérifier que l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    const userId = request.session.userId;
+    const friendId = request.body.friendId;
+
+    // Vérifier que l'ID de l'ami est fourni
+    if (!friendId) {
+        return response.status(400).send({ error: 'ID de l\'ami manquant' });
+    }
+
+    const db = new Database('database.db');
+
+    // Vérifier si la demande d'amitié existe
+    const getRequest = db.prepare('SELECT * FROM friends WHERE senderId = ? AND receiverId = ? AND status = ?');
+    const friendRequest = getRequest.get(friendId, userId, 'pending');
+    if (!friendRequest) {
+        return response.status(404).send({ error: 'Demande d\'amitié non trouvée' });
+    }
+
+    // Supprime de la demande d'amitié
+    const deleteFriendship = db.prepare('DELETE FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
+    deleteFriendship.run(userId, friendId, friendId, userId, 'accepted');
+
+    return response.status(200).send({ message: 'Demande d\'amitié supprimée avec succès' });
+
+
+}
+
+
+
 
 module.exports = {
     requestFriend,
