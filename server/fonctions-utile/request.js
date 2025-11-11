@@ -1,3 +1,8 @@
+/**
+ * @brief Route pour les échanges entre utilisateurs
+ * @file server/fonctions-utile/request.js
+ * @author Donatien VACHETTE, Elise FOUR
+ */
 const Database=require("better-sqlite3");
 
 //penser a ouvrir et ferme la bd et exporter
