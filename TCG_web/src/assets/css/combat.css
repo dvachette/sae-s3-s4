@@ -1,0 +1,89 @@
+@import './style.css';
+
+#Combat {
+  display: flex;
+  flex-direction: column;
+}
+
+.page_combat {
+  height: 70%;
+  display: flex;
+  flex-direction: row;
+}
+
+.F_f {
+  width: 23.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.F_f > button {
+  background-color: rgb(var(--jaune300));
+  width: 14vw;
+  height: 6vh;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1rem;
+}
+
+.F_f > button:hover {
+  background-color: rgb(var(--orange500));
+  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+}
+
+.F_f > button:active {
+  background-color: rgb(var(--orange700));
+  transform: translateY(4px);
+  box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
+}
+
+.F_f > img {
+  width: 10vw;
+  height: 10vw;
+  margin: 0px;
+}
+
+.lancement_partie {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+  align-items: center;
+  justify-content: center;
+}
+
+.lancement_partie > button {
+  background-color: rgb(var(--orange400));
+  width: 14vw;
+  height: 6vh;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.5rem;
+}
+
+.lancement_partie > button:hover {
+  background-color: rgb(var(--orange600));
+  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+}
+
+.lancement_partie > button:active {
+  background-color: rgb(var(--orange700));
+  transform: translateY(4px);
+  box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
+}
+
+.lancement_partie > img {
+  width: 14vw;
+  height: 14vw;
+  margin: 0px;
+}
+
+.Compteur {
+  width: 11.5vw;
+}
+
+.deck {
+  height: 30vh;
+  background-color: rgb(var(--jaune200));
+}

@@ -1,7 +1,8 @@
 @import './style.css';
 
-.clef {
-  margin-top: 10%;
+.bouton_achat {
+  margin-bottom: 5%;
+  margin-top: 0%;
   display: flex;
   background-color: rgb(var(--jaune400));
   width: 10vw;
@@ -12,14 +13,25 @@
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
 }
 
-.clef > img {
+.bouton_achat:hover {
+  background-color: rgb(var(--orange500));
+  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+}
+
+.bouton_achat:active {
+  background-color: rgb(var(--orange700));
+  transform: translateY(4px);
+  box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
+}
+
+img {
   width: 3vw;
   height: 4vh;
   align-self: center;
   margin-right: 10%;
 }
 
-.clef > p {
+.bouton_achat > p {
   align-self: center;
   margin-left: 10%;
 }

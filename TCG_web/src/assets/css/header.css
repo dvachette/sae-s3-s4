@@ -7,10 +7,6 @@ header {
   align-items: center;
 }
 
-a {
-  height: 100%;
-}
-
 a:has(> h1) {
   display: flex;
   text-decoration: none;
@@ -37,6 +33,7 @@ h1 {
 a > img {
   padding-top: 5%;
   width: 12.5vh;
+  height: 12.5vh;
 }
 
 h1 {
