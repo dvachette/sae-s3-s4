@@ -184,25 +184,59 @@ function acceptTrade(request, response) {
 
 function deleteTrade(request,response){
     // Vérification de la méthode HTTP
-    if (request.method !== 'GET') {
-        return response.status(405).send({ error: 'Méthode non autorisée. Utilisez GET.' });
+    if (request.method !== 'DELETE') {
+        return response.status(405).send({ error: 'Méthode non autorisée. Utilisez DELETE.' });
     }
     // Vérification que l'utilisateur est connecté
     if (!request.session || !request.session.userId) {
         return response.status(401).send({ error: 'Utilisateur non authentifié.' });
     }
 
+    if (!request.body || !request.body.tradeRequestId) {
+        return response.status(400).send({ error: 'Paramètres manquants.' });
+    }
+    const tradeRequestId = request.body.tradeRequestId;
     const db = new Database('database.db');
-    // a verifier const tradeRequestId = request.session.tradeRequestId;
+    const userId = request.session.userId;
+
+    // Vérifier que l'échange existe
+    const getTradeQuery = db.prepare(`
+        SELECT * FROM traderequest WHERE tradeRequestId = ?
+    `);
+
+    const trade = getTradeQuery.get(tradeRequestId);
+
+    if (!trade) {
+        return response.status(404).send({ error: 'Proposition d\'échange non trouvée.' });
+    }
+
+    // Vérifier que l'utilisateur est l'expéditeur de l'échange
+    if (trade.senderId !== userId) {
+        return response.status(403).send({ error: 'Vous n\'êtes pas l\'expéditeur de cette proposition d\'échange.' });
+    }   
+
 
     //rendre les cartes
 
+    addCardToCollection(userId, trade.offeredCard1Id);
+    addCardToCollection(userId, trade.offeredCard2Id);
+    addCardToCollection(userId, trade.offeredCard3Id);
+
+
     //supprime la demande d'echange
+
+    const deleteTradeQuery = db.prepare(`
+        DELETE FROM traderequest WHERE tradeRequestId = ?
+    `);
+    deleteTradeQuery.run(tradeRequestId);
+
+    return response.status(200).send({ message: 'Proposition d\'échange supprimée avec succès.' });
 
 
 }
 module.exports = {
     proposeTrade,
     getTrades,
-    acceptTrade
+    acceptTrade,
+    deleteTrade
 };
