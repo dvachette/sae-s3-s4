@@ -1,6 +1,6 @@
 /**
     @file : server/routes/friends.js
-    @author : Donatien VACHETTE
+    @author : Donatien VACHETTE, Elise FOUR
     @brief : Routes pour la gestion des amis.
     @description : Définit les fonctions pour envoyer des demandes d'amitié, accepter/rejeter des demandes, obtenir la liste d'amis et supprimer des amis.
  */

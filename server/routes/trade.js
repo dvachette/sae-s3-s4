@@ -1,7 +1,7 @@
 /**
  * @brief Route pour les échanges entre utilisateurs
  * @file server/routes/trade.js
- * @author Donatien VACHETTE
+ * @author Donatien VACHETTE, Elise FOUR
  */
 
 const Database = require('better-sqlite3');
@@ -136,6 +136,26 @@ function acceptTrade(request, response) {
     if (trade.expirationDate < currentTimestamp) {
         return response.status(400).send({ error: 'La proposition d\'échange a expiré.' });
     }
+
+}
+
+function deleteTrade(request,response){
+    // Vérification de la méthode HTTP
+    if (request.method !== 'GET') {
+        return response.status(405).send({ error: 'Méthode non autorisée. Utilisez GET.' });
+    }
+    // Vérification que l'utilisateur est connecté
+    if (!request.session || !request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié.' });
+    }
+
+    const db = new Database('database.db');
+    // a verifier const tradeRequestId = request.session.tradeRequestId;
+
+    //rendre les cartes
+
+    //supprime la demande d'echange
+
 
 }
 module.exports = {
