@@ -16,7 +16,7 @@
 
         <button type="submit">Se connecter</button>
       </form>
-      <router-link to="/booster"><button>booster</button></router-link>
+      <router-link to="/booster"><button>Créer un compte</button></router-link>
     </div>
   </main>
 </template>

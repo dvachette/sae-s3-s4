@@ -15,7 +15,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1; /*prend l'espace restant du body, donc l'espace restant visible sous le header*/
+  height : 87.5vh;
+  width : 100vw /*prend l'espace restant du body, donc l'espace restant visible sous le header*/
 }
 
 .pageConnexion {
@@ -58,7 +59,7 @@ h2 {
   justify-content: center;
   font-family: 'Lusitana';
   font-weight: normal;
-  flex: 4;
+  height : 15%;
   margin: 0;
   padding: 0;
   font-size: 2rem;
@@ -67,9 +68,9 @@ h2 {
 form {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  flex: 16;
-  /*flex : 3;*/
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex : 3;
 }
 
 form > button {
@@ -87,20 +88,20 @@ form > button:active {
 label {
   display: flex;
   align-items: center;
-  flex: 0.5;
+  height : 11.5%;
   font-family: 'Mako';
   padding-left: 2%;
   font-size: 1.2rem;
   margin: 0;
 }
 
-input {
-  flex: 1;
+form > input {
+  height : 15%;
   border-radius: 34px;
   border: none;
   background-color: rgb(var(--blanc50));
   padding: 0 2% 0 2%;
-  margin-bottom: 5%;
+  margin-bottom: 3vh;
   font-family: 'Mako';
   font-size: medium;
   color: rgb(var(--onyx));
@@ -112,8 +113,8 @@ input:focus {
 }
 
 .pageConnexion > a {
-  flex: 3;
-  margin: 5% 0 5% 0;
+  height : 12%;
+  margin: 0 0 2vh 0;
   text-decoration: none;
 
   display:flex;
