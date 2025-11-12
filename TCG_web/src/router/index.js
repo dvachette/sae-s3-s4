@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Booster from '../Booster.vue'; // chemin correct
+import Booster from '../Booster.vue';
 import Login from '../Login.vue';
 import Combat from '../Combat.vue';
 import Collection from '../Collection.vue';
@@ -9,7 +9,7 @@ import Profil from '../Profil.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
-  { path: '/connexion', component: Login },
+  { path: '/', component: Login },
   { path: '/combat', component: Combat },
   { path: '/collection', component: Collection },
   { path: '/boutique', component: Boutique },
