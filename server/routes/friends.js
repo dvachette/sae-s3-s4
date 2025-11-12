@@ -316,11 +316,8 @@ function removeFriendRequest(request, response){
 
 }
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> dev-serveur
 
 module.exports = {
     requestFriend,
