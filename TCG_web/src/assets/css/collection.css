@@ -6,10 +6,21 @@
 }
 
 .tri_filtres {
+  display: flex;
+  flex-direction: column;
   width: 23.5vw;
   height: 100%;
   background-color: rgb(var(--jaune200));
   text-align: center;
+}
+
+.cartes_possédées {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartes_possédées > h2 {
+  align-self: center;
 }
 
 .toutes_les_cartes {
