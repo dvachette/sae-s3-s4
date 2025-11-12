@@ -1,0 +1,142 @@
+@import './style.css';
+
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+div > p {
+  font-size: 1.2rem;
+}
+
+.gestion_soi {
+  display: flex;
+  flex-direction: column;
+  width: 41.5vw;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--jaune200));
+}
+
+.gestion_soi img {
+  width: 5vh;
+  height: 5vh;
+}
+
+.pp {
+  width: 20vh;
+  height: 20vh;
+  position: relative;
+}
+
+.pp > img:first-child {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pp > img:last-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+}
+
+.pseudo,
+.mail,
+.mdp,
+.historiques {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pseudo:hover,
+.mail:hover,
+.mdp:hover {
+  text-decoration: underline;
+}
+
+.historiques {
+  width: 80%;
+  justify-content: space-between;
+  margin: 5%;
+}
+
+.h_combat {
+  display: flex;
+  text-decoration: none;
+  color: rgb(var(--blanc50));
+  background-color: rgb(var(--orange600));
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  width: 45%;
+  height: 80%;
+  border-radius: 30px;
+}
+
+.h_echange {
+  display: flex;
+  text-decoration: none;
+  color: rgb(var(--blanc50));
+  background-color: rgb(var(--orange700));
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  width: 45%;
+  height: 80%;
+  border-radius: 30px;
+}
+
+.historiques > a:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.historiques > a:active {
+  background-color: rgb(var(--orange900));
+}
+
+#Déconnexion {
+  display: flex;
+  text-decoration: none;
+  color: rgb(var(--blanc50));
+  background-color: rgb(var(--rouge600));
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  width: 45%;
+  height: 5vh;
+  border: none;
+  border-radius: 30px;
+  margin-bottom: 3%;
+}
+
+#Supprimer {
+  display: flex;
+  text-decoration: none;
+  color: rgb(var(--blanc50));
+  background-color: rgb(var(--rouge900));
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  width: 45%;
+  height: 5vh;
+  border: none;
+  border-radius: 30px;
+}
+
+.gestion_soi > button:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#Supprimer:active,
+#Déconnexion:active {
+  background-color: rgb(var(--onyx));
+}

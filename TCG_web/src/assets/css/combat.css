@@ -29,13 +29,11 @@
 }
 
 .F_f > button:hover {
-  background-color: rgb(var(--orange500));
-  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .F_f > button:active {
   background-color: rgb(var(--orange700));
-  transform: translateY(4px);
   box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
 
@@ -63,13 +61,11 @@
 }
 
 .lancement_partie > button:hover {
-  background-color: rgb(var(--orange600));
-  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .lancement_partie > button:active {
   background-color: rgb(var(--orange700));
-  transform: translateY(4px);
   box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
 
