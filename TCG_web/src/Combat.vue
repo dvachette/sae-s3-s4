@@ -21,7 +21,10 @@
 <script setup>
 import { ref } from 'vue';
 import clef from '@/Composants/clef.vue';
-import '@/assets/css/combat.css';
 
 import MonHeader from '@/Composants/header.vue';
 </script>
+
+<style scoped>
+@import './assets/css/combat.css';
+</style>

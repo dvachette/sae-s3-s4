@@ -19,7 +19,11 @@
 import { ref } from 'vue';
 import clef from '@/Composants/clef.vue';
 import boutons_achat from '@/Composants/boutons_achat.vue';
-import '@/assets/css/booster.css';
+
 
 import MonHeader from '@/Composants/header.vue';
 </script>
+
+<style scoped>
+@import './assets/css/booster.css';
+</style>

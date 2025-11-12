@@ -24,6 +24,6 @@
   </header>
 </template>
 
-<script setup>
-import '@/assets/css/header.css';
-</script>
+<style scoped>
+@import '../assets/css/header.css';
+</style>

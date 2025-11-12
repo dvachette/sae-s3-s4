@@ -36,6 +36,6 @@ import { ref } from 'vue';
 import MonHeader from '@/Composants/header.vue';
 </script>
 
-<script scoped>
-import '@/assets/css/collection.css';
-</script>
+<style scoped>
+@import './assets/css/collection.css';
+</style>
