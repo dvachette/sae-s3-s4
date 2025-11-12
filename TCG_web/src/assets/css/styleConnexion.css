@@ -1,0 +1,158 @@
+:root {
+  --blanc50: #fefde8;
+  --jaune100: #fffcc2;
+  --jaune200: #fff687;
+  --jaune300: #ffe943;
+  --jaune400: #ffda22;
+  --orange400: #ffb332;
+  --orange500: #ff9a0a;
+  --orange600: #ff8201;
+  --orange700: #cc5e02;
+  --orange800: #a1490b;
+  --orange900: #823e0c;
+  --rouge400: #ff6464;
+  --rouge500: #ff4949;
+  --rouge600: #ed1515;
+  --rouge700: #c80d0d;
+  --rouge800: #a50f0f;
+  --rouge900: #881414;
+  --onyx: #32373b;
+  --vert: #179d10;
+}
+
+@font-face {
+  font-family: 'Lusitana';
+  src: url('../fonts/Lusitana-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mako';
+  src: url('../fonts/Mako-Regular.ttf') format('truetype');
+}
+
+#mainConnexion { /*espace blanc sous le header*/
+  display :flex;
+  justify-content :center;
+  align-items: center;
+  flex : 1; /*prend l'espace restant du body, donc l'espace restant visible sous le header*/
+}
+
+.pageConnexion { /*encadré jaune*/
+  display : flex;
+  flex-direction: column;
+  flex-wrap : wrap;
+  justify-content: center;
+  background-color: var(--jaune200);
+  width: 46%;
+  height: 60%;
+  border-radius: 1%;
+  padding : 1% 2.5% 1% 2.5%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3)
+}
+
+
+
+#headerConnexion {
+    display: grid;
+    grid-template-columns: 12.5vh 1fr 12.5vh;
+    align-items : center;
+}
+
+#headerConnexion > img {
+    grid-column: 1;
+    width : 100%;
+    justify-self: start;
+}
+
+#headerConnexion > h1 {
+    grid-column: 2;
+    justify-self: center;
+    font-size: 3rem;
+    margin : 0;
+}
+
+h2 {
+  display : flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lusitana';
+  font-weight: normal;
+  flex : 4;
+  margin : 0;
+  padding : 0;
+  font-size: 2rem;
+}
+
+form {
+  display : flex;
+  flex-direction: column;
+  flex-wrap : wrap;
+  flex : 16;
+  /*flex : 3;*/
+}
+
+form > button {
+  flex : 1;
+  background-color: var(--orange400);
+  border : none;
+  color : var(--blanc50);
+}
+
+form > button:active {
+  background-color: var(--orange700);
+  color: var(--orange400);
+}
+
+label {
+  display : flex;
+  align-items: center;
+  flex : 0.5;
+  font-family: 'Mako';
+  padding-left: 2%;
+  font-size: 1.2rem;
+  margin : 0;
+}
+
+input{
+  flex : 1;
+  border-radius: 34px;
+  border : none;
+  background-color: var(--blanc50) ;
+  padding : 0 2% 0 2%;
+  margin-bottom: 5%;
+  font-family: 'Mako';
+  font-size:medium;
+  color: var(--onyx);
+}
+
+input:focus {/*css qui s'applique quand l'utilisateur a le curseur dons l'input*/
+  outline : 2px solid var(--orange500);
+}
+
+.pageConnexion > button {
+  flex : 3;
+  margin : 5%;
+  background-color: var(--blanc50);
+  border : 3px solid var(--orange400);
+  color: var(--orange400);
+}
+
+button:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.pageConnexion > button:active {
+  color : var(--orange700);
+  background-color: var(--orange400);
+  border : 3px solid var(--orange700);
+}
+
+button {
+  align-self: center;
+  font-family: 'Lusitana';
+  font-size: 1.5rem;
+  width : 70%;
+  padding : 0;
+  border-radius: 34px;
+  margin : 0
+}
