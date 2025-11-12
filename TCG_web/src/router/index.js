@@ -9,7 +9,7 @@ import Profil from '../Profil.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
-  { path: '/connexion', component: Login },
+  { path: '/', component: Login },
   { path: '/combat', component: Combat },
   { path: '/collection', component: Collection },
   { path: '/boutique', component: Boutique },
