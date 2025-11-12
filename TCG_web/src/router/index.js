@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Booster from '../Booster.vue'; // chemin correct
+import Booster from '../Booster.vue';
 import Login from '../Login.vue';
 import Combat from '../Combat.vue';
 import Collection from '../Collection.vue';
