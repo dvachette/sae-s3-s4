@@ -7,7 +7,7 @@
   <main id="mainConnexion">
     <div class="pageConnexion">
       <h2>Connexion</h2>
-      <form @submit="connexion">
+      <form @submit.prevent="connexion">
         <label for="userName"> Nom d'utilisateur ou email </label>
         <input type="text" id="userName" v-model="id_utilisateur" />
 
@@ -21,6 +21,53 @@
   </main>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      id_utilisateur: '',
+      mdp_utilisateur: '',
+    };
+  },
+  methods: {
+    async connexion() {
+      try {
+        // Envoi de la requête de connexion au serveur
+        const response = await fetch(
+          'http://localhost:3000/login', // URL de l'API de connexion
+          {
+            method: 'POST', // Méthode POST pour envoyer les données
+            headers: { // En-têtes de la requête
+              'Content-Type': 'application/json', // Type de contenu JSON
+            },
+            credentials: "include", // Inclure les cookies dans la requête
+            body: JSON.stringify({ // Corps de la requête avec les données utilisateur
+              email: this.id_utilisateur,
+              password: this.mdp_utilisateur,
+            }),
+          }
+        );
+        const data = await response.json(); // Récupération de la réponse JSON
+        console.log('Réponse du serveur :', data);
+        if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)
+          // Memoriser le token JWT dans le localStorage (cookies)
+          localStorage.setItem('token', data.token);
+          // Redirection
+          this.$router.push('/booster');
+
+        } else {
+          // Afficher le message d'erreur (data.error)
+          console.error('Échec de la connexion :', data.error);
+
+        }
+      } catch (error) {
+        console.error('Erreur lors de la connexion :', error);
+      }
+    },
+  },
+};
+
+</script>
 <script setup>
 import { ref } from 'vue';
 </script>
