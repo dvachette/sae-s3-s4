@@ -5,6 +5,6 @@
   </div>
 </template>
 
-<script setup>
-import '@/assets/css/bouton_achat.css';
-</script>
+<style  scoped>
+@import './assets/css/bouton_achat.css';
+</style>

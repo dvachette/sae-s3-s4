@@ -5,6 +5,6 @@
   </div>
 </template>
 
-<script setup>
-import '@/assets/css/style_clef.css';
-</script>
+<style scoped>
+@import './assets/css/style_clef.css';
+</style>
