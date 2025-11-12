@@ -1,6 +1,6 @@
 /**
     @file : server/routes/friends.js
-    @author : Elise FOUR, Donatien VACHETTE
+    @author : Donatien VACHETTE, Elise FOUR
     @brief : Routes pour la gestion des amis.
     @description : Définit les fonctions pour envoyer des demandes d'amitié, accepter/rejeter des demandes, obtenir la liste d'amis et supprimer des amis.
  */
@@ -309,15 +309,18 @@ function removeFriendRequest(request, response){
 
     // Supprime de la demande d'amitié
     const deleteFriendship = db.prepare('DELETE FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
-    deleteFriendship.run(userId, friendId, friendId, userId, 'accepted');
+    deleteFriendship.run(userId, friendId, friendId, userId, 'pending');
 
     return response.status(200).send({ message: 'Demande d\'amitié supprimée avec succès' });
 
 
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> dev-serveur
 
 module.exports = {
     requestFriend,
@@ -325,5 +328,6 @@ module.exports = {
     getPendingRequests,
     acceptFriendRequest,
     rejectFriendRequest,
-    removeFriend
+    removeFriend,
+    removeFriendRequest
 };

@@ -14,6 +14,7 @@ const friendsRoutes = require('./routes/friends.js'); // Importation des routes 
 const userRoutes = require('./routes/user.js'); // Importation des routes utilisateur
 const boosterRoutes = require('./routes/booster.js'); // Importation des routes booster
 const collectionRoutes= require('./routes/collection.js');// Importation des routes collection
+const tradeRoutes= require('./routes/trade.js');// Importation des routes trade
 
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
@@ -44,6 +45,7 @@ app.use(express.urlencoded({ extended: true })); // Outil pour parser les donné
 // Routes pour la gestion des amis
 app.post('/friends/request', friendsRoutes.requestFriend);
 app.get('/friends/requests', friendsRoutes.getPendingRequests);
+app.delete('/friends/request', friendsRoutes.removeFriendRequest);
 app.post('/friends/accept', friendsRoutes.acceptFriendRequest);
 app.post('/friends/reject', friendsRoutes.rejectFriendRequest);
 app.get('/friends', friendsRoutes.getFriendsList);
@@ -64,6 +66,11 @@ app.post('/booster/open', boosterRoutes.openBooster);
 // Routes pour la collection
 app.get('/collection',collectionRoutes.getCollection);
 
+// Routes pour les échanges
+app.post('/trade/request', tradeRoutes.proposeTrade);
+app.get('/trade/requests', tradeRoutes.getTrades);
+app.delete('/trade/request', tradeRoutes.deleteTrade);
+app.post('/trade/accept', tradeRoutes.acceptTrade);
 
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
 app.listen(PORT, () => {

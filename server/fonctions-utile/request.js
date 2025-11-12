@@ -1,3 +1,8 @@
+/**
+ * @brief Route pour les échanges entre utilisateurs
+ * @file server/fonctions-utile/request.js
+ * @author Donatien VACHETTE, Elise FOUR
+ */
 const Database=require("better-sqlite3");
 
 //penser a ouvrir et ferme la bd et exporter
@@ -103,4 +108,15 @@ function pullCardsNoRepeat(nb){
     return drawnCards;
 }
 
-module.exports={userExisting, addCardToCollection, getAllCards,pullCardsRepeat,pullCardsNoRepeat};
+function areFriends(userId1,userId2){
+    const db=new Database("database.db");
+    const checkFriendshipQuery = db.prepare('SELECT * FROM friends WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)');
+    const friendship = checkFriendshipQuery.get(userId1, userId2, userId2, userId1);
+    db.close()
+    return friendship? true:false;
+}
+
+function isTradeValid(){
+
+}
+module.exports={userExisting, addCardToCollection, getAllCards,pullCardsRepeat,pullCardsNoRepeat, areFriends};
