@@ -29,11 +29,15 @@ h1 {
   font-size: 2rem;
   margin: auto;
 }
+a {
+  height: 100%;
+}
 
 a > img {
   padding-top: 10%;
   width: 12vh;
   height: 90%;
+  justify-self: center;
 }
 
 h1 {
