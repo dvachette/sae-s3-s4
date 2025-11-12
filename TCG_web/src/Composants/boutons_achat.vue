@@ -1,10 +1,10 @@
 <template>
-  <div class="clef">
-    <p>1212</p>
+  <div class="bouton_achat">
+    <p>100</p>
     <img src="@/assets/imgs/Clef.png" alt="Lot de clefs" />
   </div>
 </template>
 
 <script setup>
-import '@/assets/css/style_clef.css';
+import '@/assets/css/bouton_achat.css';
 </script>
