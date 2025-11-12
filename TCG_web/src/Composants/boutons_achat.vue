@@ -6,5 +6,5 @@
 </template>
 
 <style  scoped>
-@import './assets/css/bouton_achat.css';
+@import '../assets/css/bouton_achat.css';
 </style>

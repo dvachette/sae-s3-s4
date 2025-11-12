@@ -6,5 +6,5 @@
 </template>
 
 <style scoped>
-@import './assets/css/style_clef.css';
+@import '../assets/css/style_clef.css';
 </style>
