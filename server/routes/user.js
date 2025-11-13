@@ -98,7 +98,7 @@ function login(request, response) {
     }
 
     const user = User.login(mail, password);
-    console.log(user);
+    console.log(user.collection[0]);
     if (!user) {
         return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
     }
