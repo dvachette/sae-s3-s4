@@ -1,5 +1,7 @@
-const Card = require('./card.js');
+const Database = require('better-sqlite3');
 
+const Card = require('./card.js');
+const User = require('./user.js');
 class Trade {
     tradeId;
     askerId;
@@ -40,7 +42,7 @@ class Trade {
     static fromId(id) {
         const db = new Database('database.db');
 
-        const getTradeByIdQuery = db.prepare('SELECT * FROM trade WHERE tradeId = ?');
+        const getTradeByIdQuery = db.prepare('SELECT * FROM traderequest WHERE tradeId = ?');
         const row = getTradeByIdQuery.get(id);
 
         db.close();
@@ -55,7 +57,7 @@ class Trade {
     static fromUserId(userId) {
         const db = new Database('database.db');
 
-        const getTradesByUserIdQuery = db.prepare('SELECT * FROM trade WHERE askerId = ?');
+        const getTradesByUserIdQuery = db.prepare('SELECT * FROM traderequest WHERE askerId = ?');
         const rows = getTradesByUserIdQuery.all(userId);
 
         db.close();
@@ -70,7 +72,7 @@ class Trade {
     static acceptedByUserId(userId) {
         const db = new Database('database.db');
 
-        const getAcceptedTradesByUserIdQuery = db.prepare('SELECT * FROM trade WHERE receiverId = ? AND acceptedCardId IS NOT NULL');
+        const getAcceptedTradesByUserIdQuery = db.prepare('SELECT * FROM traderequest WHERE receiverId = ? AND acceptedCardId IS NOT NULL');
         const rows = getAcceptedTradesByUserIdQuery.all(userId);
 
         db.close();
@@ -89,16 +91,20 @@ class Trade {
         }
 
         for (const cardId of offeredCardsIds) {
-            if (!asker.getCardQuantity(cardId)) {
+            if (asker.getCardQuantity(cardId) <= 0) {
                 throw new Error(`Vous ne possédez pas la carte avec l'ID ${cardId}.`);
             }
         }
 
+        // Enlever les cartes proposées de la collection de l'utilisateur
+        for (const cardId of offeredCardsIds) {
+            asker.addCardToCollection(cardId, -1);
+        }
 
         const db = new Database('database.db');
 
         const createTradeQuery = db.prepare(`
-            INSERT INTO trade (askerId, offeredCard1ID, offeredCard2ID, offeredCard3ID, requestedCardId, expirationDate)
+            INSERT INTO traderequest (askerId, offeredCard1ID, offeredCard2ID, offeredCard3ID, requestedCardId, expirationDate)
             VALUES (?, ?, ?, ?, ?, ?)
         `);
         
@@ -117,7 +123,52 @@ class Trade {
         return Trade.fromId(result.lastInsertRowid);
     }
 
+    cancel() {
+        const db = new Database('database.db');
+        const user = User.fromId(this.askerId);
 
+        for (const cardId of this.offeredCards.map(card => card.cardId)) {
+            // Rendre les cartes proposées à l'utilisateur
+            user.addCardToCollection(cardId, 1);
+        }
+        const deleteTradeQuery = db.prepare('DELETE FROM traderequest WHERE tradeId = ?');
+        deleteTradeQuery.run(this.tradeId);
+
+        db.close();
+    }
+
+    accept(receiverId, acceptedCardId) {
+        const db = new Database('database.db');
+        const sender = User.fromId(this.askerId);
+        const receiver = User.fromId(receiverId);
+        
+        // Vérifier que le receveur possède la carte demandée
+        if (receiver.getCardQuantity(this.requestedCard) <= 0) {
+            throw new Error('Vous ne possédez pas la carte demandée pour cet échange.');
+        }
+        // Vérifier que la carte acceptée est bien l'une des cartes offertes
+        const offeredCardIds = this.offeredCards.map(card => card.cardId);
+        if (!offeredCardIds.includes(acceptedCardId)) {
+            throw new Error('La carte acceptée n\'est pas parmi les cartes offertes.');
+        }
+
+        // Mettre à jour l'échange dans la base de données
+        const acceptTradeQuery = db.prepare(`
+            UPDATE traderequest SET receiverId = ?, acceptedCardId = ? WHERE tradeId = ?
+        `);
+        acceptTradeQuery.run(receiverId, acceptedCardId, this.tradeId);
+
+        db.close();
+        // Effectuer l'échange des cartes
+        receiver.addCardToCollection(this.requestedCard, -1);
+        sender.addCardToCollection(acceptedCardId, 1);
+        // Rendre les cartes non acceptées au vendeur
+        for (const cardId of offeredCardIds) {
+            if (cardId !== acceptedCardId) {
+                sender.addCardToCollection(cardId, 1);
+            }
+        }
+    }
 }
 
 module.exports = Trade;

@@ -1,6 +1,7 @@
 const Database = require("better-sqlite3");
 const Collection = require("./collection.js");
 const FriendRequest = require("./friendRequest.js");
+const Trade = require("./trade.js");
 class User {
     // Attibuts et méthodes de la classe User
     userId;
@@ -12,6 +13,9 @@ class User {
     friends;
     pendingFriendRequests;
     pendingIncomingRequests;
+    sentTrades;
+    receivedTrades;
+    acceptedTrades;
 
     constructor(userId, username, email, lastBoosterOpening, balance) {
         this.userId = userId;
@@ -23,6 +27,8 @@ class User {
         this.friends = [];
         this.pendingFriendRequests = [];
         this.pendingIncomingRequests = [];
+        this.sentTrades = [];
+        this.receivedTrades = [];
     }
 
     static fromRow(row) {
@@ -58,7 +64,24 @@ class User {
                 }
             }
         }
-
+        // Remplir les échanges envoyés et disponibles
+        for (const trade of Trade.fromUserId(user.userId)) {
+            if (trade.receiverId === null) {
+                user.sentTrades.push(trade);
+            } else {
+                user.acceptedTrades.push(trade);
+            }
+        }
+        for (const friendId of user.friends) {
+            const trades = Trade.fromUserId(friendId);
+            for (const trade of trades) {
+                if (trade.receiverId === user.userId) {
+                    user.acceptedTrades.push(trade);
+                } else if (trade.receiverId === null) {
+                    this.receivedTrades.push(trade);
+                }
+            }
+        }
         return user;
 
     }
