@@ -207,25 +207,6 @@ function deleteAccount(request, response) {
     if (!user) {
         return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
-    // Connexion à la base de données
-    const db = new Database('database.db');
-
-    // Supprimer les données associées à l'utilisateur (ex: amis, messages, etc.) si nécessaire
-
-    // Supprimer ses liens d'amitié
-    const deleteFriendsQuery = db.prepare('DELETE FROM friends WHERE senderId = ? OR receiverId = ?');
-    deleteFriendsQuery.run(userId, userId);
-
-    db.close();
-
-    // Remplacer son mail par <id>@DELETED
-    user.email = `${userId}@DELETED`;
-    // Remplacer son nom par DELETED_user_<id>
-    user.username = `DELETED_user_${userId}`;
-    // Remplaces son mot de passe par DELETED
-    user.passwordHash = 'DELETED';
-    // Remplacer son type de profil par 'deleted'
-    user.save();
     user.delete();
 
     // Détruire la session utilisateur

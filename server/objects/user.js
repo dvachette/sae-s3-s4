@@ -144,6 +144,35 @@ class User {
     }
 
     delete() {
+        // Supprimer ses liens d'amitié
+        for (const friendId of user.friends) {
+            try {
+                user.removeFriend(friendId);
+            } catch (error) {
+                // Ignorer les erreurs lors de la suppression des amis
+            }
+        }
+        for (const request of user.pendingFriendRequests) {
+            try {
+                user.cancelFriendRequest(request.receiverId);
+            } catch (error) {
+                // Ignorer les erreurs lors de la suppression des demandes d'amis
+            }
+        }
+        for (const request of user.pendingIncomingRequests) {
+            try {
+                user.rejectFriendRequest(request.senderId);
+            } catch (error) {
+                // Ignorer les erreurs lors de la suppression des demandes d'amis
+            }
+        }
+        // Remplacer son mail par <id>@DELETED
+        this.email = `${userId}@DELETED`;
+        // Remplacer son nom par DELETED_user_<id>
+        this.username = `DELETED_user_${userId}`;
+        // Remplaces son mot de passe par DELETED
+        this.passwordHash = 'DELETED';
+        this.save();
         const db = new Database("database.db");
 
         const deleteUserQuery = db.prepare('UPDATE user SET profileType = ? WHERE userId = ?');
