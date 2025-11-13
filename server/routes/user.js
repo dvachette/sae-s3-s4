@@ -10,7 +10,6 @@ const Database = require('better-sqlite3'); // Importation de la bibliothèque S
 
 // Modules internes
 const User = require('../objects/user.js'); // Importation de l'objet User
-const {userExisting}=require("../fonctions-utile/request");
 
 /**
  * @brief Crée un nouveau compte utilisateur.

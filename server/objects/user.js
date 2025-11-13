@@ -321,6 +321,27 @@ class User {
         db.close();
     }
 
+    setCardQuantity(cardId, quantity) {
+        const existingCard = this.collection.find(item => item.card.cardId === cardId);
+        if (existingCard) {
+            existingCard.quantity = quantity;
+            const db = new Database("database.db");
+            const updateQuery = db.prepare('UPDATE collection SET quantity = ? WHERE userId = ? AND cardId = ?');
+            updateQuery.run(quantity, this.userId, cardId);
+            db.close();
+        } else {
+            throw new Error("L'utilisateur ne possède pas cette carte dans sa collection.");
+        }
+    }
+
+    getCardQuantity(cardId) {
+        const existingCard = this.collection.find(item => item.card.cardId === cardId);
+        if (existingCard) {
+            return existingCard.quantity;
+        } else {
+            return 0;
+        }
+    }
 }
 
 module.exports = User;

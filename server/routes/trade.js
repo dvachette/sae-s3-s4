@@ -6,7 +6,6 @@
 
 const Database = require('better-sqlite3');
 
-const {addCardToCollection, areFriends} = require('../fonctions-utile/request');
 
 /**
  * 

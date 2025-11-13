@@ -6,7 +6,6 @@
  */
 
 const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
-const {addCardToCollection,pullCardsNoRepeat,pullCardsRepeat}=require("../fonctions-utile/request");
 const User = require('../objects/user.js'); // Importation de l'objet User
 const Card = require('../objects/card.js'); // Importation de l'objet Card
 /**
