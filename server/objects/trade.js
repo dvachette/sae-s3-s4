@@ -4,7 +4,7 @@ const Card = require('./card.js');
 const User = require('./user.js');
 class Trade {
     tradeId;
-    askerId;
+    senderId;
     receiverId;
     offeredCards;
     requestedCard;
@@ -13,9 +13,9 @@ class Trade {
 
 
 
-    constructor(tradeId, askerId, offeredCards, requestedCard, acceptedCard, expiration, receiverId) {
+    constructor(tradeId, senderId, offeredCards, requestedCard, acceptedCard, expiration, receiverId) {
         this.tradeId = tradeId;
-        this.askerId = askerId;
+        this.senderId = senderId;
         this.offeredCards = offeredCards;
         this.requestedCard = requestedCard;
         this.acceptedCard = acceptedCard;
@@ -26,7 +26,7 @@ class Trade {
     static fromRow(row) {
         return new Trade(
             row.tradeId, 
-            row.askerId, 
+            row.senderId, 
             [
                 Card.fromId(row.offeredCard1ID), 
                 Card.fromId(row.offeredCard2ID), 
@@ -57,7 +57,7 @@ class Trade {
     static fromUserId(userId) {
         const db = new Database('database.db');
 
-        const getTradesByUserIdQuery = db.prepare('SELECT * FROM traderequest WHERE askerId = ?');
+        const getTradesByUserIdQuery = db.prepare('SELECT * FROM traderequest WHERE senderId = ?');
         const rows = getTradesByUserIdQuery.all(userId);
 
         db.close();
@@ -104,7 +104,7 @@ class Trade {
         const db = new Database('database.db');
 
         const createTradeQuery = db.prepare(`
-            INSERT INTO traderequest (askerId, offeredCard1ID, offeredCard2ID, offeredCard3ID, requestedCardId, expirationDate)
+            INSERT INTO traderequest (senderId, offeredCard1ID, offeredCard2ID, offeredCard3ID, requestedCardId, expirationDate)
             VALUES (?, ?, ?, ?, ?, ?)
         `);
         
@@ -125,7 +125,7 @@ class Trade {
 
     cancel() {
         const db = new Database('database.db');
-        const user = User.fromId(this.askerId);
+        const user = User.fromId(this.senderId);
 
         for (const cardId of this.offeredCards.map(card => card.cardId)) {
             // Rendre les cartes proposées à l'utilisateur
@@ -139,7 +139,7 @@ class Trade {
 
     accept(receiverId, acceptedCardId) {
         const db = new Database('database.db');
-        const sender = User.fromId(this.askerId);
+        const sender = User.fromId(this.senderId);
         const receiver = User.fromId(receiverId);
         
         // Vérifier que le receveur possède la carte demandée
