@@ -1,22 +1,37 @@
 const Database = require("better-sqlite3");
-
+const Collection = require("./collection.js");
 
 class User {
     // Attibuts et méthodes de la classe User
-    id;
+    userId;
     username;
     email;
     passwordHash;
+    collection;
 
-    constructor(id, username, email, passwordHash) {
-        this.id = id;
+    constructor(userId, username, email, passwordHash) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.collection = [];
     }
 
     static fromRow(row) {
-        return new User(row.userId, row.name, row.email, row.password);
+        const user = new User(row.userId, row.name, row.email, row.password);
+
+        // Récupération de la collection de l'utilisateur
+        const db = new Database("database.db");
+
+        const getCollectionQuery = db.prepare('SELECT * FROM collection WHERE userId = ?');
+        const collectionRows = getCollectionQuery.all(user.userId);
+        db.close();
+        for (const collRow of collectionRows) {
+            const collectionItem = new Collection(collRow.cardId, collRow.level, collRow.quantity);
+            user.collection.push(collectionItem);
+        }
+        return user;
+
     }
 
     static fromId(id) {
