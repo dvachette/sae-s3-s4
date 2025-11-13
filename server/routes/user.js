@@ -43,22 +43,15 @@ function createAccount(request, response) {
         return response.status(400).send({ error: 'Informations manquantes' });
     }
 
-    // Connexion à la base de données
-    const db = new Database('database.db')
-
-    
     // Vérifier si l'email ou le nom d'utilisateur existe déjà
     
     
-    if (userExisting(mail,username)) {
+    if (User.isEmailTaken(mail) || User.isUsernameTaken(username)) {
         return response.status(409).send({ error: 'Mail ou pseudo déjà utilisé' });
     }
 
     // Insérer le nouvel utilisateur dans la base de données
-    const insertUser = db.prepare('INSERT INTO user (email, password, name) VALUES (?, ?, ?)');
-    insertUser.run(mail, password, username);
-
-    const newUser = db.prepare('SELECT userid, email, name FROM user WHERE email = ?').get(mail);
+    const newUser = User.create(mail, password, username);
 
     // Connecter automatiquement l'utilisateur après la création du compte
     request.session.userId = newUser.userid;
@@ -98,7 +91,7 @@ function login(request, response) {
     }
 
     const user = User.login(mail, password);
-    console.log(user.collection[0]);
+
     if (!user) {
         return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
     }
@@ -106,7 +99,7 @@ function login(request, response) {
     // Initialiser la session utilisateur
     request.session.userId = user.userId;
 
-    return response.status(200).send({ message: 'Connexion réussie' });
+    return response.status(200).send({ message: 'Connexion réussie', user: user });
 }
 
 /**
@@ -158,13 +151,11 @@ function editAccount(request, response) {
         return response.status(400).send({ error: 'Aucune information à mettre à jour' });
     }
 
-    // Connexion à la base de données
-    const db = new Database('database.db');
-    
-    // Récupérer l'utilisateur actuel
-    const getUserQuery = db.prepare('SELECT * FROM user WHERE userid = ?');
-    const user = getUserQuery.get(userId);
-    
+    if (User.isEmailTaken(newMail) || User.isUsernameTaken(newUsername)) {
+        return response.status(409).send({ error: 'Mail ou pseudo déjà utilisé' });
+    }
+
+    const user = User.fromId(userId);
     // Vérifier si l'utilisateur existe
     if (!user) {
         return response.status(404).send({ error: 'Utilisateur non trouvé' });
@@ -184,8 +175,7 @@ function editAccount(request, response) {
         user.name = newUsername;
     }
     // Exécuter la requête de mise à jour
-    const updateUserQuery = db.prepare('UPDATE user SET email = ?, password = ?, name = ? WHERE userid = ?');
-    updateUserQuery.run(user.email, user.password, user.name, userId);
+    user.save();
 
     return response.status(200).send({ message: 'Compte mis à jour avec succès' });
 
@@ -212,7 +202,11 @@ function deleteAccount(request, response) {
     }
 
     const userId = request.session.userId;
+    const user = User.fromId(userId);
 
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
     // Connexion à la base de données
     const db = new Database('database.db');
 
@@ -222,15 +216,18 @@ function deleteAccount(request, response) {
     const deleteFriendsQuery = db.prepare('DELETE FROM friends WHERE senderId = ? OR receiverId = ?');
     deleteFriendsQuery.run(userId, userId);
 
+    db.close();
+
     // Remplacer son mail par <id>@DELETED
-    const deletedEmail = `${userId}@DELETED`;
+    user.email = `${userId}@DELETED`;
     // Remplacer son nom par DELETED_user_<id>
-    const deletedName = `DELETED_user_${userId}`;
+    user.username = `DELETED_user_${userId}`;
     // Remplaces son mot de passe par DELETED
-    const deletedPassword = 'DELETED';
+    user.passwordHash = 'DELETED';
     // Remplacer son type de profil par 'deleted'
-    const updateEmailQuery = db.prepare("UPDATE user SET email = ?, name = ?, password = ?, profileType = 'deleted' WHERE userid = ?");
-    updateEmailQuery.run(deletedEmail, deletedName, deletedPassword, userId);
+    user.save();
+    user.delete();
+
     // Détruire la session utilisateur
     request.session.destroy();
 
@@ -259,11 +256,7 @@ function getUserData(request, response) {
     const userId = request.session.userId;
 
     // Connexion à la base de données
-    const db = new Database('database.db');
-
-    // Récupérer les informations de l'utilisateur
-    const getUserQuery = db.prepare('SELECT userid, email, name, profileType FROM user WHERE userid = ?');
-    const user = getUserQuery.get(userId);
+    const user = User.fromId(userId);
 
     if (!user) {
         return response.status(404).send({ error: 'Utilisateur non trouvé' });

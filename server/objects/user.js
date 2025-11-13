@@ -81,12 +81,51 @@ class User {
         const db = new Database("database.db");
         const user = User.fromEmail(email);
         db.close();
-        if (user && password === user.passwordHash) {
+        if (user && password === user.passwordHash && user.profileType !== 'deleted') {
             return user;
         } else {
             return null;
         }
     }
+
+    static register(username, email, password) {
+        const db = new Database("database.db");
+
+        const insertUserQuery = db.prepare('INSERT INTO user (name, email, password) VALUES (?, ?, ?)');
+        const result = insertUserQuery.run(username, email, password);
+
+        db.close();
+
+        return User.fromId(result.lastInsertRowid);
+    }
+
+    static isEmailTaken(email) {
+        return User.fromEmail(email) !== null;
+    }
+
+    static isUsernameTaken(username) {
+        return User.fromUsername(username) !== null;
+    }
+
+    save() {
+        const db = new Database("database.db");
+
+        const updateUserQuery = db.prepare('UPDATE user SET name = ?, email = ?, password = ? WHERE userId = ?');
+        updateUserQuery.run(this.username, this.email, this.passwordHash, this.userId);
+
+        db.close();
+    }
+
+    delete() {
+        const db = new Database("database.db");
+
+        const deleteUserQuery = db.prepare('UPDATE user SET profileType = ? WHERE userId = ?');
+        deleteUserQuery.run('deleted', this.userId);
+
+        db.close();
+    }
+
+
 }
 
 module.exports = User;
