@@ -8,6 +8,8 @@
 // Modules NPM
 const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
 
+// Modules internes
+const User = require('../objects/user.js'); // Importation de l'objet User
 const {userExisting}=require("../fonctions-utile/request");
 
 /**
@@ -95,16 +97,9 @@ function login(request, response) {
         return response.status(400).send({ error: 'Information manquante' });
     }
 
+    const user = User.login(mail, password);
 
-    // Connexion à la base de données
-    const db = new Database('database.db');
-
-    // Vérifier les informations d'identification de l'utilisateur
-    const getUserQuery = db.prepare('SELECT userid, password, profileType FROM user WHERE email = ?');
-    const user = getUserQuery.get(mail);
-    // Si l'utilisateur est supprimé, refuser la connexio,
-    // Vérifier si l'utilisateur existe et si le mot de passe est correct
-    if (!user || user.password !== password || user.profileType === 'deleted') { // TODO : Ajouter le hachage des mots de passe
+    if (!user) {
         return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
     }
 

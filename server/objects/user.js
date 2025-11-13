@@ -1,3 +1,6 @@
+const Database = require("better-sqlite3");
+
+
 class User {
     // Attibuts et méthodes de la classe User
     id;
@@ -13,11 +16,10 @@ class User {
     }
 
     static fromRow(row) {
-        return new User(row.id, row.name, row.email, row.passwordHash);
+        return new User(row.userId, row.name, row.email, row.password);
     }
 
     static fromId(id) {
-        const Database = require("better-sqlite3");
         const db = new Database("database.db");
 
         const getUserByIdQuery = db.prepare('SELECT * FROM user WHERE id = ?');
@@ -33,14 +35,11 @@ class User {
     }
 
     static fromEmail(email) {
-        const Database = require("better-sqlite3");
         const db = new Database("database.db");
-
+        
         const getUserByEmailQuery = db.prepare('SELECT * FROM user WHERE email = ?');
         const row = getUserByEmailQuery.get(email);
-
         db.close();
-
         if (row) {
             return User.fromRow(row);
         } else {
@@ -49,7 +48,6 @@ class User {
     }
 
     static fromUsername(username) {
-        const Database = require("better-sqlite3");
         const db = new Database("database.db");
 
         const getUserByUsernameQuery = db.prepare('SELECT * FROM user WHERE name = ?');
@@ -64,6 +62,16 @@ class User {
         }
     }
 
-    
-
+    static login(email, password) {
+        const db = new Database("database.db");
+        const user = User.fromEmail(email);
+        db.close();
+        if (user && password === user.passwordHash) {
+            return user;
+        } else {
+            return null;
+        }
+    }
 }
+
+module.exports = User;
