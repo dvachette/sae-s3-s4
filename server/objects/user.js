@@ -6,15 +6,19 @@ class User {
     userId;
     username;
     email;
+    lastBoosterOpening;
+    balance;
     collection;
     friends;
     pendingFriendRequests;
     pendingIncomingRequests;
 
-    constructor(userId, username, email) {
+    constructor(userId, username, email, lastBoosterOpening, balance) {
         this.userId = userId;
         this.username = username;
         this.email = email;
+        this.lastBoosterOpening = lastBoosterOpening;
+        this.balance = balance;
         this.collection = [];
         this.friends = [];
         this.pendingFriendRequests = [];
@@ -22,7 +26,7 @@ class User {
     }
 
     static fromRow(row) {
-        const user = new User(row.userId, row.name, row.email);
+        const user = new User(row.userId, row.name, row.email, row.lastBoosterOppening, row.balance);
 
         // Récupération de la collection de l'utilisateur
         const db = new Database("database.db");
@@ -263,6 +267,60 @@ class User {
     isFriendWith(userId) {
         return this.friends.includes(userId);
     }
+
+    delayBeforeNextBooster() {
+        const now = Math.floor(Date.now() / 1000); // Temps actuel en secondes
+        const db = new Database("database.db");
+        const getLastBoosterOpeningQuery = db.prepare('SELECT lastBoosterOppening FROM user WHERE userId = ?');
+        const row = getLastBoosterOpeningQuery.get(this.userId);
+        db.close();
+        this.lastBoosterOpening = row.lastBoosterOppening;
+        const lastOpening = this.lastBoosterOpening;
+        const delay = 5 * 60 * 60; // 24 heures en millisecondes
+        const timeSinceLastOpening = now - lastOpening;
+        return Math.max(0, delay - timeSinceLastOpening);
+    }
+
+    addCardToCollection(cardId, quantity) {
+        const existingCard = this.collection.find(item => item.card.cardId === cardId);
+        if (existingCard) {
+            existingCard.quantity += quantity;
+        } else {
+            const newCard = new Collection(cardId, 1, quantity);
+            this.collection.push(newCard);
+        }
+        console.log(existingCard);
+        const db = new Database("database.db");
+
+        if (existingCard) {
+            const updateQuery = db.prepare('UPDATE collection SET quantity = ? WHERE userId = ? AND cardId = ?');
+            updateQuery.run(existingCard.quantity, this.userId, cardId);
+        } else {
+            const insertQuery = db.prepare('INSERT INTO collection (userId, cardId, level, quantity) VALUES (?, ?, ?, ?)');
+            insertQuery.run(this.userId, cardId, 1, quantity); 
+        }
+        
+        db.close();
+    }
+
+    addKeys(amount) {
+        this.balance += amount;
+        const db = new Database("database.db");
+
+        const updateBalanceQuery = db.prepare('UPDATE user SET balance = ? WHERE userId = ?');
+        updateBalanceQuery.run(this.balance, this.userId);
+
+        db.close();
+    }
+
+    resetBoosterOpeningDate() {
+        this.lastBoosterOpening = Math.floor(Date.now() / 1000);
+        const db = new Database("database.db");
+        const updateLastBoosterOpeningQuery = db.prepare('UPDATE user SET lastBoosterOppening = ? WHERE userId = ?');
+        updateLastBoosterOpeningQuery.run(this.lastBoosterOpening, this.userId);
+        db.close();
+    }
+
 }
 
 module.exports = User;

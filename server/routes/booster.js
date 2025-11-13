@@ -7,6 +7,8 @@
 
 const Database = require('better-sqlite3'); // Importation de la bibliothèque SQLite3
 const {addCardToCollection,pullCardsNoRepeat,pullCardsRepeat}=require("../fonctions-utile/request");
+const User = require('../objects/user.js'); // Importation de l'objet User
+const Card = require('../objects/card.js'); // Importation de l'objet Card
 /**
  * @brief Achète un booster pour l'utilisateur connecté.
  * @returns response - Résultat de la requête.
@@ -30,57 +32,33 @@ function openBooster(request, response) {
 
     const userId = request.session.userId;
 
-    const db = new Database('database.db');
+    const user = User.fromId(userId);
 
-    // Récuperer la date de dernier ouverture de booster
-    const getLastBoosterOppeningQuery = db.prepare('SELECT lastBoosterOppening FROM user WHERE userid = ?');
-    const userData = getLastBoosterOppeningQuery.get(userId);
-    const lastBoosterOppening = userData.lastBoosterOppening;
-
-    const currentTime = Math.floor(Date.now() / 1000); // Temps actuel en secondes
-
-    // On peut ouvrir un booster toutes les 3 heures (10800 secondes) 
-    if (lastBoosterOppening && (currentTime - lastBoosterOppening) < 3 * 3600) {
-        const timeLeft = 3 * 3600 - (currentTime - lastBoosterOppening);
-        // TODO: Améliorer le message pour afficher en heures/minutes/secondes
-        return response.status(429).send({ error: `Vous devez attendre ${Math.floor(timeLeft / 3600)} heures ${Math.floor((timeLeft % 3600) / 60)} minutes avant d'ouvrir un nouveau booster.` });
-    }
-
-  
-   
 
     // Faire un tirage par poids pour obtenir 5 cartes
     let drawnCards = [];
 
-    // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
-
-
-    if(lastBoosterOppening===null){
-        drawnCards=pullCardsNoRepeat(5);
+    if (user.lastBoosterOpening === null) {
+        drawnCards = Card.drawUniqueRandomCards(5);
+    } else if (user.delayBeforeNextBooster() < 0) {
+        drawnCards = Card.drawRandomCards(5);
+    } else { // Trop tôt pour ouvrir un nouveau booster, renvoyer un to many request (429)
+        return response.status(429).send({ error: 'Booster non disponible pour le moment', delay: user.delayBeforeNextBooster() });
     }
-    else
-        drawnCards=pullCardsRepeat(5);
-    if(drawnCards.length===0)
-        return response.status(500).send({error:"trop de cartes demandées"});
-
-    // Insérer les cartes tirées dans la collection de l'utilisateur
-    for (const cardId of drawnCards) {
-        addCardToCollection(userId,cardId);
+    if (drawnCards.length === 0) {
+        return response.status(403).send({ error: 'Trop de cartes demandées' });
+    }
+    for (const card of drawnCards) {
+        user.addCardToCollection(card.cardId, 1);
     }
 
-    // Ajouter un nombre de clé à l'utilisateur
-    const addKeyQuery = db.prepare('UPDATE user SET balance = balance + 5 WHERE userid = ?');
-    addKeyQuery.run(userId);
+    user.addKeys(5);
 
     // Mettre à jour la date de dernier ouverture de booster (en timestamp epoch en secondes)
-    const updateLastBoosterOppeningQuery = db.prepare('UPDATE user SET lastBoosterOppening = ? WHERE userid = ?');
-    updateLastBoosterOppeningQuery.run(Math.floor(Date.now() / 1000), userId);
+    user.resetBoosterOpeningDate();
 
-    // Retourner le détail des cartes tirées
-    const getCardDetailsQuery = db.prepare('SELECT * FROM card WHERE cardid = ?');
-    const drawnCardDetails = drawnCards.map(cardId => getCardDetailsQuery.get(cardId));
 
-    return response.status(200).send({ message: 'Booster ouvert avec succès', cards: drawnCardDetails , keys: 5});
+    return response.status(200).send({ message: 'Booster ouvert avec succès', cards: drawnCards , keys: 5});
 }
 
 module.exports = {

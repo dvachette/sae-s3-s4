@@ -91,7 +91,6 @@ function login(request, response) {
     }
 
     const user = User.login(mail, password);
-
     if (!user) {
         return response.status(401).send({ error: 'Email ou mot de passe incorrect' });
     }
