@@ -6,17 +6,15 @@ class User {
     userId;
     username;
     email;
-    passwordHash;
     collection;
     friends;
     pendingFriendRequests;
     pendingIncomingRequests;
 
-    constructor(userId, username, email, passwordHash) {
+    constructor(userId, username, email) {
         this.userId = userId;
         this.username = username;
         this.email = email;
-        this.passwordHash = passwordHash;
         this.collection = [];
         this.friends = [];
         this.pendingFriendRequests = [];
@@ -24,7 +22,7 @@ class User {
     }
 
     static fromRow(row) {
-        const user = new User(row.userId, row.name, row.email, row.password);
+        const user = new User(row.userId, row.name, row.email);
 
         // Récupération de la collection de l'utilisateur
         const db = new Database("database.db");
@@ -64,7 +62,7 @@ class User {
     static fromId(id) {
         const db = new Database("database.db");
 
-        const getUserByIdQuery = db.prepare('SELECT * FROM user WHERE id = ?');
+        const getUserByIdQuery = db.prepare('SELECT * FROM user WHERE userId = ?');
         const row = getUserByIdQuery.get(id);
 
         db.close();
@@ -107,8 +105,10 @@ class User {
     static login(email, password) {
         const db = new Database("database.db");
         const user = User.fromEmail(email);
+        const getUserPasswordQuery = db.prepare('SELECT password FROM user WHERE email = ?');
+        const row = getUserPasswordQuery.get(email);
         db.close();
-        if (user && password === user.passwordHash && user.profileType !== 'deleted') {
+        if (user && password === row.password && user.profileType !== 'deleted') {
             return user;
         } else {
             return null;
@@ -151,8 +151,89 @@ class User {
 
         db.close();
     }
+    requestFriend(friendId) {
+        if (this.userId === friendId) {
+            throw new Error("Vous ne pouvez pas vous ajouter vous-même en ami.");
+        }
+        if (this.friends.includes(friendId)) {
+            throw new Error("Cet utilisateur est déjà votre ami.");
+        }
+        for (const request of this.pendingFriendRequests) {
+            if (request.toUserId === friendId) {
+                throw new Error("Vous avez déjà envoyé une demande d'ami à cet utilisateur.");
+            }
+        }
+        for (const request of this.pendingIncomingRequests) {
+            if (request.fromUserId === friendId) {
+                throw new Error("Cet utilisateur vous a déjà envoyé une demande d'ami.");
+            }
+        }
+        const db = new Database("database.db");
 
+        const insertFriendRequestQuery = db.prepare('INSERT INTO friends (senderId, receiverId, status) VALUES (?, ?, ?)');
+        const result = insertFriendRequestQuery.run(this.userId, friendId, 'pending');
+        const request = new FriendRequest(result.lastInsertRowid, this.userId, friendId, 'pending');
+        this.pendingFriendRequests.push(request);
+        db.close();
+    }
 
+    removeFriend(friendId) {
+        if (!this.friends.includes(friendId)) {
+            throw new Error("Cet utilisateur n'est pas dans votre liste d'amis.");
+        }
+
+        const db = new Database("database.db");
+        
+        const deleteFriendQuery = db.prepare('DELETE FROM friends WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)');
+        deleteFriendQuery.run(this.userId, friendId, friendId, this.userId);
+        this.friends = this.friends.filter(id => id !== friendId);
+        db.close();
+    }
+
+    acceptFriend(friendId) {
+        // Vérifier si une demande entrante existe
+        const requestExists = this.pendingIncomingRequests.some(request => request.fromUserId === friendId);
+        if (!requestExists) {
+            throw new Error("Aucune demande d'ami entrante de cet utilisateur.");
+        }
+        const db = new Database("database.db");
+
+        const updateFriendRequestQuery = db.prepare('UPDATE friends SET status = ? WHERE senderId = ? AND receiverId = ?');
+        updateFriendRequestQuery.run('accepted', friendId, this.userId);
+        this.friends.push(friendId);
+        this.pendingIncomingRequests = this.pendingIncomingRequests.filter(request => request.fromUserId !== friendId);
+        db.close();
+    }
+    rejectFriend(friendId) {
+        // Vérifier si une demande entrante existe
+        const requestExists = this.pendingIncomingRequests.some(request => request.fromUserId === friendId);
+        if (!requestExists) {
+            throw new Error("Aucune demande d'ami entrante de cet utilisateur.");
+        }
+        const db = new Database("database.db");
+
+        const deleteFriendRequestQuery = db.prepare('DELETE FROM friends WHERE senderId = ? AND receiverId = ?');
+        deleteFriendRequestQuery.run(friendId, this.userId);
+        this.pendingIncomingRequests = this.pendingIncomingRequests.filter(request => request.fromUserId !== friendId);
+        db.close();
+    }
+    cancelFriendRequest(friendId) {
+        // Vérifier si une demande sortante existe
+        const requestExists = this.pendingFriendRequests.some(request => request.toUserId === friendId);
+        if (!requestExists) {
+            throw new Error("Aucune demande d'ami envoyée à cet utilisateur.");
+        }
+        const db = new Database("database.db");
+
+        const deleteFriendRequestQuery = db.prepare('DELETE FROM friends WHERE senderId = ? AND receiverId = ?');
+        deleteFriendRequestQuery.run(this.userId, friendId);
+        this.pendingFriendRequests = this.pendingFriendRequests.filter(request => request.toUserId !== friendId);
+        db.close();
+    }
+
+    isFriendWith(userId) {
+        return this.friends.includes(userId);
+    }
 }
 
 module.exports = User;

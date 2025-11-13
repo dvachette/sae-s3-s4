@@ -8,6 +8,7 @@
 // Modules NPM
 const Database = require('better-sqlite3'); // Importation de better-sqlite3 pour interagir avec la base de données SQLite
 
+const User = require('../objects/user.js'); // Importation de l'objet User
 
 
 /**
@@ -38,34 +39,19 @@ function requestFriend(request, response) {
     if (!friendId) {
         return response.status(400).send({ error: 'ID de l\'ami manquant' });
     }
-
-    // Vérifier que l'utilisateur n'essaie pas de s'ajouter lui-même
-    if (userId == friendId) {
-        return response.status(400).send({ error: 'Impossible de s\'ajouter soi-même en ami' });
+    const user = User.fromId(userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
 
-    const db = new Database('database.db');
 
-    // Vérifier si la demande d'amitié existe déjà
-    const checkRequest = db.prepare('SELECT * FROM friends WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND ReceiverId = ?)');
-    const existingRequest = checkRequest.get(userId, friendId, friendId, userId);
-
-    // Gérer les différents cas de demande existante
-    if (existingRequest) {
-        switch (existingRequest.status) {
-            case 'pending':
-                return response.status(409).send({ error: 'Demande d\'amitié déjà en attente' });
-            case 'accepted':
-                return response.status(409).send({ error: 'Vous êtes déjà amis' });
-            case 'rejected':
-                // Permettre de renvoyer une demande si elle a été rejetée
-                break;
-        }
+    try {
+        user.requestFriend(friendId);
+    } catch (error) {
+        return response.status(409).send({ error: error.message });
     }
 
-    // Insérer la nouvelle demande d'amitié
-    const insertRequest = db.prepare('INSERT INTO friends (senderId, receiverId, status) VALUES (?, ?, ?)');
-    insertRequest.run(userId, friendId, 'pending');
 
     return response.status(201).send({ message: 'Demande d\'amitié envoyée avec succès' });
 }
@@ -92,14 +78,19 @@ function getFriendsList(request, response) {
     const userId = request.session.userId;
 
     // Récupérer la liste des amis depuis la base de données
-    const db = new Database('database.db');
-    const getFriendsQuery = db.prepare(`
-        SELECT u.userid, u.name, u.email 
-        FROM user u
-        JOIN friends f ON (u.userid = f.senderId OR u.userid = f.receiverId)
-        WHERE (f.senderId = ? OR f.receiverId = ?) AND f.status = 'accepted' AND u.userid != ?
-    `);
-    const friends = getFriendsQuery.all(userId, userId, userId);
+    const user = User.fromId(userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
+
+    const friends = [];
+    for (const friendId of user.friends) {
+        const friend = User.fromId(friendId);
+        if (friend) {
+            friends.push({  userId: friend.userId, username: friend.username  });
+        }
+    }
 
     return response.status(200).send({ friends: friends });
 }
@@ -121,17 +112,19 @@ function getPendingRequests(request, response) {
     if (!request.session.userId) {
         return response.status(401).send({ error: 'Utilisateur non authentifié' });
     }
+    const user = User.fromId(request.session.userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
 
-    const userId = request.session.userId;
-    const db = new Database('database.db');
-
-    const getRequestsQuery = db.prepare(`
-        SELECT u.userid, u.name, u.email 
-        FROM user u
-        JOIN friends f ON u.userid = f.senderId
-        WHERE f.receiverId = ? AND f.status = 'pending'
-    `);
-    const requests = getRequestsQuery.all(userId);
+    const requests = [];
+    for (const friendId of user.pendingIncomingRequests.map(req => req.fromUserId)) {
+        const friend = User.fromId(friendId);
+        if (friend) {
+            requests.push({  userId: friend.userId, username: friend.username  });
+        }
+    }
 
     return response.status(200).send({ requests: requests });
 }
@@ -164,18 +157,17 @@ function acceptFriendRequest(request, response) {
         return response.status(400).send({ error: 'ID de l\'ami manquant' });
     }
 
-    const db = new Database('database.db');
-
-    // Vérifier si la demande d'amitié existe
-    const getRequest = db.prepare('SELECT * FROM friends WHERE senderId = ? AND receiverId = ? AND status = ?');
-    const friendRequest = getRequest.get(friendId, userId, 'pending');
-    if (!friendRequest) {
-        return response.status(404).send({ error: 'Demande d\'amitié non trouvée' });
+    const user = User.fromId(userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
 
-    // Mettre à jour le statut de la demande d'amitié
-    const updateRequest = db.prepare('UPDATE friends SET status = ? WHERE senderId = ? AND receiverId = ?');
-    updateRequest.run('accepted', friendId, userId);
+    try {
+        user.acceptFriend(friendId);
+    } catch (error) {
+        return response.status(400).send({ error: error.message });
+    }
 
     return response.status(200).send({ message: 'Demande d\'amitié acceptée avec succès' });
 }
@@ -209,19 +201,16 @@ function rejectFriendRequest(request, response) {
         return response.status(400).send({ error: 'ID de l\'ami manquant' });
     }
 
-    const db = new Database('database.db');
+    const user = User.fromId(userId);
 
-    // Vérifier si la demande d'amitié existe
-    const getRequest = db.prepare('SELECT * FROM friends WHERE senderId = ? AND receiverId = ? AND status = ?');
-    const friendRequest = getRequest.get(friendId, userId, 'pending');
-    if (!friendRequest) {
-        return response.status(404).send({ error: 'Demande d\'amitié non trouvée' });
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
-
-    // Mettre à jour le statut de la demande d'amitié
-    const updateRequest = db.prepare('UPDATE friends SET status = ? WHERE senderId = ? AND receiverId = ?');
-    updateRequest.run('rejected', friendId, userId);
-
+    try {
+        user.rejectFriend(friendId);
+    } catch (error) {
+        return response.status(400).send({ error: error.message });
+    }
     return response.status(200).send({ message: 'Demande d\'amitié rejetée avec succès' });
 }
 
@@ -253,18 +242,17 @@ function removeFriend(request, response) {
         return response.status(400).send({ error: 'ID de l\'ami manquant' });
     }
 
-    const db = new Database('database.db');
-
-    // Vérifier si l'amitié existe
-    const getFriendship = db.prepare('SELECT * FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
-    const friendship = getFriendship.get(userId, friendId, friendId, userId, 'accepted');
-    if (!friendship) {
-        return response.status(404).send({ error: 'Amitié non trouvée' });
+    const user = User.fromId(userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
 
-    // Supprimer l'amitié
-    const deleteFriendship = db.prepare('DELETE FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
-    deleteFriendship.run(userId, friendId, friendId, userId, 'accepted');
+    try {
+        user.removeFriend(friendId);
+    } catch (error) {
+        return response.status(400).send({ error: error.message });
+    }
 
     return response.status(200).send({ message: 'Amitié supprimée avec succès' });
 }
@@ -298,23 +286,49 @@ function removeFriendRequest(request, response){
         return response.status(400).send({ error: 'ID de l\'ami manquant' });
     }
 
-    const db = new Database('database.db');
-
-    // Vérifier si la demande d'amitié existe
-    const getRequest = db.prepare('SELECT * FROM friends WHERE senderId = ? AND receiverId = ? AND status = ?');
-    const friendRequest = getRequest.get(friendId, userId, 'pending');
-    if (!friendRequest) {
-        return response.status(404).send({ error: 'Demande d\'amitié non trouvée' });
+    const user = User.fromId(userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
 
-    // Supprime de la demande d'amitié
-    const deleteFriendship = db.prepare('DELETE FROM friends WHERE ((senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)) AND status = ?');
-    deleteFriendship.run(userId, friendId, friendId, userId, 'pending');
+    try {
+        user.cancelFriendRequest(friendId);
+    } catch (error) {
+        return response.status(400).send({ error: error.message });
+    }
 
     return response.status(200).send({ message: 'Demande d\'amitié supprimée avec succès' });
 
-
 }
+
+function getOutcomingRequests(request, response) {
+    //  Vérifier que la méthode est GET
+    if (request.method !== 'GET') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+    // Vérifier que l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+    const user = User.fromId(request.session.userId);
+    
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
+
+    const requests = [];
+    for (const friendId of user.pendingFriendRequests.map(req => req.toUserId)) {
+        const friend = User.fromId(friendId);
+        if (friend) {
+            requests.push({  userId: friend.userId, username: friend.username  });
+        }
+    }
+
+    return response.status(200).send({ requests: requests });
+}
+
+
 
 
 
@@ -326,5 +340,6 @@ module.exports = {
     acceptFriendRequest,
     rejectFriendRequest,
     removeFriend,
-    removeFriendRequest
+    removeFriendRequest,
+    getOutcomingRequests
 };
