@@ -71,6 +71,7 @@ app.post('/booster/open', boosterRoutes.openBooster);
 
 // Routes pour la collection
 app.get('/collection',collectionRoutes.getCollection);
+app.post('/collection/upgrade',collectionRoutes.upgradeCard);
 
 // Routes pour les échanges
 app.post('/trade/request', tradeRoutes.proposeTrade);

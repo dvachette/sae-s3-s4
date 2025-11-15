@@ -2,6 +2,7 @@ const Database = require("better-sqlite3");
 const Collection = require("./collection.js");
 const FriendRequest = require("./friendRequest.js");
 const Trade = require("./trade.js");
+const Card = require("./card.js");
 class User {
     // Attibuts et méthodes de la classe User
     userId;
@@ -363,6 +364,42 @@ class User {
             return existingCard.quantity;
         } else {
             return 0;
+        }
+    }
+
+    upgradeCard(cardId) {
+        /*
+        level 1 -> 2 : 5 cartes 
+        level 2 -> 3 : 10 cartes au total (5 supplémentaires)
+        level 3 -> 4 : 15 cartes au total (5 supplémentaires)
+        level 4 -> 5 : 20 cartes au total (5 supplémentaires)
+        */
+        const neededCardsByLevel = {
+            1: 5,
+            2: 10,
+            3: 15,
+            4: 20
+        };
+        const existingCard = this.collection.find(item => item.card.cardId == cardId);
+        if (existingCard) {
+            const currentLevel = existingCard.card.level;
+            if (currentLevel >= 5) {
+                throw new Error("La carte est déjà au niveau maximum.");
+            }
+            const neededCards = neededCardsByLevel[currentLevel];
+            if (existingCard.quantity >= neededCards) {
+                // On peut upgrader
+                const existingCardIndex = this.collection.indexOf(existingCard);
+                this.collection[existingCardIndex].card = Card.fromId(cardId, currentLevel + 1);
+                const db = new Database("database.db");
+                const updateCollectionQuery = db.prepare('UPDATE collection SET level = ? WHERE userId = ? AND cardId = ?');
+                updateCollectionQuery.run(currentLevel + 1, this.userId, cardId);
+                db.close();
+            } else {
+                throw new Error("Vous n'avez pas assez de cartes pour améliorer cette carte.");
+            }
+        } else {
+            throw new Error("L'utilisateur ne possède pas cette carte dans sa collection.");
         }
     }
 }
