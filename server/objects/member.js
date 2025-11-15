@@ -3,6 +3,7 @@ const Database = require('better-sqlite3');
 const Card = require('./card.js');
 const Attack = require('./attacks.js');
 class Member extends Card {
+    maxHitpoints;
     hitpoints;
     attackMultiplier;
     modifiers;
@@ -11,6 +12,7 @@ class Member extends Card {
     constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl, hitpoints, attackMultiplier, attacks) {
         super(cardId, name, 'member', mandat, pictureUrl, description, weight, level, borderPictureUrl);
         this.hitpoints = hitpoints;
+        this.maxHitpoints = hitpoints;
         this.attackMultiplier = attackMultiplier;
         this.modifiers = [];
         this.attacks = attacks;

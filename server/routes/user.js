@@ -50,7 +50,7 @@ function createAccount(request, response) {
     }
 
     // Insérer le nouvel utilisateur dans la base de données
-    const newUser = User.create(mail, password, username);
+    const newUser = User.register(mail, password, username);
 
     // Connecter automatiquement l'utilisateur après la création du compte
     request.session.userId = newUser.userid;
@@ -175,7 +175,7 @@ function editAccount(request, response) {
     // Exécuter la requête de mise à jour
     user.save();
 
-    return response.status(200).send({ message: 'Compte mis à jour avec succès' });
+    return response.status(200).send({ message: 'Compte mis à jour avec succès' , user: user });
 
 
 }
@@ -186,6 +186,7 @@ function editAccount(request, response) {
  * @returns response - Résultat de la requête.
  * @returns status 200 - Compte supprimé avec succès. 
  * @returns status 401 - Utilisateur non authentifié.
+ * @returns status 404 - Utilisateur non trouvé.
  * @returns status 405 - Méthode non autorisée.
  */
 function deleteAccount(request, response) {

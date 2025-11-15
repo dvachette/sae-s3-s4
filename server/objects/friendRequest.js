@@ -1,4 +1,8 @@
 class FriendRequest {
+    requestId;
+    fromUserId;
+    toUserId;
+    status;
     constructor(requestId, fromUserId, toUserId, status) {
         this.requestId = requestId;
         this.fromUserId = fromUserId;
