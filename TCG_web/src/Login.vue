@@ -50,8 +50,6 @@ export default {
         const data = await response.json(); // Récupération de la réponse JSON
         console.log('Réponse du serveur :', data);
         if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)
-          // Memoriser le token JWT dans le localStorage (cookies)
-          localStorage.setItem('token', data.token);
           // Redirection
           this.$router.push('/booster');
 
