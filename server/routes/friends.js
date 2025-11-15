@@ -44,6 +44,12 @@ function requestFriend(request, response) {
     if (!user) {
         return response.status(404).send({ error: 'Utilisateur non trouvé' });
     }
+    
+    const friendUser = User.fromId(friendId);
+    
+    if (!friendUser) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
 
 
     try {
@@ -52,8 +58,9 @@ function requestFriend(request, response) {
         return response.status(409).send({ error: error.message });
     }
 
+    const friendRequest = user.pendingFriendRequests.find(req => req.toUserId === friendId);
 
-    return response.status(201).send({ message: 'Demande d\'amitié envoyée avec succès' });
+    return response.status(201).send({ message: 'Demande d\'amitié envoyée avec succès', friendRequest: friendRequest });
 }
 
 
@@ -259,7 +266,7 @@ function removeFriend(request, response) {
 
 /**
  * @brief Supprime une demande d'amitié.
- * @param friendId int - ID de l'ami à qui la demande à supprimé a été faite
+ * @param friendId int - ID de l'ami à qui la demande à supprimer a été faite
  * @returns response - Résultat de la requête
  * @returns status 200 - Demande d'amitié supprimée avec succès
  * @returns status 400 - ID de l'ami manquant
