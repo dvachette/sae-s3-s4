@@ -45,19 +45,20 @@ function openBooster(request, response) {
         return response.status(429).send({ error: 'Booster non disponible pour le moment', delay: user.delayBeforeNextBooster() });
     }
     if (drawnCards.length === 0) {
-        return response.status(403).send({ error: 'Trop de cartes demandées' });
+        return response.status(500).send({ error: 'Le booster ne peut pas être ouvert maintenant' });
     }
     for (const card of drawnCards) {
         user.addCardToCollection(card.cardId, 1);
     }
+    const keys = 5;
 
-    user.addKeys(5);
+    user.addKeys(keys);
 
     // Mettre à jour la date de dernier ouverture de booster (en timestamp epoch en secondes)
     user.resetBoosterOpeningDate();
 
 
-    return response.status(200).send({ message: 'Booster ouvert avec succès', cards: drawnCards , keys: 5});
+    return response.status(200).send({ message: 'Booster ouvert avec succès', cards: drawnCards , keys: keys});
 }
 
 module.exports = {
