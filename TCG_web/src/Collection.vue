@@ -26,7 +26,9 @@
         <label><input type="checkbox" name="filtre" value="arènes">arènes</input></label>
       </div>
     </div>
-    <div class="toutes_les_cartes"></div>
+    <div class="toutes_les_cartes">
+      <Carte_membre></Carte_membre>
+    </div>
   </main>
 </template>
 
@@ -34,6 +36,7 @@
 import { ref } from 'vue';
 
 import MonHeader from '@/Composants/header.vue';
+import Carte_membre from './Composants/carte_membre.vue';
 </script>
 
 <style scoped>

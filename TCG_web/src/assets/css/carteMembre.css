@@ -1,0 +1,109 @@
+@import './style.css';
+
+p {
+    font-family: 'Mako';
+    margin:0;
+}
+
+.carte {
+    width : var(--w);
+    height : calc(1.39*var(--w));
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 60% 25% 15%;
+}
+
+img {
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+    width : 100%;
+    height: 100%;
+}
+
+#tour_img {
+    grid-column: 1;
+    grid-row: 1;
+
+    padding : 8% 8% 0 8%; 
+    display: grid;
+    grid-template-columns: 20% 44% 13% 23%;
+    grid-template-rows: 10% 83% 7%;
+}
+
+#nom {
+    grid-column: 1/3;
+    grid-row: 1/2;
+
+    font-size: calc(var(--w)*0.067);
+    font-weight: bold;
+
+    padding: 0 5% 3% 5%;
+
+    display: flex;
+    align-items: center;
+}
+
+.PV {
+    grid-column: 1/2;
+    grid-row: 3/4;
+
+    padding: 5% 20% 2% 6%;
+
+    display: flex;
+}
+
+#PV {
+    margin: 0;
+    font-size: calc(var(--w)*0.05);
+    font-weight: bold;
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+}
+
+#lblPV {
+    padding: 0 0 0 5%;
+    font-size: calc(var(--w)*0.027);
+    font-weight: bold;
+    
+/*mettre le texte pv vers le bas de sa case*/
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    line-height: calc(var(--w)*0.027); /*espace en hauteur que prend une ligne de texte 
+    -> meme que taille de police pour pas créer d'espace en bas*/
+}
+
+.niv {
+    grid-column: 4/5;
+    grid-row: 3/4;
+
+    padding: 5% 6% 2% 20%;
+
+    display: flex;
+}
+
+#niv {
+    margin: 0;
+    font-size: calc(var(--w)*0.045);
+    font-weight: 600;
+    margin-right: auto;
+    padding-bottom: 2%;
+
+    display: flex;
+    align-items: center;
+    line-height: calc(var(--w)*0.05); 
+}
+
+#lblNiv {
+    padding: 0 5% 0 0;
+    font-size: calc(var(--w)*0.03);
+    font-weight:500;
+    
+/*mettre le texte pv vers le bas de sa case*/
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    line-height: calc(var(--w)*0.03); 
+}
