@@ -39,7 +39,7 @@ function openBooster(request, response) {
 
     if (user.lastBoosterOpening === null) {
         drawnCards = Card.drawUniqueRandomCards(5);
-    } else if (user.delayBeforeNextBooster() < 0) {
+    } else if (user.delayBeforeNextBooster() <= 0) {
         drawnCards = Card.drawRandomCards(5);
     } else { // Trop tôt pour ouvrir un nouveau booster, renvoyer un to many request (429)
         return response.status(429).send({ error: 'Booster non disponible pour le moment', delay: user.delayBeforeNextBooster() });
