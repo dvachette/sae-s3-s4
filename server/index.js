@@ -76,6 +76,7 @@ app.post('/collection/upgrade',collectionRoutes.upgradeCard);
 // Routes pour les échanges
 app.post('/trade/request', tradeRoutes.proposeTrade);
 app.get('/trade/requests', tradeRoutes.getTrades);
+app.get('/trade/requests/me', tradeRoutes.getSelfTradeRequests);
 app.delete('/trade/request', tradeRoutes.deleteTrade);
 app.post('/trade/accept', tradeRoutes.acceptTrade);
 
