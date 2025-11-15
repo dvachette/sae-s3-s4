@@ -3,17 +3,13 @@ const Database = require('better-sqlite3');
 const Card = require('./card.js');
 const Attack = require('./attacks.js');
 class Member extends Card {
-    level;
-    borderPictureUrl;
     hitpoints;
     attackMultiplier;
     modifiers;
     attacks;
     statusEffects;
     constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl, hitpoints, attackMultiplier, attacks) {
-        super(cardId, name, 'member', mandat, pictureUrl, description, weight);
-        this.level = level;
-        this.borderPictureUrl = borderPictureUrl;
+        super(cardId, name, 'member', mandat, pictureUrl, description, weight, level, borderPictureUrl);
         this.hitpoints = hitpoints;
         this.attackMultiplier = attackMultiplier;
         this.modifiers = [];
@@ -55,7 +51,7 @@ class Member extends Card {
         const weight = cardRow.weight;
         const borderPicture = levelRow.borderPicture;
         const hitpoints = levelRow.hitpoints;
-        const attackMultiplier = levelRow.attackMultiplier;
+        const attackMultiplier = levelRow.multiplier;
 
         const attack1Name = memberRow.attack1Name;
         const attack1Cost = memberRow.attack1Cost;
@@ -78,6 +74,8 @@ class Member extends Card {
 }
 
 module.exports = Member;
+
+
 /*
 [
     { type:'heal', target:'<self|opponent|hand|opponentHand>', value:<PV à soigner>}, // soigner
