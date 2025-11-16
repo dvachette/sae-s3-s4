@@ -5,12 +5,14 @@ p {
     margin:0;
 }
 
-.carte {
+.carte { 
     width : var(--w);
     height : calc(1.39*var(--w));
+
+    /*grid de toute la carte, divisé en 3 lignes : haut_carte (tour de l'img), attaques, bas_carte*/ 
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 60% 25% 15%;
+    grid-template-rows: 60% 3% 18% 2% 17%;
 }
 
 img {
@@ -20,11 +22,15 @@ img {
     height: 100%;
 }
 
-#tour_img {
+
+/*----------------------Partie Haut_carte----------------------*/
+#haut_carte {
     grid-column: 1;
     grid-row: 1;
 
     padding : 8% 8% 0 8%; 
+
+    /*grid du haut de l'image pour placer chaque info*/
     display: grid;
     grid-template-columns: 20% 44% 13% 23%;
     grid-template-rows: 10% 83% 7%;
@@ -105,5 +111,85 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    line-height: calc(var(--w)*0.03); 
+}
+
+
+/*----------------------Partie Attaques----------------------*/
+.attaques {
+    grid-row: 3;
+    grid-column: 1/-1;
+
+    padding : 0 8% 0 6.5%;
+
+    display: grid;
+    grid-template-columns: 5% 68% 10% 17%;
+    grid-template-rows: 19% 27% 8% 19% 27%;
+}
+
+.attaques > p:nth-of-type(-n+4){
+    grid-row : 1;
+}
+
+.attaques > p:nth-of-type(5){
+    grid-row: 2;
+    grid-column: 2/5;
+
+    
+}
+
+.attaques > :nth-child(6),
+.attaques > :nth-child(7),
+.attaques > :nth-child(8),
+.attaques > :nth-child(9) {
+    grid-row : 4;
+}
+
+.attaques > :last-child {
+    grid-row: 5;
+    grid-column: 2/5;
+}
+
+.attaques > .cout {
+    font-size: calc(var(--w)*0.037);
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.attaques > .nom_attaque {
+    font-size: calc(var(--w)*0.053);
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+}
+
+.attaques > .degats {
+    font-size: calc(var(--w)*0.053);
+    font-weight: bold;
+
+    margin-left : auto;
+
+    display: flex;
+    align-items: center;
+}
+
+.attaques > .lblDegats {    
+    font-size: calc(var(--w)*0.037);
+    font-weight: 500;
+
+    padding : 0 0 0 5%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    line-height: calc(var(--w)*0.037);
+}
+
+.attaques > .desc_attaque {
+    font-size: calc(var(--w)*0.03);
+
+    padding : 1.25% 0 0 0;
     line-height: calc(var(--w)*0.03); 
 }
