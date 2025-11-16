@@ -98,7 +98,7 @@ function getTrades(request, response) {
         JOIN friends f ON (tr.senderId = f.senderId AND f.receiverId = ?) OR (tr.senderId = f.receiverId AND f.senderId = ?) WHERE f.status = 'accepted'
     `);
     const trades = getTradesQuery.all(userId, userId);
-    return response.status(200).send({ trades });
+    return response.status(200).send({ trades:trades });
 }
 
 
@@ -254,7 +254,7 @@ function getSelfTradeRequests(request, response) {
         FROM traderequest WHERE tr.senderId = ?
     `);
     const trades = getTradesQuery.all(userId, userId);
-    return response.status(200).send({ trades });
+    return response.status(200).send({ trades:trades });
 }
 module.exports = {
     proposeTrade,
