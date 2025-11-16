@@ -209,6 +209,7 @@ class User {
         db.close();
     }
     requestFriend(friendId) {
+        friendId = parseInt(friendId);
         if (this.userId === friendId) {
             throw new Error("Vous ne pouvez pas vous ajouter vous-même en ami.");
         }
@@ -235,6 +236,7 @@ class User {
     }
 
     removeFriend(friendId) {
+        friendId = parseInt(friendId);
         if (!this.friends.includes(friendId)) {
             throw new Error("Cet utilisateur n'est pas dans votre liste d'amis.");
         }
@@ -249,6 +251,7 @@ class User {
 
     acceptFriend(friendId) {
         // Vérifier si une demande entrante existe
+        friendId = parseInt(friendId);
         const requestExists = this.pendingIncomingRequests.some(request => request.fromUserId === friendId);
         if (!requestExists) {
             throw new Error("Aucune demande d'ami entrante de cet utilisateur.");
@@ -262,6 +265,7 @@ class User {
         db.close();
     }
     rejectFriend(friendId) {
+        friendId = parseInt(friendId);
         // Vérifier si une demande entrante existe
         const requestExists = this.pendingIncomingRequests.some(request => request.fromUserId === friendId);
         if (!requestExists) {
@@ -276,6 +280,7 @@ class User {
     }
     cancelFriendRequest(friendId) {
         // Vérifier si une demande sortante existe
+        friendId = parseInt(friendId);
         const requestExists = this.pendingFriendRequests.some(request => request.toUserId === friendId);
         if (!requestExists) {
             throw new Error("Aucune demande d'ami envoyée à cet utilisateur.");

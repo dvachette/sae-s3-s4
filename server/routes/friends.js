@@ -58,7 +58,7 @@ function requestFriend(request, response) {
         return response.status(409).send({ error: error.message });
     }
 
-    const friendRequest = user.pendingFriendRequests.find(req => req.toUserId === friendId);
+    const friendRequest = user.pendingFriendRequests.find(req => req.toUserId == friendId);
 
     return response.status(201).send({ message: 'Demande d\'amitié envoyée avec succès', friendRequest: friendRequest });
 }
