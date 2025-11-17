@@ -1,8 +1,11 @@
 const Card = require('./card.js');
 
 class Arena extends Card {
-    constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl) {
+    backgroundPictureUrl;
+
+    constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl,backgroundPictureUrl) {
         super(cardId, name, 'arena', mandat, pictureUrl, description, weight, level, borderPictureUrl);
+        this.backgroundPictureUrl=backgroundPictureUrl;
     }
 }
 

@@ -94,7 +94,9 @@ class Card {
                 card = new Member(id, name, mandat, picture, description, weight, level, borderPicture, hitpoints, attackMultiplier, attacks);
                 break;
             case 'arena':
-                card = new Arena(row.cardId, row.name, row.mandat, row.picture, row.description, row.weight, level, levelRow.borderPicture);
+                const getImageQuery = db.prepare('SELECT backgroundPictureUrl FROM Arena WHERE cardId= ?');
+                const backgroundPictureUrlRow =getImageQuery.get(row.cardId);
+                card = new Arena(row.cardId, row.name, row.mandat, row.picture, row.description, row.weight, level, levelRow.borderPicture, backgroundPictureUrlRow.backgroundPictureUrl);
                 break;
             default:
                 db.close();
