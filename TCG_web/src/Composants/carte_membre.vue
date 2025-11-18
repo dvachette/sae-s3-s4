@@ -1,5 +1,5 @@
 <template>
-  <div class="carte" :style="{'--w' : '550px'}">
+  <div class="carte" :style="{'--w' : largeur }">
     <img src="@/assets/imgs/carte/perso/fond_comm.png" alt="carte" />
      <div id="haut_carte">
         <p id="nom">Mzhdunosaure</p>
@@ -37,6 +37,12 @@
 
 <script setup>
 const niveau = "niveau";
+
+const props = defineProps({
+  largeur : String
+})
+
+const styleValue = "{'--w' : "+props.largeur+"}"
 </script>
 
 <style scoped>
