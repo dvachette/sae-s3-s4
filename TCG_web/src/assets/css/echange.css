@@ -1,0 +1,41 @@
+@import './style.css';
+
+.autres_echange {
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: rgb(var(--jaune300));
+  width: 35vw;
+  height: 23vh;
+  justify-content: center;
+  border: solid, 5px, rgb(var(--orange400));
+  border-radius: 20px;
+  box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
+  font-size: 1.2rem;
+}
+
+.reception {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+}
+
+.a_don {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  text-align: center;
+  border-right: solid 3px rgb(var(--orange400));
+}
+
+.reception > p,
+.a_don > p {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+.los_cartos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
