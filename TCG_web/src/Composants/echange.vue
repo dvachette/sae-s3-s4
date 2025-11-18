@@ -2,14 +2,14 @@
   <div class="autres_echange">
     <div class="reception">
       <p>Carte demandée</p>
-      <carte_membre />
+      <carte_membre largeur="5.5vw" />
     </div>
     <div class="a_don">
       <p>Cartes à recevoir</p>
       <div class="los_cartos">
-        <carte_membre />
-        <carte_membre />
-        <carte_membre />
+        <carte_membre largeur="5.5vw" />
+        <carte_membre largeur="5.5vw" />
+        <carte_membre largeur="5.5vw" />
       </div>
     </div>
   </div>

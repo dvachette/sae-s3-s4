@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="toutes_les_cartes">
-      <Carte_membre></Carte_membre>
+      <Carte_membre largeur="200px"></Carte_membre>
     </div>
   </main>
 </template>

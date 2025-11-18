@@ -10,7 +10,7 @@
   border: solid, 5px, rgb(var(--orange400));
   border-radius: 20px;
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
-  font-size: 1.2rem;
+  font-size: 1.4vw;
 }
 
 .reception {

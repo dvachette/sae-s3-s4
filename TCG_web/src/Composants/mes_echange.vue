@@ -2,14 +2,14 @@
   <div class="mon_echange">
     <div class="demande">
       <p>Carte demandée</p>
-      <carte_membre />
+      <carte_membre largeur="5.5vw" />
     </div>
     <div class="don">
       <p>Cartes à donner</p>
       <div class="les_cartes">
-        <carte_membre />
-        <carte_membre />
-        <carte_membre />
+        <carte_membre largeur="5.5vw" />
+        <carte_membre largeur="5.5vw" />
+        <carte_membre largeur="5.5vw" />
       </div>
     </div>
   </div>
