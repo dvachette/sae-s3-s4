@@ -28,9 +28,13 @@
     </div>
 
     <div class="bas_carte">
-      <p class="faib/force">Faiblesse</p>
-      <p class="faib/force">Force</p>
-      <p class="mandat">2024-2025</p>
+      <p class="faibForce">Faiblesse</p>
+      <p class="faibForce">Force</p>
+      <img src="@/assets/imgs/carte/perso/faiblessesForces/suivi.png" alt="faiblesse"/>
+      <img src="@/assets/imgs/carte/perso/faiblessesForces/locviseur.png" alt="force"/>
+      <p class="dateMandat">2024 2025</p>
+      <img src="@/assets/imgs/carte/perso/mandats/sdi.png" alt="mandat" id="imgMandat"/>
+      <p class="descCarte">description courte de la personne représentée sur la carte</p>
     </div>
   </div>
 </template>
