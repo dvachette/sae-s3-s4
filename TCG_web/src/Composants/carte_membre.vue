@@ -1,6 +1,7 @@
 <template>
   <div class="carte" :style="{'--w' : largeur }">
-    <img src="@/assets/imgs/carte/perso/fond_comm.png" alt="carte" />
+    <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
+    <img src="@/assets/imgs/carte/perso/cléLocal.png" alt="imgCarte" />
      <div id="haut_carte">
         <p id="nom">Mzhdunosaure</p>
         <div class="PV">
@@ -46,7 +47,6 @@ const props = defineProps({
   largeur : String
 })
 
-const styleValue = "{'--w' : "+props.largeur+"}"
 </script>
 
 <style scoped>
