@@ -3,12 +3,12 @@
   <main id="booster">
     <div class="Récompenses_quotidiennes">
       <h2>Récompenses quotidiennes</h2>
-      <div class="jour actif fait"  id="j1">
+      <div class="jour fait"  id="j1">
         <p>Jour 1</p>
         <p>20</p>
         <img src="@/assets/imgs/Clef.png" alt="clé"/>
       </div>
-      <div class="jour fait" id="j2">
+      <div class="jour actif" id="j2">
         <p>Jour 2</p>
         <img src="@/assets/imgs/carte/carte_inconnue.png" alt="">
       </div>
