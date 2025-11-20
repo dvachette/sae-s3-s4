@@ -9,7 +9,10 @@ class Member extends Card {
     modifiers;
     attacks;
     statusEffects;
-    constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl, hitpoints, attackMultiplier, attacks) {
+    type;
+    force;
+    faiblesse;
+    constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl, hitpoints, attackMultiplier, attacks,type,force,faiblesse) {
         super(cardId, name, 'member', mandat, pictureUrl, description, weight, level, borderPictureUrl);
         this.hitpoints = hitpoints;
         this.maxHitpoints = hitpoints;
@@ -17,6 +20,9 @@ class Member extends Card {
         this.modifiers = [];
         this.attacks = attacks;
         this.statusEffects = [];
+        this.type=type;
+        this.force=force;
+        this.faiblesse=faiblesse;
     }
     
     static fromId(id, level) {

@@ -42,7 +42,9 @@ class Type{
             faiblessesId.push(faiblesseRow.forceId);
         }
 
-        return new Type(row.typeId,row.name,row.icon,row.color,forcesId,faiblessesId);
+        return new Type(row.typeId,row.name,row.icone,row.color,forcesId,faiblessesId);
     }
 
 }
+
+module.exports=Type;

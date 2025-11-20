@@ -1,3 +1,3 @@
-const Card = require("../objects/card.js");
-const cards = Card.getAll();
-console.log(cards);
+const Type = require("../objects/type.js");
+const types = Type.fromId(6);
+console.log(types);
