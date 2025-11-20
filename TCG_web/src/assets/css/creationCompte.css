@@ -29,12 +29,12 @@ main > a {
   align-self: start;
   padding : 5% 0 0 2%;
 
-  width: 100%;
+  width: 50%;
 }
 
 main > a > button{
   height: 7vh;
-  width: 50%;
+  width: 100%;
   background-color: rgb(var(--jaune200));
   border: 3px solid rgb(var(--orange400));
   color: rgb(var(--orange400));
