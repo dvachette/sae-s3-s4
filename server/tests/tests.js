@@ -1,3 +1,3 @@
-const Card = require("../objects/card.js");
-const nathalie = Card.fromId(38, 1);
-console.log(nathalie);
+const User = require("../objects/user.js");
+const elise = User.fromId(10);
+console.log(elise);

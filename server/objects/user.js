@@ -3,6 +3,7 @@ const Collection = require("./collection.js");
 const FriendRequest = require("./friendRequest.js");
 const Trade = require("./trade.js");
 const Card = require("./card.js");
+const Deck = require("./deck.js");
 class User {
     // Attibuts et méthodes de la classe User
     userId;
@@ -17,8 +18,9 @@ class User {
     sentTrades;
     receivedTrades;
     acceptedTrades;
+    deck;
 
-    constructor(userId, username, email, lastBoosterOpening, balance) {
+    constructor(userId, username, email, lastBoosterOpening, balance, deck) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -30,10 +32,12 @@ class User {
         this.pendingIncomingRequests = [];
         this.sentTrades = [];
         this.receivedTrades = [];
+        this.acceptedTrades = [];
+        this.deck = deck;
     }
 
     static fromRow(row) {
-        const user = new User(row.userId, row.name, row.email, row.lastBoosterOppening, row.balance);
+        const user = new User(row.userId, row.name, row.email, row.lastBoosterOppening, row.balance, Deck.fromUserId(row.userId));
 
         // Récupération de la collection de l'utilisateur
         const db = new Database("database.db");
@@ -83,6 +87,7 @@ class User {
                 }
             }
         }
+
         return user;
 
     }
