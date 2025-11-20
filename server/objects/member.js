@@ -51,7 +51,32 @@ class Member extends Card {
             db.close();
             return null;
         }
+
+        const getTypesIdsQuery = db.prepare('SELECT * FROM types_des_membres WHERE membreId = ?');
+        const typesRows = getTypesIdsQuery.all(id);
+
+        const type = [];
+        const force = [];
+        const faiblesse = [];
+
+        if (typesRows.length < 1) {
+            db.close();
+            return null;
+        }
         db.close();
+        const Type = require("./type.js");
+        for (const typeRow of typesRows) {
+            const currentType = Type.fromId(typeRow.typeId);
+            if (!currentType) {
+                continue;
+            } else {
+                type.push(currentType);
+            }
+        }
+        // Récuperer les forces et faiblesses du type avec la priorité à 1
+        const prioType = typesRows.filter(tr => tr.priorite === 1).map(tr => Type.fromId(tr.typeId))[0];
+        force.push(...prioType.forceId);
+        faiblesse.push(...prioType.faiblesseId);
         const name = cardRow.name;
         const mandat = cardRow.mandat;
         const picture = cardRow.picture;
@@ -76,7 +101,7 @@ class Member extends Card {
         if (attack2Name) {
             attacks.push(new Attack(attack2Effects, attack2Name, attack2Cost, attack2Description));
         }
-        return new Member(id, name, mandat, picture, description, weight, level, borderPicture, hitpoints, attackMultiplier, attacks);
+        return new Member(id, name, mandat, picture, description, weight, level, borderPicture, hitpoints, attackMultiplier, attacks, type,force,faiblesse);
 
     }
 }

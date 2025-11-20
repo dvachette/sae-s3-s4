@@ -1,3 +1,3 @@
-const Type = require("../objects/type.js");
-const types = Type.fromId(6);
-console.log(types);
+const Card = require("../objects/card.js");
+const nathalie = Card.fromId(38, 1);
+console.log(nathalie);

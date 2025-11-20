@@ -58,40 +58,7 @@ class Card {
                 }
                 break;
             case 'member':
-                const getMemberByIdQuery = db.prepare('SELECT * FROM member WHERE cardId = ?');
-                const memberRow = getMemberByIdQuery.get(id);
-
-                if (!memberRow) {
-                    db.close();
-                    return null;
-                }
-
-                db.close();
-                const name = row.name;
-                const mandat = row.mandat;
-                const picture = row.picture;
-                const description = row.description;
-                const weight = row.weight;
-                const borderPicture = levelRow.borderPicture;
-                const hitpoints = levelRow.hitpoints;
-                const attackMultiplier = levelRow.multiplier;
-            
-                const attack1Name = memberRow.attack1Name;
-                const attack1Cost = memberRow.attack1Cost;
-                const attack1Description = memberRow.attack1Description;
-                const attack1Effects = JSON.parse(memberRow.attack1Effects);
-
-                const attack2Name = memberRow.attack2Name;
-                const attack2Cost = memberRow.attack2Cost;
-                const attack2Description = memberRow.attack2Description;
-                const attack2Effects = JSON.parse(memberRow.attack2Effects);
-            
-                const attacks = []
-                attacks.push(new Attack(attack1Effects, attack1Name, attack1Cost, attack1Description));
-                if (attack2Name) {
-                    attacks.push(new Attack(attack2Effects, attack2Name, attack2Cost, attack2Description));
-                }
-                card = new Member(id, name, mandat, picture, description, weight, level, borderPicture, hitpoints, attackMultiplier, attacks);
+                card = Member.fromId(id, level);
                 break;
             case 'arena':
                 const getImageQuery = db.prepare('SELECT backgroundPictureUrl FROM Arena WHERE cardId= ?');
