@@ -15,6 +15,7 @@ const userRoutes = require('./routes/user.js'); // Importation des routes utilis
 const boosterRoutes = require('./routes/booster.js'); // Importation des routes booster
 const collectionRoutes= require('./routes/collection.js');// Importation des routes collection
 const tradeRoutes= require('./routes/trade.js');// Importation des routes trade
+const deckRoutes= require('./routes/deck.js');// Importation des routes deck
 
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
@@ -80,6 +81,9 @@ app.get('/trade/requests/me', tradeRoutes.getSelfTradeRequests);
 app.delete('/trade/request', tradeRoutes.deleteTrade);
 app.post('/trade/accept', tradeRoutes.acceptTrade);
 
+
+app.get("/deck", deckRoutes.getDeck);
+app.post("/deck/replaceCard", deckRoutes.replaceCardInDeck);
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
 app.listen(PORT, () => {
     console.log('ATTENTION, SERVEUR EN MODE DÉVELOPPEMENT, NE PAS UTILISER EN PRODUCTION !');

@@ -82,6 +82,7 @@ class Card {
 
         const cards = [];
         for (const row of rows) {
+            console.log(row);
             cards.push(Card.fromId(row.cardId, 1));
         }
         return cards;
@@ -90,6 +91,7 @@ class Card {
     static getRandomWeightedCard(cards) {
         let totalWeight = 0;
         for (const card of cards) {
+            console.log(card);
             totalWeight += card.weight;
         }
         console.log("Total weight:", totalWeight);

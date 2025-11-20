@@ -20,7 +20,7 @@ class User {
     acceptedTrades;
     deck;
 
-    constructor(userId, username, email, lastBoosterOpening, balance, deck) {
+    constructor(userId, username, email, lastBoosterOpening, balance) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -33,11 +33,11 @@ class User {
         this.sentTrades = [];
         this.receivedTrades = [];
         this.acceptedTrades = [];
-        this.deck = deck;
+        this.deck = null;
     }
 
     static fromRow(row) {
-        const user = new User(row.userId, row.name, row.email, row.lastBoosterOppening, row.balance, Deck.fromUserId(row.userId));
+        const user = new User(row.userId, row.name, row.email, row.lastBoosterOppening, row.balance);
 
         // Récupération de la collection de l'utilisateur
         const db = new Database("database.db");
@@ -88,6 +88,17 @@ class User {
             }
         }
 
+        // Récupération du deck de l'utilisateur
+        const deckCard1 = user.collection.find(item => item.card.cardId === row.card1Id)?.card || null;
+        const deckCard2 = user.collection.find(item => item.card.cardId === row.card2Id)?.card || null;
+        const deckCard3 = user.collection.find(item => item.card.cardId === row.card3Id)?.card || null;
+        const deckCard4 = user.collection.find(item => item.card.cardId === row.card4Id)?.card || null;
+        const deckCard5 = user.collection.find(item => item.card.cardId === row.card5Id)?.card || null;
+        const petCard = user.collection.find(item => item.card.cardId === row.petId)?.card || null;
+        const arenaCard = user.collection.find(item => item.card.cardId === row.arenaId)?.card || null;
+
+        const deckCards = [deckCard1, deckCard2, deckCard3, deckCard4, deckCard5];
+        user.deck = new Deck(deckCards, petCard, arenaCard);
         return user;
 
     }
