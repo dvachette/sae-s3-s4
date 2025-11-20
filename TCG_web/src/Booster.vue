@@ -14,7 +14,7 @@
       </div>
       <div class="jour" id="j3">
         <p>Jour 3</p>
-        <div class="Booster"></div>
+        <img src="@/assets/imgs/booster.png" alt="booster" class="Booster"/>
       </div>
       <div class="jour" id="j4">
         <p>Jour 4</p>
@@ -32,11 +32,11 @@
       <div class="jour" id="j7">
         <p>Jour 7</p>
         <p>3</p>
-        <div class="Booster"></div>
+        <img src="@/assets/imgs/booster.png" alt="booster" class="Booster"/>
       </div>
     </div>
     <div class="Booster_page">
-      <div class="Booster"></div>
+      <img src="@/assets/imgs/booster.png" alt="booster" class="Booster"/>
       <p>11h 21min 27sec</p>
       <boutons_achat />
     </div>

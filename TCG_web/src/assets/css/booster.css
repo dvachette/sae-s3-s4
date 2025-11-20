@@ -106,7 +106,7 @@ img {
 
 .jour > .Booster {
   width : 30px;
-  height : 50px;   
+  height: 46.2px;
 }
 
 
@@ -147,9 +147,9 @@ img {
 
 .Booster {
   height: 55vh;
-  width: 20vw;
-  background-color: rgb(var(--onyx));
-  box-shadow: 0 10px 10px rgba(var(--onyx), 1);
+  width: 35.2vh;
+  background-color: transparent;
+  /*box-shadow: 0 10px 10px rgba(var(--onyx), 1);*/
 }
 
 .Compteur {
