@@ -85,3 +85,7 @@ header > * {
   font-family: 'Lusitana', sans-serif;
   font-weight: normal;
 }
+
+a, button {
+  cursor: pointer;
+}
