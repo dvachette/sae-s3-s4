@@ -1,0 +1,38 @@
+@import './style.css';
+* .attente {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgb(var(--jaune200));
+  width: 25vw;
+  height: 8vh;
+  border-radius: 30px;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 1%;
+}
+
+.attente p {
+  grid-column: 1/2;
+  color: rgb(var(--onyx));
+  font-family: 'Mako';
+  font-size: 150%;
+}
+
+.annuler {
+  grid-column: 3/4;
+  display: flex;
+  flex-direction: row;
+  width: 7vh;
+  height: 7vh;
+  background-color: rgb(var(--rouge800));
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+}
+
+.annuler > img {
+  width: 5vh;
+  height: 6vh;
+}

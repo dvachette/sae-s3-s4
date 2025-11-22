@@ -12,9 +12,9 @@
       <div class="Tri">
         <h2>Trié par :</h2>
         <label><input type="radio" name="tri" value="mandat">mandat</input></label>
-        <label><input type="radio" name="croissant" value="chronologique">chronologique</input></label>
+        <label><input type="checkbox" name="croissant" value="chronologique">chronologique</input></label>
         <label><input type="radio" name="tri" value="niveau">niveau</input></label>
-        <label><input type="radio" name="croissant" value="croissant">croissant</input></label>
+        <label><input type="checkbox" name="croissant" value="croissant">croissant</input></label>
         <label><input type="radio" name="tri" value="pôle">pôle</input></label>
       </div>
       <div class="Filtres">

@@ -1,0 +1,58 @@
+@import './style.css';
+
+.demande {
+  display: grid;
+  grid-template-columns: 3.9fr 1fr 1fr;
+  grid-template-rows: 100%;
+  background-color: rgb(var(--jaune200));
+  width: 25vw;
+  height: 8vh;
+  border-radius: 30px;
+  align-items: center;
+  padding-left: 2%;
+  padding-right: 1%;
+}
+
+.demande p {
+  grid-column: 1/2;
+  color: rgb(var(--onyx));
+  font-family: 'Mako';
+  font-size: 150%;
+}
+
+.accepter {
+  grid-column: 2/3;
+  display: flex;
+  flex-direction: row;
+  width: 7vh;
+  height: 7vh;
+  background-color: rgb(var(--vert));
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+}
+
+.accepter > img {
+  width: 5vh;
+  height: 6vh;
+  align-self: center;
+}
+
+.refuser {
+  grid-column: 3/4;
+  display: flex;
+  flex-direction: row;
+  width: 7vh;
+  height: 7vh;
+  background-color: rgb(var(--rouge800));
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+}
+
+.refuser > img {
+  width: 5vh;
+  height: 6vh;
+}

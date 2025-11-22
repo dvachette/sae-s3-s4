@@ -1,301 +1,297 @@
 @import './style.css';
 
 p {
-    font-family: 'Mako';
-    margin:0;
+  font-family: 'Mako';
+  margin: 0;
 }
 
-.carte { 
-    width : var(--w);
-    height : calc(1.39*var(--w));
+.carte {
+  width: var(--w);
+  height: calc(1.39 * var(--w));
 
-    /*grid de toute la carte, divisé en 3 lignes : haut_carte (tour de l'img), attaques, bas_carte*/ 
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 60% 3% 18% 3% 16%;
+  /*grid de toute la carte, divisé en 3 lignes : haut_carte (tour de l'img), attaques, bas_carte*/
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 60% 3% 18% 3% 16%;
 }
 
 .carte > img:first-of-type {
-    grid-column: 1/-1;
-    grid-row: 1/-1;
-    width : 100%;
-    height: 100%;
-    z-index: 1;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .carte > img:nth-of-type(2) {
-    grid-column: 1/-1;
-    grid-row: 1;
-    width : calc(var(--w)*0.84);
-    height: calc(var(--w)*0.84);
+  grid-column: 1/-1;
+  grid-row: 1;
+  width: calc(var(--w) * 0.84);
+  height: calc(var(--w) * 0.84);
 
-    padding : 8% 8% 0 8%; 
+  padding: 8% 8% 0 8%;
 
-    z-index: 0;
+  z-index: 0;
 }
-
 
 /*----------------------Partie Haut_carte----------------------*/
 #haut_carte {
-    grid-column: 1;
-    grid-row: 1;
+  grid-column: 1;
+  grid-row: 1;
 
-    padding : 8% 8% 0 8%; 
+  padding: 8% 8% 0 8%;
 
-    /*grid du haut de l'image pour placer chaque info*/
-    display: grid;
-    grid-template-columns: 20% 44% 13% 23%;
-    grid-template-rows: 10% 83% 7%;
+  /*grid du haut de l'image pour placer chaque info*/
+  display: grid;
+  grid-template-columns: 20% 44% 13% 23%;
+  grid-template-rows: 10% 83% 7%;
 
-    z-index: 2;
+  z-index: 2;
 }
 
 #nom {
-    grid-column: 1/3;
-    grid-row: 1/2;
+  grid-column: 1/3;
+  grid-row: 1/2;
 
-    font-size: calc(var(--w)*0.067);
-    font-weight: bold;
+  font-size: calc(var(--w) * 0.067);
+  font-weight: bold;
 
-    padding: 0 5% 3% 5%;
+  padding: 0 5% 3% 5%;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .PV {
-    grid-column: 1/2;
-    grid-row: 3/4;
+  grid-column: 1/2;
+  grid-row: 3/4;
 
-    padding: 5% 20% 2% 6%;
+  padding: 5% 20% 2% 6%;
 
-    display: flex;
+  display: flex;
 }
 
 #PV {
-    margin: 0;
-    font-size: calc(var(--w)*0.05);
-    font-weight: bold;
-    margin-left: auto;
+  margin: 0;
+  font-size: calc(var(--w) * 0.05);
+  font-weight: bold;
+  margin-left: auto;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #lblPV {
-    padding: 0 0 0 5%;
-    font-size: calc(var(--w)*0.027);
-    font-weight: bold;
-    
-/*mettre le texte pv vers le bas de sa case*/
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    line-height: calc(var(--w)*0.027); /*espace en hauteur que prend une ligne de texte 
+  padding: 0 0 0 5%;
+  font-size: calc(var(--w) * 0.027);
+  font-weight: bold;
+
+  /*mettre le texte pv vers le bas de sa case*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  line-height: calc(
+    var(--w) * 0.027
+  ); /*espace en hauteur que prend une ligne de texte 
     -> meme que taille de police pour pas créer d'espace en bas*/
 }
 
 .niv {
-    grid-column: 4/5;
-    grid-row: 3/4;
+  grid-column: 4/5;
+  grid-row: 3/4;
 
-    padding: 5% 6% 2% 20%;
+  padding: 5% 6% 2% 20%;
 
-    display: flex;
+  display: flex;
 }
 
 #niv {
-    margin: 0;
-    font-size: calc(var(--w)*0.045);
-    font-weight: 600;
-    margin-right: auto;
-    padding-bottom: 2%;
+  margin: 0;
+  font-size: calc(var(--w) * 0.045);
+  font-weight: 600;
+  margin-right: auto;
+  padding-bottom: 2%;
 
-    display: flex;
-    align-items: center;
-    line-height: calc(var(--w)*0.05); 
+  display: flex;
+  align-items: center;
+  line-height: calc(var(--w) * 0.05);
 }
 
 #lblNiv {
-    padding: 0 5% 0 0;
-    font-size: calc(var(--w)*0.03);
-    font-weight:500;
-    
-/*mettre le texte pv vers le bas de sa case*/
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    line-height: calc(var(--w)*0.03); 
-}
+  padding: 0 5% 0 0;
+  font-size: calc(var(--w) * 0.03);
+  font-weight: 500;
 
+  /*mettre le texte pv vers le bas de sa case*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  line-height: calc(var(--w) * 0.03);
+}
 
 /*----------------------Partie Attaques----------------------*/
 .attaques {
-    grid-row: 3;
-    grid-column: 1/-1;
+  grid-row: 3;
+  grid-column: 1/-1;
 
-    padding : 0 8% 0 6.5%;
+  padding: 0 8% 0 6.5%;
 
-    display: grid;
-    grid-template-columns: 5% 68% 10% 17%;
-    grid-template-rows: 19% 27% 8% 19% 27%;
+  display: grid;
+  grid-template-columns: 5% 68% 10% 17%;
+  grid-template-rows: 19% 27% 8% 19% 27%;
 
-    z-index: 2;
+  z-index: 2;
 }
 
-.attaques > p:nth-of-type(-n+4){
-    grid-row : 1;
+.attaques > p:nth-of-type(-n + 4) {
+  grid-row: 1;
 }
 
-.attaques > p:nth-of-type(5){
-    grid-row: 2;
-    grid-column: 2/5;
-
-    
+.attaques > p:nth-of-type(5) {
+  grid-row: 2;
+  grid-column: 2/5;
 }
 
 .attaques > :nth-child(6),
 .attaques > :nth-child(7),
 .attaques > :nth-child(8),
 .attaques > :nth-child(9) {
-    grid-row : 4;
+  grid-row: 4;
 }
 
 .attaques > :last-child {
-    grid-row: 5;
-    grid-column: 2/5;
+  grid-row: 5;
+  grid-column: 2/5;
 }
 
 .attaques > .cout {
-    font-size: calc(var(--w)*0.037);
-    font-weight: bold;
+  font-size: calc(var(--w) * 0.037);
+  font-weight: bold;
 
-    text-align: center;
+  text-align: center;
 }
 
 .attaques > .nom_attaque {
-    font-size: calc(var(--w)*0.053);
-    font-weight: bold;
+  font-size: calc(var(--w) * 0.053);
+  font-weight: bold;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .attaques > .degats {
-    font-size: calc(var(--w)*0.053);
-    font-weight: bold;
+  font-size: calc(var(--w) * 0.053);
+  font-weight: bold;
 
-    margin-left : auto;
+  margin-left: auto;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.attaques > .lblDegats {    
-    font-size: calc(var(--w)*0.037);
-    font-weight: 500;
+.attaques > .lblDegats {
+  font-size: calc(var(--w) * 0.037);
+  font-weight: 500;
 
-    padding : 0 0 0 5%;
+  padding: 0 0 0 5%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    line-height: calc(var(--w)*0.037);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  line-height: calc(var(--w) * 0.037);
 }
 
 .attaques > .desc_attaque {
-    font-size: calc(var(--w)*0.03);
+  font-size: calc(var(--w) * 0.03);
 
-    padding : 1.25% 0 0 0;
-    line-height: calc(var(--w)*0.033); 
+  padding: 1.25% 0 0 0;
+  line-height: calc(var(--w) * 0.033);
 }
 
 /*----------------------Partie Bas_carte----------------------*/
 .bas_carte {
-    grid-row: 5;
-    grid-column: 1;
+  grid-row: 5;
+  grid-column: 1;
 
-    padding : 0 8% 6% 8%;
+  padding: 0 8% 6% 8%;
 
-    display: grid;
-    grid-template-columns: 20% 20% 30% 15% 15%;
-    grid-template-rows: 30% 47% 23%;
+  display: grid;
+  grid-template-columns: 20% 20% 30% 15% 15%;
+  grid-template-rows: 30% 47% 23%;
 
-    z-index: 2;
-
+  z-index: 2;
 }
 
 .bas_carte > p:first-of-type {
-    grid-column: 1;
-    grid-row: 1;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .bas_carte > p:nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 1;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .bas_carte > img:first-of-type {
-    grid-column: 1;
-    grid-row: 2;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .bas_carte > img:nth-of-type(2) {
-    grid-column: 2;
-    grid-row: 2;
+  grid-column: 2;
+  grid-row: 2;
 }
 
-
 .faibForce {
-    font-size: calc(var(--w)*0.037);
-    font-weight: 500;
+  font-size: calc(var(--w) * 0.037);
+  font-weight: 500;
 
-    text-align: center;
+  text-align: center;
 }
 
 .bas_carte > img {
-    width : calc(var(--w)*0.075);
-    height : calc(var(--w)*0.075);
+  width: calc(var(--w) * 0.075);
+  height: calc(var(--w) * 0.075);
 
-    margin : auto;
+  margin: auto;
 }
 
 .dateMandat {
-    grid-column: 4;
-    grid-row: 1/3;
+  grid-column: 4;
+  grid-row: 1/3;
 
-    font-size: calc(var(--w)*0.037);
-    font-weight: 500;
+  font-size: calc(var(--w) * 0.037);
+  font-weight: 500;
 
-    display: flex;
-    align-items: center;
-    text-align: end;
+  display: flex;
+  align-items: center;
+  text-align: end;
 
-    padding : 5% 12% 0 0 
+  padding: 5% 12% 0 0;
 }
 
 #imgMandat {
-    grid-column: 5;
-    grid-row: 1/3;
+  grid-column: 5;
+  grid-row: 1/3;
 
-    width : calc(var(--w)*0.112);
-    height : calc(var(--w)*0.112);
+  width: calc(var(--w) * 0.112);
+  height: calc(var(--w) * 0.112);
 
-    margin : auto auto 0 0;
+  margin: auto auto 0 0;
 
-    display:flex;
-    justify-content: end;
+  display: flex;
+  justify-content: end;
 }
 
 .descCarte {
-    grid-column: 1/-1;
-    grid-row: 3;
+  grid-column: 1/-1;
+  grid-row: 3;
 
-    font-size: calc(var(--w)*0.025);
-    font-weight: 500;
+  font-size: calc(var(--w) * 0.025);
+  font-weight: 500;
 
-    text-align: center;
-    padding-top : 2%;
+  text-align: center;
+  padding-top: 2%;
 
-    line-height: calc(var(--w)*0.025);
+  line-height: calc(var(--w) * 0.025);
 }

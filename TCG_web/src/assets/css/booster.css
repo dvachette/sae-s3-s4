@@ -5,6 +5,10 @@
   flex-direction: row;
 }
 
+p {
+  font-family: 'Mako';
+}
+
 /*-------------------------------Récompenses Quotidiennes-------------------------------*/
 .Récompenses_quotidiennes {
   width: 23.5vw;
@@ -16,7 +20,7 @@
   grid-template-columns: 45% 7% 45%;
   grid-template-rows: 8% 19.5% 19.5% 19.5% 19.5%;
 
-  padding : 0 2% 2% 2%;
+  padding: 0 2% 2% 2%;
   row-gap: 3%;
 }
 
@@ -40,11 +44,10 @@
   text-align: center;
 
   border-radius: 5px;
-
 }
 
 .jour > :first-child {
-  width : 100%;
+  width: 100%;
   margin: 0;
 
   display: flex;
@@ -66,57 +69,57 @@
 #j1 {
   grid-row: 2;
   grid-column: 1;
-} 
+}
 
 #j2 {
   grid-row: 2;
   grid-column: 3;
-} 
+}
 
 #j3 {
   grid-row: 3;
   grid-column: 1;
-} 
+}
 
 #j4 {
   grid-row: 3;
   grid-column: 3;
-} 
+}
 
 #j5 {
   grid-row: 4;
   grid-column: 1;
-} 
+}
 
 #j6 {
   grid-row: 4;
   grid-column: 3;
-} 
+}
 
 #j7 {
   grid-row: 5;
   grid-column: 1/-1;
-} 
+}
 
 img {
-  height : 40%;
+  height: 40%;
 
   align-self: center;
 }
 
 .jour > .Booster {
-  width : 30px;
+  width: 30px;
   height: 46.2px;
 }
 
-
 /*classes pour différencier les fait et non fait*/
-.actif {/*récompense du jour actif non récupéré*/
+.actif {
+  /*récompense du jour actif non récupéré*/
   border: solid 2px rgb(var(--rouge600));
 }
 
 .fait {
-  position : relative;
+  position: relative;
 }
 
 .fait > * {
@@ -124,8 +127,9 @@ img {
   z-index: 1;
 }
 
-.fait::before { /* récompenses des jours précedents, deja récupéré*/
-  content : "";
+.fait::before {
+  /* récompenses des jours précedents, deja récupéré*/
+  content: '';
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -133,7 +137,6 @@ img {
   background: rgba(var(--rouge800), 0.7);
   border-radius: 3px;
 }
-
 
 /*------------------------------------Partie Booster------------------------------------*/
 .Booster_page {

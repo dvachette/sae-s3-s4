@@ -1,17 +1,17 @@
 <template>
-  <div class="carte" :style="{'--w' : largeur }">
+  <div class="carte" :style="{ '--w': largeur }">
     <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
     <img src="@/assets/imgs/carte/perso/cléLocal.png" alt="imgCarte" />
-     <div id="haut_carte">
-        <p id="nom">Mzhdunosaure</p>
-        <div class="PV">
-            <p id="PV">120</p>
-            <p id="lblPV"> PV</p>  
-        </div>
-        <div class="niv">
-            <p id="lblNiv">{{niveau}}</p>
-            <p id="niv">5</p> 
-        </div>
+    <div id="haut_carte">
+      <p id="nom">Mzhdunosaure</p>
+      <div class="PV">
+        <p id="PV">120</p>
+        <p id="lblPV">PV</p>
+      </div>
+      <div class="niv">
+        <p id="lblNiv">{{ niveau }}</p>
+        <p id="niv">5</p>
+      </div>
     </div>
 
     <div class="attaques">
@@ -35,11 +35,23 @@
     <div class="bas_carte">
       <p class="faibForce">Faiblesse</p>
       <p class="faibForce">Force</p>
-      <img src="@/assets/imgs/carte/perso/faiblessesForces/suivi.png" alt="faiblesse"/>
-      <img src="@/assets/imgs/carte/perso/faiblessesForces/locviseur.png" alt="force"/>
+      <img
+        src="@/assets/imgs/carte/perso/faiblessesForces/suivi.png"
+        alt="faiblesse"
+      />
+      <img
+        src="@/assets/imgs/carte/perso/faiblessesForces/locviseur.png"
+        alt="force"
+      />
       <p class="dateMandat">2024 2025</p>
-      <img src="@/assets/imgs/carte/perso/mandats/sdi.png" alt="mandat" id="imgMandat"/>
-      <p class="descCarte">description courte de la personne représentée sur la carte</p>
+      <img
+        src="@/assets/imgs/carte/perso/mandats/sdi.png"
+        alt="mandat"
+        id="imgMandat"
+      />
+      <p class="descCarte">
+        description courte de la personne représentée sur la carte
+      </p>
     </div>
   </div>
 </template>
@@ -50,7 +62,6 @@ const niveau = 'niveau';
 const props = defineProps({
   largeur: String,
 });
-
 </script>
 
 <style scoped>

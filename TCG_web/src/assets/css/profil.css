@@ -3,6 +3,7 @@
 main {
   display: flex;
   flex-direction: row;
+  font-family: 'Mako';
 }
 
 div > p {

@@ -10,6 +10,7 @@
   justify-content: space-evenly;
   border-radius: 20px;
   font-size: 1.6rem;
+  font-family: 'Mako';
 }
 
 .bouton_achat:hover {

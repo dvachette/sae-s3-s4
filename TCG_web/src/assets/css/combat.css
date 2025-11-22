@@ -20,12 +20,14 @@
 }
 
 .F_f > button {
+  font-family: 'Mako';
+  color: rgb(var(--onyx));
   background-color: rgb(var(--jaune300));
   width: 14vw;
   height: 6vh;
   border: none;
   border-radius: 25px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .F_f > button:hover {
@@ -52,12 +54,14 @@
 }
 
 .lancement_partie > button {
+  font-family: 'Mako';
+  color: rgb(var(--onyx));
   background-color: rgb(var(--orange400));
   width: 14vw;
   height: 6vh;
   border: none;
   border-radius: 25px;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .lancement_partie > button:hover {
