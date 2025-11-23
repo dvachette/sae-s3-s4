@@ -1,0 +1,16 @@
+@import './style.css';
+
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Remplit l'écran sans bandes noires */
+}
+
+.video-container {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}

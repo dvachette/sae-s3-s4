@@ -36,7 +36,9 @@
       </div>
     </div>
     <div class="Booster_page">
-      <img src="@/assets/imgs/booster.png" alt="booster" class="Booster" />
+      <router-link to="/ouverture"
+        ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
+      /></router-link>
       <p>11h 21min 27sec</p>
       <boutons_achat />
     </div>
