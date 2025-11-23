@@ -14,3 +14,22 @@ video {
   align-items: center;
   z-index: 1;
 }
+
+.min-h-screen {
+  min-height: 100vh;
+}
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+.p-8 {
+  padding: 2rem;
+}

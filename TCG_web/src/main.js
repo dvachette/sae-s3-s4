@@ -10,4 +10,7 @@ import Boutique from './Boutique.vue';
 import Social from './Social.vue';
 import Profil from './Profil.vue';
 
+const app = createApp(App);
+
+app.mount('#app');
 createApp(App).use(router).mount('#app');

@@ -6,50 +6,116 @@
     </video>
   </div>
 
-  <div v-else class="révélation">
+  <div
+    v-else-if="!allCardsGone"
+    class="min-h-screen flex items-center justify-center bg-gray-100 p-8"
+  >
     <Stack
-      :randomRotation="true"
+      :randomRotation="false"
       :sensitivity="180"
       :sendToBackOnClick="false"
-      :cardDimensions="{ width: 200, height: 200 }"
-      :cardsData="images"
-    ></Stack>
+      :cardDimensions="{ width: 300, height: 420 }"
+      :cardsData="cards"
+      @allCardsGone="onAllCardsGone"
+    />
+  </div>
+
+  <!-- Écran après que toutes les cartes sont parties -->
+  <div
+    v-else
+    class="min-h-screen flex items-center justify-center bg-green-500"
+  >
+    <h1 class="text-4xl text-white">Toutes les cartes sont parties ! 🎉</h1>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import Stack from '@/Composants/Stack.vue';
+import carte_membre from '@/Composants/carte_membre.vue';
 
-const showVideo = ref(true);
+const showVideo = ref(true); // ← Remettez true pour la vidéo
 const introVideo = ref(null);
+const allCardsGone = ref(false);
 
-onMounted(() => {
-  introVideo.value.play().catch(() => {
-    // Autoplay peut échouer si la vidéo n’est pas muted → obligé de mettre muted
-  });
+// Surveiller quand la vidéo est montée
+watch(introVideo, (videoElement) => {
+  if (videoElement) {
+    videoElement.play().catch((error) => {
+      console.error('Erreur lecture vidéo:', error);
+    });
+  }
 });
 
 const onVideoEnd = () => {
   showVideo.value = false;
 };
 
-import Stack from './Stack.vue';
-const images = [
+const onAllCardsGone = () => {
+  console.log('Toutes les cartes sont parties');
+  allCardsGone.value = true;
+};
+
+const cards = [
   {
     id: 1,
-    img: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format',
+    component: carte_membre,
+    props: {
+      largeur: '100%',
+      data: {
+        nom: 'Mzhdunosaure',
+        pv: 120,
+        niveau: 5,
+      },
+    },
   },
   {
     id: 2,
-    img: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format',
+    component: carte_membre,
+    props: {
+      largeur: '100%',
+      data: {
+        nom: 'Autre Carte',
+        pv: 100,
+        niveau: 3,
+      },
+    },
   },
   {
     id: 3,
-    img: 'https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format',
+    component: carte_membre,
+    props: {
+      largeur: '100%',
+      data: {
+        nom: 'Troisième Carte',
+        pv: 80,
+        niveau: 4,
+      },
+    },
   },
   {
     id: 4,
-    img: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format',
+    component: carte_membre,
+    props: {
+      largeur: '100%',
+      data: {
+        nom: 'Quatrième Carte',
+        pv: 90,
+        niveau: 6,
+      },
+    },
+  },
+  {
+    id: 5,
+    component: carte_membre,
+    props: {
+      largeur: '100%',
+      data: {
+        nom: 'Cinquième Carte',
+        pv: 90,
+        niveau: 6,
+      },
+    },
   },
 ];
 </script>
