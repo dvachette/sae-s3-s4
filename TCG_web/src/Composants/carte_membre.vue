@@ -60,7 +60,8 @@
 const niveau = 'niveau';
 
 const props = defineProps({
-  largeur: String,
+  data: Object,
+  largeur: String
 });
 </script>
 
