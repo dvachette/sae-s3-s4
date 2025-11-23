@@ -11,11 +11,17 @@
       </div>
       <div class="Tri">
         <h2>Trié par :</h2>
-        <label><input type="radio" name="tri" value="mandat">mandat</input></label>
-        <label><input type="checkbox" name="croissant" value="chronologique">chronologique</input></label>
-        <label><input type="radio" name="tri" value="niveau">niveau</input></label>
-        <label><input type="checkbox" name="croissant" value="croissant">croissant</input></label>
-        <label><input type="radio" name="tri" value="pôle">pôle</input></label>
+        <div class="Tri_liste" v-for="item in options" :key="item.value">
+    <label>
+      <input type="radio" name="tri" v-model="selected" :value="item.value">
+      {{ item.label }}
+    </label>
+    <!-- Checkbox visible uniquement si ce radio est sélectionné -->
+    <label v-if="selected === item.value && item.checkbox">
+      <input type="checkbox" v-model="item.checkboxValue">
+      {{ item.checkbox }}
+    </label>
+  </div>
       </div>
       <div class="Filtres">
         <h2>Filtré par :</h2>
@@ -63,6 +69,14 @@ cartes.value = [
 const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
 const width = ref((Math.floor(80 * vw.value / 220))*220);
 const widthFlexCartes = ref(width.value+"px");
+
+const selected = ref(null);
+
+const options = ref([
+  { value: 'mandat', label: 'mandat', checkbox: 'chronologique', checkboxValue: false },
+  { value: 'niveau', label: 'niveau', checkbox: 'croissant', checkboxValue: false },
+  { value: 'pôle',   label: 'pôle', checkbox: null },
+]);
 </script>
 
 <style scoped>

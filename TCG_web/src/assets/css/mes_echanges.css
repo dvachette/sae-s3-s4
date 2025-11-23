@@ -14,6 +14,10 @@
   font-family: 'Mako';
 }
 
+.mon_echange:hover {
+  border: solid, 5px, rgb(var(--orange500));
+}
+
 .demande {
   display: flex;
   flex-direction: column;
@@ -30,6 +34,10 @@
   justify-content: center;
   text-align: center;
   border-left: solid 3px rgb(var(--jaune300));
+}
+
+.mon_echange:hover .don {
+  border-left: solid 3px rgb(var(--orange500));
 }
 
 .demande > p,

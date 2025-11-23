@@ -20,8 +20,8 @@ div > p {
 }
 
 .gestion_soi img {
-  width: 5vh;
-  height: 5vh;
+  width: 4.8vh;
+  height: 6vh;
 }
 
 .pp {
@@ -157,7 +157,8 @@ div > p {
 .param_stats {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
+  margin-top: 2vh;
   font-size: 1.5rem;
   color: rgb(var(--onyx));
   height: 100%;
@@ -165,6 +166,11 @@ div > p {
 
 .param_stats > * {
   margin-left: 5vw;
+}
+
+.param_stats > p {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 input[type='checkbox'] {
