@@ -1,11 +1,24 @@
 @import './style.css';
 
+.comp-echange {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comp-echange > p {
+  color: rgb(var(--orange400));
+  font-family: 'Mako';
+  font-size: 100%;
+  font-weight: bold;
+}
+
 .autres_echange {
   display: flex;
   flex-direction: row-reverse;
   background-color: rgb(var(--jaune300));
-  width: 30vw;
-  height: 10vw;
+  width: 33vw;
+  height: 11vw;
   justify-content: center;
   border: solid, 5px, rgb(var(--orange400));
   border-radius: 20px;

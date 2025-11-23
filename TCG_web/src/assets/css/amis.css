@@ -4,32 +4,32 @@
   display: flex;
   flex-direction: row;
   background-color: rgb(var(--jaune200));
-  width: 25vw;
-  height: 8vh;
+  width: 18vw;
+  height: 7.5vh;
   border-radius: 30px;
   align-items: center;
   justify-content: space-between;
-  padding-left: 2%;
-  padding-right: 1%;
+  padding-left: 4%;
+  padding-right: 2%;
 }
 
 .ami p {
   color: rgb(var(--onyx));
   font-family: 'Mako';
-  font-size: 150%;
+  font-size: 120%;
 }
 
 .ami_option {
-  width: 7vh;
-  height: 7vh;
+  display: flex;
+  width: 5vh;
+  height: 5vh;
   background-color: rgb(var(--orange400));
   border-radius: 50px;
+  align-items: center;
+  justify-content: center;
 }
 
-.ami_option > p {
-  color: rgb(var(--blanc50));
-  font-size: 2.2rem;
-  margin: 0px;
-  text-align: center;
-  line-height: 0.75;
+.ami_option > img {
+  width: 2.9vh;
+  height: 4vh;
 }

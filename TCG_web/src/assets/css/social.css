@@ -8,12 +8,17 @@ main {
 .part_echange {
   display: grid;
   flex-direction: column;
-  margin-left: 2vw;
+  margin-left: 1vw;
   margin-top: 1vh;
-  width: 65%;
+  width: 75%;
   height: 100%;
   row-gap: 2.2vh;
   column-gap: 1vh;
+}
+
+.e1,
+.e2 {
+  justify-self: center;
 }
 
 .part_echange > h2 {
@@ -27,10 +32,11 @@ main {
   margin-top: 2vh;
   display: flex;
   flex-direction: column;
-  width: 35%;
+  width: 25%;
   height: 100%;
   align-items: center;
   gap: 2vh;
+  align-items: center;
 }
 
 .nouv_ami,
@@ -39,8 +45,8 @@ main {
   display: flex;
   flex-direction: row;
   background-color: rgb(var(--orange500));
-  width: 25vw;
-  height: 8vh;
+  width: 18vw;
+  height: 7.5vh;
   border-radius: 30px;
   align-items: center;
   justify-content: space-around;
@@ -54,10 +60,11 @@ main {
 .demandes_attentes > p {
   color: rgb(var(--onyx));
   font-family: 'Mako';
-  font-size: 150%;
+  font-size: 120%;
+  text-align: center;
 }
 
 .nouv_ami > img {
-  width: 5vh;
-  height: 6.5vh;
+  width: 4vh;
+  height: 5.2vh;
 }

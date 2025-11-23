@@ -2,7 +2,7 @@
   <div class="ami">
     <p>{{ nom_ami }} :</p>
     <div class="ami_option">
-      <p>...</p>
+      <img src="@/assets/imgs/trois_points.png" alt="3 points" />
     </div>
   </div>
 </template>

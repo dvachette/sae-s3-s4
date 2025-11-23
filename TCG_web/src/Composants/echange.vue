@@ -1,15 +1,18 @@
 <template>
-  <div class="autres_echange">
-    <div class="reception">
-      <p>Carte demandée</p>
-      <carte_membre largeur="4.9vw" />
-    </div>
-    <div class="a_don">
-      <p>Cartes à recevoir</p>
-      <div class="los_cartos">
+  <div class="comp-echange">
+    <p>échange de : {{ nom_echangeur }}</p>
+    <div class="autres_echange">
+      <div class="reception">
+        <p>Carte demandée</p>
         <carte_membre largeur="4.9vw" />
-        <carte_membre largeur="4.9vw" />
-        <carte_membre largeur="4.9vw" />
+      </div>
+      <div class="a_don">
+        <p>Cartes à recevoir</p>
+        <div class="los_cartos">
+          <carte_membre largeur="4.9vw" />
+          <carte_membre largeur="4.9vw" />
+          <carte_membre largeur="4.9vw" />
+        </div>
       </div>
     </div>
   </div>
