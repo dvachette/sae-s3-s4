@@ -120,9 +120,10 @@ const isDragging = ref(null);
 const dragStart = ref({ x: 0, y: 0 });
 const initialRotations = ref({});
 const dragMoved = ref(false);
+const collectedCards = ref([]); // Stocke les cartes collectées
 
 // Émettre un événement quand toutes les cartes sont parties
-const emit = defineEmits(['allCardsGone']);
+const emit = defineEmits(['allCardsGone', 'cardCollected']);
 
 // Surveiller le nombre de cartes
 watch(
@@ -130,7 +131,7 @@ watch(
   (newLength) => {
     if (newLength === 0) {
       console.log('Toutes les cartes sont parties !');
-      emit('allCardsGone');
+      emit('allCardsGone', collectedCards.value); // Envoie les cartes collectées
     }
   }
 );
@@ -151,13 +152,12 @@ onMounted(() => {
 
 function getCardTransform(cardId, index) {
   const pos = cardPositions.value[cardId] || { x: 0, y: 0, isExiting: false };
-  const rotation =
-    (cards.value.length - index - 1) * 4 +
-    (initialRotations.value[cardId] || 0);
-  const scale =
-    isDragging.value === cardId
-      ? 1.05
-      : 1 + index * 0.06 - cards.value.length * 0.06;
+
+  // Pas de rotation initiale - toutes les cartes sont droites
+  const rotation = initialRotations.value[cardId] || 0;
+
+  // Toutes les cartes ont la même taille, sauf celle en drag qui est légèrement plus grande
+  const scale = isDragging.value === cardId ? 1.05 : 1;
 
   // Effet 3D pendant le drag
   let rotateX = 0;
@@ -226,6 +226,11 @@ function endDrag() {
 function throwCard(cardId) {
   const pos = cardPositions.value[cardId] || { x: 0, y: 0 };
 
+  // Si la carte est déjà en train de sortir, ne rien faire
+  if (pos.isExiting) {
+    return;
+  }
+
   // Déterminer la direction de sortie
   let exitX = pos.x;
   let exitY = pos.y;
@@ -248,6 +253,18 @@ function throwCard(cardId) {
     y: exitY,
     isExiting: true,
   };
+
+  const collectedCard = cards.value.find((card) => card.id === cardId);
+  console.log('Carte à collecter:', collectedCard);
+
+  if (collectedCard) {
+    collectedCards.value.push(collectedCard);
+    console.log(
+      "Cartes collectées jusqu'à maintenant:",
+      collectedCards.value.length
+    );
+    emit('cardCollected', collectedCard);
+  }
 
   // Retirer la carte de la pile après l'animation
   setTimeout(() => {
@@ -275,5 +292,61 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@import '@/assets/css/stack.css';
+.cursor-grab {
+  cursor: grab;
+}
+
+.active\:cursor-grabbing:active {
+  cursor: grabbing;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.border-white {
+  border-color: white;
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
 </style>
