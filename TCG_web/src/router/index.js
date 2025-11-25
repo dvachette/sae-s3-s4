@@ -6,6 +6,7 @@ import Collection from '../Collection.vue';
 import Boutique from '../Boutique.vue';
 import Social from '../Social.vue';
 import Profil from '../Profil.vue';
+import Socket from '../Socket.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
@@ -15,6 +16,7 @@ const routes = [
   { path: '/boutique', component: Boutique },
   { path: '/social', component: Social },
   { path: '/profil', component: Profil },
+  { path: '/socket', component: Socket },
 ];
 
 const router = createRouter({
