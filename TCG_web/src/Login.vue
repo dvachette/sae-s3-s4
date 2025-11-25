@@ -59,6 +59,7 @@ export default {
           // Vérification du succès de la connexion (code 200 ou 201)
           // Redirection
           this.$router.push('/booster');
+
         } else {
           // Afficher le message d'erreur (data.error)
           console.error('Échec de la connexion :', data.error);
@@ -71,6 +72,7 @@ export default {
     },
   },
 };
+
 </script>
 <script setup>
 import { ref } from 'vue';

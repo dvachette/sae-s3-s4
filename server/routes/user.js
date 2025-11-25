@@ -50,7 +50,7 @@ function createAccount(request, response) {
     }
 
     // Insérer le nouvel utilisateur dans la base de données
-    const newUser = User.register(mail, password, username);
+    const newUser = User.register(username, mail, password);
 
     // Connecter automatiquement l'utilisateur après la création du compte
     request.session.userId = newUser.userid;
