@@ -10,9 +10,6 @@
     <!-- Éléments supplémentaires -->
     <div class="elements-supplementaires">
       <Barre_progress :niv="carteProps.data?.niveau || 0" />
-      <div class="nombres_cartes">
-        <p>+7</p>
-      </div>
     </div>
   </div>
 </template>
