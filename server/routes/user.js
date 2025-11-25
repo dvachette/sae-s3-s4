@@ -53,7 +53,7 @@ function createAccount(request, response) {
     const newUser = User.register(username, mail, password);
 
     // Connecter automatiquement l'utilisateur après la création du compte
-    request.session.userId = newUser.userid;
+    request.session.userId = newUser.userId;
 
     return response.status(201).send({ message: 'Compte créé avec succès', user: newUser });
     
@@ -229,6 +229,7 @@ function getUserData(request, response) {
     }
 
     // Vérifier si l'utilisateur est authentifié
+    console.log(request.session);
     if (!request.session.userId) {
         return response.status(401).send({ error: 'Utilisateur non authentifié' });
     }
