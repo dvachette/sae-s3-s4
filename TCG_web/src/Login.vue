@@ -1,5 +1,5 @@
 <template>
-  <header id = "headerConnexion">
+  <header id="headerConnexion">
     <img src="@/assets/imgs/logoTCG.png" alt="Logo du site" />
     <h1>Bienvenue sur BDE INFO TCG</h1>
   </header>
@@ -13,10 +13,12 @@
 
         <label for="password"> Mot de passe </label>
         <input type="password" id="password" v-model="mdp_utilisateur" />
-
+        <p id="Incorrect" v-show="Loginerror" v-text="texterror"></p>
         <button type="submit">Se connecter</button>
       </form>
-      <router-link to="/creationcompte"><button>Créer un compte</button></router-link>
+      <router-link to="/creationcompte"
+        ><button>Créer un compte</button></router-link
+      >
     </div>
   </main>
 </template>
@@ -27,6 +29,8 @@ export default {
     return {
       id_utilisateur: '',
       mdp_utilisateur: '',
+      Loginerror: false,
+      texterror: '',
     };
   },
   methods: {
@@ -37,11 +41,13 @@ export default {
           'http://localhost:3000/login', // URL de l'API de connexion
           {
             method: 'POST', // Méthode POST pour envoyer les données
-            headers: { // En-têtes de la requête
+            headers: {
+              // En-têtes de la requête
               'Content-Type': 'application/json', // Type de contenu JSON
             },
-            credentials: "include", // Inclure les cookies dans la requête
-            body: JSON.stringify({ // Corps de la requête avec les données utilisateur
+            credentials: 'include', // Inclure les cookies dans la requête
+            body: JSON.stringify({
+              // Corps de la requête avec les données utilisateur
               email: this.id_utilisateur,
               password: this.mdp_utilisateur,
             }),
@@ -49,14 +55,15 @@ export default {
         );
         const data = await response.json(); // Récupération de la réponse JSON
         console.log('Réponse du serveur :', data);
-        if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)
+        if (response.ok) {
+          // Vérification du succès de la connexion (code 200 ou 201)
           // Redirection
           this.$router.push('/booster');
-
         } else {
           // Afficher le message d'erreur (data.error)
           console.error('Échec de la connexion :', data.error);
-
+          this.Loginerror = true;
+          this.texterror = data.error;
         }
       } catch (error) {
         console.error('Erreur lors de la connexion :', error);
@@ -64,7 +71,6 @@ export default {
     },
   },
 };
-
 </script>
 <script setup>
 import { ref } from 'vue';
