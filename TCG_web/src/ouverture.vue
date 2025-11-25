@@ -23,11 +23,22 @@
   </div>
   <!-- Écran récapitulatif final -->
   <div v-else class="ecran-final">
-    <div v-for="card in cartesCollectees" :key="card.id" class="carte-recap">
-      <component :is="card.component" v-bind="card.props || {}" />
+    <clef class="nbClé" />
+    <div class="toutes_cartes">
+      <div v-for="card in cartesCollectees" :key="card.id" class="carte-recap">
+        <component
+          :is="card.component"
+          v-bind="{
+            ...card.props,
+            carteProps: {
+              ...card.props.carteProps,
+              largeur: '500px', // ← Changez la largeur ici (au lieu de 300px)
+            },
+          }"
+        />
+      </div>
     </div>
     <router-link to="/booster"><button>Suivant</button></router-link>
-    <clef />
   </div>
 </template>
 
