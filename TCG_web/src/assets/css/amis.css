@@ -1,0 +1,48 @@
+@import './style.css';
+
+.ami {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(var(--jaune200));
+  width: 18vw;
+  height: 7.5vh;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 4%;
+  padding-right: 2%;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ami:hover {
+  border: 3px solid rgb(var(--orange400));
+}
+
+.ami:hover p {
+  color: rgb(var(--orange800));
+}
+
+.ami p {
+  color: rgb(var(--onyx));
+  font-family: 'Mako';
+  font-size: 120%;
+}
+
+.ami_option {
+  display: flex;
+  width: 5vh;
+  height: 5vh;
+  background-color: rgb(var(--orange400));
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.ami_option:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ami_option > img {
+  width: 2.9vh;
+  height: 4vh;
+}

@@ -6,6 +6,8 @@ import Collection from '../Collection.vue';
 import Boutique from '../Boutique.vue';
 import Social from '../Social.vue';
 import Profil from '../Profil.vue';
+import CreationCompte from '../CreationCompte.vue';
+import Ouverture from '../ouverture.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
@@ -15,6 +17,8 @@ const routes = [
   { path: '/boutique', component: Boutique },
   { path: '/social', component: Social },
   { path: '/profil', component: Profil },
+  { path: '/creationcompte', component: CreationCompte },
+  { path: '/ouverture', component: Ouverture },
 ];
 
 const router = createRouter({

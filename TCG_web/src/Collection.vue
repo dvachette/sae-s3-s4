@@ -1,6 +1,6 @@
 <template>
   <MonHeader />
-  <main id="collection">
+  <main>
     <div class="tri_filtres">
       <div class="cartes_possédées">
         <h2>cartes possédées :</h2>
@@ -11,11 +11,17 @@
       </div>
       <div class="Tri">
         <h2>Trié par :</h2>
-        <label><input type="radio" name="tri" value="mandat">mandat</input></label>
-        <label><input type="radio" name="tri" value="chronologique">chronologique</input></label>
-        <label><input type="radio" name="tri" value="niveau">niveau</input></label>
-        <label><input type="radio" name="tri" value="croissant">croissant</input></label>
-        <label><input type="radio" name="tri" value="pôle">pôle</input></label>
+        <div class="Tri_liste" v-for="item in options" :key="item.value">
+    <label>
+      <input type="radio" name="tri" v-model="selected" :value="item.value">
+      {{ item.label }}
+    </label>
+    <!-- Checkbox visible uniquement si ce radio est sélectionné -->
+    <label v-if="selected === item.value && item.checkbox">
+      <input type="checkbox" v-model="item.checkboxValue">
+      {{ item.checkbox }}
+    </label>
+  </div>
       </div>
       <div class="Filtres">
         <h2>Filtré par :</h2>
@@ -26,13 +32,53 @@
         <label><input type="checkbox" name="filtre" value="arènes">arènes</input></label>
       </div>
     </div>
-    <div class="toutes_les_cartes"></div>
+    <div class="collection">
+      <div class="conteneur_cartes" :style="{'--width': widthFlexCartes}">
+        <div class="une_carte"
+          v-for="carte in cartes"
+          :key="carte.id"
+        >
+          <Carte_membre :data="carte" largeur="200px"/>
+          <Barre_progress :niv="carte.niv" />
+        </div>
+      </div>
+      
+    </div>
   </main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import '@/assets/css/collection.css';
 
 import MonHeader from '@/Composants/header.vue';
+import Carte_membre from './Composants/carte_membre.vue';
+import Barre_progress from './Composants/barre_progress_carte.vue';
+
+const cartes = ref([])
+
+cartes.value = [
+  {id:1, niv:2},
+  {id:2, niv:11},
+  {id:3, niv:1},
+  {id:4, niv:8},
+  {id:5, niv:78},
+  {id:6, niv:9},
+  {id:7, niv:12}
+]
+
+const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
+const width = ref((Math.floor(80 * vw.value / 220))*220);
+const widthFlexCartes = ref(width.value+"px");
+
+const selected = ref(null);
+
+const options = ref([
+  { value: 'mandat', label: 'mandat', checkbox: 'chronologique', checkboxValue: false },
+  { value: 'niveau', label: 'niveau', checkbox: 'croissant', checkboxValue: false },
+  { value: 'pôle',   label: 'pôle', checkbox: null },
+]);
 </script>
+
+<style scoped>
+@import './assets/css/collection.css';
+</style>

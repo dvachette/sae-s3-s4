@@ -10,23 +10,21 @@
   justify-content: space-evenly;
   border-radius: 20px;
   font-size: 1.6rem;
-  box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
+  font-family: 'Mako';
 }
 
 .bouton_achat:hover {
-  background-color: rgb(var(--orange500));
-  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .bouton_achat:active {
   background-color: rgb(var(--orange700));
-  transform: translateY(4px);
   box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
 
 img {
-  width: 3vw;
-  height: 4vh;
+  width: 2.5vw;
+  height: 2.5vw;
   align-self: center;
   margin-right: 10%;
 }

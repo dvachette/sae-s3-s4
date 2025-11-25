@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header id = "headerConnexion">
     <img src="@/assets/imgs/logoTCG.png" alt="Logo du site" />
     <h1>Bienvenue sur BDE INFO TCG</h1>
   </header>
@@ -16,7 +16,7 @@
 
         <button type="submit">Se connecter</button>
       </form>
-      <router-link to="/booster"><button>booster</button></router-link>
+      <router-link to="/creationcompte"><button>Créer un compte</button></router-link>
     </div>
   </main>
 </template>

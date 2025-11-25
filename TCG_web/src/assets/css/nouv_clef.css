@@ -1,0 +1,29 @@
+@import './style.css';
+
+.clef {
+  display: flex;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--orange400)),
+    rgb(var(--orange500))
+  );
+  transition: width 0.3s ease;
+  width: 10vw;
+  height: 5vh;
+  justify-content: space-evenly;
+  border-radius: 20px;
+  font-size: 1.6rem;
+  font-family: 'Mako';
+}
+
+.clef > img {
+  width: 2.5vw;
+  height: 2.5vw;
+  align-self: center;
+  margin-right: 10%;
+}
+
+.clef > p {
+  align-self: center;
+  margin-left: 10%;
+}

@@ -1,17 +1,39 @@
 @import './style.css';
 
-#collection {
-  display: flex;
-  flex-direction: row;
+header {
+  width: 100vw;
+  position: fixed;
+  z-index: 100;
 }
 
+main {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  margin-top: 12.5vh;
+}
+
+h2,
+h3,
+label {
+  font-family: 'Mako';
+}
+
+/*----------------------------------------Partie Tri/filtres----------------------------------------*/
 .tri_filtres {
   display: flex;
   flex-direction: column;
-  width: 23.5vw;
-  height: 100%;
+  width: 20vw;
+  height: 87.5vh;
   background-color: rgb(var(--jaune200));
   text-align: center;
+
+  position: fixed;
+}
+
+.cartes_possédées,
+.Tri {
+  border-bottom: 3px solid rgb(var(--onyx));
 }
 
 .cartes_possédées {
@@ -19,11 +41,146 @@
   flex-direction: column;
 }
 
+.cartes_possédées > h2,
+.Tri > h2,
+.Filtres > h2 {
+  color: rgb(var(--rouge700));
+  margin: 4%;
+  font-size: 1.5rem;
+}
+
+.cartes_possédées > h3 {
+  font-size: 1.7rem;
+  margin: 2%;
+}
+
+.barre_total {
+  height: 4vh;
+  width: 90%;
+  background-color: rgb(var(--onyx));
+  align-self: center;
+  border-radius: 20px;
+  margin: 4%;
+}
+
+.barre_progression {
+  height: 4vh;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--jaune400)),
+    rgb(var(--orange500))
+  );
+  align-self: start;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.Tri {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8%;
+  padding-top: 8%;
+  align-items: first baseline;
+  gap: 0.5vh;
+}
+
+.Tri_liste {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.Tri_liste > label > input {
+  appearance: none; /* supprime le rendu natif */
+  -webkit-appearance: none;
+  width: 3vh;
+  height: 3vh;
+  border: 2px solid rgb(var(--onyx));
+  border-radius: 100%;
+  background-color: rgb(var(--jaune200));
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.Tri_liste > label > input:checked {
+  background-color: rgb(var(--orange600));
+  border: 2px solid rgb(var(--orange700));
+  cursor: pointer;
+}
+
+.Filtres > label > input {
+  appearance: none; /* supprime le rendu natif */
+  -webkit-appearance: none;
+  width: 3vh;
+  height: 3vh;
+  border: 2px solid rgb(var(--onyx));
+  border-radius: 4px;
+  background-color: rgb(var(--jaune200));
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.Filtres > label > input:checked {
+  background-color: rgb(var(--orange600));
+  border: 2px solid rgb(var(--orange700));
+  cursor: pointer;
+}
+
+.Tri_liste > label > input[type='checkbox'],
+.Tri_liste > label > input[type='checkbox'] {
+  margin-left: 2vw;
+}
+
+.input[type='checkbox'] > label {
+  display: flex;
+  align-items: center;
+}
+
+.Filtres {
+  display: flex;
+  flex-direction: column;
+  align-items: first baseline;
+}
+
+.Filtres > label {
+  display: flex;
+  align-items: center;
+}
+
 .cartes_possédées > h2 {
   align-self: center;
 }
 
-.toutes_les_cartes {
-  width: 76.5vw;
-  height: 100%;
+/*----------------------------------------Partie Cartes----------------------------------------*/
+.collection {
+  width: 80vw;
+  margin-left: 20vw;
+}
+
+.conteneur_cartes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  width: var(--width);
+
+  margin: 30px auto 20px auto;
+}
+
+.une_carte {
+  display: flex;
+  flex-direction: column;
+  width: 201px;
+  gap: 10px;
+}
+
+.carte {
+  margin-top: 10px;
 }
