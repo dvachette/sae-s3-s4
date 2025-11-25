@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <MonHeader />
   <main>
     <div class="tri_filtres">
@@ -53,6 +54,7 @@ import { ref } from 'vue';
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Barre_progress from './Composants/barre_progress_carte.vue';
+import VerifLogin from '@/Composants/verifLogin.vue';
 
 const cartes = ref([])
 

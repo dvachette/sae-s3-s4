@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <MonHeader />
   <main id="booster">
     <div class="Récompenses_quotidiennes">
@@ -54,6 +55,7 @@ import clef from '@/Composants/clef.vue';
 import boutons_achat from '@/Composants/boutons_achat.vue';
 
 import MonHeader from '@/Composants/header.vue';
+import VerifLogin from '@/Composants/verifLogin.vue';
 </script>
 
 <style scoped>

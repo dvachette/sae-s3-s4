@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <MonHeader />
   <main>
     <div class="gestion_soi">
@@ -95,6 +96,7 @@
 </template>
 
 <script setup>
+import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
 
