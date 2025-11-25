@@ -9,6 +9,10 @@
 const express = require('express'); // Importation du framework Express
 const session = require('express-session'); // Importation de l'outil de gestion de sessions
 const cors = require('cors'); // Importation de l'outil CORS pour gérer les requêtes multi-origines
+const ws = require('ws'); // Importation du module WebSocket
+const cookie = require('cookie');
+const signature = require('cookie-signature');
+
 // Modules internes
 const friendsRoutes = require('./routes/friends.js'); // Importation des routes d'amis
 const userRoutes = require('./routes/user.js'); // Importation des routes utilisateur
@@ -22,10 +26,12 @@ const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serve
 const app = express(); // Création de l'application Express
 
 // Configuration de l'application Express
+const SESSION_KEY = 'LaSuperClefDeSession'
+
 app.use(
     session({
         // TODO: CHANGER LA CLÉ SECRÈTE AVANT DE METTRE EN PRODUCTION 
-        secret: 'votre_secret_de_session', // Clé secrète pour signer le cookie de session
+        secret: SESSION_KEY, // Clé secrète pour signer le cookie de session
         resave: false, // Ne pas sauvegarder la session si elle n'a pas été modifiée
         saveUninitialized: true, // Sauvegarder les sessions non initialisées
         cookie: { 
@@ -89,3 +95,30 @@ app.listen(PORT, () => {
     console.log('ATTENTION, SERVEUR EN MODE DÉVELOPPEMENT, NE PAS UTILISER EN PRODUCTION !');
     console.log(`Server is running on port ${PORT}`);
 });
+
+const wss = new ws.Server({ port: 8080 }); // Serveur WebSocket sur le port 8080
+// Gestion des connexions WebSocket
+
+const combats = []; // Tableau pour stocker les combats actifs
+const usersWS = {}; // Objet pour mapper les utilisateurs aux connexions WebSocket
+wss.on('connection', (socket) => {
+    
+    socket.on('message', (message) => {
+        console.log('Received message:', message.toString());
+        const parsedMessage = JSON.parse(message);
+        switch (parsedMessage.type) {
+            case 'authenticate':
+                const userId = parsedMessage.userId;
+                usersWS[userId] = socket;
+                socket.userId = userId;
+                console.log(`User ${userId} authenticated for WebSocket`);
+                socket.send(JSON.stringify({ type: 'authenticated' }));
+                break;
+        }
+    });
+
+    socket.on('close', () => {
+        console.log('WebSocket connection closed');
+        // Gérer la fermeture de la connexion WebSocket ici
+    });
+});    
