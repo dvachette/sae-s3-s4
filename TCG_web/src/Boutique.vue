@@ -1,4 +1,3 @@
-c
 <template>
   <MonHeader />
   <main>

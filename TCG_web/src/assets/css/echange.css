@@ -20,7 +20,7 @@
   width: 33vw;
   height: 11vw;
   justify-content: center;
-  border: solid, 5px, rgb(var(--orange400));
+  border: solid 5px rgb(var(--orange400));
   border-radius: 20px;
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
   font-size: 1.1vw;
@@ -28,7 +28,7 @@
 }
 
 .autres_echange:hover {
-  border: solid, 5px, rgb(var(--orange700));
+  border: solid 5px rgb(var(--orange700));
 }
 
 .reception {
