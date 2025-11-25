@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <MonHeader />
   <main>
     <div class="part_echange">
@@ -38,6 +39,7 @@ import new_echange from '@/Composants/new_echange.vue';
 import amis from '@/Composants/amis.vue';
 import amis_demandes from '@/Composants/amis_demandes.vue';
 import amis_attentes from '@/Composants/amis_attentes.vue';
+import VerifLogin from '@/Composants/verifLogin.vue';
 
 import MonHeader from '@/Composants/header.vue';
 </script>

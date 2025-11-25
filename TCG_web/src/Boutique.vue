@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <MonHeader />
   <main>
     <div class="la_boutique">
@@ -28,6 +29,7 @@ import clef from '@/Composants/clef.vue';
 import boutons_achat from '@/Composants/boutons_achat.vue';
 import MonHeader from '@/Composants/header.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
+import VerifLogin from '@/Composants/verifLogin.vue';
 </script>
 
 <style scoped>
