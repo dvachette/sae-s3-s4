@@ -24,20 +24,6 @@
   z-index: 10;
 }
 
-.nombres_cartes {
-  display: flex;
-  flex-direction: column;
-  width: 10vw;
-  height: 4vh;
-  background: linear-gradient(
-    90deg,
-    rgb(var(--jaune400)),
-    rgb(var(--orange500))
-  );
-  border-radius: 20px;
-  text-align: center;
-}
-
 @keyframes pulse {
   0%,
   100% {

@@ -8,6 +8,7 @@ import Social from '../Social.vue';
 import Profil from '../Profil.vue';
 import CreationCompte from '../CreationCompte.vue';
 import Ouverture from '../ouverture.vue';
+import Socket from '../Socket.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
@@ -19,6 +20,7 @@ const routes = [
   { path: '/profil', component: Profil },
   { path: '/creationcompte', component: CreationCompte },
   { path: '/ouverture', component: Ouverture },
+  { path: '/socket', component: Socket },
 ];
 
 const router = createRouter({

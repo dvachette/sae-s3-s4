@@ -7,7 +7,7 @@
   width: 33vw;
   height: 11vw;
   justify-content: center;
-  border: solid, 5px, rgb(var(--jaune300));
+  border: solid 5px rgb(var(--jaune300));
   border-radius: 20px;
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
   font-size: 1.1vw;
@@ -15,7 +15,7 @@
 }
 
 .mon_echange:hover {
-  border: solid, 5px, rgb(var(--orange500));
+  border: solid 5px rgb(var(--orange500));
 }
 
 .demande {

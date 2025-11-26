@@ -1,0 +1,17 @@
+PROJECT_NAME           = "MonProjetJS"
+OUTPUT_DIRECTORY       = docs
+RECURSIVE              = YES
+FILE_PATTERNS          = *.js *.jsx
+EXTRACT_ALL            = YES
+OPTIMIZE_OUTPUT_JAVA   = YES
+EXTENSION_MAPPING      = js=JavaScript
+INPUT_ENCODING         = UTF-8
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+GENERATE_TREEVIEW      = YES
+EXTRACT_PRIVATE        = YES
+JAVADOC_AUTOBRIEF      = YES
+HAVE_DOT = YES
+CALL_GRAPH = YES
+CALLER_GRAPH = YES
+EXCLUDE_PATTERNS = */node_modules/* */tests/*

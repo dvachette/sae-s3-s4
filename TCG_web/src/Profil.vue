@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <MonHeader />
   <main>
     <div class="gestion_soi">
@@ -77,7 +78,7 @@
             ><p>historique des échanges</p></router-link
           >
         </div>
-        <button id="Déconnexion">Déconnexion</button>
+        <button @click="deconnexion" id="Déconnexion">Déconnexion</button>
         <button id="Supprimer">Supprimer le compte</button>
     </div>
     <div class="param_stats">
@@ -95,9 +96,10 @@
 </template>
 
 <script setup>
+import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
-
+import { useRouter } from 'vue-router';
 const password = ref('motdepasse123')
 
 const editing = ref(false)
@@ -168,6 +170,27 @@ function cancelM() {
   edit_M.value = false
   draft_M.value = mail.value
 }
+
+const router = useRouter(); 
+async function deconnexion(){
+  try {
+        // Envoi de la requête de connexion au serveur
+        const response = await fetch(
+          'http://localhost:3000/logout', // URL de l'API de connexion
+          {
+            method: 'GET', // Méthode GET pour récupérer les données
+            credentials: "include", // Inclure les cookies dans la requête
+          }
+        );
+        const data = await response.json(); // Récupération de la réponse JSON
+        console.log('Réponse du serveur :', data);
+        router.push('/');
+      } catch (error) {
+        console.error('Erreur lors de la connexion :', error);
+        router.push('/');
+      }
+}
+
 </script>
 
 <style scoped>
