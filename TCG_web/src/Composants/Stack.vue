@@ -30,7 +30,7 @@
       @click="throwCard(card.id)"
     >
       <div
-        class="rounded-2xl overflow-hidden border-4 border-white shadow-xl"
+        class="rounded-2xl border-4 border-white shadow-xl carte-container"
         :style="{
           width: cardDimensions.width + 'px',
           height: cardDimensions.height + 'px',
@@ -292,61 +292,5 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.cursor-grab {
-  cursor: grab;
-}
-
-.active\:cursor-grabbing:active {
-  cursor: grabbing;
-}
-
-.pointer-events-none {
-  pointer-events: none;
-}
-
-.select-none {
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.h-full {
-  height: 100%;
-}
-
-.object-cover {
-  object-fit: cover;
-}
-
-.rounded-2xl {
-  border-radius: 1rem;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.border-4 {
-  border-width: 4px;
-}
-
-.border-white {
-  border-color: white;
-}
-
-.shadow-xl {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.absolute {
-  position: absolute;
-}
-
-.relative {
-  position: relative;
-}
+@import '@/assets/css/stack.css';
 </style>

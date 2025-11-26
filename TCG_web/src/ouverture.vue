@@ -37,6 +37,7 @@ import Stack from '@/Composants/Stack.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 import nouv_clef from './Composants/nouv_clef.vue';
 import clef from './Composants/clef.vue';
+import carteBooster from './carte-booster.vue';
 
 const showVideo = ref(true); // ← Remettez true pour la vidéo
 const introVideo = ref(null);
@@ -63,15 +64,20 @@ const onAllCardsGone = (cartes) => {
   allCardsGone.value = true;
 };
 // Dimensions des cartes (vous pouvez les rendre réactives si besoin)
-const cardDimensions = ref({ width: 300, height: 420 });
+const cardDimensions = ref({ width: 300, height: 520 });
 
 // Fonction pour créer les cartes avec la bonne largeur
-const createCard = (id, data) => ({
+const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
   id,
-  component: markRaw(carte_membre), // ← Ajoutez markRaw ici
+  component: markRaw(carteBooster),
   props: {
-    largeur: cardDimensions.value.width + 'px',
-    data,
+    carteComponent: markRaw(carte_membre), // ← Important : markRaw ici
+    carteProps: {
+      largeur: cardDimensions.value.width + 'px',
+      data,
+    },
+    isNew,
+    rarete,
   },
 });
 
