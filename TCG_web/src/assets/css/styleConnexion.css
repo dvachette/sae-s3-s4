@@ -24,12 +24,12 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-evenly;
   background-color: rgb(var(--jaune200));
   width: 46%;
   height: 60%;
   border-radius: 1%;
-  padding: 1% 2.5% 1% 2.5%;
+  padding: 0 2.5% 0 2.5%;
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
 }
 
@@ -68,7 +68,7 @@ h2 {
 form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-wrap: nowrap;
   flex : 3;
 }
@@ -101,10 +101,20 @@ form > input {
   border: none;
   background-color: rgb(var(--blanc50));
   padding: 0 2% 0 2%;
-  margin-bottom: 3vh;
+  margin-bottom: 1vh;
   font-family: 'Mako';
   font-size: medium;
   color: rgb(var(--onyx));
+}
+
+form > p {
+  margin : 0 0 1vh 0;
+  font-family: 'Mako';
+  font-size: medium;
+  color : rgb(var(--rouge600));
+
+  display: flex;
+  align-items: center;
 }
 
 input:focus {
@@ -114,7 +124,7 @@ input:focus {
 
 .pageConnexion > a {
   height : 12%;
-  margin: 0 0 2vh 0;
+  margin: 1vh 0 2vh 0;
   text-decoration: none;
 
   display: flex;
