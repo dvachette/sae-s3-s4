@@ -83,7 +83,7 @@
     </div>
     <div class="param_stats">
       <h2>Paramètres :</h2>
-      <label><input type="checkbox" name="apparence" value="pôle">Thême Sombre</input></label>
+      <label><input type="checkbox" name="apparence" value="pôle">Thème Sombre</input></label>
       <label><input type="checkbox" name="musique" value="pôle">Musique active</input></label>
       <label><input type="checkbox" name="effets" value="pôle">Effets Sonores</input></label>
       <h2>Statistiques :</h2>
