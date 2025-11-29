@@ -2,18 +2,18 @@
   <div
     class="relative"
     :style="{
-      width: cardDimensions.width + 'px',
-      height: cardDimensions.height + 'px',
+      width: cardDimensions.width + 'vw',
+      height: cardDimensions.height + 'vw',
       perspective: '600px',
     }"
   >
     <div
       v-for="(card, index) in cards"
       :key="card.id"
-      class="absolute cursor-grab active:cursor-grabbing"
+      class="toutes_les_cartes"
       :style="{
-        left: '0px',
-        top: '0px',
+        left: '0',
+        top: '0',
         transform: getCardTransform(card.id, index),
         transition:
           cardPositions[card.id] && cardPositions[card.id].isExiting
@@ -32,8 +32,8 @@
       <div
         class="rounded-2xl border-4 border-white shadow-xl carte-container"
         :style="{
-          width: cardDimensions.width + 'px',
-          height: cardDimensions.height + 'px',
+          width: cardDimensions.width + 'vw',
+          height: cardDimensions.height + 'vw',
           boxShadow:
             isDragging === card.id
               ? '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
@@ -76,7 +76,7 @@ const props = defineProps({
   },
   cardDimensions: {
     type: Object,
-    default: () => ({ width: 208, height: 208 }),
+    default: () => ({ width: 20, height: 35 }), // Valeurs en vw
   },
   cardsData: {
     type: Array,
@@ -92,51 +92,27 @@ const props = defineProps({
   },
 });
 
-const cards = ref(
-  props.cardsData.length
-    ? props.cardsData
-    : [
-        {
-          id: 1,
-          img: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=500&auto=format',
-        },
-        {
-          id: 2,
-          img: 'https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=500&auto=format',
-        },
-        {
-          id: 3,
-          img: 'https://images.unsplash.com/photo-1452626212852-811d58933cae?q=80&w=500&auto=format',
-        },
-        {
-          id: 4,
-          img: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?q=80&w=500&auto=format',
-        },
-      ]
-);
+const cards = ref(props.cardsData.length ? props.cardsData : []);
 
 const cardPositions = ref({});
 const isDragging = ref(null);
 const dragStart = ref({ x: 0, y: 0 });
 const initialRotations = ref({});
 const dragMoved = ref(false);
-const collectedCards = ref([]); // Stocke les cartes collectées
+const collectedCards = ref([]);
 
-// Émettre un événement quand toutes les cartes sont parties
 const emit = defineEmits(['allCardsGone', 'cardCollected']);
 
-// Surveiller le nombre de cartes
 watch(
   () => cards.value.length,
   (newLength) => {
     if (newLength === 0) {
       console.log('Toutes les cartes sont parties !');
-      emit('allCardsGone', collectedCards.value); // Envoie les cartes collectées
+      emit('allCardsGone', collectedCards.value);
     }
   }
 );
 
-// Initialiser les positions et rotations
 onMounted(() => {
   cards.value.forEach((card) => {
     cardPositions.value[card.id] = { x: 0, y: 0, isExiting: false };
@@ -152,14 +128,9 @@ onMounted(() => {
 
 function getCardTransform(cardId, index) {
   const pos = cardPositions.value[cardId] || { x: 0, y: 0, isExiting: false };
-
-  // Pas de rotation initiale - toutes les cartes sont droites
   const rotation = initialRotations.value[cardId] || 0;
-
-  // Toutes les cartes ont la même taille, sauf celle en drag qui est légèrement plus grande
   const scale = isDragging.value === cardId ? 1.05 : 1;
 
-  // Effet 3D pendant le drag
   let rotateX = 0;
   let rotateY = 0;
   let finalRotation = rotation;
@@ -169,7 +140,6 @@ function getCardTransform(cardId, index) {
     rotateY = pos.x / 10;
   }
 
-  // Si la carte sort de l'écran, ajouter de la rotation
   if (pos.isExiting) {
     finalRotation += 45;
   }
@@ -214,7 +184,6 @@ function onDrag(event) {
 function endDrag() {
   if (!isDragging.value) return;
 
-  // Si on a bougé la carte, la faire sortir de l'écran
   if (dragMoved.value) {
     throwCard(isDragging.value);
   }
@@ -226,28 +195,23 @@ function endDrag() {
 function throwCard(cardId) {
   const pos = cardPositions.value[cardId] || { x: 0, y: 0 };
 
-  // Si la carte est déjà en train de sortir, ne rien faire
   if (pos.isExiting) {
     return;
   }
 
-  // Déterminer la direction de sortie
   let exitX = pos.x;
   let exitY = pos.y;
 
-  // Si la carte n'a pas été déplacée ou très peu, choisir une direction aléatoire
   if (Math.abs(pos.x) < 50 && Math.abs(pos.y) < 50) {
     const angle = Math.random() * Math.PI * 2;
     exitX = Math.cos(angle) * 1000;
     exitY = Math.sin(angle) * 1000;
   } else {
-    // Amplifier le mouvement dans la direction actuelle
     const magnitude = Math.sqrt(pos.x * pos.x + pos.y * pos.y);
     exitX = (pos.x / magnitude) * 1500;
     exitY = (pos.y / magnitude) * 1500;
   }
 
-  // Faire sortir la carte de l'écran
   cardPositions.value[cardId] = {
     x: exitX,
     y: exitY,
@@ -266,7 +230,6 @@ function throwCard(cardId) {
     emit('cardCollected', collectedCard);
   }
 
-  // Retirer la carte de la pile après l'animation
   setTimeout(() => {
     const index = cards.value.findIndex((card) => card.id === cardId);
     if (index !== -1) {
@@ -275,7 +238,6 @@ function throwCard(cardId) {
   }, 500);
 }
 
-// Ajouter les event listeners
 onMounted(() => {
   document.addEventListener('mousemove', onDrag);
   document.addEventListener('mouseup', endDrag);

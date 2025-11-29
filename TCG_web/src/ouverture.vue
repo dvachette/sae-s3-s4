@@ -32,7 +32,7 @@
             ...card.props,
             carteProps: {
               ...card.props.carteProps,
-              largeur: '310px', // ← Changez la largeur ici (au lieu de 300px)
+              largeur: cardWidthRecapVw, // ← Changez la largeur ici (au lieu de 300px)
             },
           }"
         />
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, watch, markRaw } from 'vue';
+import { ref, watch, markRaw, computed } from 'vue';
 import Stack from '@/Composants/Stack.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 import nouv_clef from './Composants/nouv_clef.vue';
@@ -74,17 +74,20 @@ const onAllCardsGone = (cartes) => {
   cartesCollectees.value = cartes;
   allCardsGone.value = true;
 };
-// Dimensions des cartes (vous pouvez les rendre réactives si besoin)
-const cardDimensions = ref({ width: 310, height: 500 });
+
+const cardDimensions = ref({ width: 20, height: 34 });
+// Computed pour convertir en string avec unité
+const cardWidthVw = computed(() => '20vw');
+const cardWidthRecapVw = computed(() => '20vw');
 
 // Fonction pour créer les cartes avec la bonne largeur
 const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
   id,
   component: markRaw(carteBooster),
   props: {
-    carteComponent: markRaw(carte_membre), // ← Important : markRaw ici
+    carteComponent: markRaw(carte_membre),
     carteProps: {
-      largeur: cardDimensions.value.width + 'px',
+      largeur: cardWidthVw.value,
       data,
     },
     isNew,
