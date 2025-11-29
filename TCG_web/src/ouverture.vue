@@ -32,7 +32,7 @@
             ...card.props,
             carteProps: {
               ...card.props.carteProps,
-              largeur: '500px', // ← Changez la largeur ici (au lieu de 300px)
+              largeur: '310px', // ← Changez la largeur ici (au lieu de 300px)
             },
           }"
         />
@@ -75,7 +75,7 @@ const onAllCardsGone = (cartes) => {
   allCardsGone.value = true;
 };
 // Dimensions des cartes (vous pouvez les rendre réactives si besoin)
-const cardDimensions = ref({ width: 310, height: 520 });
+const cardDimensions = ref({ width: 310, height: 500 });
 
 // Fonction pour créer les cartes avec la bonne largeur
 const createCard = (id, data, isNew = false, rarete = 'Commun') => ({

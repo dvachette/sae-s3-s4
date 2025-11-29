@@ -1,10 +1,12 @@
 @import './style.css';
 
-.cursor-grab {
+.toutes_les_cartes {
+  position: absolute;
   cursor: grab;
+  cursor: grabbing;
 }
 
-.active\:cursor-grabbing:active {
+.toutes_les_cartes:active {
   cursor: grabbing;
 }
 
@@ -106,10 +108,6 @@
 .shadow-xl {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.absolute {
-  position: absolute;
 }
 
 .relative {
