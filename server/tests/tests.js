@@ -1,3 +1,4 @@
-const User = require("../objects/user.js");
-const elise = User.fromId(10);
-console.log(elise);
+const Card = require('../objects/card.js');
+const Member = require('../objects/member.js');
+const members = Card.getAllByClass("member")
+console.log(members);

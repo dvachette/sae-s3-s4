@@ -88,6 +88,11 @@ class Card {
         return cards;
     }
 
+    static getAllByClass(cardClass) {
+        const cards = Card.getAll();
+        return cards.filter(card => card._class === cardClass);
+    }
+
     static getRandomWeightedCard(cards) {
         let totalWeight = 0;
         for (const card of cards) {
@@ -110,8 +115,16 @@ class Card {
         return null; // Devrait théoriquement ne jamais arriver
     }
 
-    static drawRandomCards(nb) {
-        const allCards = Card.getAll();
+    static drawRandomCards(nb, classFilter = null) {
+        let allCards;
+        if (classFilter) {
+            allCards = Card.getAllByClass(classFilter);
+        } else {
+            allCards = Card.getAll();
+        }
+        if (allCards.length === 0) {
+            return []; // Pas de cartes disponibles
+        }
         const drawnCards = [];
         for (let i = 0; i < nb; i++) {
             const drawnCard = Card.getRandomWeightedCard(allCards);
@@ -123,8 +136,13 @@ class Card {
         return drawnCards;
     }
 
-    static drawUniqueRandomCards(nb) {
-        const allCards = Card.getAll();
+    static drawUniqueRandomCards(nb, classFilter = null) {
+        let allCards;
+        if (classFilter) {
+            allCards = Card.getAllByClass(classFilter);
+        } else {
+            allCards = Card.getAll();
+        }
         if (allCards.length < nb) {
             return []; // Pas assez de cartes pour tirer nb cartes uniques
         }
