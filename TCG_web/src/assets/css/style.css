@@ -18,6 +18,7 @@
   --rouge900: 136, 20, 20;
   --onyx: 50, 55, 59;
   --vert: 23, 157, 16;
+  --vertclair: 63, 235, 54;
 }
 
 html,
@@ -87,6 +88,7 @@ header > * {
   font-weight: normal;
 }
 
-a, button {
+a,
+button {
   cursor: pointer;
 }
