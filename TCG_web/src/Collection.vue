@@ -38,10 +38,12 @@
         <div class="une_carte"
           v-for="carte in cartes"
           :key="carte.id"
-        >
+         >
           <Carte_membre :data="carte" largeur="200px"/>
           <Barre_progress :niv="carte.niv" />
         </div>
+        <div class="une_carte"><Carte_familier largeur="200px"/></div>
+          
       </div>
       
     </div>
@@ -53,6 +55,7 @@ import { ref } from 'vue';
 
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
+import Carte_familier from './Composants/carte_familier.vue';
 import Barre_progress from './Composants/barre_progress_carte.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
@@ -64,7 +67,7 @@ cartes.value = [
   {id:3, niv:1},
   {id:4, niv:8},
   {id:5, niv:78},
-  {id:6, niv:9},
+  {id:6, niv:10},
   {id:7, niv:12}
 ]
 
