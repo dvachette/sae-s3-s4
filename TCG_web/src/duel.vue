@@ -18,8 +18,8 @@
         <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
         <Carte_membre largeur="100px" />
         <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
-        <Carte_membre largeur="150px" />
-        <Vie_cartes :pv="74" :pvtotal="100" largeur="150px" />
+        <Carte_membre largeur="100px" />
+        <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
         <Carte_membre largeur="100px" />
         <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
         <Carte_membre largeur="100px" />
@@ -32,8 +32,8 @@
         <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
         <Carte_membre largeur="100px" />
         <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
-        <Carte_membre largeur="150px" />
-        <Vie_cartes :pv="74" :pvtotal="100" largeur="150px" />
+        <Carte_membre largeur="100px" />
+        <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
         <Carte_membre largeur="100px" />
         <Vie_cartes :pv="74" :pvtotal="100" largeur="100px" />
         <Carte_membre largeur="100px" />

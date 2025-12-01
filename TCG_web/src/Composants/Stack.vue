@@ -30,14 +30,10 @@
       @click="throwCard(card.id)"
     >
       <div
-        class="rounded-2xl border-4 border-white shadow-xl carte-container"
+        class="rounded-2xl border-4 border-white carte-container"
         :style="{
           width: cardDimensions.width + 'vw',
           height: cardDimensions.height + 'vw',
-          boxShadow:
-            isDragging === card.id
-              ? '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
-              : '0 20px 25px -5px rgba(0, 0, 0, 0.1)',
         }"
       >
         <component

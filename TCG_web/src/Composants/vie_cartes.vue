@@ -17,7 +17,6 @@ import { computed } from 'vue';
 const props = defineProps({
   pv: Number,
   pvtotal: Number,
-  largeur: Number,
 });
 
 const progress = Math.floor(props.pv);
