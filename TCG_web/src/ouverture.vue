@@ -12,9 +12,7 @@
     </div>
     <div class="cartes">
       <Stack
-        :randomRotation="false"
         :sensitivity="180"
-        :sendToBackOnClick="false"
         :cardDimensions="cardDimensions"
         :cardsData="cards"
         @allCardsGone="onAllCardsGone"
@@ -90,17 +88,15 @@ const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
       largeur: cardWidthVw.value,
       data,
     },
-    isNew,
-    rarete,
   },
 });
 
 const cards = [
-  createCard(1, { nom: 'Mzhdunosaure', pv: 120, niveau: 5 }),
-  createCard(2, { nom: 'Autre Carte', pv: 100, niveau: 3 }),
-  createCard(3, { nom: 'Troisième Carte', pv: 80, niveau: 4 }),
-  createCard(4, { nom: 'Quatrième Carte', pv: 90, niveau: 6 }),
-  createCard(5, { nom: 'Cinquième Carte', pv: 90, niveau: 6 }),
+  createCard(1),
+  createCard(2),
+  createCard(3),
+  createCard(4),
+  createCard(5),
 ];
 </script>
 

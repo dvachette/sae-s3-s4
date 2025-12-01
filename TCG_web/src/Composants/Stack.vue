@@ -62,10 +62,6 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  randomRotation: {
-    type: Boolean,
-    default: false,
-  },
   sensitivity: {
     type: Number,
     default: 50,

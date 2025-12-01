@@ -1,9 +1,15 @@
 <template>
   <div class="clef">
-    <p>1212</p>
+    <p>{{ props.NbCle || 0 }}</p>
     <img src="@/assets/imgs/Clef.png" alt="Lot de clefs" />
   </div>
 </template>
+
+<script setup>
+const props = defineProps({
+  NbCle: Number,
+});
+</script>
 
 <style scoped>
 @import '../assets/css/style_clef.css';
