@@ -62,16 +62,19 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); 
-const lastBoosterOpening = ref(userData.value.lastBoosterOpening);  
-const nextBoosterOpening = new Date(lastBoosterOpening.value + 12*60*60*1000); //12 heures plus tard
-let remaining_time = nextBoosterOpening - new Date();
+const lastBoosterOpening = ref(new Date(userData.value.lastBoosterOpening * 1000));  
+// Get the next available booster time (12 hours after last opening)
+let now = new Date();
+let nextAvailableTime = new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000);
+// Calculate remaining time in milliseconds
+let remaining_time = nextAvailableTime - now;
 let timerText = ref("");
 // Update every second
 setInterval(() => {
-  remaining_time -= 1000;
-  const hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((remaining_time / (1000 * 60)) %60);
-  const seconds = Math.floor((remaining_time / 1000) % 60);
+  let remaining_time = nextAvailableTime - new Date();
+  let hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((remaining_time / (1000 * 60)) %60);
+  let seconds = Math.floor((remaining_time / 1000) % 60);
   if (remaining_time <= 0) {
     timerText.value = "Booster disponible !";
     return;
