@@ -13,7 +13,7 @@
         >
       </div>
       <div class="Compteur">
-        <clef />
+        <clef :cles="nbCles" />
       </div>
     </div>
     <div class="deck">
@@ -55,6 +55,9 @@ deck.value = [
   { id: 4, niv: 8 },
   { id: 5, niv: 78 },
 ];
+const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const nbCles = ref(userData.value.balance); 
+
 </script>
 
 <style scoped>

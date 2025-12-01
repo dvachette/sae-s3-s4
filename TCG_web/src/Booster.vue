@@ -44,7 +44,7 @@
       <boutons_achat />
     </div>
     <div class="Compteur">
-      <clef />
+      <clef :cles="nbCles"/>
     </div>
   </main>
 </template>
@@ -56,6 +56,12 @@ import boutons_achat from '@/Composants/boutons_achat.vue';
 
 import MonHeader from '@/Composants/header.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
+
+
+
+
+const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const nbCles = ref(userData.value.balance); 
 </script>
 
 <style scoped>

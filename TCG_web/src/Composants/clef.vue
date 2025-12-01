@@ -1,6 +1,6 @@
 <template>
   <div class="clef">
-    <p>{{ props.NbCles || 0 }}</p>
+    <p>{{ props.cles }}</p>
     <img src="@/assets/imgs/Clef.png" alt="Lot de clefs" />
   </div>
 </template>
@@ -8,7 +8,11 @@
 
 <script setup>
   const props = defineProps({
-    nbCles: Number,
+    "cles": {
+      type: Number,
+      required: false,
+      default: 0
+    }
   });
 </script>
 <style scoped>

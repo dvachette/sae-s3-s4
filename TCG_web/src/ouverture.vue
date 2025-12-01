@@ -23,7 +23,7 @@
   </div>
   <!-- Écran récapitulatif final -->
   <div v-else class="ecran-final">
-    <clef class="nbClé" />
+    <clef class="nbClé" :cles="nbCles" />
     <div class="toutes_cartes">
       <div v-for="card in cartesCollectees" :key="card.id" class="carte-recap">
         <component
@@ -102,6 +102,10 @@ const cards = [
   createCard(4, { nom: 'Quatrième Carte', pv: 90, niveau: 6 }),
   createCard(5, { nom: 'Cinquième Carte', pv: 90, niveau: 6 }),
 ];
+
+const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici 
+
 </script>
 
 <style scoped>
