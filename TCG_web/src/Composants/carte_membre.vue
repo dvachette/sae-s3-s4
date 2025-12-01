@@ -3,7 +3,7 @@
     <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
     <img src="@/assets/imgs/carte/perso/Mzhdunosaure.png" alt="imgCarte" />
     <div id="haut_carte">
-      <p id="nom">Mhzdunosaure</p>
+      <p id="nom">Aurel, le retour</p>
       <div class="PV">
         <p id="PV">120</p>
         <p id="lblPV">PV</p>
