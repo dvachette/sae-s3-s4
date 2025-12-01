@@ -40,11 +40,11 @@
       <router-link to="/ouverture"
         ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
       /></router-link>
-      <p>11h 21min 27sec</p>
+      <p>{{timerText}}</p>
       <boutons_achat />
     </div>
     <div class="Compteur">
-      <clef />
+      <clef :cles="nbCles"/>
     </div>
   </main>
 </template>
@@ -56,6 +56,32 @@ import boutons_achat from '@/Composants/boutons_achat.vue';
 
 import MonHeader from '@/Composants/header.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
+
+
+
+
+const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const nbCles = ref(userData.value.balance); 
+const lastBoosterOpening = ref(new Date(userData.value.lastBoosterOpening * 1000));  
+// Get the next available booster time (12 hours after last opening)
+let now = new Date();
+let nextAvailableTime = new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000);
+// Calculate remaining time in milliseconds
+let remaining_time = nextAvailableTime - now;
+let timerText = ref("");
+// Update every second
+setInterval(() => {
+  let remaining_time = nextAvailableTime - new Date();
+  let hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((remaining_time / (1000 * 60)) %60);
+  let seconds = Math.floor((remaining_time / 1000) % 60);
+  if (remaining_time <= 0) {
+    timerText.value = "Booster disponible !";
+    return;
+  }
+  timerText.value = `${hours}h ${minutes}min ${seconds}sec`;
+}, 1000);
+
 </script>
 
 <style scoped>

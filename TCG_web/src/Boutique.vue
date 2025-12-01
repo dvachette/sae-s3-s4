@@ -8,7 +8,7 @@
         <boutons_achat />
       </div>
       <div class="cartes_proposés">
-        <clef class="compteur_boutique"></clef>
+        <clef class="compteur_boutique" :cles="nbCles"/>
         <p>2/3</p>
         <p>3/3</p>
         <p>1/3</p>
@@ -30,6 +30,9 @@ import boutons_achat from '@/Composants/boutons_achat.vue';
 import MonHeader from '@/Composants/header.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
+const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const nbCles = ref(userData.value.balance); 
+
 </script>
 
 <style scoped>

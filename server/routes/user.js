@@ -229,7 +229,6 @@ function getUserData(request, response) {
     }
 
     // Vérifier si l'utilisateur est authentifié
-    console.log(request.session);
     if (!request.session.userId) {
         return response.status(401).send({ error: 'Utilisateur non authentifié' });
     }

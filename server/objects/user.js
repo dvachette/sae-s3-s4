@@ -321,7 +321,7 @@ class User {
         db.close();
         this.lastBoosterOpening = row.lastBoosterOppening;
         const lastOpening = this.lastBoosterOpening;
-        const delay = 5 * 60 * 60; // 5 heures en secondes
+        const delay = 12 * 60 * 60; // 5 heures en secondes
         const timeSinceLastOpening = now - lastOpening;
         return Math.max(0, delay - timeSinceLastOpening);
     }

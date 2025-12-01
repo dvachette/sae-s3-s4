@@ -8,12 +8,12 @@
     <div class="pageConnexion">
       <h2>Connexion</h2>
       <form @submit.prevent="connexion">
-        <label for="userName"> Nom d'utilisateur ou email </label>
+        <label for="userName"> Email </label>
         <input type="text" id="userName" v-model="id_utilisateur" />
 
         <label for="password"> Mot de passe </label>
         <input type="password" id="password" v-model="mdp_utilisateur" />
-        <p id="Incorrect" v-show="Loginerror" v-text="texterror"></p>
+        <p id="Incorrect" v-show="Loginerror" >	&#x26A0 {{ texterror }} &#x26A0</p>
         <button type="submit">Se connecter</button>
       </form>
       <router-link to="/creationcompte"
