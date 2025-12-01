@@ -40,7 +40,7 @@
       <router-link to="/ouverture"
         ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
       /></router-link>
-      <p>11h 21min 27sec</p>
+      <p>{{timerText}}</p>
       <boutons_achat />
     </div>
     <div class="Compteur">
@@ -62,6 +62,23 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); 
+const lastBoosterOpening = ref(userData.value.lastBoosterOpening);  
+const nextBoosterOpening = new Date(lastBoosterOpening.value + 12*60*60*1000); //12 heures plus tard
+let remaining_time = nextBoosterOpening - new Date();
+let timerText = ref("");
+// Update every second
+setInterval(() => {
+  remaining_time -= 1000;
+  const hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((remaining_time / (1000 * 60)) %60);
+  const seconds = Math.floor((remaining_time / 1000) % 60);
+  if (remaining_time <= 0) {
+    timerText.value = "Booster disponible !";
+    return;
+  }
+  timerText.value = `${hours}h ${minutes}min ${seconds}sec`;
+}, 1000);
+
 </script>
 
 <style scoped>
