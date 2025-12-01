@@ -68,6 +68,10 @@ cartes.value = [
   {id:7, niv:12}
 ]
 
+const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+
+const collection = userData.value.collection; //test OK mais vide
+
 const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
 const width = ref((Math.floor(80 * vw.value / 220))*220);
 const widthFlexCartes = ref(width.value+"px");
