@@ -1,6 +1,6 @@
 .pv_barre {
   width: var(--w);
-  height: 25px;
+  height: 15px;
   background-color: black;
   border-radius: 20px;
   margin: 0;
