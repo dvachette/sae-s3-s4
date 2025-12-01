@@ -19,8 +19,6 @@ const props = defineProps({
   pvtotal: Number,
   largeur: Number,
 });
-
-const progress = Math.floor(props.pv);
 const pourcentageValue = computed(() => (props.pv * 100) / props.pvtotal);
 const pourcentage = computed(() => pourcentageValue.value + '%');
 
