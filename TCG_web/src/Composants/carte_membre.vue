@@ -1,9 +1,9 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
     <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
-    <img src="@/assets/imgs/carte/perso/cléLocal.png" alt="imgCarte" />
+    <img src="@/assets/imgs/carte/perso/Mzhdunosaure.png" alt="imgCarte" />
     <div id="haut_carte">
-      <p id="nom">Mzhdunosaure</p>
+      <p id="nom">Mhzdunosaure</p>
       <div class="PV">
         <p id="PV">120</p>
         <p id="lblPV">PV</p>
@@ -16,19 +16,19 @@
 
     <div class="attaques">
       <p class="cout">2</p>
-      <p class="nom_attaque">Com-potes</p>
+      <p class="nom_attaque">kdkdkd</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
       <p class="desc_attaque">
-        Inflige le 2x20 dégats si la carte Aloys est également dans l'équipe
+        Tchou ! Tchou ! Apéro ?
       </p>
 
       <p class="cout">2</p>
-      <p class="nom_attaque">Piouccino</p>
+      <p class="nom_attaque">Oh ! Un nid de vaches !</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
       <p class="desc_attaque">
-        Soigne de 10pv tous les membres du mandat 2023-2024 (MIB) de son équipe
+         rend confus son adversaire pendant 2 tours, iel cherchera en vain ce qu'on a tenté de lui montrer
       </p>
     </div>
 
@@ -45,12 +45,12 @@
       />
       <p class="dateMandat">2024 2025</p>
       <img
-        src="@/assets/imgs/carte/perso/mandats/sdi.png"
+        src="@/assets/imgs/carte/perso/mandats/fbi.png"
         alt="mandat"
         id="imgMandat"
       />
       <p class="descCarte">
-        description courte de la personne représentée sur la carte
+        compliqué à tenir en place, cherchez-le vers les basses ou sous un trampoline
       </p>
     </div>
   </div>
@@ -63,6 +63,7 @@ const props = defineProps({
   data: Object,
   largeur: String
 });
+
 </script>
 
 <style scoped>
