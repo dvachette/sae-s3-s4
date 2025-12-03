@@ -43,7 +43,7 @@
           <Barre_progress :niv="carte.niv" />
         </div>
         <div class="une_carte"><Carte_familier largeur="200px"/></div>
-          
+        <div class="une_carte"><Carte_terrain largeur="200px"/></div> 
       </div>
       
     </div>
@@ -56,6 +56,7 @@ import { ref } from 'vue';
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
+import Carte_terrain from './Composants/carte_terrain.vue';
 import Barre_progress from './Composants/barre_progress_carte.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
