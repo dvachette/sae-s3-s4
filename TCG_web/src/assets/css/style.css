@@ -18,6 +18,15 @@
   --rouge900: 136, 20, 20;
   --onyx: 50, 55, 59;
   --vert: 23, 157, 16;
+  --vertclair: 63, 235, 54;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(var(--blanc50)); /* fond global */
 }
 
 @font-face {
@@ -38,7 +47,6 @@ body {
 
 #app {
   /*vise la div implentée par vueJS, équivalent du body en html classique*/
-  background-color: rgb(var(--blanc50));
   color: rgb(var(--onyx));
   display: flex;
   flex-direction: column;
@@ -53,7 +61,7 @@ pour cela il faut avoir, une div contenant le aside et main (mais pas le header 
 }
 
 main {
-  flex: 1;
+  height: 87.5%;
 }
 
 aside {
@@ -77,4 +85,9 @@ header > * {
   text-align: center;
   font-family: 'Lusitana', sans-serif;
   font-weight: normal;
+}
+
+a,
+button {
+  cursor: pointer;
 }

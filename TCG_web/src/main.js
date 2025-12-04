@@ -9,5 +9,7 @@ import Collection from './Collection.vue';
 import Boutique from './Boutique.vue';
 import Social from './Social.vue';
 import Profil from './Profil.vue';
+import Duel from './duel.vue';
 
+const app = createApp(App);
 createApp(App).use(router).mount('#app');

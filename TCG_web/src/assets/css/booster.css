@@ -5,13 +5,146 @@
   flex-direction: row;
 }
 
+p {
+  font-family: 'Mako';
+}
+
+/*-------------------------------Récompenses Quotidiennes-------------------------------*/
 .Récompenses_quotidiennes {
   width: 23.5vw;
   height: 100%;
   background-color: rgb(var(--jaune200));
   text-align: center;
+
+  display: grid;
+  grid-template-columns: 45% 7% 45%;
+  grid-template-rows: 8% 19.5% 19.5% 19.5% 19.5%;
+
+  padding: 0 2% 0 2%;
+  row-gap: 3%;
 }
 
+.Récompenses_quotidiennes > h2 {
+  grid-column: 1/-1;
+  grid-row: 1;
+
+  margin: 0;
+  padding-top: 5%;
+
+  font-size: 1.1rem;
+  font-family: 'Mako';
+}
+
+.jour {
+  background-color: rgb(var(--orange400));
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+
+  border-radius: 5px;
+
+  cursor : pointer;
+}
+
+.jour:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.jour > :first-child {
+  width: 100%;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  font-size: 0.9rem;
+  font-family: 'Mako';
+  line-height: 0.9rem;
+}
+
+.jour > p:nth-of-type(2) {
+  padding-right: 7%;
+  font-family: 'Mako';
+
+  align-self: center;
+}
+
+#j1 {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+#j2 {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+#j3 {
+  grid-row: 3;
+  grid-column: 1;
+}
+
+#j4 {
+  grid-row: 3;
+  grid-column: 3;
+}
+
+#j5 {
+  grid-row: 4;
+  grid-column: 1;
+}
+
+#j6 {
+  grid-row: 4;
+  grid-column: 3;
+}
+
+#j7 {
+  grid-row: 5;
+  grid-column: 1/-1;
+}
+
+img {
+  height: 40%;
+
+  align-self: center;
+}
+
+.jour > .Booster {
+  width: 30px;
+  height: 46.2px;
+}
+
+/*classes pour différencier les fait et non fait*/
+.actif {
+  /*récompense du jour actif non récupéré*/
+  border: solid 2px rgb(var(--rouge600));
+}
+
+.fait {
+  position: relative;
+}
+
+.fait > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fait::before {
+  /* récompenses des jours précedents, deja récupéré*/
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  background: rgba(var(--rouge800), 0.7);
+  border-radius: 3px;
+}
+
+/*------------------------------------Partie Booster------------------------------------*/
 .Booster_page {
   width: 65vw;
   display: flex;
@@ -23,9 +156,9 @@
 
 .Booster {
   height: 55vh;
-  width: 20vw;
-  background-color: rgb(var(--onyx));
-  box-shadow: 0 10px 10px rgba(var(--onyx), 1);
+  width: 35.2vh;
+  background-color: transparent;
+  /*box-shadow: 0 10px 10px rgba(var(--onyx), 1);*/
 }
 
 .Compteur {

@@ -1,89 +1,168 @@
 @import './style.css';
 
-#Combat {
+main {
   display: flex;
   flex-direction: column;
+  height: auto;
 }
 
 .page_combat {
-  height: 70%;
-  display: flex;
-  flex-direction: row;
+  height: var(
+    --hPage
+  ); /*70% des 87.5vh du main de "base" (donc de l'espace restant sur l'ecran sous le header*/
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: var(--hPage);
 }
 
+/*------------Forces et faiblesses-------------*/
 .F_f {
-  width: 23.5%;
+  grid-column: 1;
+  justify-self: start;
+  align-self: end;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
+
+  width: 80%;
+  height: 60%;
+
+  margin-bottom: 5%;
 }
 
 .F_f > button {
+  font-family: 'Mako';
+  color: rgb(var(--onyx));
   background-color: rgb(var(--jaune300));
-  width: 14vw;
-  height: 6vh;
+  width: 85%;
+  height: 17%;
   border: none;
   border-radius: 25px;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .F_f > button:hover {
-  background-color: rgb(var(--orange500));
-  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .F_f > button:active {
   background-color: rgb(var(--orange700));
-  transform: translateY(4px);
   box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
 
 .F_f > img {
-  width: 10vw;
-  height: 10vw;
-  margin: 0px;
+  height: 40%;
+  max-width: 40vw;
+  padding: 5%;
 }
 
+/*------------Lancement partie-------------*/
 .lancement_partie {
+  grid-column: 2;
   display: flex;
   flex-direction: column;
-  width: 65%;
+
   align-items: center;
   justify-content: center;
 }
 
-.lancement_partie > button {
+.lancement_partie a {
+  text-decoration: none;
+}
+
+.lancement_partie button {
+  font-family: 'Mako';
+  color: rgb(var(--onyx));
   background-color: rgb(var(--orange400));
   width: 14vw;
-  height: 6vh;
   border: none;
   border-radius: 25px;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.lancement_partie > button:hover {
-  background-color: rgb(var(--orange600));
-  box-shadow: 0 2px 5px rgba(var(--onyx), 0.5);
+.lancement_partie button:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.lancement_partie > button:active {
+.lancement_partie button:active {
   background-color: rgb(var(--orange700));
-  transform: translateY(4px);
   box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
 
 .lancement_partie > img {
-  width: 14vw;
-  height: 14vw;
-  margin: 0px;
+  max-width: 40vh;
+  height: 60%;
+  margin: 2%;
 }
 
+/*-------------Compteur--------------*/
 .Compteur {
+  grid-column: 3;
   width: 11.5vw;
+
+  justify-self: end;
 }
 
+/*-------------Deck---------------*/
 .deck {
-  height: 30vh;
+  height: auto;
   background-color: rgb(var(--jaune200));
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 14.5% 13.5% 13.5% 13.5% 13.5% 3.5% 13.5% 14.5%;
+  grid-template-rows: 20px 186.8px;
+}
+
+.deck > p {
+  grid-row: 1;
+
+  display: flex;
+  align-items: center;
+  justify-self: center;
+
+  font-size: 1rem;
+  font-family: 'Mako';
+  margin: 0;
+  padding-top: 5%;
+}
+
+.deck > p:first-of-type {
+  grid-column: 1;
+}
+
+.deck > p:nth-of-type(2) {
+  grid-column: 7;
+}
+
+.deck > p:nth-of-type(3) {
+  grid-column: 8;
+}
+
+.carte {
+  grid-row: 2;
+
+  justify-self: center;
+  align-self: center;
+}
+
+#separateur {
+  grid-column: 6;
+  grid-row: 1/-1;
+  width: 5px;
+  background-color: rgb(var(--orange400));
+  justify-self: center;
+}
+
+.carte:nth-of-type(6) {
+  grid-column: 7;
+}
+
+.deck > .carte:last-child {
+  grid-column: 8;
 }

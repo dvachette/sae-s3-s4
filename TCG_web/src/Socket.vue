@@ -1,4 +1,5 @@
 <template>
+  <VerifLogin/>
   <main>
     <h2>
       La page des sockets WebSocket
@@ -7,6 +8,7 @@
 </template>
 
 <script setup>
+import VerifLogin from '@/Composants/verifLogin.vue';
 import { onMounted, ref } from 'vue';
 
 async function setupWebSocket() {

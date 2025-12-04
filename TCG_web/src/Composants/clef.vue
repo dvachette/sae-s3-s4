@@ -1,10 +1,22 @@
 <template>
   <div class="clef">
-    <p>1212</p>
+    <p>{{ props.cles }}</p>
     <img src="@/assets/imgs/Clef.png" alt="Lot de clefs" />
   </div>
 </template>
 
+
 <script setup>
-import '@/assets/css/style_clef.css';
+  const props = defineProps({
+    "cles": {
+      type: Number,
+      required: false,
+      default: 0
+    }
+  });
 </script>
+<style scoped>
+@import '../assets/css/style_clef.css';
+</style>
+
+

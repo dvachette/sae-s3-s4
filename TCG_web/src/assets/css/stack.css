@@ -1,0 +1,103 @@
+@import './style.css';
+
+.toutes_les_cartes {
+  position: absolute;
+  cursor: grab;
+  cursor: grabbing;
+}
+
+.toutes_les_cartes:active {
+  cursor: grabbing;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.border-white {
+  border-color: white;
+}
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.active\:cursor-grabbing:active {
+  cursor: grabbing;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.select-none {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.border-4 {
+  border-width: 4px;
+}
+
+.border-white {
+  border-color: white;
+}
+.relative {
+  position: relative;
+}
