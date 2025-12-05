@@ -189,31 +189,31 @@ class User {
 
     delete() {
         // Supprimer ses liens d'amitié
-        for (const friendId of user.friends) {
+        for (const friendId of this.friends) {
             try {
-                user.removeFriend(friendId);
+                this.removeFriend(friendId);
             } catch (error) {
                 // Ignorer les erreurs lors de la suppression des amis
             }
         }
-        for (const request of user.pendingFriendRequests) {
+        for (const request of this.pendingFriendRequests) {
             try {
-                user.cancelFriendRequest(request.receiverId);
+                this.cancelFriendRequest(request.receiverId);
             } catch (error) {
                 // Ignorer les erreurs lors de la suppression des demandes d'amis
             }
         }
-        for (const request of user.pendingIncomingRequests) {
+        for (const request of this.pendingIncomingRequests) {
             try {
-                user.rejectFriendRequest(request.senderId);
+                this.rejectFriendRequest(request.senderId);
             } catch (error) {
                 // Ignorer les erreurs lors de la suppression des demandes d'amis
             }
         }
         // Remplacer son mail par <id>@DELETED
-        this.email = `${userId}@DELETED`;
+        this.email = `${this.userId}@DELETED`;
         // Remplacer son nom par DELETED_user_<id>
-        this.username = `DELETED_user_${userId}`;
+        this.username = `DELETED_user_${this.userId}`;
         // Remplaces son mot de passe par DELETED
         this.passwordHash = 'DELETED';
         this.save();
