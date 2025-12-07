@@ -4,7 +4,6 @@
     :style="{
       width: cardDimensions.width + 'vw',
       height: cardDimensions.height + 'vw',
-      perspective: '600px',
     }"
   >
     <div
@@ -12,8 +11,6 @@
       :key="card.id"
       class="toutes_les_cartes"
       :style="{
-        left: '0',
-        top: '0',
         transform: getCardTransform(card.id, index),
         transition:
           cardPositions[card.id] && cardPositions[card.id].isExiting
@@ -30,7 +27,7 @@
       @click="throwCard(card.id)"
     >
       <div
-        class="rounded-2xl border-4 border-white carte-container"
+        class="carte_barre"
         :style="{
           width: cardDimensions.width + 'vw',
           height: cardDimensions.height + 'vw',
@@ -40,14 +37,7 @@
           v-if="card.component"
           :is="card.component"
           v-bind="card.props || {}"
-          class="w-full h-full"
-        />
-        <img
-          v-else
-          :src="card.img"
-          :alt="`card-${card.id}`"
-          class="w-full h-full object-cover pointer-events-none select-none"
-          draggable="false"
+          class="composant_crt"
         />
       </div>
     </div>
@@ -58,18 +48,6 @@
 import { ref, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
-  className: {
-    type: String,
-    default: '',
-  },
-  randomRotation: {
-    type: Boolean,
-    default: false,
-  },
-  sensitivity: {
-    type: Number,
-    default: 50,
-  },
   cardDimensions: {
     type: Object,
     default: () => ({ width: 20, height: 35 }), // Valeurs en vw
@@ -78,18 +56,9 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  animationConfig: {
-    type: Object,
-    default: () => ({ stiffness: 260, damping: 20 }),
-  },
-  sendToBackOnClick: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 const cards = ref(props.cardsData.length ? props.cardsData : []);
-
 const cardPositions = ref({});
 const isDragging = ref(null);
 const dragStart = ref({ x: 0, y: 0 });
@@ -118,8 +87,6 @@ onMounted(() => {
       initialRotations.value[card.id] = 0;
     }
   });
-  console.log('Cards mounted:', cards.value);
-  console.log('Card positions:', cardPositions.value);
 });
 
 function getCardTransform(cardId, index) {
@@ -215,7 +182,6 @@ function throwCard(cardId) {
   };
 
   const collectedCard = cards.value.find((card) => card.id === cardId);
-  console.log('Carte à collecter:', collectedCard);
 
   if (collectedCard) {
     collectedCards.value.push(collectedCard);

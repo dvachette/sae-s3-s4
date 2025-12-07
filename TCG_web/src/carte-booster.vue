@@ -1,14 +1,11 @@
 <template>
-  <div class="carte-wrapper">
-    <!-- Version simplifiée qui devrait marcher -->
+  <div class="carte_simple">
     <carte_membre
       :largeur="carteProps.largeur"
       :data="carteProps.data"
       class="carte-principale"
     />
-
-    <!-- Éléments supplémentaires -->
-    <div class="elements-supplementaires">
+    <div class="barre_simple">
       <Barre_progress :niv="carteProps.data?.niveau || 0" />
     </div>
   </div>

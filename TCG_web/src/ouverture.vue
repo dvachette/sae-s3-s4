@@ -1,5 +1,4 @@
 <template>
-  <!-- Écran vidéo -->
   <div v-if="showVideo" class="video-container">
     <video ref="introVideo" autoplay muted playsinline @ended="onVideoEnd">
       <source src="@/assets/vidéos/boosteranim.mp4" type="video/mp4" />
@@ -12,9 +11,6 @@
     </div>
     <div class="cartes">
       <Stack
-        :randomRotation="false"
-        :sensitivity="180"
-        :sendToBackOnClick="false"
         :cardDimensions="cardDimensions"
         :cardsData="cards"
         @allCardsGone="onAllCardsGone"
@@ -69,7 +65,6 @@ const onVideoEnd = () => {
 };
 
 const onAllCardsGone = (cartes) => {
-  console.log('Cartes reçues:', cartes);
   console.log('Nombre de cartes:', cartes.length);
   cartesCollectees.value = cartes;
   allCardsGone.value = true;
@@ -104,8 +99,7 @@ const cards = [
 ];
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
-const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici 
-
+const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici
 </script>
 
 <style scoped>
