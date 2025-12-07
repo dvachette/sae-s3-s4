@@ -1,7 +1,11 @@
 <template>
   <main :style="{ '--jauge_energie': jauge_energie }">
     <img src="@/assets/imgs/combat_feyssine.png" alt="echange" />
-    <pop_up_abandon v-if="afficher_abandon" id="abandon" />
+    <pop_up_abandon
+      v-if="afficher_abandon"
+      id="abandon"
+      @fermer="afficher_abandon = false"
+    />
     <div class="cartes_combat">
       <div class="son_deck">
         <div class="familier">

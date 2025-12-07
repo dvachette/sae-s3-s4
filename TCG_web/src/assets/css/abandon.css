@@ -24,23 +24,35 @@
   height: 50%;
   justify-content: space-around;
 }
-.choix > button {
-  grid-row: 2/3;
-  height: 50%;
-  width: 30%;
+.choix button {
+  height: 5vh;
+  width: 15vw;
   border: none;
   font-size: 100%;
-  align-self: center;
   border-radius: 50px;
   color: rgb(var(--blanc50));
 }
 
-.choix > button:nth-child(1) {
+.choix > a {
+  display: flex;
+  grid-row: 2/3;
   grid-column: 1/2;
+  align-items: center;
+  justify-items: center;
+  text-decoration: none;
+}
+
+.choix > a > button {
   background-color: rgb(var(--rouge600));
 }
 
+a > button {
+  color: red;
+}
+
 .choix > button:nth-child(2) {
+  grid-row: 2/3;
   grid-column: 2/3;
   background-color: rgb(var(--vert));
+  align-self: center;
 }
