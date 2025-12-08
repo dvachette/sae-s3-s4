@@ -42,6 +42,14 @@ function createAccount(request, response) {
         return response.status(400).send({ error: 'Informations manquantes' });
     }
 
+    if (!isEmailValid(mail)) {
+        return response.status(400).send({ error: 'Format d\'email invalide' });
+    }
+
+    if (!isPasswordStrong(password)) {
+        return response.status(400).send({ error: 'Mot de passe trop faible' });
+    }
+
     // Vérifier si l'email ou le nom d'utilisateur existe déjà
     
     
@@ -144,6 +152,7 @@ function editAccount(request, response) {
     const newPassword = request.body.password || null;
     const newUsername = request.body.name || null;
     
+    
     // Vérifier qu'au moins une information est fournie
     if (!newMail && !newPassword && !newUsername) {
         return response.status(400).send({ error: 'Aucune information à mettre à jour' });
@@ -153,6 +162,13 @@ function editAccount(request, response) {
         return response.status(409).send({ error: 'Mail ou pseudo déjà utilisé' });
     }
 
+    if (newMail && !isEmailValid(newMail)) {
+        return response.status(400).send({ error: 'Format d\'email invalide' });
+    }
+
+    if (newPassword && !isPasswordStrong(newPassword)) {
+        return response.status(400).send({ error: 'Mot de passe trop faible' });
+    }
     const user = User.fromId(userId);
     // Vérifier si l'utilisateur existe
     if (!user) {
@@ -245,6 +261,18 @@ function getUserData(request, response) {
     return response.status(200).send({ user: user });
 }
 
+function isEmailValid(email) {
+    // Expression régulière pour valider le format de l'email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function isPasswordStrong(password) {
+    // Vérifie que le mot de passe a au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+}
+
 
 module.exports = { 
     createAccount,
@@ -254,3 +282,4 @@ module.exports = {
     deleteAccount,
     getUserData
 };
+
