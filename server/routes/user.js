@@ -261,6 +261,24 @@ function getUserData(request, response) {
     return response.status(200).send({ user: user });
 }
 
+function getUserNameById(request, response) {
+
+    // Vérifier que la méthode HTTP est GET
+    if (request.method !== 'GET') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    const userId = request.params.id;
+
+    const user = User.fromId(userId);
+
+    if (!user) {
+        return response.status(404).send({ error: 'Utilisateur non trouvé' });
+    }
+
+    return response.status(200).send({ name: user.name });
+}
+
 function isEmailValid(email) {
     // Expression régulière pour valider le format de l'email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -280,6 +298,7 @@ module.exports = {
     logout,
     editAccount,
     deleteAccount,
-    getUserData
+    getUserData,
+    getUserNameById
 };
 
