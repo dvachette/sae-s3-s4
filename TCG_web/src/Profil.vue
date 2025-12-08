@@ -79,7 +79,7 @@
           >
         </div>
         <button @click="deconnexion" id="Déconnexion">Déconnexion</button>
-        <button id="Supprimer">Supprimer le compte</button>
+        <button @click="supprimerCompte" id="Supprimer">Supprimer le compte</button>
     </div>
     <div class="param_stats">
       <h2>Paramètres :</h2>
@@ -100,7 +100,7 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
-const password = ref('motdepasse123')
+const password = ref('')
 
 const editing = ref(false)
 const draftPassword = ref('')
@@ -126,8 +126,7 @@ function cancel() {
   editing.value = false
   draftPassword.value = password.value
 }
-
-const pseudo = ref('Ton_Pseudo')
+const pseudo = ref('')
 
 const edit_P = ref(false)
 const draft_P = ref('')
@@ -148,8 +147,19 @@ function cancelP() {
   edit_P.value = false
   draft_P.value = pseudo.value
 }
+const user = ref(JSON.parse(localStorage.getItem('userData')));
 
-const mail = ref('Ton_Mail')
+console.log(user.value);
+const mail = ref('');
+setTimeout(() => {
+  user.value = JSON.parse(localStorage.getItem('userData'));
+  mail.value = user.value ? user.value.email : '';
+  pseudo.value = user.value ? user.value.username : '';
+}, 3000);
+
+
+
+
 
 const edit_M = ref(false)
 const draft_M = ref('')
@@ -190,6 +200,31 @@ async function deconnexion(){
         router.push('/');
       }
 }
+
+async function supprimerCompte() {
+  const router = useRouter();
+  try {
+    const response = await fetch('http://localhost:3000/user',
+    {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Compte supprimé avec succès");
+    } else {
+      console.error(`Erreur lors de la supression du compte, redirection sur le login.\nErreur : ${data.error}`);
+    }
+    router.push("/");
+    
+  } catch (error) {
+    console.error('Erreur lors de la supression du compte :', error);
+    router.push("/");
+  }
+}
+
+
+
 
 </script>
 
