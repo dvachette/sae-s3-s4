@@ -59,7 +59,9 @@ class User {
         for (const friendRow of friendsRows) {
             if (friendRow.status === 'accepted') {
                 const friendId = (friendRow.senderId === user.userId) ? friendRow.receiverId : friendRow.senderId;
-                user.friends.push(friendId);
+                const friendNameQuery = new Database("database.db").prepare('SELECT name FROM user WHERE userId = ?');
+                const friendNameRow = friendNameQuery.get(friendId);    
+                user.friends.push({userId: friendId, name: friendNameRow.name});
             } else if (friendRow.status === 'pending') {
                 const request = new FriendRequest(friendRow.requestId, friendRow.senderId, friendRow.receiverId, friendRow.status);
                 if (friendRow.receiverId === user.userId) {
@@ -77,8 +79,8 @@ class User {
                 user.acceptedTrades.push(trade);
             }
         }
-        for (const friendId of user.friends) {
-            const trades = Trade.fromUserId(friendId);
+        for (const friend of user.friends) {
+            const trades = Trade.fromUserId(friend.userId);
             for (const trade of trades) {
                 if (trade.receiverId === user.userId) {
                     user.acceptedTrades.push(trade);
