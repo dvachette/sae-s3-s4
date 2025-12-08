@@ -210,7 +210,6 @@ async function deconnexion(){
 }
 
 async function supprimerCompte() {
-  const router = useRouter();
   try {
     const response = await fetch('http://localhost:3000/user',
     {
@@ -230,6 +229,7 @@ async function supprimerCompte() {
     router.push("/");
   }
 }
+
 </script>
 
 <style scoped>
