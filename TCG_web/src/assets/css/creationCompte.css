@@ -104,21 +104,18 @@ form {
   flex : 3;
 }
 
-form > a {
+form > button {
   align-self: center;
-  width: 60%
-}
-
-form > a > button {
-  width: 100%;
-  background-color: rgb(var(--orange400));
-  border: none;
-  color: rgb(var(--blanc50));
-}
-
-form > a > button:active {
-  background-color: rgb(var(--orange700));
+  width: 60%;
+  background-color: rgb(var(--blanc50));
+  border: 3px solid rgb(var(--orange400));
   color: rgb(var(--orange400));
+}
+
+form > button:active {
+  color: rgb(var(--orange700));
+  background-color: rgb(var(--orange400));
+  border: 3px solid rgb(var(--orange700));
 }
 
 label {
