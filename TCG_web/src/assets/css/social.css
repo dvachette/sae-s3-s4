@@ -3,6 +3,7 @@
 main {
   display: flex;
   flex-direction: row;
+  height: auto;
 }
 
 .part_echange {
@@ -80,4 +81,8 @@ main {
 .nouv_ami > img {
   width: 4vh;
   height: 5.2vh;
+}
+
+.part_echange > .comp-echange:nth-last-child {
+  margin-bottom: 4vh;
 }

@@ -1,6 +1,12 @@
 <template>
   <VerifLogin/>
   <MonHeader />
+  <pop_up_suppression
+      v-if="afficher_suppr"
+      id="suppr"
+      @fermer="afficher_suppr = false"
+      @suprpimer_compte="supprimerCompte"
+    />
   <main>
     <div class="gestion_soi">
       <div class="pp">
@@ -79,7 +85,7 @@
           >
         </div>
         <button @click="deconnexion" id="Déconnexion">Déconnexion</button>
-        <button @click="supprimerCompte" id="Supprimer">Supprimer le compte</button>
+        <button id="Supprimer" @click="afficher_suppr = true">Supprimer le compte</button>
     </div>
     <div class="param_stats">
       <h2>Paramètres :</h2>
@@ -100,11 +106,13 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
+import pop_up_suppression from './Composants/pop_up_suppression.vue';
 const password = ref('')
 
 const editing = ref(false)
 const draftPassword = ref('')
 const inputEl = ref(null)
+const afficher_suppr = ref(false);
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>
@@ -176,7 +184,7 @@ function saveM() {
   mail.value = draft_M.value
 }
 
-function cancelM() {
+function cancelM() {  
   edit_M.value = false
   draft_M.value = mail.value
 }
@@ -222,10 +230,6 @@ async function supprimerCompte() {
     router.push("/");
   }
 }
-
-
-
-
 </script>
 
 <style scoped>
