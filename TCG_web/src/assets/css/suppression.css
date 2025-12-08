@@ -1,17 +1,15 @@
-.abandon {
+.suppr {
   display: flex;
   flex-direction: column;
   width: 40vw;
   height: 30vh;
   background-color: rgb(var(--blanc50));
-  align-items: center;
-  justify-content: center;
   border-radius: 25px;
   border: 5px solid rgb(var(--onyx));
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.abandon > p {
+.suppr > p {
   grid-column: 1/3;
   grid-row: 2/3;
   font-size: 200%;
@@ -24,31 +22,28 @@
   height: 50%;
   justify-content: space-around;
 }
-.choix button {
+
+.choix > button {
+  display: flex;
+  grid-row: 2/3;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
   height: 5vh;
   width: 15vw;
   border: none;
   font-size: 100%;
   border-radius: 50px;
   color: rgb(var(--blanc50));
+  align-self: center;
 }
 
-.choix > a {
-  display: flex;
-  grid-row: 2/3;
-  grid-column: 1/2;
-  align-items: center;
-  justify-items: center;
-  text-decoration: none;
-}
-
-.choix > a > button {
+.choix > button:nth-child(1) {
   background-color: rgb(var(--rouge600));
+  grid-column: 1/2;
 }
 
 .choix > button:nth-child(2) {
-  grid-row: 2/3;
   grid-column: 2/3;
   background-color: rgb(var(--vert));
-  align-self: center;
 }
