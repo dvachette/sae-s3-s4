@@ -1,0 +1,127 @@
+@import './style.css';
+
+p {
+  font-family: 'Mako';
+  margin: 0;
+}
+
+.carte {
+  width: var(--w);
+  height: calc(1.39 * var(--w));
+
+  /*grid de toute la carte, divisé en 3 lignes : haut_carte (tour de l'img), attaques, bas_carte*/
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 71% 3% 17.25% 3% 5.75%;
+}
+
+.carte > img:first-of-type {
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.carte > img:nth-of-type(2) {
+  grid-column: 1/-1;
+  grid-row: 1;
+  width: calc(var(--w) * 0.84);
+  max-height: calc(var(--w) * 0.84);
+
+  padding: 15% 8% 0 8%;
+
+  z-index: 0;
+}
+
+/*----------------------Partie Haut_carte----------------------*/
+#haut_carte {
+  grid-column: 1;
+  grid-row: 1;
+
+  padding: 8% 8% 0 8%;
+
+  /*grid du haut de l'image pour placer chaque info*/
+  display: grid;
+  grid-template-columns: 77% 23%;
+  grid-template-rows: 7% 86% 7%;
+
+  z-index: 2;
+}
+
+#nom {
+  grid-column: 1/-1;
+  grid-row: 1/2;
+
+  font-size: calc(var(--w) * 0.067);
+  font-weight: bold;
+
+  padding-left : 3.5%;
+
+  display: flex;
+  align-items: flex-end;
+}
+
+.niv {
+  grid-column: 2/3;
+  grid-row: 3/4;
+
+  padding: 5% 6% 2% 20%;
+
+  display: flex;
+}
+
+#niv {
+  margin: 0;
+  font-size: calc(var(--w) * 0.045);
+  font-weight: 600;
+  margin-right: auto;
+  padding-bottom: 5%;
+
+  line-height: calc(var(--w) * 0.055);
+
+}
+
+#lblNiv {
+  padding: 0 5% 0 0;
+  font-size: calc(var(--w) * 0.03);
+  font-weight: 500;
+
+  /*mettre le texte pv vers le bas de sa case*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  line-height: calc(var(--w) * 0.03);
+}
+
+/*----------------------Partie Attaques----------------------*/
+.effet {
+  grid-row: 3;
+  grid-column: 1/-1;
+
+  padding: 0 9% 0 9%;
+
+  font-size: calc(var(--w) * 0.044);
+  font-weight: 500;
+  line-height: calc(var(--w) * 0.05);
+
+  z-index: 2;
+}
+
+/*----------------------Partie Bas_carte----------------------*/
+.descCarte {
+  grid-row: 5;
+  grid-column: 1;
+
+  padding: 0 8% 6% 8%;
+
+  font-size: calc(var(--w) * 0.025);
+  font-weight: 500;
+
+  text-align: center;
+
+  line-height: calc(var(--w) * 0.025);
+
+  z-index: 2;
+}
+

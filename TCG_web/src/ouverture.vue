@@ -1,5 +1,4 @@
 <template>
-  <!-- Écran vidéo -->
   <div v-if="showVideo" class="video-container">
     <video
       ref="introVideo"
@@ -19,7 +18,6 @@
     </div>
     <div class="cartes">
       <Stack
-        :sensitivity="180"
         :cardDimensions="cardDimensions"
         :cardsData="cards"
         @allCardsGone="onAllCardsGone"
@@ -75,7 +73,6 @@ const onVideoEnd = () => {
 };
 
 const onAllCardsGone = (cartes) => {
-  console.log('Cartes reçues:', cartes);
   console.log('Nombre de cartes:', cartes.length);
   cartesCollectees.value = cartes;
   allCardsGone.value = true;
