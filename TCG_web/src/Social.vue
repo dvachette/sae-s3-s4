@@ -1,5 +1,5 @@
 <template>
-  <VerifLogin/>
+  <VerifLogin />
   <MonHeader />
   <main>
     <div class="part_echange">
@@ -22,19 +22,19 @@
       <div class="demandes_reçus">
         <p>Demandes reçues</p>
       </div>
-      <amis_demandes 
+      <amis_demandes
         v-for="demande in demandesRecues"
-          :key="demande.fromUserId"
-          :nom_ami="demande.fromUserId"
-        />
+        :key="demande.fromUserId"
+        :nom_ami="demande.fromUserId"
+      />
       <div class="demandes_attentes">
         <p>Demandes en attentes</p>
       </div>
-      <amis_attentes 
+      <amis_attentes
         v-for="demande in demandesEnvoyees"
-          :key="demande.toUserId"
-          :nom_ami="demande.toUserId"
-        />
+        :key="demande.toUserId"
+        :nom_ami="demande.toUserId"
+      />
     </div>
   </main>
 </template>
