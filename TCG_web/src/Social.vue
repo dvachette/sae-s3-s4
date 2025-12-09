@@ -1,5 +1,5 @@
 <template>
-  <VerifLogin/>
+  <VerifLogin />
   <MonHeader />
   <main>
     <div class="part_echange">
