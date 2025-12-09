@@ -1,5 +1,5 @@
 <template>
-  <VerifLogin/>
+  <VerifLogin @loginSuccess="loadUserData"/>
   <MonHeader />
   <pop_up_suppression
       v-if="afficher_suppr"
@@ -105,7 +105,7 @@
 import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
-import { useRouter } from 'vue-router';
+import { loadRouteLocation, useRouter } from 'vue-router';
 import pop_up_suppression from './Composants/pop_up_suppression.vue';
 const password = ref('')
 
@@ -159,11 +159,11 @@ const user = ref(JSON.parse(localStorage.getItem('userData')));
 
 console.log(user.value);
 const mail = ref('');
-setTimeout(() => {
+function loadUserData() {
   user.value = JSON.parse(localStorage.getItem('userData'));
   mail.value = user.value ? user.value.email : '';
   pseudo.value = user.value ? user.value.username : '';
-}, 3000);
+}
 
 
 
