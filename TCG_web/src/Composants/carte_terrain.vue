@@ -1,7 +1,7 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
-    <img src="@/assets/imgs/carte/perso/fonds/fond_terrain.png" alt="carte" />
-    <img src="@/assets/imgs/carte/perso/Mzhdunosaure.png" alt="imgCarte" />
+    <img src="@/assets/imgs/carte/arena/fond_terrain.png" alt="carte" />
+    <img src="@/assets/imgs/carte/arena/cartes/feyssine.png" alt="imgCarte" />
     <div id="haut_carte">
       <p id="nom">Aurel, le retour</p>
       <div class="niv">

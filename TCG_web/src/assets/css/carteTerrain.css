@@ -12,7 +12,7 @@ p {
   /*grid de toute la carte, divisé en 3 lignes : haut_carte (tour de l'img), attaques, bas_carte*/
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 91.25% 3% 5.75%;
+  grid-template-rows: 93.25% 1% 5.75%;
 }
 
 .carte > img:first-of-type {
@@ -27,7 +27,7 @@ p {
   grid-column: 1/-1;
   grid-row: 1;
   width: calc(var(--w) * 0.84);
-  max-height: calc(var(--w) * 0.84);
+  max-height: 100%;
 
   padding: 15% 8% 0 8%;
 
@@ -44,7 +44,7 @@ p {
   /*grid du haut de l'image pour placer chaque info*/
   display: grid;
   grid-template-columns: 77% 23%;
-  grid-template-rows: 7% 88% 5%;
+  grid-template-rows: 5% 90% 5%;
 
   z-index: 2;
 }
@@ -78,7 +78,7 @@ p {
   margin-right: auto;
   padding-bottom: 5%;
 
-  line-height: calc(var(--w) * 0.045);
+  line-height: calc(var(--w) * 0.055);
 
 }
 
