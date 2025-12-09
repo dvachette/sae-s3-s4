@@ -22,11 +22,19 @@
       <div class="demandes_reçus">
         <p>Demandes reçues</p>
       </div>
-      <amis_demandes nom_ami="A.JOUBERT" />
+      <amis_demandes
+        v-for="demande in demandesRecues"
+        :key="demande.fromUserId"
+        :nom_ami="demande.fromUserId"
+      />
       <div class="demandes_attentes">
         <p>Demandes en attentes</p>
       </div>
-      <amis_attentes nom_ami="A.PEYTAVIE" />
+      <amis_attentes
+        v-for="demande in demandesEnvoyees"
+        :key="demande.toUserId"
+        :nom_ami="demande.toUserId"
+      />
     </div>
   </main>
 </template>
@@ -42,6 +50,11 @@ import amis_attentes from '@/Composants/amis_attentes.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
 import MonHeader from '@/Composants/header.vue';
+
+const userData = ref(JSON.parse(localStorage.getItem('userData')));
+
+const demandesRecues = ref(userData.value.pendingIncomingRequests);
+const demandesEnvoyees = ref(userData.value.pendingFriendRequests);
 </script>
 
 <style scoped>
