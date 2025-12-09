@@ -1,0 +1,84 @@
+.pageCreation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 40vw;
+  background-color: rgb(var(--jaune200));
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lusitana';
+  font-weight: normal;
+  height: 15%;
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex: 3;
+}
+
+form > button {
+  align-self: center;
+  width: 60%;
+  background-color: rgb(var(--blanc50));
+  border: 3px solid rgb(var(--orange400));
+  color: rgb(var(--orange400));
+}
+
+form > button:active {
+  color: rgb(var(--orange700));
+  background-color: rgb(var(--orange400));
+  border: 3px solid rgb(var(--orange700));
+}
+
+label {
+  display: flex;
+  align-items: center;
+  height: 11.5%;
+  font-family: 'Mako';
+  padding-left: 2%;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+form > input {
+  height: 15%;
+  border-radius: 34px;
+  border: none;
+  background-color: rgb(var(--blanc50));
+  padding: 0 2% 0 2%;
+  margin-bottom: 3vh;
+  font-family: 'Mako';
+  font-size: medium;
+  color: rgb(var(--onyx));
+}
+
+input:focus {
+  /*css qui s'applique quand l'utilisateur a le curseur dons l'input*/
+  outline: 2px solid rgb(var(--orange500));
+}
+
+button:hover {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  align-self: center;
+  font-family: 'Lusitana';
+  font-size: 1.5rem;
+  width: 70%;
+  padding: 0;
+  border-radius: 34px;
+  margin: 0;
+}
