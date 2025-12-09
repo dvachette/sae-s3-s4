@@ -1,6 +1,6 @@
 <template>
   <div class="ami">
-    <p>{{ nom_ami }} :</p>
+    <p>{{ nom_ami }}</p>
     <div class="ami_option">
       <img src="@/assets/imgs/trois_points.png" alt="3 points" />
     </div>

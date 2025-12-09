@@ -63,7 +63,7 @@ class User {
                 const friendNameRow = friendNameQuery.get(friendId);    
                 user.friends.push({userId: friendId, name: friendNameRow.name});
             } else if (friendRow.status === 'pending') {
-                const request = new FriendRequest(friendRow.requestId, friendRow.senderId, friendRow.receiverId, friendRow.status);
+                const request = FriendRequest.fromRow(friendRow);
                 if (friendRow.receiverId === user.userId) {
                     user.pendingIncomingRequests.push(request);
                 } else {

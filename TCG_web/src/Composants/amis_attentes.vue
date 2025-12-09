@@ -16,5 +16,5 @@ const props = defineProps({
 </script>
 
 <style scoped>
-@import '@/assets/css/attentes.css';
+@import '@/assets/css/amis_attentes.css';
 </style>

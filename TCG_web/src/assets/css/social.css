@@ -29,7 +29,7 @@ main {
   font-size: 1.5rem;
 }
 
-.amis {
+.les_amis {
   margin-top: 2vh;
   display: flex;
   flex-direction: column;
