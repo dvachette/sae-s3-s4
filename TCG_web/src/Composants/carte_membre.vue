@@ -3,32 +3,32 @@
     <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
     <img src="@/assets/imgs/carte/perso/Mzhdunosaure.png" alt="imgCarte" />
     <div id="haut_carte">
-      <p id="nom">{{data.name}}</p>
+      <p id="nom">Aurel, le retour</p>
       <div class="PV">
-        <p id="PV">{{ data.maxHitpoints }}</p>
+        <p id="PV">120</p>
         <p id="lblPV">PV</p>
       </div>
       <div class="niv">
-        <p id="lblNiv">niveau</p>
-        <p id="niv">{{ data.level }}</p>
+        <p id="lblNiv">{{ niveau }}</p>
+        <p id="niv">5</p>
       </div>
     </div>
 
     <div class="attaques">
-      <p class="cout">{{ data.attacks[0].cost }}</p>
-      <p class="nom_attaque">{{ data.attacks[0].name }}</p>
+      <p class="cout">2</p>
+      <p class="nom_attaque">kdkdkd</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
       <p class="desc_attaque">
-        {{ data.attacks[0].description }}
+        Tchou ! Tchou ! Apéro ?
       </p>
 
-      <p class="cout">{{ data.attacks[0].cost }}</p>
-      <p class="nom_attaque">{{ data.attacks[0].name }}</p>
+      <p class="cout">2</p>
+      <p class="nom_attaque">Oh ! Un nid de vaches !</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
       <p class="desc_attaque">
-        {{ data.attacks[0].description }}
+         rend confus son adversaire pendant 2 tours, iel cherchera en vain ce qu'on a tenté de lui montrer
       </p>
     </div>
 
@@ -50,7 +50,7 @@
         id="imgMandat"
       />
       <p class="descCarte">
-        {{ data.description }}
+        compliqué à tenir en place, cherchez-le vers les basses ou sous un trampoline
       </p>
     </div>
   </div>

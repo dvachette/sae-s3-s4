@@ -4,6 +4,7 @@
   <main>
     <div class="part_echange">
       <h2>Mes échanges</h2>
+      
       <mes_echanges class="e1" />
       <new_echange class="e2" />
       <h2>Autres échanges</h2>
