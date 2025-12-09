@@ -4,7 +4,7 @@
   <main>
     <div class="part_echange">
       <h2>Mes échanges</h2>
-      
+
       <mes_echanges class="e1" />
       <new_echange class="e2" />
       <h2>Autres échanges</h2>
@@ -19,7 +19,8 @@
         <img src="@/assets/imgs/ajout_ami.png" ref="nouvel ami" />
         <p>Ajouter des ami.e.s</p>
       </div>
-      <amis nom_ami="C.JALOUX" />
+      <amis nom_ami="C.JALOUX" v-for="ami in amis" :key"ami.fromUserId"
+      :nom_ami="ami.fromUserId" />
       <div class="demandes_reçus">
         <p>Demandes reçues</p>
       </div>
@@ -54,6 +55,7 @@ import MonHeader from '@/Composants/header.vue';
 
 const userData = ref(JSON.parse(localStorage.getItem('userData')));
 
+const amis = ref(userData.value.friends);
 const demandesRecues = ref(userData.value.pendingIncomingRequests);
 const demandesEnvoyees = ref(userData.value.pendingFriendRequests);
 </script>

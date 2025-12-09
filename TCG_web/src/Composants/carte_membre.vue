@@ -19,16 +19,15 @@
       <p class="nom_attaque">kdkdkd</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
-      <p class="desc_attaque">
-        Tchou ! Tchou ! Apéro ?
-      </p>
+      <p class="desc_attaque">Tchou ! Tchou ! Apéro ?</p>
 
       <p class="cout">2</p>
       <p class="nom_attaque">Oh ! Un nid de vaches !</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
       <p class="desc_attaque">
-         rend confus son adversaire pendant 2 tours, iel cherchera en vain ce qu'on a tenté de lui montrer
+        rend confus son adversaire pendant 2 tours, iel cherchera en vain ce
+        qu'on a tenté de lui montrer
       </p>
     </div>
 
@@ -50,7 +49,8 @@
         id="imgMandat"
       />
       <p class="descCarte">
-        compliqué à tenir en place, cherchez-le vers les basses ou sous un trampoline
+        compliqué à tenir en place, cherchez-le vers les basses ou sous un
+        trampoline
       </p>
     </div>
   </div>
@@ -61,9 +61,8 @@ const niveau = 'niveau';
 
 const props = defineProps({
   data: Object,
-  largeur: String
+  largeur: String,
 });
-
 </script>
 
 <style scoped>
