@@ -64,7 +64,7 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 const nbCles = ref(0); 
-const lastBoosterOpening = ref(new Date(userData.value.lastBoosterOpening * 1000));  
+const lastBoosterOpening = ref(new Date());  
 // Get the next available booster time (12 hours after last opening)
 let now = new Date();
 let nextAvailableTime = ref(new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000));
