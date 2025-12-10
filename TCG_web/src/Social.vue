@@ -1,5 +1,5 @@
 <template>
-  <VerifLogin />
+  <VerifLogin @login-success="updateFriendData"/>
   <MonHeader />
   <main>
     <div class="part_echange">
@@ -31,6 +31,8 @@
         v-for="demande in demandesRecues"
         :key="demande.fromUserId"
         :nom_ami="demande.fromUserName"
+        :ami_id="demande.fromUserId"
+        @accepter="demande_ami_acceptee"
       />
       <div class="demandes_attentes">
         <p>Demandes en attentes</p>
@@ -61,7 +63,19 @@ const userData = ref(JSON.parse(localStorage.getItem('userData')));
 const amis = ref(userData.value.friends);
 const demandesRecues = ref(userData.value.pendingIncomingRequests);
 const demandesEnvoyees = ref(userData.value.pendingFriendRequests);
+
+function updateFriendData() {
+  userData.value = JSON.parse(localStorage.getItem('userData'));
+  amis.value = userData.value.friends;
+  demandesRecues.value = userData.value.pendingIncomingRequests;
+  demandesEnvoyees.value = userData.value.pendingFriendRequests;
+}
 console.log(demandesRecues, demandesEnvoyees);
+
+function demande_ami_acceptee(data) {
+  const accepted_id = data.ami_id;
+  const accepted_name = data.nom_ami;
+}
 </script>
 
 <style scoped>
