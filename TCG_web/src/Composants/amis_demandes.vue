@@ -1,7 +1,7 @@
 <template>
-  <div class="demande">
+  <div class="demande" id="props.ami_id">
     <p>{{ nom_ami }}</p>
-    <div class="accepter">
+    <div class="accepter" @click="accept_ami">
       <img src="@/assets/imgs/check_blanc.png" alt="check" />
     </div>
     <div class="refuser">
@@ -22,22 +22,23 @@ const emit = defineEmits(['accepter', 'refuser', 'erreur']);
 
 async function accept_ami() {
   try {
-    const response = await fetch('localhost:3000/friends/accept', {
+    const response = await fetch('http://localhost:3000/friends/accept', {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ friendId: ami_id }),
+      body: JSON.stringify({ friendId: props.ami_id }),
     });
     const data = await response.json();
     if (response.ok) {
-      emit('accepter');
+      emit('accepter', { ami_id: props.ami_id, ami_nom: props.nom_ami });
     } else {
       emit('erreur');
     }
   } catch (erreur) {
     emit('erreur');
+    console.error(erreur);
   }
 }
 </script>
