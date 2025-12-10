@@ -15,7 +15,7 @@ import { ref } from 'vue';
 
 const props = defineProps({
   nom_ami: String,
-  ami_id: int,
+  ami_id: Number,
 });
 
 const emit = defineEmits(['accepter', 'refuser', 'erreur']);
