@@ -1,5 +1,7 @@
 <template>
-  <VerifLogin/>
+  <VerifLogin
+    @login-success="updateUserData"
+  />
   <MonHeader />
   <main id="booster">
     <div class="Récompenses_quotidiennes">
@@ -65,13 +67,13 @@ const nbCles = ref(userData.value.balance);
 const lastBoosterOpening = ref(new Date(userData.value.lastBoosterOpening * 1000));  
 // Get the next available booster time (12 hours after last opening)
 let now = new Date();
-let nextAvailableTime = new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000);
+let nextAvailableTime = ref(new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000));
 // Calculate remaining time in milliseconds
-let remaining_time = nextAvailableTime - now;
+let remaining_time = nextAvailableTime.value - now;
 let timerText = ref("");
 // Update every second
 setInterval(() => {
-  let remaining_time = nextAvailableTime - new Date();
+  let remaining_time = nextAvailableTime.value - new Date();
   let hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
   let minutes = Math.floor((remaining_time / (1000 * 60)) %60);
   let seconds = Math.floor((remaining_time / 1000) % 60);
@@ -81,7 +83,12 @@ setInterval(() => {
   }
   timerText.value = `${hours}h ${minutes}min ${seconds}sec`;
 }, 1000);
-
+function updateUserData() {
+  userData.value = JSON.parse(localStorage.getItem('userData'));
+  nbCles.value = userData.value.balance;
+  lastBoosterOpening.value = new Date(userData.value.lastBoosterOpening * 1000);
+  nextAvailableTime.value = new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000);
+}
 </script>
 
 <style scoped>
