@@ -360,6 +360,19 @@ class User {
         db.close();
     }
 
+    removeKeys(amount) {
+        if (this.balance < amount) {
+            throw new Error("Solde insuffisant.");
+        }
+        this.balance -= amount;
+        const db = new Database("database.db");
+
+        const updateBalanceQuery = db.prepare('UPDATE user SET balance = ? WHERE userId = ?');
+        updateBalanceQuery.run(this.balance, this.userId);
+
+        db.close();
+    }
+
     resetBoosterOpeningDate() {
         this.lastBoosterOpening = Math.floor(Date.now() / 1000);
         const db = new Database("database.db");

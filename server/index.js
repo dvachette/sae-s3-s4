@@ -76,6 +76,7 @@ app.get('/logout', userRoutes.logout);
 
 // Routes pour les boosters
 app.post('/booster/open', boosterRoutes.openBooster);
+app.post('/booster/buy', boosterRoutes.buyBooster);
 
 // Routes pour la collection
 app.get('/collection',collectionRoutes.getCollection);

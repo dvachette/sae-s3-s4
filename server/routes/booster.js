@@ -61,6 +61,47 @@ function openBooster(request, response) {
     return response.status(200).send({ message: 'Booster ouvert avec succès', cards: drawnCards , keys: keys});
 }
 
+function buyBooster(request, response) {
+    // Forcer l'utilisation de la methode POST
+    if (request.method !== 'POST') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    // Vérifier que l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+    
+    const userId = request.session.userId;
+
+    const user = User.fromId(userId);
+
+    const boosterCost = 100; // Coût du booster en clés
+    
+    if (user.balance < boosterCost) {
+        return response.status(400).send({ error: 'Clés insuffisantes pour acheter un booster' });
+    };
+    user.removeKeys(boosterCost);
+
+    // Faire un tirage par poids pour obtenir 5 cartes
+    let drawnCards = [];
+
+    drawnCards = Card.drawRandomCards(5);
+    
+    if (drawnCards.length === 0) {
+        return response.status(500).send({ error: 'Le booster ne peut pas être ouvert maintenant' });
+    }
+    for (const card of drawnCards) {
+        user.addCardToCollection(card.cardId, 1);
+    }
+    const keys = 5;
+
+    user.addKeys(keys);
+
+    return response.status(200).send({ message: 'Booster acheté avec succès' , cards: drawnCards , keys: keys});
+}
+
 module.exports = {
-    openBooster
+    openBooster,
+    buyBooster
 };
