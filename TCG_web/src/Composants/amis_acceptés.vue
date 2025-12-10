@@ -13,6 +13,7 @@ import { ref } from 'vue';
 const props = defineProps({
   nom_ami: String,
 });
+console.log(props.nom_ami);
 </script>
 
 <style scoped>

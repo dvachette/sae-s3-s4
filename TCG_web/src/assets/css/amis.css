@@ -15,7 +15,7 @@
 }
 
 .ami:hover {
-  border: 3px solid rgb(var(--orange400));
+  outline: 3px solid rgb(var(--orange400));
 }
 
 .ami:hover p {
@@ -36,6 +36,7 @@
   border-radius: 50px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .ami_option:hover {
