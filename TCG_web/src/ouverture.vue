@@ -117,7 +117,6 @@ async function fetchBooster() {
   nbCles.value += data.keys;
   obtainedKeys.value = data.keys;
   localStorage.setItem('userData', JSON.stringify(userData.value));
-  nbCles.value = data.newBalance;
   for (const cardInfo of data.cards) {
     const card = createCard(cardInfo.cardId, cardInfo);
     cards.push(card);
