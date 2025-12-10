@@ -1,5 +1,5 @@
 <template>
-  <VerifLogin />
+  <VerifLogin @login-success="updateFriendData"/>
   <MonHeader />
   <main>
     <div class="part_echange">
@@ -61,6 +61,13 @@ const userData = ref(JSON.parse(localStorage.getItem('userData')));
 const amis = ref(userData.value.friends);
 const demandesRecues = ref(userData.value.pendingIncomingRequests);
 const demandesEnvoyees = ref(userData.value.pendingFriendRequests);
+
+function updateFriendData() {
+  userData.value = JSON.parse(localStorage.getItem('userData'));
+  amis.value = userData.value.friends;
+  demandesRecues.value = userData.value.pendingIncomingRequests;
+  demandesEnvoyees.value = userData.value.pendingFriendRequests;
+}
 console.log(demandesRecues, demandesEnvoyees);
 </script>
 
