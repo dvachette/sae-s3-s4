@@ -3,7 +3,7 @@
     <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
     <img src="@/assets/imgs/carte/perso/Maël.png" alt="imgCarte" />
     <div id="haut_carte">
-      <p id="nom">Aurel, le retour</p>
+      <p id="nom">{{nom}}</p>
       <div class="PV">
         <p id="PV">120</p>
         <p id="lblPV">PV</p>
@@ -14,8 +14,8 @@
       </div>
     </div>
 
-    <div class="attaques">
-      <p class="cout">2</p>
+    <div v-if="attaques.length == 2" class="attaques">
+      <p class="cout">{{ attaques[0].cost }}</p>
       <p class="nom_attaque">kdkdkd</p>
       <p class="degats">20</p>
       <p class="lblDegats">dégâts</p>
@@ -64,6 +64,23 @@ const props = defineProps({
   largeur: String
 });
 
+console.log(props.data.name);
+
+const nom = props.data.name;
+const pv = props.data.maxHitpoints;
+const niv = props.data.level;
+
+const attaques = props.data.attacks;
+//, effects:{{duration:'3', target:'self', type:'rage', value:1}} 
+
+if(attaques[1] == null){
+  attaques[1] = {cost:0, description:'bloupi bloup ! miaou', name:'bloup'};
+} else if(attaques[1].cost == null){
+  attaques[1].cost = 1;
+  attaques[1].description = "bloupi bloup ! miaou";
+  attaques[1].name = "bloup";
+}
+console.log(attaques[1]);
 </script>
 
 <style scoped>

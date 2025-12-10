@@ -36,14 +36,21 @@
     <div class="collection">
       <div class="conteneur_cartes" :style="{'--width': widthFlexCartes}">
         <div class="une_carte"
-          v-for="carte in cartes"
-          :key="carte.id"
+          v-for="carte in collection"
+          :key="carte.card.cardId"
          >
-          <Carte_membre :data="carte" largeur="200px"/>
-          <Barre_progress :niv="carte.niv" />
+          <Carte_membre v-if="carte.card._class == 'member'" 
+          
+            :data="carte.card" largeur="200px"/>
+
+          <Carte_familier v-if="carte.card._class == 'pet'" 
+            largeur="200px"/>
+
+          <Carte_terrain v-if="carte.card._class == 'arena'" 
+            largeur="200px"/>
+
+          <Barre_progress :niv="carte.quantity" />
         </div>
-        <div class="une_carte"><Carte_familier largeur="200px"/></div>
-        <div class="une_carte"><Carte_terrain largeur="200px"/></div> 
       </div>
       
     </div>
@@ -75,6 +82,7 @@ cartes.value = [
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 
 const collection = userData.value.collection; //test OK mais vide
+console.log(collection[0].card.cardId);
 
 const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
 const width = ref((Math.floor(80 * vw.value / 220))*220);
