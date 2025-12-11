@@ -20,7 +20,7 @@ const emit = defineEmits(['annuler', 'erreur']);
 async function annuler_demande() {
   try {
     const response = await fetch(
-      'http://localhost:3000/friends/removeFriendRequest',
+      'http://localhost:3000/friends/request',
       {
         method: 'DELETE',
         credentials: 'include',
