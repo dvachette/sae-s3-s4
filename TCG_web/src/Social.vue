@@ -47,7 +47,7 @@
         v-for="demande in demandesEnvoyees"
         :key="demande.toUserId"
         :nom_ami="demande.toUserName"
-        :ami_id="demande.fromUserId"
+        :ami_id="demande.toUserId"
         @annuler="annuler_demande"
       />
     </div>
@@ -98,9 +98,10 @@ function demande_ami_refusee(data) {
 }
 
 function annuler_demande(data) {
+  console.log('here', data);
   const annulee_id = data.ami_id;
   demandesEnvoyees.value = demandesEnvoyees.value.filter(
-    (friend) => friend.fromUserId != annulee_id
+    (friend) => friend.toUserId != annulee_id
   );
 }
 

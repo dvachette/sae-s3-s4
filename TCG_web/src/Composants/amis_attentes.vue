@@ -19,22 +19,21 @@ const emit = defineEmits(['annuler', 'erreur']);
 
 async function annuler_demande() {
   try {
-    const response = await fetch(
-      'http://localhost:3000/friends/removeFriendRequest',
-      {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ friendId: props.ami_id }),
-      }
-    );
+    console.log('props', props);
+    const response = await fetch('http://localhost:3000/friends/request', {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ friendId: props.ami_id }),
+    });
     const data = await response.json();
     if (response.ok) {
       emit('annuler', { ami_id: props.ami_id, ami_nom: props.nom_ami });
     } else {
       emit('erreur');
+      console.error(data);
     }
   } catch (erreur) {
     emit('erreur');

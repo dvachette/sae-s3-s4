@@ -299,7 +299,8 @@ class User {
     cancelFriendRequest(friendId) {
         // Vérifier si une demande sortante existe
         friendId = parseInt(friendId);
-        const requestExists = this.pendingFriendRequests.some(request => request.toUserId === friendId);
+        console.log(this.pendingFriendRequests) ;
+        const requestExists = this.pendingFriendRequests.some(request => request.toUserId == friendId);
         if (!requestExists) {
             throw new Error("Aucune demande d'ami envoyée à cet utilisateur.");
         }
