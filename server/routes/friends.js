@@ -294,7 +294,6 @@ function removeFriendRequest(request, response) {
   }
 
   const userId = request.session.userId;
-  console.log(request.body);
   const friendId = request.body.friendId;
 
   // Vérifier que l'ID de l'ami est fourni

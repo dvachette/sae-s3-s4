@@ -28,6 +28,8 @@
         v-for="m_ami in amis"
         :key="m_ami.userId"
         :nom_ami="m_ami.name"
+        :id_ami="m_ami.userId"
+        @supprimer="supprimer_ami"
       />
       <div class="demandes_reçus">
         <p>Demandes reçues</p>
@@ -98,7 +100,6 @@ function demande_ami_refusee(data) {
 }
 
 function annuler_demande(data) {
-  console.log('here', data);
   const annulee_id = data.ami_id;
   demandesEnvoyees.value = demandesEnvoyees.value.filter(
     (friend) => friend.toUserId != annulee_id
@@ -113,6 +114,11 @@ function handleClickOutside(event) {
   if (zoneTexte.value && !zoneTexte.value.contains(event.target)) {
     chercheAmi.value = false;
   }
+}
+
+function supprimer_ami(data) {
+  const supprimer_id = data.id_ami;
+  amis.value = amis.value.filter((friend) => friend.UserId != supprimer_id);
 }
 
 onMounted(() => {

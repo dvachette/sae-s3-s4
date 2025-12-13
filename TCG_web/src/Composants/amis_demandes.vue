@@ -22,7 +22,7 @@ const emit = defineEmits(['accepter', 'refuser', 'erreur']);
 
 async function accept_ami() {
   try {
-    const response = await fetch('http://localhost:3000/friends/remove', {
+    const response = await fetch('http://localhost:3000/friends/accept', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -57,7 +57,6 @@ async function refus_ami() {
       emit('refuser', { ami_id: props.ami_id, ami_nom: props.nom_ami });
     } else {
       emit('erreur');
-      console.log('Here amis_faux');
     }
   } catch (erreur) {
     emit('erreur');
