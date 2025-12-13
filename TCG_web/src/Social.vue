@@ -23,7 +23,13 @@
         <img src="@/assets/imgs/ajout_ami.png" ref="nouvel ami" />
         <p>Ajouter des ami.e.s</p>
       </div>
-      <input v-else type="text" ref="zoneTexte" @click.stop />
+      <input
+        v-else
+        type="text"
+        ref="zoneTexte"
+        @click.stop
+        @keypress="afficher_liste"
+      />
       <amis_acceptés
         v-for="m_ami in amis"
         :key="m_ami.userId"
@@ -75,6 +81,7 @@ const demandesRecues = ref(userData.value.pendingIncomingRequests);
 const demandesEnvoyees = ref(userData.value.pendingFriendRequests);
 const chercheAmi = ref(false);
 const zoneTexte = ref(null);
+const resultRecherche = ref([]);
 
 function updateFriendData() {
   userData.value = JSON.parse(localStorage.getItem('userData'));
@@ -119,6 +126,30 @@ function handleClickOutside(event) {
 function supprimer_ami(data) {
   const supprimer_id = data.id_ami;
   amis.value = amis.value.filter((friend) => friend.UserId != supprimer_id);
+}
+
+async function afficher_liste(event) {
+  if (event.key === 'Enter') {
+    try {
+      const response = await fetch('http://localhost:3000/user/search', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: event.target.value }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        resultRecherche.value = data.users;
+        console.log(resultRecherche.value);
+      } else {
+        console.error(data);
+      }
+    } catch (erreur) {
+      console.error(erreur);
+    }
+  }
 }
 
 onMounted(() => {

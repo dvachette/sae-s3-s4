@@ -73,6 +73,7 @@ app.put('/user', userRoutes.editAccount);
 app.get('/user/name', userRoutes.getUserNameById);
 app.post('/login', userRoutes.login);
 app.get('/logout', userRoutes.logout);
+app.post('/user/search', userRoutes.searchUsers);
 
 // Routes pour les boosters
 app.post('/booster/open', boosterRoutes.openBooster);

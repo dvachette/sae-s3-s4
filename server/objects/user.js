@@ -180,6 +180,14 @@ class User {
         return User.fromUsername(username) !== null;
     }
 
+    static search(query) {
+        const db = new Database("database.db") ;
+        const fetchUserQuery = db.prepare('SELECT name, userId FROM user WHERE name LIKE ?');
+        const result = fetchUserQuery.all(query) ;
+        
+        return result ;
+    }
+
     save() {
         const db = new Database("database.db");
 
