@@ -82,7 +82,7 @@ cartes.value = [
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 
 const collection = userData.value.collection; //test OK mais vide
-console.log(collection[0].card.cardId);
+//console.log(collection[0].card.cardId);
 
 const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
 const width = ref((Math.floor(80 * vw.value / 220))*220);

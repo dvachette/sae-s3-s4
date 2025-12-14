@@ -5,30 +5,32 @@
     <div id="haut_carte">
       <p id="nom">{{nom}}</p>
       <div class="PV">
-        <p id="PV">120</p>
+        <p id="PV">{{pv}}</p>
         <p id="lblPV">PV</p>
       </div>
       <div class="niv">
-        <p id="lblNiv">{{ niveau }}</p>
-        <p id="niv">5</p>
+        <p id="lblNiv">niveau</p>
+        <p id="niv">{{niv}}</p>
       </div>
     </div>
 
-    <div v-if="attaques.length == 2" class="attaques">
+    <div class="attaques">
       <p class="cout">{{ attaques[0].cost }}</p>
-      <p class="nom_attaque">kdkdkd</p>
-      <p class="degats">20</p>
-      <p class="lblDegats">dégâts</p>
+      <p class="nom_attaque">{{ attaques[0].name }}</p>
+      <p class="degats">{{degats1}}</p>
+      <p v-if="degats1 != undefined" class="lblDegats">dégâts</p>
+      <p v-if="degats1 == undefined" class="lblDegats"></p>
       <p class="desc_attaque">
-        Tchou ! Tchou ! Apéro ?
+        {{ attaques[0].description }}
       </p>
 
-      <p class="cout">2</p>
-      <p class="nom_attaque">Oh ! Un nid de vaches !</p>
-      <p class="degats">20</p>
-      <p class="lblDegats">dégâts</p>
-      <p class="desc_attaque">
-         rend confus son adversaire pendant 2 tours, iel cherchera en vain ce qu'on a tenté de lui montrer
+      <p v-if="attaques.length == 2" class="cout">{{ attaques[1].cost }}</p>
+      <p v-if="attaques.length == 2" class="nom_attaque">{{ attaques[1].name }}</p>
+      <p v-if="attaques.length == 2" class="degats">{{degats2}}</p>
+      <p v-if="degats2 != undefined" class="lblDegats">dégâts</p>
+      <p v-if="degats2 == undefined" class="lblDegats"></p>
+      <p v-if="attaques.length == 2" class="desc_attaque">
+         {{ attaques[1].description }}
       </p>
     </div>
 
@@ -45,42 +47,74 @@
       />
       <p class="dateMandat">2024 2025</p>
       <img
-        src="@/assets/imgs/carte/perso/mandats/fbi.png"
+        :src="imgMandat"
         alt="mandat"
         id="imgMandat"
       />
       <p class="descCarte">
-        compliqué à tenir en place, cherchez-le vers les basses ou sous un trampoline
+        {{desc}}
       </p>
     </div>
   </div>
 </template>
 
 <script setup>
-const niveau = 'niveau';
+import { ref } from 'vue';
 
 const props = defineProps({
   data: Object,
   largeur: String
 });
 
-console.log(props.data.name);
+//chargement des images du dossier perso (**/* permet de charger tous les sous dossiers de perso)
+const images = import.meta.glob('../assets/imgs/carte/perso/**/*.png', { eager: true })
 
+//partie haute
 const nom = props.data.name;
 const pv = props.data.maxHitpoints;
 const niv = props.data.level;
 
+//partie attaques
 const attaques = props.data.attacks;
-//, effects:{{duration:'3', target:'self', type:'rage', value:1}} 
+  const effets = attaques[0].effects;
+  const degats1 = ref();
+  const degats2 = ref();  
 
-if(attaques[1] == null){
-  attaques[1] = {cost:0, description:'bloupi bloup ! miaou', name:'bloup'};
-} else if(attaques[1].cost == null){
-  attaques[1].cost = 1;
-  attaques[1].description = "bloupi bloup ! miaou";
-  attaques[1].name = "bloup";
+  for(const effet of attaques[0].effects){
+    console.log(effet.type);
+    if(effet.type == 'damage'){
+      degats1.value = effet.value;
+    }
+  }
+  if(attaques.length == 2){
+    for(const effet of attaques[1].effects){
+      console.log(effet.type);
+      if(effet.type == 'damage'){
+        degats2.value = effet.value;
+      }
+    }
+  }
+
+//partie basse
+const desc = props.data.description;
+const mandat = props.data.mandat;
+const imgMandat = images['../assets/imgs/carte/perso/mandats/'+props.data.mandat+'.png']?.default 
+//prends l'url dans la liste des images chargées dont la clé est le chemin d'acces a cette image,
+// ? permet de renvoyer undefined si l'img n'existe pas
+// .default permet d'accéder à l'url utilisable par l'attribut src de <img/> 
+const dateMandat = ref();
+if(mandat == "SDI"){
+  dateMandat.value = '2025 2026';
+} else if (mandat == "FBI"){
+  dateMandat.value = '2024 2025';
+} else if (mandat == "MIB"){
+  dateMandat.value = '2023 2024';
+} else {
+  dateMandat.value = '2022 2023'
 }
-console.log(attaques[1]);
+
+
+
 </script>
 
 <style scoped>
