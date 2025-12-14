@@ -1,9 +1,18 @@
 @import './style.css';
 
 main {
+  position: relative;
   display: flex;
   flex-direction: row;
   height: auto;
+}
+
+#s_ami {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  margin-top: 20%;
+  transform: translate(-50%, -50%);
 }
 
 .part_echange {
@@ -62,10 +71,16 @@ main {
   cursor: pointer;
 }
 
+.recherche_ami {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 input[type='text'] {
   background-color: rgb(var(blanc50));
   width: 18vw;
-  height: 4vh;
+  height: 7.5vh;
   border-radius: 30px;
   border: none;
   align-items: center;
@@ -74,14 +89,14 @@ input[type='text'] {
   padding-right: 1%;
   margin-top: 4vh;
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
-  font-size: 200;
+  font-size: 120%;
 }
 
 input[type='text']:focus {
   outline: 3px solid rgb(var(--jaune400));
 }
 
-.nouv_ami:hover {
+.recherche .nouv_ami:hover {
   outline: 3px solid rgb(var(--orange500));
 }
 

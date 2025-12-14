@@ -291,6 +291,23 @@ function isPasswordStrong(password) {
     return passwordRegex.test(password);
 }
 
+function searchUsers(request, response) {
+    // Vérifier que la méthode HTTP est GET
+    if (request.method !== 'POST') {
+        return response.status(405).send({ error: 'Methode non autorisée' });
+    }
+
+    // Vérifier si l'utilisateur est authentifié
+    if (!request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié' });
+    }
+
+    const query = request.body.query ;
+    const ret = User.search(query) ;
+    console.log(ret) ;
+
+    return response.status(200).send({ users: ret });
+}
 
 module.exports = { 
     createAccount,
@@ -299,6 +316,7 @@ module.exports = {
     editAccount,
     deleteAccount,
     getUserData,
-    getUserNameById
+    getUserNameById,
+    searchUsers
 };
 
