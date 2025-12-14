@@ -2,7 +2,11 @@
   <div class="ami">
     <p>{{ nom_ami }}</p>
     <div class="ami_option">
-      <img src="@/assets/imgs/trois_points.png" alt="3 points" />
+      <img
+        src="@/assets/imgs/croix_blanche.png"
+        alt="croix"
+        @click="$emit('appel_pop_up')"
+      />
     </div>
   </div>
 </template>

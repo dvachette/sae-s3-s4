@@ -13,6 +13,7 @@
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
   font-weight: bold;
   align-items: center;
+  cursor: pointer;
 }
 
 .créer_echange:hover {

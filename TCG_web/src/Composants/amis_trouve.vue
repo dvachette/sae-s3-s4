@@ -1,33 +1,31 @@
 <template>
-  <div class="attente">
+  <div class="trouvés">
     <p>{{ nom_ami }}</p>
-    <div class="annuler" @click="annuler_demande">
-      <img src="@/assets/imgs/croix_blanche.png" alt="croix" />
-    </div>
+    <p @click="demander_ami">+</p>
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
   nom_ami: String,
-  ami_id: Number,
+  id_ami: Number,
 });
 
-const emit = defineEmits(['annuler', 'erreur']);
+const emit = defineEmits(['demander', 'erreur']);
 
-async function annuler_demande() {
+async function demander_ami() {
   try {
     const response = await fetch('http://localhost:3000/friends/request', {
-      method: 'DELETE',
+      method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ friendId: props.ami_id }),
+      body: JSON.stringify({ friendId: props.id_ami }),
     });
     const data = await response.json();
     if (response.ok) {
-      emit('annuler', { ami_id: props.ami_id, ami_nom: props.nom_ami });
+      emit('demander', { ami_id: props.id_ami, ami_nom: props.nom_ami });
     } else {
       emit('erreur');
       console.error(data);
@@ -40,5 +38,5 @@ async function annuler_demande() {
 </script>
 
 <style scoped>
-@import '@/assets/css/amis_attentes.css';
+@import '@/assets/css/amis_trouve.css';
 </style>
