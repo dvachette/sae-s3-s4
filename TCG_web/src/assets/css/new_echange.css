@@ -16,7 +16,8 @@
 }
 
 .créer_echange:hover {
-  border: solid 5px rgba(var(--orange800), 1);
+  border: solid 5px
+   rgba(var(--orange800), 1);
 }
 
 .créer_echange:hover p {
