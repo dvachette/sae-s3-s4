@@ -101,3 +101,53 @@ receivedTrades|Trade[]|Demandes d’échange reçues en attente
 acceptedTrades|Trade[]|Historique des échanges
 
 
+## Collection
+Classe servant à représenter un élément de collection ( une carte et une quantité possédée)
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+card|<C extends Card>|Carte possédéec(Pet, Arena, Member) de type Card
+quantity|int|Nombre d'exemplaire possédée de la carte
+
+## Card
+Classe abstraite représentant une carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+cardId|int|Identifiant de la carte
+name|string|Nom de la carte
+_class|string|Type de la carte (Member, Arena, Pet)
+mandat|string|Mandat de la carte (ALL quand ça n'est pas pertinent d'indiquer un mandat, pour les arènes par exemple)
+pictureUrl|string|URL de l'image de la carte
+description|string|description de la carte
+weight|int|Poid de la carte (plus le poid est grand, plus la carte a de chances d'être tirée dans un booster)
+level|int|niveau de la carte
+borderPictureUrl|string|URL de l'image de la bordure de la carte (changeant avec les niveau)
+
+## Arena
+Classe étendant Card pour représenter une carte arène
+Arena possède les champs de Card, ainsi que les champs suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+backgroundPictureUrl|String|URL de l'image de fond
+
+## Pet
+Classe étendant Card pour représenter une carte familier
+Pet possède les champs de Card, ainsi que les champs suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+modifier|object|Le modificateur de la partie donné par le familier, il peut donner divers effets au joueur ou à son adversaire
+modifierText|string|Description du modificateur
+
+Le modificateur est un objet anonyme qui possède les champs suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+type|string|"boost" ou "nerf", indique l'action à réaliser
+target|string|"owner" ou "opponent", indique le joueur cible du modificateur
+on|string|"health", "shield", "poison", "rage","fatigue", "strength", "regen"ou "weakness", indique la statistique affecté
+value|int|Indique la valeur de modificationde la statistique affectée
+filter|object|filtre optionnel pour cibler ceertaines cartes par champ (mandat, level, type...)
+
+## Member
+Classe étendant Card pour représenter une carte membre
+Member possède les champs de Card, ainsi que les champs de suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
