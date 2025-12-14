@@ -2,6 +2,14 @@
   <VerifLogin @login-success="updateFriendData" />
   <MonHeader />
   <main>
+    <pop_up_supprami
+      v-if="afficher_supprami == true"
+      :nom_ami="nom_ami_selectionne"
+      :id_ami="id_ami_selectionne"
+      id="s_ami"
+      @supprimer="supprimer_ami"
+      @garder_ami="afficher_supprami = false"
+    />
     <div class="part_echange">
       <h2>Mes échanges</h2>
 
@@ -23,19 +31,25 @@
         <img src="@/assets/imgs/ajout_ami.png" ref="nouvel ami" />
         <p>Ajouter des ami.e.s</p>
       </div>
-      <input
-        v-else
-        type="text"
-        ref="zoneTexte"
-        @click.stop
-        @keypress="afficher_liste"
-      />
+      <div class="recherche_ami" v-if="chercheAmi == true" @click.stop>
+        <input type="text" ref="zoneTexte" @keypress="afficher_liste" />
+        <amis_trouvé
+          v-for="p_trouvés in resultRecherche"
+          :key="p_trouvés.userId"
+          :nom_ami="p_trouvés.name"
+          :id_ami="p_trouvés.userId"
+          @demander="demander_ami"
+        />
+      </div>
       <amis_acceptés
         v-for="m_ami in amis"
         :key="m_ami.userId"
         :nom_ami="m_ami.name"
-        :id_ami="m_ami.userId"
-        @supprimer="supprimer_ami"
+        @appel_pop_up="
+          afficher_supprami = true;
+          nom_ami_selectionne = m_ami.name;
+          id_ami_selectionne = m_ami.userId;
+        "
       />
       <div class="demandes_reçus">
         <p>Demandes reçues</p>
@@ -71,6 +85,8 @@ import amis_acceptés from '@/Composants/amis_acceptés.vue';
 import amis_demandes from '@/Composants/amis_demandes.vue';
 import amis_attentes from '@/Composants/amis_attentes.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
+import pop_up_supprami from './Composants/pop_up_supprami.vue';
+import amis_trouvé from './Composants/amis_trouve.vue';
 
 import MonHeader from '@/Composants/header.vue';
 
@@ -82,6 +98,9 @@ const demandesEnvoyees = ref(userData.value.pendingFriendRequests);
 const chercheAmi = ref(false);
 const zoneTexte = ref(null);
 const resultRecherche = ref([]);
+const afficher_supprami = ref(false);
+const nom_ami_selectionne = ref('');
+const id_ami_selectionne = ref('');
 
 function updateFriendData() {
   userData.value = JSON.parse(localStorage.getItem('userData'));
@@ -120,12 +139,25 @@ function rechercheAmi() {
 function handleClickOutside(event) {
   if (zoneTexte.value && !zoneTexte.value.contains(event.target)) {
     chercheAmi.value = false;
+    resultRecherche.value = [];
   }
 }
 
 function supprimer_ami(data) {
   const supprimer_id = data.id_ami;
   amis.value = amis.value.filter((friend) => friend.UserId != supprimer_id);
+  afficher_supprami.value = false;
+}
+
+function demander_ami(data) {
+  const demande_id = data.ami_id;
+  const demande_name = data.ami_nom;
+  demandesEnvoyees.value.push({
+    toUserId: demande_id,
+    toUserName: demande_name,
+  });
+  chercheAmi.value = false;
+  resultRecherche.value = [];
 }
 
 async function afficher_liste(event) {
