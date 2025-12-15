@@ -151,3 +151,90 @@ Classe étendant Card pour représenter une carte membre
 Member possède les champs de Card, ainsi que les champs de suivants
 | Champ | Type | Description |
 |:-:|:-:|:-:|
+maxHitpoints|int|PV max de la carte (Change avec le niveau)
+hitpoints|int|PV actuels de la carte (Change avec le niveau)
+attackMultiplier|float|Multiplicateur d'attaque de la carte (Défini par le niveau)
+modifiers|object[]|Modificateurs appliqués par les familiers en jeu
+attacks|Attack[]|Attaques
+statusEffects|object[]|Effets infligés à la carte en jeu (poison, regen, shield, rage, strenght, fatigue, stun) avec leur force et leur durée
+type|Type[]|Liste des types(poles) du membre
+force|int[]|Liste des identifiants des types contre qui le membre est fort
+faiblesse|int[]|Liste des identifiants des types contre qui le membre est faible
+
+## Attack
+Classe représentant une attaque de carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+effects|object[]|Liste des effets de l'attaque
+name|string|Nom de l'attaque
+cost|int|Coût en énergie de l'attaque
+description|string|Description de l'attaque
+Une attaque peut avoir plusieurs effets, chaque effet possédant les champs suivants :
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+type|string|Effets de l'attaque
+target|string|Cible de l'effet
+value|int|Valeur de l'effet
+duration|int|Durée de l'effet
+
+Chaque effet doit avoir certains attributs
+| type | target | value | duration | description |
+|:-:|:-:|:-:|:-:|:-:|
+heal|self,opponent,selfHand,opponenthand|PV à soigner||Soigne
+damage|self,opponent,selfHand,opponenthand|Dégâts à infliger||Inflige du dégat
+shield|self,opponent,selfHand,opponenthand|Coups à absorber||Donne un bouclier
+poison|self,opponent,selfHand,opponenthand|Dégâts à infliger par tour|Durée en nombre de tours|Inflige du dégât à chaque tour
+stun|self,opponent,selfHand,opponenthand||Durée en nombre de tours|Empêche d'attaquer
+rage|self,opponent,selfHand,opponenthand|Bonus de coût des attaques|Durée en nombre de tours|Réduit le coût des attaques
+fatigue|self,opponent,selfHand,opponenthand|Malus de coût des attaques|Durée en nombre de tours|Augmente le coût des attaques
+strenght|self,opponent,selfHand,opponenthand|Bonus de dégât|Durée en nombre de tours|Augmente les dégats des attaques
+weakness|self,opponent,selfHand,opponenthand|Malus de dégât|Durée en nombre de tours|Réduit les dégats des attaques
+regen|self,opponent,selfHand,opponenthand|PV à soigner par tour|Durée en nombre de tours|Soigne à chaque tour
+
+## Trade
+Classe représentant une demande d'échange
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+tradeId|int|Identifiant de l'échange
+senderId|int|ID de l'utilisateur demandant l'échange
+receiverId|int|ID de l'utilisateur ayant accepté l'échange ou null si personne n'a encore accepté l'échange
+offeredCards|Card[]|Liste des cartes proposées par l'utilisateur proposant l'échange
+requestedCard|Card|Carte demandée par l'utilisateur proposant l'échange
+accpetedCard|Card|Carte acceptée par l'utilisateur acceptant l'échange
+expiration|int|Date d'expiration de l'échange (en secondes écoulées depuis le 1er janvier 1970)
+
+## FriendRequest
+Classe représentant une attaque de carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+requestId|int|ID de la demande d'amis
+fromUserId|int|ID de l'utilisateur à l'origine de la demande d'amis
+toUserId|int|ID de l'utilisateur demandé en amis
+fromUserName|String|Npm de l'utilisateur à l'origine de la demande d'amis
+toUserName|string|Nom de l'utilisateur demandé en amis
+status|string|Status de la demande(pending, refused ou accepted)
+
+
+## Type
+Classe représentant un type(pole) d'une carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+typeId|int|ID du type
+name|string|Nom du type
+icon|string|Chemin vers l'image de l'icone
+color|string|Couleur du type
+forceId|int|ID du type contre qui ce type a un avantage
+faiblesseId|int|ID du type contre qui ce type a un désavantage
+
+## Type
+Classe représentant le deck de l'utilisateur
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+cards|Member[]|Les 5 cartes personnages
+pet|Pet|Le familier
+arena|Arena|La carte arène
+
+## Offer
+Classe représentant les offres du magasin A REFAIRE
+| Champ | Type | Description |
+|:-:|:-:|:-:|
