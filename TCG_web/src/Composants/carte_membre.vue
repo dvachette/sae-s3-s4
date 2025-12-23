@@ -38,14 +38,14 @@
       <p class="faibForce">Faiblesse</p>
       <p class="faibForce">Force</p>
       <img
-        src="@/assets/imgs/carte/perso/faiblessesForces/suivi.png"
+        :src="imgForce"
         alt="faiblesse"
       />
       <img
-        src="@/assets/imgs/carte/perso/faiblessesForces/locviseur.png"
+        :src="imgFaiblesse"
         alt="force"
       />
-      <p class="dateMandat">2024 2025</p>
+      <p class="dateMandat">{{dateMandat}}</p>
       <img
         :src="imgMandat"
         alt="mandat"
@@ -95,7 +95,7 @@ const attaques = props.data.attacks;
     }
   }
 
-//partie basse
+//partie mandat
 const desc = props.data.description;
 const mandat = props.data.mandat;
 const imgMandat = images['../assets/imgs/carte/perso/mandats/'+props.data.mandat+'.png']?.default 
@@ -110,8 +110,24 @@ if(mandat == "SDI"){
 } else if (mandat == "MIB"){
   dateMandat.value = '2023 2024';
 } else {
-  dateMandat.value = '2022 2023'
+  dateMandat.value = '2022 2023';
 }
+
+//partie force et faiblesse
+const poles = {
+0:"presidence", 1:"commRezo", 2:"tresorerie", 3:"secretariat",
+4:"projet", 5:"locviseur", 6:"ma", 7:"mi", 
+8:"culvention", 9:"bobopioux", 10:"bobopioux", 11:"locviseur",
+12:"culvention", 13:"suivi"}
+
+const force = poles[props.data.force[0]];
+const faiblesse = poles[props.data.faiblesse[0]];
+
+const imgForce = images['../assets/imgs/carte/perso/faiblessesForces/'+force+'.png']?.default 
+const imgFaiblesse = images['../assets/imgs/carte/perso/faiblessesForces/'+faiblesse+'.png']?.default
+
+//plus qu'a faire la partie fond
+
 
 
 
