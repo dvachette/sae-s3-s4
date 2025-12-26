@@ -1,6 +1,6 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
-    <img src="@/assets/imgs/carte/perso/fonds/fond_comm.png" alt="carte" />
+    <img :src="imgFond" alt="carte" />
     <img src="@/assets/imgs/carte/perso/Maël.png" alt="imgCarte" />
     <div id="haut_carte">
       <p id="nom">{{nom}}</p>
@@ -98,7 +98,7 @@ const attaques = props.data.attacks;
 //partie mandat
 const desc = props.data.description;
 const mandat = props.data.mandat;
-const imgMandat = images['../assets/imgs/carte/perso/mandats/'+props.data.mandat+'.png']?.default 
+const imgMandat = images['../assets/imgs/carte/perso/mandats/'+props.data.mandat+'.png']?.default;
 //prends l'url dans la liste des images chargées dont la clé est le chemin d'acces a cette image,
 // ? permet de renvoyer undefined si l'img n'existe pas
 // .default permet d'accéder à l'url utilisable par l'attribut src de <img/> 
@@ -123,11 +123,39 @@ const poles = {
 const force = poles[props.data.force[0]];
 const faiblesse = poles[props.data.faiblesse[0]];
 
-const imgForce = images['../assets/imgs/carte/perso/faiblessesForces/'+force+'.png']?.default 
-const imgFaiblesse = images['../assets/imgs/carte/perso/faiblessesForces/'+faiblesse+'.png']?.default
+const imgForce = images['../assets/imgs/carte/perso/faiblessesForces/'+force+'.png']?.default; 
+const imgFaiblesse = images['../assets/imgs/carte/perso/faiblessesForces/'+faiblesse+'.png']?.default;
 
-//plus qu'a faire la partie fond
+//partie fond
+const types = props.data.type;
+const imgFond = ref(images['../assets/imgs/carte/perso/fonds/fond_comm.png']?.default);
 
+if(types.length == 1){
+  imgFond.value = images['../assets/imgs/carte/perso/fonds/fond_'+types[0].name+'.png']?.default;
+} else {
+  let txtTypes = '';
+  for(let i=0; i<types.length; i++){
+    txtTypes = txtTypes + types[i].name.slice(0,4);
+    console.log(txtTypes);
+  }
+  imgFond.value = images['../assets/imgs/carte/perso/fonds/fond_'+txtTypes+'.png']?.default;
+}
+/*const poles = {
+0:"presidence",
+1:"communication",
+2:"tresorerie",
+3:"secretariat",
+4:"projet",
+5:"local",
+6:"MA",
+7:"MI",
+8:"prevention",
+9:"pioux",
+10:"pls",
+11:"superviseur",
+12:"culture",
+13:"suivi",
+}*/
 
 
 
