@@ -44,10 +44,10 @@
             :data="carte.card" largeur="200px"/>
 
           <Carte_familier v-if="carte.card._class == 'pet'" 
-            largeur="200px"/>
+            :data="carte.card" largeur="200px"/>
 
           <Carte_terrain v-if="carte.card._class == 'arena'" 
-            largeur="200px"/>
+            :data="carte.card" largeur="200px"/>
 
           <Barre_progress :niv="carte.quantity" />
         </div>

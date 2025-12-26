@@ -3,26 +3,28 @@
     <img src="@/assets/imgs/carte/arena/fond_terrain.png" alt="carte" />
     <img src="@/assets/imgs/carte/arena/cartes/feyssine.png" alt="imgCarte" />
     <div id="haut_carte">
-      <p id="nom">Aurel, le retour</p>
+      <p id="nom">{{nom}}</p>
       <div class="niv">
-        <p id="lblNiv">{{ niveau }}</p>
-        <p id="niv">5</p>
+        <p id="lblNiv">niveau</p>
+        <p id="niv">{{niv}}</p>
       </div>
     </div>
     
     <p class="descCarte">
-        compliqué à tenir en place, cherchez-le vers les basses ou sous un trampoline
+        {{desc}}
     </p>
   </div>
 </template>
 
 <script setup>
-const niveau = 'niveau';
-
 const props = defineProps({
   data: Object,
   largeur: String
 });
+
+const nom = props.data.name;
+const niv = props.data.level;
+const desc = props.data.description;
 
 </script>
 
