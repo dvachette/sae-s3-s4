@@ -21,17 +21,24 @@
       <p>Familier</p>
       <p>Terrain</p>
 
-      <Carte_membre
-        v-for="carte in deck"
-        :key="carte.id"
-        :data="carte"
-        largeur="120px"
-      />
+      <div class="carteMembreDeck" 
+        v-for="(carte, index) in deckMembre"
+        :key="index"
+      >
+        <div class="carteVide"
+          v-if="!carte"
+        ></div>
 
+        <Carte_membre
+          v-else
+          :data="carte"
+          largeur="120px"
+        />
+      </div>
       <div id="separateur"></div>
 
-      <Carte_membre largeur="120px" />
-      <Carte_membre largeur="120px" />
+      <Carte_membre v-if="!deckMembre[2]" :data="deckMembre[2]" largeur="120px" />
+      <Carte_membre v-if="!deckMembre[2]" :data="deckMembre[2]" largeur="120px" />
     </div>
   </main>
 </template>
@@ -55,8 +62,16 @@ deck.value = [
   { id: 4, niv: 8 },
   { id: 5, niv: 78 },
 ];
+
+
+
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); 
+console.log(userData.value.deck);
+const deckMembre = userData.value.deck.cards;
+console.log(deckMembre[2]);
+const familier = userData.value.deck.pet;
+const terrain = userData.value.deck.arena;
 
 </script>
 

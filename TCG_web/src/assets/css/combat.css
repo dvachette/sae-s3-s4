@@ -151,6 +151,10 @@ main {
   align-self: center;
 }
 
+.carteMembreDeck {
+  grid-row: 2;
+}
+
 #separateur {
   grid-column: 6;
   grid-row: 1/-1;
