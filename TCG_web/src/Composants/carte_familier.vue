@@ -1,33 +1,42 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
     <img src="@/assets/imgs/carte/pet/fond_familier.png" alt="carte" />
-  <img src="@/assets/imgs/carte/pet/trainCarton.png" alt="imgCarte" />
+  <img :src="imgFamilier" alt="imgCarte" />
     <div id="haut_carte">
-      <p id="nom">Aurel, le retour</p>
+      <p id="nom">{{ nom }}</p>
       <div class="niv">
-        <p id="lblNiv">{{ niveau }}</p>
-        <p id="niv">5</p>
+        <p id="lblNiv">niveau</p>
+        <p id="niv">{{ niv }}</p>
       </div>
     </div>
 
     <p class="effet">
-        Pour 3 tours, l'adversaire imite Yves Lecoq qui imite Jacque Chirac. Iel perd 10 PV  pendant 3 tours
+        {{effet}}
     </p>
 
     
     <p class="descCarte">
-        compliqué à tenir en place, cherchez-le vers les basses ou sous un trampoline
+        {{desc}}
     </p>
   </div>
 </template>
 
 <script setup>
-const niveau = 'niveau';
+const images = import.meta.glob('../assets/imgs/carte/pet/*.png', { eager: true });
 
 const props = defineProps({
   data: Object,
   largeur: String
 });
+
+const nom = props.data.name;
+const niv = props.data.level;
+const desc = props.data.description;
+const effet = props.data.modifierText;
+
+//partie image
+const imgFamilier = images['../assets/imgs/carte/pet/'+nom+'.png']?.default;
+
 
 </script>
 

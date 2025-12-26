@@ -1,7 +1,8 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
     <img src="@/assets/imgs/carte/arena/fond_terrain.png" alt="carte" />
-    <img src="@/assets/imgs/carte/arena/cartes/feyssine.png" alt="imgCarte" />
+    <img :src="imgTerrain" alt="imgCarte" />
+    
     <div id="haut_carte">
       <p id="nom">{{nom}}</p>
       <div class="niv">
@@ -17,6 +18,9 @@
 </template>
 
 <script setup>
+
+const images = import.meta.glob('../assets/imgs/carte/arena/cartes/*.png', { eager: true });
+
 const props = defineProps({
   data: Object,
   largeur: String
@@ -25,6 +29,9 @@ const props = defineProps({
 const nom = props.data.name;
 const niv = props.data.level;
 const desc = props.data.description;
+
+//partie image
+const imgTerrain = images['../assets/imgs/carte/arena/cartes/'+nom+'.png']?.default;
 
 </script>
 
