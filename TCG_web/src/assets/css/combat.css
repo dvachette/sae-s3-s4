@@ -110,13 +110,15 @@ main {
 
 /*-------------Deck---------------*/
 .deck {
-  height: auto;
+  height: 248.5px; /*208.5px pour la hauteur de la carte, 20px de marge en haut et en bas*/
   background-color: rgb(var(--jaune200));
   width: 100%;
+  padding: 0 1% 0 1%;
+  box-sizing: border-box; /*permet que le width soit vraiment la valeur de width et pas width+padding+border, le contenu s'adapte*/
 
   display: grid;
-  grid-template-columns: 14.5% 13.5% 13.5% 13.5% 13.5% 3.5% 13.5% 14.5%;
-  grid-template-rows: 20px 186.8px;
+  grid-template-columns: 14% 14% 14% 14% 14% 2.5% 13.75% 13.75%;
+  grid-template-rows: 20px 1fr;
 }
 
 .deck > p {
@@ -153,12 +155,23 @@ main {
 
 .carteMembreDeck {
   grid-row: 2;
+  height: calc(1.39*150px);
+  width: 150px;
+
+  justify-self: center;
+  align-self: center;
+}
+
+.carteMembreDeck > img {
+  max-width: 150px;
+  max-height: 208.5px;
 }
 
 #separateur {
   grid-column: 6;
   grid-row: 1/-1;
   width: 5px;
+  height: 100%;
   background-color: rgb(var(--orange400));
   justify-self: center;
 }
@@ -168,5 +181,20 @@ main {
 }
 
 .deck > .carte:last-child {
+  grid-column: 8;
+}
+
+.deck > img{
+  max-width: 150px;
+  max-height: 208.5px;
+  justify-self: center;
+  align-self: center;
+}
+
+#familier {
+  grid-column: 7;
+}
+
+#terrain {
   grid-column: 8;
 }

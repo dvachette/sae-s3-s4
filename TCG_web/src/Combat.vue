@@ -25,21 +25,23 @@
         v-for="(carte, index) in deckMembre"
         :key="index"
       >
-        <div class="carteVide"
-          v-if="!carte"
-        ></div>
-
+        <img v-if="!carte" src="@/assets/imgs/carte/carte_ajout.png" alt="Carte_à_Ajouter">
+        
         <Carte_membre
           v-else
           :data="carte"
-          largeur="120px"
+          largeur="150px"
         />
       </div>
       <div id="separateur"></div>
 
-      <Carte_membre v-if="!deckMembre[2]" :data="deckMembre[2]" largeur="120px" />
-      <Carte_membre v-if="!deckMembre[2]" :data="deckMembre[2]" largeur="120px" />
+      <Carte_familier v-if="familier" :data="familier" largeur="150px"/>
+      <img v-else src="@/assets/imgs/carte/carte_ajout.png" alt="Carte_à_Ajouter" id="familier">
+      <Carte_terrain v-if="terrain" :data="terrain" largeur="150px" />
+      <img v-else src="@/assets/imgs/carte/carte_ajout.png" alt="Carte_à_Ajouter" id="terrain">
     </div>
+
+    
   </main>
 </template>
 
@@ -49,29 +51,20 @@ import clef from '@/Composants/clef.vue';
 
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
+import Carte_familier from './Composants/carte_familier.vue';
+import Carte_terrain from './Composants/carte_terrain.vue';
 
 const vh = ref(window.innerHeight / 100); //obtenir 1% de la hauteur de la fenetre, en px
-const hmain = ref(vh.value * 87.5 - 166.8 - 20 * 2 + 'px');
-
-const deck = ref([]);
-
-deck.value = [
-  { id: 1, niv: 2 },
-  { id: 2, niv: 11 },
-  { id: 3, niv: 1 },
-  { id: 4, niv: 8 },
-  { id: 5, niv: 78 },
-];
-
-
+const hmain = ref(vh.value * 87.5 - 208.5 - 20*2 + 'px');
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); 
-console.log(userData.value.deck);
+
 const deckMembre = userData.value.deck.cards;
-console.log(deckMembre[2]);
 const familier = userData.value.deck.pet;
 const terrain = userData.value.deck.arena;
+
+const collection = userData.value.collection;
 
 </script>
 

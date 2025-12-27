@@ -67,18 +67,6 @@ import Carte_terrain from './Composants/carte_terrain.vue';
 import Barre_progress from './Composants/barre_progress_carte.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
-const cartes = ref([])
-
-cartes.value = [
-  {id:1, niv:2},
-  {id:2, niv:11},
-  {id:3, niv:1},
-  {id:4, niv:8},
-  {id:5, niv:78},
-  {id:6, niv:10},
-  {id:7, niv:12}
-]
-
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 
 const collection = userData.value.collection; //test OK mais vide
