@@ -1,18 +1,29 @@
 @import './style.css';
 
+header {
+  width:100%;
+  position: fixed;
+  z-index: 100;
+}
+
 main {
   display: flex;
   flex-direction: column;
   height: auto;
+  margin-top: 12.5vh;
 }
 
 .page_combat {
   height: var(
     --hPage
   ); /*70% des 87.5vh du main de "base" (donc de l'espace restant sur l'ecran sous le header*/
+  width : 100%;
   display: grid;
   grid-template-columns: 25% 50% 25%;
   grid-template-rows: var(--hPage);
+  
+  position : fixed;
+  z-index : 0;
 }
 
 /*------------Forces et faiblesses-------------*/
@@ -110,15 +121,21 @@ main {
 
 /*-------------Deck---------------*/
 .deck {
-  height: 248.5px; /*208.5px pour la hauteur de la carte, 20px de marge en haut et en bas*/
+  height: 318px; /*278px pour la hauteur de la carte, 20px de marge en haut et en bas*/
   background-color: rgb(var(--jaune200));
   width: 100%;
   padding: 0 1% 0 1%;
   box-sizing: border-box; /*permet que le width soit vraiment la valeur de width et pas width+padding+border, le contenu s'adapte*/
 
   display: grid;
-  grid-template-columns: 14% 14% 14% 14% 14% 2.5% 13.75% 13.75%;
+  grid-template-columns: 14% 14% 14% 14% 14% 2% 14% 14%;
   grid-template-rows: 20px 1fr;
+
+  margin-top: var(--hPage);
+  z-index: 2;
+
+  position: sticky; /*pour qu'il colle quand il arrive juste en dessous du header*/
+  top: 12.5vh; 
 }
 
 .deck > p {
@@ -155,21 +172,24 @@ main {
 
 .carteMembreDeck {
   grid-row: 2;
-  height: calc(1.39*150px);
-  width: 150px;
+  height: calc(1.39*200px);
+  width: 200px;
 
   justify-self: center;
   align-self: center;
 }
 
 .carteMembreDeck > img {
-  max-width: 150px;
-  max-height: 208.5px;
+  max-width: 200px;
+  max-height: 278px;
 }
 
-#separateur {
+.deck > .separateur {
   grid-column: 6;
   grid-row: 1/-1;
+}
+
+.separateur {
   width: 5px;
   height: 100%;
   background-color: rgb(var(--orange400));
@@ -185,8 +205,8 @@ main {
 }
 
 .deck > img{
-  max-width: 150px;
-  max-height: 208.5px;
+  max-width: 200px;
+  max-height: 278px;
   justify-self: center;
   align-self: center;
 }
@@ -197,4 +217,64 @@ main {
 
 #terrain {
   grid-column: 8;
+}
+/*-----------------Séparateur-------------------*/
+.separateurDeckCollection {
+  height : 5px;
+  width: 100%;
+  background-color: rgb(var(--orange400));
+
+  position: sticky;
+  top: calc(var(--vhPx)*12.5 + 318px); 
+  z-index:2;
+}
+
+/*-----------------Partie Collection---------------------*/
+.collection {
+  width: 100%;
+  height: auto;
+
+  background-color: rgb(var(--jaune200));
+  padding: 0 1% 0 1%;
+  box-sizing: border-box; 
+
+  display: grid;
+  grid-template-columns: 70% 2% 14% 14%;
+
+  z-index: 1;
+}
+
+.collecMembre {
+  grid-column : 1;
+
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--wgap);
+  row-gap: 15px;
+
+  width: 100%;
+
+  margin: 20px auto 10px auto;
+}
+
+.collecFamilier {
+  grid-column: 3;
+}
+
+.collecFamilier, .collecTerrain {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  align-items: start;
+
+  width: 100%;
+  margin: 20px auto 10px auto;
+}
+
+.collecTerrain {
+  grid-column: 4;
+}
+
+.collection > .separateur {
+  grid-column: 2;
 }
