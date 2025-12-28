@@ -17,6 +17,7 @@ const User = require('../objects/user.js'); // Importation de l'objet User
  * @returns status 201 - Demande d'amitié envoyée avec succès
  * @returns status 400 - ID de l'ami manquant / Impossible de s'ajouter soi-même en ami
  * @returns status 401 - Utilisateur non authentifié
+ * @returns status 404 - Utilisateur non trouvé
  * @returns status 405 - Méthode non autorisée
  * @returns status 409 - Demande d'amitié déjà en attente / Vous êtes déjà amis
  */
@@ -111,6 +112,7 @@ function getFriendsList(request, response) {
  * @returns response - Résultat de la requête
  * @returns status 200 - Liste des demandes récupérée avec succès
  * @returns status 401 - Utilisateur non authentifié
+ * @returns status 404 - Utilisateur non trouvé
  * @returns status 405 - Méthode non autorisée (GET uniquement)
  */
 function getPendingRequests(request, response) {

@@ -375,6 +375,7 @@ password|string|Mot de passe de l'utilisateur|Non
 200|Connexion réussie|message, user
 400|Informations manquantes|error
 401|Email ou mot de passe incorrect|error
+404|Utilisateur non trouvé|error
 405|Méthode non autorisée|error
 
 Champs de la réponse
@@ -392,26 +393,152 @@ Déconnecte l'utilisateur de son compte
 #### Requête
 URL:/logout
 Méthode : GET
-Corps de la requête : 
-| Clé | Type | Description | Optionnel |
-|:-:|:-:|:-:|:-:|
-name|string|Pseudo de l'utilisateur|Non
-email|string|Email de l'utilisateur|Non
-password|string|Mot de passe de l'utilisateur|non
+Corps de la requête : vide
 
 #### Réponse
 | Code de statut | Signification | Champs envoyés |
 |:-:|:-:|:-:|
-201|Compte édité avec succès|message, user
-400|Aucune information à mettre à jour|error
+200|Deconnexion réussi|message
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+
+## Amis
+
+### Demander un amis
+
+#### Action
+Envoie une demande d'amis à l'utilisateur d'ID spécifié, nécessite d'être authentifié
+
+#### Requête
+URL:/friends/request
+Méthode : POST
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'utilisateur à qui la demande sera envoyée|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+201|Demande créée avec succès|message, friendRequest
+400|Informations manquantes|error
 401|Utilisateur non authentifié|error
 404|Utilisateur non trouvé|error
-409|Mail ou pseudo déja utilisé|error
+405|Méthode non autorisée|error
+409|Demande existante/ amitié existante/ l'utilisateur a tenté de se demander lui-même en ami|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+friendRequest|FriendRequest|Demande d'amis créée
+error|string|Message d'erreur
+
+### Voir les demandes d'amis reçues en attente
+
+#### Action
+Renvoie les demandes d'amis reçues par l'utilisateur authentifié
+
+#### Requête
+URL:/user/request
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Demande récupérées avec succès|requests
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+requests|FriendRequest[]|Demandes d'amis
+error|string|Message d'erreur
+
+
+### Voir les demandes d'amis envoyées en attente
+
+#### Action
+Renvoie les demande d'amis envoyées par l'utilisateur authentifié en attente
+
+#### Requête
+URL:/friends/requests/me
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Liste des demandes récupérée avec succès|requests
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+requests|FriendRequest[]|Demandes d'amis envoyées
+error|string|Message d'erreur
+
+### Annuler une demande d'amis
+
+#### Action
+Annule une demande d'amis de l'utilisateur authentifié
+
+#### Requête
+URL:/friends/request
+Méthode : DELATE
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'utilisateur à qui la demande à supprimer a été envoyée|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Demande d'amitié supprimée avec succès|message
+400|Informations manquantes, ou erreur générique|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
 405|Méthode non autorisée|error
 
 Champs de la réponse
 | Champs | Type | Description |
 |:-:|:-:|:-:|
 message|string|Message de confirmation de succès
-user|User|Utilisateur modifié
+error|string|Message d'erreur
+
+### Accepter une demande d'amis
+
+### Voir les amis
+
+#### Action
+Récupère la liste des amis de l'utilisateur authentifié.
+
+#### Requête
+URL:/login
+Méthode : POST
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+201|Demande d'amitié envoyée avec succès|message, friends
+400|ID de l'ami manquant / Impossible de s'ajouter soi-même en ami|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+409|Demande d'amitié déjà en attente / Vous êtes déjà amis|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+friends|friend[]|Liste des amis
 error|string|Message d'erreur
