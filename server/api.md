@@ -226,7 +226,7 @@ color|string|Couleur du type
 forceId|int|ID du type contre qui ce type a un avantage
 faiblesseId|int|ID du type contre qui ce type a un désavantage
 
-## Type
+## Deck
 Classe représentant le deck de l'utilisateur
 | Champ | Type | Description |
 |:-:|:-:|:-:|
@@ -238,3 +238,180 @@ arena|Arena|La carte arène
 Classe représentant les offres du magasin A REFAIRE
 | Champ | Type | Description |
 |:-:|:-:|:-:|
+
+
+# Route
+
+## Utilisateur
+
+### Creer un compte
+
+#### Action
+Enregistre un nouveau compte et connecte l'utilisateur à ce compte
+
+#### Requete
+URL :/user
+Méthode : POST
+Corps de la requête
+| Clé | Type | Description | Optionnel
+|:-:|:-:|:-:|:-:|
+name|string|Pseudo de l'utilisateur|Non
+email|string|Email de l'utilisateur|Non
+password|string|Mot de passe de l'utilisateur|Non
+
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+201|Compte créé avec succès|message, user
+400|Informations manquantes|error
+409|Mail ou peudo déja utilisé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur créé
+error|string|Message d'erreur
+
+### Supprimer son compte
+
+#### Action
+Supprime le compte auquel l'utilisateur est connecté
+
+#### Requête
+URL:/user
+Méthode : DELETE
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Compte supprimé avec succès|message
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+error|string|Message d'erreur
+
+### Récupérer les informations de son compte
+
+#### Action
+Envoie les informations de l'utilisateur authentifié
+
+#### Requête
+URL:/user
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Compte récupéré avec succès|user
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+user|User|Utilisateur créé
+error|string|Message d'erreur
+
+### Editer son compte
+
+#### Action
+Change des informations de l'utilisateur authentifié
+
+#### Requête
+URL:/user
+Méthode : PUT
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+newUsername|string|Nouveau pseudo de l'utilisateur|Oui
+newEmail|string|Nouvel email de l'utilisateur|Oui
+newPassword|string|Nouveau mot de passe de l'utilisateur|Oui
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Compte édité avec succès|message, user
+400|Aucune information à mettre à jour|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+409|Mail ou pseudo déja utilisé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur modifié
+error|string|Message d'erreur
+
+### Se connecter à un compte
+
+#### Action
+Connecte l'utilisateur à ce compte
+
+#### Requête
+URL:/login
+Méthode : POST
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+email|string|Email de l'utilisateur|Non
+password|string|Mot de passe de l'utilisateur|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Connexion réussie|message, user
+400|Informations manquantes|error
+401|Email ou mot de passe incorrect|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur créé
+error|string|Message d'erreur
+
+### Se déconnecter
+
+#### Action
+Déconnecte l'utilisateur de son compte
+
+#### Requête
+URL:/logout
+Méthode : GET
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+name|string|Pseudo de l'utilisateur|Non
+email|string|Email de l'utilisateur|Non
+password|string|Mot de passe de l'utilisateur|non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+201|Compte édité avec succès|message, user
+400|Aucune information à mettre à jour|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+409|Mail ou pseudo déja utilisé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur modifié
+error|string|Message d'erreur
