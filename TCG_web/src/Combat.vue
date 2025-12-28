@@ -41,10 +41,10 @@
       <img v-else src="@/assets/imgs/carte/carte_ajout.png" alt="Carte_à_Ajouter" id="terrain">
     </div>
 
-    <div class="separateurDeckCollection" :style="{ '--vhPx': vh+'px' }"></div>
+    <div class="separateurDeckCollection" :style="{ '--vhPx': vh+'px' }" v-if="tailleCollection>=1"></div>
 
-    <div class="collection">
-      <div class="collecMembre" :style="{ '--wgap': gapCollec }">
+    <div class="collection" v-if="tailleCollection>=1">
+      <div class="collecMembre" :style="{ '--wgap': gapCollec }" >
         <Carte_membre v-for="carte of membres"
           :key="carte.card.cardId"
       
@@ -107,6 +107,7 @@ const deckFamilier = userData.value.deck.pet;
 const deckTerrain = userData.value.deck.arena;
 
 const collection = computed(() => { return userData.value.collection;});
+const tailleCollection = collection.value.length;
 const membres = computed(() => {
   return collection.value.filter( 
     carte => carte.card._class === 'member' 
@@ -123,7 +124,6 @@ const terrains = computed(() => {
     carte => carte.card._class === 'arena' 
   )
 })
-console.log(familiers.value[0].card)
 
 </script>
 
