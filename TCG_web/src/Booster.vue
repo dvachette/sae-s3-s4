@@ -1,5 +1,7 @@
 <template>
-  <VerifLogin/>
+  <VerifLogin
+    @login-success="updateUserData"
+  />
   <MonHeader />
   <main id="booster">
     <div class="Récompenses_quotidiennes">
@@ -61,24 +63,32 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
-const nbCles = ref(userData.value.balance); 
-const lastBoosterOpening = ref(userData.value.lastBoosterOpening);  
-const nextBoosterOpening = new Date(lastBoosterOpening.value + 12*60*60*1000); //12 heures plus tard
-let remaining_time = nextBoosterOpening - new Date();
+const nbCles = ref(0); 
+const lastBoosterOpening = ref(new Date());  
+// Get the next available booster time (12 hours after last opening)
+let now = new Date();
+let nextAvailableTime = ref(new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000));
+// Calculate remaining time in milliseconds
+let remaining_time = nextAvailableTime.value - now;
 let timerText = ref("");
 // Update every second
 setInterval(() => {
-  remaining_time -= 1000;
-  const hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((remaining_time / (1000 * 60)) %60);
-  const seconds = Math.floor((remaining_time / 1000) % 60);
+  let remaining_time = nextAvailableTime.value - new Date();
+  let hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((remaining_time / (1000 * 60)) %60);
+  let seconds = Math.floor((remaining_time / 1000) % 60);
   if (remaining_time <= 0) {
     timerText.value = "Booster disponible !";
     return;
   }
   timerText.value = `${hours}h ${minutes}min ${seconds}sec`;
 }, 1000);
-
+function updateUserData() {
+  userData.value = JSON.parse(localStorage.getItem('userData'));
+  nbCles.value = userData.value.balance;
+  lastBoosterOpening.value = new Date(userData.value.lastBoosterOpening * 1000);
+  nextAvailableTime.value = new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000);
+}
 </script>
 
 <style scoped>

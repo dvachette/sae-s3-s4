@@ -63,7 +63,7 @@ import { ref } from 'vue';
 
 const props = defineProps({
   data: Object,
-  largeur: String
+  largeur: String,
 });
 
 //chargement des images du dossier perso (**/* permet de charger tous les sous dossiers de perso)

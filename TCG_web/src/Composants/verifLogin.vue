@@ -3,6 +3,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
+const emit = defineEmits(['loginSuccess']);
 const router = useRouter()
     async function connexion() {
       try {
@@ -19,7 +20,8 @@ const router = useRouter()
         if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)
           // Stockage des données dans localstorage
           localStorage.setItem('userData', JSON.stringify(data.user));
-
+          // Emettre un événement pour indiquer la réussite de la connexion
+          emit('loginSuccess');
         } else {
           // Afficher le message d'erreur (data.error) et redirection vers la connexion
           console.error('Échec de la connexion :', data.error);

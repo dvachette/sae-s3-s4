@@ -59,9 +59,11 @@ class User {
         for (const friendRow of friendsRows) {
             if (friendRow.status === 'accepted') {
                 const friendId = (friendRow.senderId === user.userId) ? friendRow.receiverId : friendRow.senderId;
-                user.friends.push(friendId);
+                const friendNameQuery = new Database("database.db").prepare('SELECT name FROM user WHERE userId = ?');
+                const friendNameRow = friendNameQuery.get(friendId);    
+                user.friends.push({userId: friendId, name: friendNameRow.name});
             } else if (friendRow.status === 'pending') {
-                const request = new FriendRequest(friendRow.requestId, friendRow.senderId, friendRow.receiverId, friendRow.status);
+                const request = FriendRequest.fromRow(friendRow);
                 if (friendRow.receiverId === user.userId) {
                     user.pendingIncomingRequests.push(request);
                 } else {
@@ -77,8 +79,8 @@ class User {
                 user.acceptedTrades.push(trade);
             }
         }
-        for (const friendId of user.friends) {
-            const trades = Trade.fromUserId(friendId);
+        for (const friend of user.friends) {
+            const trades = Trade.fromUserId(friend.userId);
             for (const trade of trades) {
                 if (trade.receiverId === user.userId) {
                     user.acceptedTrades.push(trade);
@@ -178,6 +180,14 @@ class User {
         return User.fromUsername(username) !== null;
     }
 
+    static search(query) {
+        const db = new Database("database.db") ;
+        const fetchUserQuery = db.prepare('SELECT name, userId FROM user WHERE name LIKE ?');
+        const result = fetchUserQuery.all(query) ;
+        
+        return result ;
+    }
+
     save() {
         const db = new Database("database.db");
 
@@ -189,31 +199,31 @@ class User {
 
     delete() {
         // Supprimer ses liens d'amitié
-        for (const friendId of user.friends) {
+        for (const friendId of this.friends) {
             try {
-                user.removeFriend(friendId);
+                this.removeFriend(friendId);
             } catch (error) {
                 // Ignorer les erreurs lors de la suppression des amis
             }
         }
-        for (const request of user.pendingFriendRequests) {
+        for (const request of this.pendingFriendRequests) {
             try {
-                user.cancelFriendRequest(request.receiverId);
+                this.cancelFriendRequest(request.receiverId);
             } catch (error) {
                 // Ignorer les erreurs lors de la suppression des demandes d'amis
             }
         }
-        for (const request of user.pendingIncomingRequests) {
+        for (const request of this.pendingIncomingRequests) {
             try {
-                user.rejectFriendRequest(request.senderId);
+                this.rejectFriendRequest(request.senderId);
             } catch (error) {
                 // Ignorer les erreurs lors de la suppression des demandes d'amis
             }
         }
         // Remplacer son mail par <id>@DELETED
-        this.email = `${userId}@DELETED`;
+        this.email = `${this.userId}@DELETED`;
         // Remplacer son nom par DELETED_user_<id>
-        this.username = `DELETED_user_${userId}`;
+        this.username = `DELETED_user_${this.userId}`;
         // Remplaces son mot de passe par DELETED
         this.passwordHash = 'DELETED';
         this.save();
@@ -253,7 +263,7 @@ class User {
 
     removeFriend(friendId) {
         friendId = parseInt(friendId);
-        if (!this.friends.includes(friendId)) {
+        if (!this.friends.some((friend) => friend.userId == friendId)) {
             throw new Error("Cet utilisateur n'est pas dans votre liste d'amis.");
         }
 
@@ -261,7 +271,7 @@ class User {
         
         const deleteFriendQuery = db.prepare('DELETE FROM friends WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)');
         deleteFriendQuery.run(this.userId, friendId, friendId, this.userId);
-        this.friends = this.friends.filter(id => id !== friendId);
+        this.friends = this.friends.filter(friend => friend.userId !== friendId);
         db.close();
     }
 
@@ -297,7 +307,7 @@ class User {
     cancelFriendRequest(friendId) {
         // Vérifier si une demande sortante existe
         friendId = parseInt(friendId);
-        const requestExists = this.pendingFriendRequests.some(request => request.toUserId === friendId);
+        const requestExists = this.pendingFriendRequests.some(request => request.toUserId == friendId);
         if (!requestExists) {
             throw new Error("Aucune demande d'ami envoyée à cet utilisateur.");
         }
@@ -350,6 +360,19 @@ class User {
 
     addKeys(amount) {
         this.balance += amount;
+        const db = new Database("database.db");
+
+        const updateBalanceQuery = db.prepare('UPDATE user SET balance = ? WHERE userId = ?');
+        updateBalanceQuery.run(this.balance, this.userId);
+
+        db.close();
+    }
+
+    removeKeys(amount) {
+        if (this.balance < amount) {
+            throw new Error("Solde insuffisant.");
+        }
+        this.balance -= amount;
         const db = new Database("database.db");
 
         const updateBalanceQuery = db.prepare('UPDATE user SET balance = ? WHERE userId = ?');

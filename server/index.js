@@ -70,11 +70,14 @@ app.delete('/user', userRoutes.deleteAccount);
 app.get('/user', userRoutes.getUserData);
 app.post('/user', userRoutes.createAccount);
 app.put('/user', userRoutes.editAccount);
+app.get('/user/name', userRoutes.getUserNameById);
 app.post('/login', userRoutes.login);
 app.get('/logout', userRoutes.logout);
+app.post('/user/search', userRoutes.searchUsers);
 
 // Routes pour les boosters
 app.post('/booster/open', boosterRoutes.openBooster);
+app.post('/booster/buy', boosterRoutes.buyBooster);
 
 // Routes pour la collection
 app.get('/collection',collectionRoutes.getCollection);

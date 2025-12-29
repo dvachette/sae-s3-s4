@@ -1,9 +1,8 @@
 @import './style.css';
-
-.demande {
-  display: grid;
-  grid-template-columns: 3.9fr 1fr 1fr;
-  grid-template-rows: 100%;
+.attente {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: rgb(var(--jaune200));
   width: 18vw;
   height: 7.5vh;
@@ -14,45 +13,22 @@
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.demande:hover {
-  border: 3px solid rgb(var(--orange400));
+.attente:hover {
+  outline: 3px solid rgb(var(--orange400));
 }
 
-.demande:hover p {
+.attente:hover p {
   color: rgb(var(--orange800));
 }
 
-.demande p {
+.attente p {
   grid-column: 1/2;
   color: rgb(var(--onyx));
   font-family: 'Mako';
   font-size: 120%;
 }
 
-.accepter {
-  grid-column: 2/3;
-  display: flex;
-  flex-direction: row;
-  width: 5vh;
-  height: 5vh;
-  background-color: rgb(var(--vert));
-  border-radius: 50px;
-  align-items: center;
-  justify-content: center;
-  justify-self: end;
-}
-
-.accepter:hover {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.accepter > img {
-  width: 2.9vh;
-  height: 4vh;
-  align-self: center;
-}
-
-.refuser {
+.annuler {
   grid-column: 3/4;
   display: flex;
   flex-direction: row;
@@ -63,13 +39,14 @@
   align-items: center;
   justify-content: center;
   justify-self: end;
+  cursor: pointer;
 }
 
-.refuser:hover {
+.annuler:hover {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.refuser > img {
+.annuler > img {
   width: 2.9vh;
   height: 4vh;
 }

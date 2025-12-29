@@ -12,6 +12,7 @@
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
   font-size: 1.1vw;
   font-family: 'Mako';
+  cursor: pointer;
 }
 
 .mon_echange:hover {

@@ -1,0 +1,651 @@
+# BDE INFO TCG - API
+### NA, EF, AG, DV
+
+# Introduction : 
+BDE TCG est construit sur le modèle back-end/front-end, qui consiste en une partie front-end qui est l’interface utilisateur de l'application, et d’une partie back-end qui est la partie logique de l’application.
+
+Pour communiquer, le front-end effectue des requêtes HTTP vers une URL du back-end (endpoint), qui lui renvoie les informations demandées, ou effectue les actions demandées.
+
+## `fetch()`
+Pour effectuer une requête, il faut utiliser la fonction javascript `fetch()` qui permet de réaliser des requêtes sur le back-end 
+
+Voici un exemple de syntaxe de la fonction `fetch()` :
+```javascript
+fetch('<url>’, {
+  method: 'POST', 
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ foo: 'bar' })
+});
+```
+L’`url` est celui de l’endpoint sur lequel on fait la requête. Dans la documentation, les url données correspondent à la partie après l’adresse du serveur, mais il ne faut pas l’omettre
+Le champ `method` indique la méthode HTTP à employer (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`)
+La ligne `credentials: 'include'` permet d’activer les outils d’authentification, et est nécessaire pour **TOUS** les appels API de BDE TCG
+Le champ headers permet de définir plusieurs en-têtes, nous utiliserons principalement le champ `'Content-Type': 'application/json'` qui spécifie le format de données envoyées au back-end
+Le champ `body` contient les informations à envoyer au back-end, dans le format précisé dans les headers (on préfèrera l’emploi de `JSON`)
+Les clés du contenu du `body` doivent être exactement celles indiquées dans la documentation
+
+`fetch()` est une fonction asynchrone, ce qui signifie qu’elle est non bloquante. Pour attendre qu’elle ai fini d’effectuer la requête, il faut que la fonction qui effectue le `fetch()` soit définie comme asynchrone, avec le mot clé `async` devant la définition de la fonction :
+`async function demo() {}`
+Dans la fonction asynchrone, le mot clé `await` peut être placé devant `fetch()` pour attendre la fin de la requête avant de continuer le programme.
+On peut ensuite récupérer le résultat et le corps de la requête :
+```javascript
+async function demo() {
+    const response = await fetch(...);
+    const data = await response.json();
+    // Traiter ensuite les données
+}
+```
+## JSON
+### Définition
+JSON (JavaScript Object Notation) est un format de données textuel utilisé pour représenter des structures simples : objets, tableaux, valeurs primitives.
+Il sert principalement à échanger des données entre systèmes, notamment via des API HTTP.
+JSON n’est pas du code : c’est uniquement du texte structuré. 
+### Structure générale
+Un document JSON contient :
+```
+Objets : paires clé–valeur, entourées de { }
+Tableaux : listes ordonnées, entourées de [ ]
+Valeurs :
+    chaîne ("texte")
+    nombre (42)
+    booléen (true, false)
+    null (null)
+    objet
+    tableau
+```
+### Exemple valide :
+```json
+{
+"key": "value",
+"count": 3,
+"active": true,
+"items": ["a", "b"],
+"meta": { "version": 1 }
+}
+```
+### Règles formelles :
+ - Les clés sont toujours des chaînes entre guillemets doubles.
+ - Les chaînes utilisent exclusivement ".
+ - Pas de commentaires.
+ - Pas de fonctions, pas de dates, pas d’undefined.
+ - Le document doit être valide UTF-8.
+
+
+
+### Usage côté JavaScript
+Conversion JSON -> objet JS:
+`JSON.parse(jsonString)`
+
+Conversion objet JS -> JSON:
+`JSON.stringify(obj)`
+
+# Classes
+## User
+Classe servant à représenter un utilisateur
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+userId|int|Identifiant de l’utilisateur
+username|string|Pseudonyme de l’utilisateur
+email|string|Adresse email de l’utilisateur
+lastBoosterOpening|int|Date de la dernière ouverture de booster (en secondes depuis le 1er janvier 1970), ou null si l’utilisateur n’a pas encore ouvert de booster
+balance|int|Nombre de clés possédées par l’utilisateur
+collection|Collection[]|Liste représentant la collection de cartes de l’utilisateur
+friends|Friend[]|Liste des amis de l’utilisateur
+pendingFriendsRequests|FriendRequest[]|Demandes d’amis envoyées en attente de réponse
+pendingIncomingFriendRequests|FriendRequest[]|Demandes d’amis reçues en attente
+sentTrades|Trade[]|Demandes d’échange envoyées en attente
+receivedTrades|Trade[]|Demandes d’échange reçues en attente
+acceptedTrades|Trade[]|Historique des échanges
+
+
+## Collection
+Classe servant à représenter un élément de collection ( une carte et une quantité possédée)
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+card|<C extends Card>|Carte possédéec(Pet, Arena, Member) de type Card
+quantity|int|Nombre d'exemplaire possédée de la carte
+
+## Card
+Classe abstraite représentant une carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+cardId|int|Identifiant de la carte
+name|string|Nom de la carte
+_class|string|Type de la carte (Member, Arena, Pet)
+mandat|string|Mandat de la carte (ALL quand ça n'est pas pertinent d'indiquer un mandat, pour les arènes par exemple)
+pictureUrl|string|URL de l'image de la carte
+description|string|description de la carte
+weight|int|Poid de la carte (plus le poid est grand, plus la carte a de chances d'être tirée dans un booster)
+level|int|niveau de la carte
+borderPictureUrl|string|URL de l'image de la bordure de la carte (changeant avec les niveau)
+
+## Arena
+Classe étendant Card pour représenter une carte arène
+Arena possède les champs de Card, ainsi que les champs suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+backgroundPictureUrl|String|URL de l'image de fond
+
+## Pet
+Classe étendant Card pour représenter une carte familier
+Pet possède les champs de Card, ainsi que les champs suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+modifier|object|Le modificateur de la partie donné par le familier, il peut donner divers effets au joueur ou à son adversaire
+modifierText|string|Description du modificateur
+
+Le modificateur est un objet anonyme qui possède les champs suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+type|string|"boost" ou "nerf", indique l'action à réaliser
+target|string|"owner" ou "opponent", indique le joueur cible du modificateur
+on|string|"health", "shield", "poison", "rage","fatigue", "strength", "regen"ou "weakness", indique la statistique affecté
+value|int|Indique la valeur de modificationde la statistique affectée
+filter|object|filtre optionnel pour cibler ceertaines cartes par champ (mandat, level, type...)
+
+## Member
+Classe étendant Card pour représenter une carte membre
+Member possède les champs de Card, ainsi que les champs de suivants
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+maxHitpoints|int|PV max de la carte (Change avec le niveau)
+hitpoints|int|PV actuels de la carte (Change avec le niveau)
+attackMultiplier|float|Multiplicateur d'attaque de la carte (Défini par le niveau)
+modifiers|object[]|Modificateurs appliqués par les familiers en jeu
+attacks|Attack[]|Attaques
+statusEffects|object[]|Effets infligés à la carte en jeu (poison, regen, shield, rage, strenght, fatigue, stun) avec leur force et leur durée
+type|Type[]|Liste des types(poles) du membre
+force|int[]|Liste des identifiants des types contre qui le membre est fort
+faiblesse|int[]|Liste des identifiants des types contre qui le membre est faible
+
+## Attack
+Classe représentant une attaque de carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+effects|object[]|Liste des effets de l'attaque
+name|string|Nom de l'attaque
+cost|int|Coût en énergie de l'attaque
+description|string|Description de l'attaque
+Une attaque peut avoir plusieurs effets, chaque effet possédant les champs suivants :
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+type|string|Effets de l'attaque
+target|string|Cible de l'effet
+value|int|Valeur de l'effet
+duration|int|Durée de l'effet
+
+Chaque effet doit avoir certains attributs
+| type | target | value | duration | description |
+|:-:|:-:|:-:|:-:|:-:|
+heal|self,opponent,selfHand,opponenthand|PV à soigner||Soigne
+damage|self,opponent,selfHand,opponenthand|Dégâts à infliger||Inflige du dégat
+shield|self,opponent,selfHand,opponenthand|Coups à absorber||Donne un bouclier
+poison|self,opponent,selfHand,opponenthand|Dégâts à infliger par tour|Durée en nombre de tours|Inflige du dégât à chaque tour
+stun|self,opponent,selfHand,opponenthand||Durée en nombre de tours|Empêche d'attaquer
+rage|self,opponent,selfHand,opponenthand|Bonus de coût des attaques|Durée en nombre de tours|Réduit le coût des attaques
+fatigue|self,opponent,selfHand,opponenthand|Malus de coût des attaques|Durée en nombre de tours|Augmente le coût des attaques
+strenght|self,opponent,selfHand,opponenthand|Bonus de dégât|Durée en nombre de tours|Augmente les dégats des attaques
+weakness|self,opponent,selfHand,opponenthand|Malus de dégât|Durée en nombre de tours|Réduit les dégats des attaques
+regen|self,opponent,selfHand,opponenthand|PV à soigner par tour|Durée en nombre de tours|Soigne à chaque tour
+
+## Trade
+Classe représentant une demande d'échange
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+tradeId|int|Identifiant de l'échange
+senderId|int|ID de l'utilisateur demandant l'échange
+receiverId|int|ID de l'utilisateur ayant accepté l'échange ou null si personne n'a encore accepté l'échange
+offeredCards|Card[]|Liste des cartes proposées par l'utilisateur proposant l'échange
+requestedCard|Card|Carte demandée par l'utilisateur proposant l'échange
+accpetedCard|Card|Carte acceptée par l'utilisateur acceptant l'échange
+expiration|int|Date d'expiration de l'échange (en secondes écoulées depuis le 1er janvier 1970)
+
+## FriendRequest
+Classe représentant une attaque de carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+requestId|int|ID de la demande d'amis
+fromUserId|int|ID de l'utilisateur à l'origine de la demande d'amis
+toUserId|int|ID de l'utilisateur demandé en amis
+fromUserName|String|Npm de l'utilisateur à l'origine de la demande d'amis
+toUserName|string|Nom de l'utilisateur demandé en amis
+status|string|Status de la demande(pending, refused ou accepted)
+
+
+## Type
+Classe représentant un type(pole) d'une carte
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+typeId|int|ID du type
+name|string|Nom du type
+icon|string|Chemin vers l'image de l'icone
+color|string|Couleur du type
+forceId|int|ID du type contre qui ce type a un avantage
+faiblesseId|int|ID du type contre qui ce type a un désavantage
+
+## Deck
+Classe représentant le deck de l'utilisateur
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+cards|Member[]|Les 5 cartes personnages
+pet|Pet|Le familier
+arena|Arena|La carte arène
+
+## Offer
+Classe représentant les offres du magasin A REFAIRE
+| Champ | Type | Description |
+|:-:|:-:|:-:|
+
+
+# Route
+
+## Utilisateur
+
+### Creer un compte
+
+#### Action
+Enregistre un nouveau compte et connecte l'utilisateur à ce compte
+
+#### Requete
+URL :/user
+Méthode : POST
+Corps de la requête
+| Clé | Type | Description | Optionnel
+|:-:|:-:|:-:|:-:|
+name|string|Pseudo de l'utilisateur|Non
+email|string|Email de l'utilisateur|Non
+password|string|Mot de passe de l'utilisateur|Non
+
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+201|Compte créé avec succès|message, user
+400|Informations manquantes|error
+409|Mail ou peudo déja utilisé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur créé
+error|string|Message d'erreur
+
+### Supprimer son compte
+
+#### Action
+Supprime le compte auquel l'utilisateur est connecté
+
+#### Requête
+URL:/user
+Méthode : DELETE
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Compte supprimé avec succès|message
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+error|string|Message d'erreur
+
+### Récupérer les informations de son compte
+
+#### Action
+Envoie les informations de l'utilisateur authentifié
+
+#### Requête
+URL:/user
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Compte récupéré avec succès|user
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+user|User|Utilisateur créé
+error|string|Message d'erreur
+
+### Editer son compte
+
+#### Action
+Change des informations de l'utilisateur authentifié
+
+#### Requête
+URL:/user
+Méthode : PUT
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+newUsername|string|Nouveau pseudo de l'utilisateur|Oui
+newEmail|string|Nouvel email de l'utilisateur|Oui
+newPassword|string|Nouveau mot de passe de l'utilisateur|Oui
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Compte édité avec succès|message, user
+400|Aucune information à mettre à jour|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+409|Mail ou pseudo déja utilisé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur modifié
+error|string|Message d'erreur
+
+### Se connecter à un compte
+
+#### Action
+Connecte l'utilisateur à ce compte
+
+#### Requête
+URL:/login
+Méthode : POST
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+email|string|Email de l'utilisateur|Non
+password|string|Mot de passe de l'utilisateur|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Connexion réussie|message, user
+400|Informations manquantes|error
+401|Email ou mot de passe incorrect|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+user|User|Utilisateur créé
+error|string|Message d'erreur
+
+### Se déconnecter
+
+#### Action
+Déconnecte l'utilisateur de son compte
+
+#### Requête
+URL:/logout
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Deconnexion réussi|message
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+
+## Amis
+
+### Demander un amis
+
+#### Action
+Envoie une demande d'amis à l'utilisateur d'ID spécifié, nécessite d'être authentifié
+
+#### Requête
+URL:/friends/request
+Méthode : POST
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'utilisateur à qui la demande sera envoyée|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+201|Demande créée avec succès|message, friendRequest
+400|Informations manquantes|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+409|Demande existante/ amitié existante/ l'utilisateur a tenté de se demander lui-même en ami|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+friendRequest|FriendRequest|Demande d'amis créée
+error|string|Message d'erreur
+
+### Voir les demandes d'amis reçues en attente
+
+#### Action
+Renvoie les demandes d'amis reçues par l'utilisateur authentifié
+
+#### Requête
+URL:/user/request
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Demande récupérées avec succès|requests
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+requests|FriendRequest[]|Demandes d'amis
+error|string|Message d'erreur
+
+
+### Voir les demandes d'amis envoyées en attente
+
+#### Action
+Renvoie les demande d'amis envoyées par l'utilisateur authentifié en attente
+
+#### Requête
+URL:/friends/requests/me
+Méthode : GET
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Liste des demandes récupérée avec succès|requests
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+requests|FriendRequest[]|Demandes d'amis envoyées
+error|string|Message d'erreur
+
+### Annuler une demande d'amis
+
+#### Action
+Annule une demande d'amis de l'utilisateur authentifié
+
+#### Requête
+URL:/friends/request
+Méthode : DELETE
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'utilisateur à qui la demande à supprimer a été envoyée|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Demande d'amitié supprimée avec succès|message
+400|Informations manquantes, ou erreur générique|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+error|string|Message d'erreur
+
+### Accepter une demande d'amis
+
+#### Action
+Accepte une demande d'amis pour l'utilisateur authentifié
+
+#### Requête
+URL:/friends/accept
+Méthode : POST
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'utilisateur ayant envoyé la demande d'amis acceptée|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Demande d'amitié acceptée avec succès|message
+400|ID de l'ami manquant|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+error|string|Message d'erreur
+
+### Refuser une demande d'amis
+
+#### Action
+Refuse une demande d'amis pour l'utilisateur authentifié
+
+#### Requête
+URL:/friends/reject
+Méthode : POST
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'utilisateur ayant envoyé la demande d'amis refusée|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Demande d'amitié refusée avec succès|message
+400|ID de l'ami manquant|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+error|string|Message d'erreur
+### Voir les amis
+
+#### Action
+Renvoie la liste des amis de l'utilisateur authentifié.
+
+#### Requête
+URL:/login
+Méthode : POST
+Corps de la requête : vide
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Amis récupérés avec succès|friends
+400|ID de l'ami manquant / Impossible de s'ajouter soi-même en ami|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+friends|object[]|Amis de l'utilisateur (userId et username)
+error|string|Message d'erreur
+
+### Supprimer un ami
+
+#### Action
+Supprime un ami de l'utilisateur authentifié
+
+#### Requête
+URL:/friends
+Méthode : DELETE
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+friendId|int|ID de l'ami à supprimer|Non
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|Ami supprimé avec succès|message
+400|ID de l'ami manquant|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+message|string|Message de confirmation de succès
+error|string|Message d'erreur
+
+### jsplus truc out coming
+
+#### Action
+jsp
+
+#### Requête
+URL:pas compris ca
+Méthode : GET
+Corps de la requête : 
+| Clé | Type | Description | Optionnel |
+|:-:|:-:|:-:|:-:|
+jsp|jsp|jsp|jsp
+
+#### Réponse
+| Code de statut | Signification | Champs envoyés |
+|:-:|:-:|:-:|
+200|jsp|requests
+400|ID de l'ami manquant|error
+401|Utilisateur non authentifié|error
+404|Utilisateur non trouvé|error
+405|Méthode non autorisée|error
+
+Champs de la réponse
+| Champs | Type | Description |
+|:-:|:-:|:-:|
+requests|jsp|jsp
+error|string|Message d'erreur

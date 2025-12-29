@@ -1,13 +1,20 @@
 <template>
   <div v-if="showVideo" class="video-container">
-    <video ref="introVideo" autoplay muted playsinline @ended="onVideoEnd">
+    <video
+      ref="introVideo"
+      autoplay
+      muted
+      playsinline
+      @ended="onVideoEnd"
+      @play="fetchBooster"
+    >
       <source src="@/assets/vidéos/boosteranim.mp4" type="video/mp4" />
     </video>
   </div>
 
   <div v-else-if="!allCardsGone" class="conteneur-cartes">
     <div class="clés">
-      <nouv_clef />
+      <nouv_clef :cles="obtainedKeys" />
     </div>
     <div class="cartes">
       <Stack
@@ -45,6 +52,7 @@ import carte_membre from '@/Composants/carte_membre.vue';
 import nouv_clef from './Composants/nouv_clef.vue';
 import clef from './Composants/clef.vue';
 import carteBooster from './carte-booster.vue';
+import router from './router';
 
 const showVideo = ref(true); // ← Remettez true pour la vidéo
 const introVideo = ref(null);
@@ -85,21 +93,36 @@ const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
       largeur: cardWidthVw.value,
       data, //doit modifier ca pour lui donner la carte
     },
-    isNew,
-    rarete,
   },
 });
 
-const cards = [
-  createCard(1, { nom: 'Mzhdunosaure', pv: 120, niveau: 5 }), //donc là je dois juste donner une carte plutot que le truc a la main {}
-  createCard(2, { nom: 'Autre Carte', pv: 100, niveau: 3 }),
-  createCard(3, { nom: 'Troisième Carte', pv: 80, niveau: 4 }),
-  createCard(4, { nom: 'Quatrième Carte', pv: 90, niveau: 6 }),
-  createCard(5, { nom: 'Cinquième Carte', pv: 90, niveau: 6 }),
-];
+let cards = [];
 
 const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici
+const obtainedKeys = ref(0);
+async function fetchBooster() {
+  const response = await fetch('http://localhost:3000/booster/open', {
+    method: 'POST',
+    credentials: 'include',
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    console.error('Erreur ouverture booster:', data.error);
+    router.push('/booster');
+    return;
+  }
+  console.log('Booster ouvert:', data);
+  // Mettre à jour les clés dans le localStorage
+  nbCles.value += data.keys;
+  obtainedKeys.value = data.keys;
+  localStorage.setItem('userData', JSON.stringify(userData.value));
+  for (const cardInfo of data.cards) {
+    const card = createCard(cardInfo.cardId, cardInfo);
+    cards.push(card);
+  }
+  console.log('Cartes du booster:', cards);
+}
 </script>
 
 <style scoped>

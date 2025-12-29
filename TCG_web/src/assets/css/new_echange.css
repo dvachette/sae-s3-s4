@@ -8,15 +8,17 @@
   height: 11vw;
   justify-content: center;
   align-items: center;
-  border: solid 5px, rgba(var(--onyx), 0.3);
+  border: solid 5px rgba(var(--onyx), 0.3);
   border-radius: 20px;
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
   font-weight: bold;
   align-items: center;
+  cursor: pointer;
 }
 
 .créer_echange:hover {
-  border: solid 5px, rgba(var(--orange800), 1);
+  border: solid 5px
+   rgba(var(--orange800), 1);
 }
 
 .créer_echange:hover p {

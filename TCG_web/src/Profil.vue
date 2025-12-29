@@ -1,11 +1,12 @@
 <template>
-  <VerifLogin/>
+  <VerifLogin @loginSuccess="loadUserData"/>
   <MonHeader />
   <main>
     <pop_up_suppression
       v-if="afficher_suppr"
       id="suppr"
       @fermer="afficher_suppr = false"
+      @suprpimer_compte="supprimerCompte"
     />
   <pop_up_mdp
   v-if="afficher_mdp"
@@ -86,7 +87,7 @@
 import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
-import { useRouter } from 'vue-router';
+import { loadRouteLocation, useRouter } from 'vue-router';
 import pop_up_suppression from './Composants/pop_up_suppression.vue';
 import pop_up_mdp from './Composants/pop_up_mdp.vue';
 import pop_up_mail from './Composants/pop_up_mail.vue';
@@ -120,8 +121,7 @@ function cancel() {
   editing.value = false
   draftPassword.value = password.value
 }
-
-const pseudo = ref('Ton_Pseudo')
+const pseudo = ref('')
 
 const edit_P = ref(false)
 const draft_P = ref('')
@@ -142,8 +142,19 @@ function cancelP() {
   edit_P.value = false
   draft_P.value = pseudo.value
 }
+const user = ref(JSON.parse(localStorage.getItem('userData')));
 
-const mail = ref('Ton_Mail')
+console.log(user.value);
+const mail = ref('');
+function loadUserData() {
+  user.value = JSON.parse(localStorage.getItem('userData'));
+  mail.value = user.value ? user.value.email : '';
+  pseudo.value = user.value ? user.value.username : '';
+}
+
+
+
+
 
 const edit_M = ref(false)
 const draft_M = ref('')
@@ -183,6 +194,27 @@ async function deconnexion(){
         console.error('Erreur lors de la connexion :', error);
         router.push('/');
       }
+}
+
+async function supprimerCompte() {
+  try {
+    const response = await fetch('http://localhost:3000/user',
+    {
+      method: 'DELETE',
+      credentials: 'include'
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log("Compte supprimé avec succès");
+    } else {
+      console.error(`Erreur lors de la supression du compte, redirection sur le login.\nErreur : ${data.error}`);
+    }
+    router.push("/");
+    
+  } catch (error) {
+    console.error('Erreur lors de la supression du compte :', error);
+    router.push("/");
+  }
 }
 
 </script>
