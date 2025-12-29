@@ -1,11 +1,14 @@
-.pageCreation {
+.pageChangement {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 50vh;
-  width: 40vw;
+  width: 50vw;
   background-color: rgb(var(--jaune200));
+  border-radius: 25px;
+  border: 5px solid rgb(var(--onyx));
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
@@ -22,21 +25,14 @@ h2 {
 
 form {
   display: flex;
+  width: 70%;
   flex-direction: column;
   justify-content: center;
   flex-wrap: nowrap;
   flex: 3;
 }
 
-form > button {
-  align-self: center;
-  width: 60%;
-  background-color: rgb(var(--blanc50));
-  border: 3px solid rgb(var(--orange400));
-  color: rgb(var(--orange400));
-}
-
-form > button:active {
+form button:active {
   color: rgb(var(--orange700));
   background-color: rgb(var(--orange400));
   border: 3px solid rgb(var(--orange700));
@@ -52,8 +48,10 @@ label {
   margin: 0;
 }
 
-form > input {
+form input {
+  align-self: center;
   height: 15%;
+  width: 100%;
   border-radius: 34px;
   border: none;
   background-color: rgb(var(--blanc50));
@@ -77,8 +75,22 @@ button {
   align-self: center;
   font-family: 'Lusitana';
   font-size: 1.5rem;
-  width: 70%;
+  width: 100%;
   padding: 0;
   border-radius: 34px;
-  margin: 0;
+  margin-bottom: 8px;
+}
+
+#fermer {
+  height: 12%;
+  background-color: rgb(var(--blanc50));
+  border: 3px solid rgb(var(--orange400));
+  color: rgb(var(--orange400));
+}
+
+#changer {
+  height: 15%;
+  background-color: rgb(var(--orange400));
+  border: none;
+  color: rgb(var(--blanc50));
 }

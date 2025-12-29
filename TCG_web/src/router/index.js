@@ -10,6 +10,7 @@ import CreationCompte from '../CreationCompte.vue';
 import Ouverture from '../ouverture.vue';
 import Socket from '../Socket.vue';
 import duel from '../duel.vue';
+import duel_resultat from '@/duel_resultat.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
@@ -23,6 +24,7 @@ const routes = [
   { path: '/ouverture', component: Ouverture },
   { path: '/socket', component: Socket },
   { path: '/duel', component: duel },
+  { path: '/duel_resultat', component: duel_resultat },
 ];
 
 const router = createRouter({

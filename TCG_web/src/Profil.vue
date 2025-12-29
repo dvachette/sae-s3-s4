@@ -1,77 +1,59 @@
 <template>
   <VerifLogin/>
   <MonHeader />
-  <pop_up_suppression
+  <main>
+    <pop_up_suppression
       v-if="afficher_suppr"
       id="suppr"
       @fermer="afficher_suppr = false"
     />
-  <main>
+  <pop_up_mdp
+  v-if="afficher_mdp"
+  id="mdp"
+  @fermer="afficher_mdp = false" />
+
+  <pop_up_mail
+  v-if="afficher_mail"
+  id="mail"
+  @fermer="afficher_mail = false" />
+
+  <pop_up_pseudo
+  v-if="afficher_pseudo"
+  id="pseudo"
+  @fermer="afficher_pseudo = false" />
     <div class="gestion_soi">
       <div class="pp">
         <img src="@/assets/imgs/logoTCG.png" alt="pp"></img>
         <img src="@/assets/imgs/Appareil_photo.png" alt="edit" />
       </div>
       <div class="pseudo">
-        <p v-if="!edit_P">Pseudo : {{ pseudo }}</p>
-
-        <input
-          v-else
-          type="text"
-          v-model="draft_P"
-          @keydown.enter="saveP"
-          @blur="cancelP"
-          class="edit-pseudo"
-          ref="input_P  "
-        />
+        <p>Pseudo : {{ pseudo }}</p>
 
         <img
-          v-if="!edit_P"
           src="@/assets/imgs/Petit_crayon.png"
           alt="edit"
-          @click="startEditP"
+          @click="afficher_pseudo = true"
           class="edit-pseudo-icon"
         />
         </div>
        <div class="mail">
-        <p v-if="!edit_M">Mail : {{ mail }}</p>
-
-        <input
-          v-else
-          type="text"
-          v-model="draft_M"
-          @keydown.enter="saveM"
-          @blur="cancelM"
-          class="edit-mail"
-          ref="input_M"
-        />
+        <p>Mail : {{ mail }}</p>
 
         <img
-          v-if="!edit_M"
           src="@/assets/imgs/Petit_crayon.png"
           alt="edit"
-          @click="startEditM"
+          @click="afficher_mail = true"
           class="edit-mail-icon"
         />
         </div>
       <div class="mdp">
-        <p v-if="!editing">Mot de passe : {{ maskedPassword }}</p>
+        <p>Mot de passe : {{ maskedPassword }}</p>
 
-        <input
-          v-else
-          type="text"
-          v-model="draftPassword"
-          @keydown.enter="save"
-          @blur="cancel"
-          class="edit-input"
-          ref="inputEl"
-        />
 
         <img
-          v-if="!editing"
           src="@/assets/imgs/Petit_crayon.png"
           alt="edit"
-          @click="startEdit"
+          @click="afficher_mdp = true"
           class="edit-icon"
         />
         </div>
@@ -106,12 +88,17 @@ import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
 import pop_up_suppression from './Composants/pop_up_suppression.vue';
-const password = ref('motdepasse123')
+import pop_up_mdp from './Composants/pop_up_mdp.vue';
+import pop_up_mail from './Composants/pop_up_mail.vue';
+import pop_up_pseudo from './Composants/pop_up_pseudo.vue';
 
-const editing = ref(false)
+const password = ref('motdepasse123')
 const draftPassword = ref('')
 const inputEl = ref(null)
 const afficher_suppr = ref(false);
+const afficher_mdp = ref(false) ;
+const afficher_mail= ref(false) ;
+const afficher_pseudo = ref(false) ;
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>
