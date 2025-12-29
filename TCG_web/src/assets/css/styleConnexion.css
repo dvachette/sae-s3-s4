@@ -71,6 +71,7 @@ form {
   justify-content: space-evenly;
   flex-wrap: nowrap;
   flex : 3;
+  width:100%;
 }
 
 form > button {
