@@ -22,6 +22,13 @@
   v-if="afficher_pseudo"
   id="pseudo"
   @fermer="afficher_pseudo = false" />
+
+  <Pop_up_déco
+      v-if="afficher_deco"
+      id="deco"
+      @fermer="afficher_deco = false"
+      @déconnexion="deconnexion"
+    />
     <div class="gestion_soi">
       <div class="pp">
         <img src="@/assets/imgs/logoTCG.png" alt="pp"></img>
@@ -66,7 +73,7 @@
             ><p>historique des échanges</p></router-link
           >
         </div>
-        <button @click="deconnexion" id="Déconnexion">Déconnexion</button>
+        <button @click="afficher_deco = true" id="Déconnexion">Déconnexion</button>
         <button id="Supprimer" @click="afficher_suppr = true">Supprimer le compte</button>
     </div>
     <div class="param_stats">
@@ -92,6 +99,7 @@ import pop_up_suppression from './Composants/pop_up_suppression.vue';
 import pop_up_mdp from './Composants/pop_up_mdp.vue';
 import pop_up_mail from './Composants/pop_up_mail.vue';
 import pop_up_pseudo from './Composants/pop_up_pseudo.vue';
+import Pop_up_déco from './Composants/pop_up_déco.vue';
 
 const password = ref('motdepasse123')
 const draftPassword = ref('')
@@ -100,6 +108,7 @@ const afficher_suppr = ref(false);
 const afficher_mdp = ref(false) ;
 const afficher_mail= ref(false) ;
 const afficher_pseudo = ref(false) ;
+const afficher_deco = ref(false) ;
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>
