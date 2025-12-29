@@ -115,6 +115,7 @@ async function fetchBooster() {
   console.log('Booster ouvert:', data);
   // Mettre à jour les clés dans le localStorage
   nbCles.value += data.keys;
+  userData.value.balance = nbCles.value;
   obtainedKeys.value = data.keys;
   localStorage.setItem('userData', JSON.stringify(userData.value));
   for (const cardInfo of data.cards) {
