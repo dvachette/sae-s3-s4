@@ -83,7 +83,7 @@ const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
     carteComponent: markRaw(carte_membre),
     carteProps: {
       largeur: cardWidthVw.value,
-      data,
+      data, //doit modifier ca pour lui donner la carte
     },
     isNew,
     rarete,
@@ -91,7 +91,7 @@ const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
 });
 
 const cards = [
-  createCard(1, { nom: 'Mzhdunosaure', pv: 120, niveau: 5 }),
+  createCard(1, { nom: 'Mzhdunosaure', pv: 120, niveau: 5 }), //donc là je dois juste donner une carte plutot que le truc a la main {}
   createCard(2, { nom: 'Autre Carte', pv: 100, niveau: 3 }),
   createCard(3, { nom: 'Troisième Carte', pv: 80, niveau: 4 }),
   createCard(4, { nom: 'Quatrième Carte', pv: 90, niveau: 6 }),
