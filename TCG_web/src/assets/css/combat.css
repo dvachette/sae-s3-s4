@@ -251,6 +251,7 @@ main {
   flex-wrap: wrap;
   column-gap: var(--wgap);
   row-gap: 15px;
+  align-content: flex-start; /*permet d'eviter que les lignes s'etire pour remplir la div*/
 
   width: 100%;
 
