@@ -11,5 +11,5 @@
 <script setup></script>
 
 <style>
-@import '@/assets/css/suppression.css';
+@import '@/assets/css/pop_up_suppression.css';
 </style>
