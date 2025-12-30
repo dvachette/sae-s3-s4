@@ -4,7 +4,7 @@ const Card = require('./card.js');
 const Attack = require('./attacks.js');
 class Member extends Card {
     maxHitpoints;
-    hitpoints;
+    hitPoints;
     attackMultiplier;
     modifiers;
     attacks;
@@ -14,7 +14,7 @@ class Member extends Card {
     faiblesse;
     constructor(cardId, name, mandat, pictureUrl, description, weight, level, borderPictureUrl, hitpoints, attackMultiplier, attacks,type,force,faiblesse) {
         super(cardId, name, 'member', mandat, pictureUrl, description, weight, level, borderPictureUrl);
-        this.hitpoints = hitpoints;
+        this.hitPoints = hitpoints;
         this.maxHitpoints = hitpoints;
         this.attackMultiplier = attackMultiplier;
         this.modifiers = [];

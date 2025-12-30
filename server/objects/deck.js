@@ -12,8 +12,44 @@ class Deck {
         this.arena = arena;
     }
 
+    static fromUserId(userId) {
+        const db = new Database('database.db');
+
+        const getDeckQuery = db.prepare('SELECT card1Id, card2Id, card3Id, card4Id, card5Id, petId, arenaId FROM user WHERE userId = ?');
+        const row = getDeckQuery.get(userId);
+        
+        const cards = [];
+        for (let i = 1; i <= 5; i++) {
+            if (row[`card${i}Id`]) {
+                const card = Member.getMemberById(row[`card${i}Id`]);
+                cards.push(card);
+            } else {
+                cards.push(null);
+            }
+        }
+
+        let pet = null;
+        if (row.petId) {
+            pet = Member.getMemberById(row.petId);
+        }
+
+        let arena = null;
+        if (row.arenaId) {
+            arena = Member.getMemberById(row.arenaId);
+        }
+
+        db.close();
+
+        return new Deck(cards, pet, arena);
+    }
+
+
+
+
     isValid() {
-        return this.cards.length === 4;
+
+        console.log(this.cards.toString());
+        return this.cards.filter(card => card !== null).length === 5
     }
 
     replaceCardAt(index, newCard) {

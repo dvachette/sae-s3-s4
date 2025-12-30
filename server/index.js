@@ -20,7 +20,7 @@ const boosterRoutes = require('./routes/booster.js'); // Importation des routes 
 const collectionRoutes= require('./routes/collection.js');// Importation des routes collection
 const tradeRoutes= require('./routes/trade.js');// Importation des routes trade
 const deckRoutes= require('./routes/deck.js');// Importation des routes deck
-
+const duelUtils = require('./socket/duel.js'); // Importation des utilitaires de duel
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
 const app = express(); // Création de l'application Express
@@ -105,25 +105,4 @@ const wss = new ws.Server({ port: 8080 }); // Serveur WebSocket sur le port 8080
 const waitList = []; // Tableau pour stocker les utilisateurs en attente de combat
 const combats = []; // Tableau pour stocker les combats actifs
 const usersWS = {}; // Objet pour mapper les utilisateurs aux connexions WebSocket
-wss.on('connection', (socket) => {
-    console.log(`New WebSocket connection established : ${socket._socket.remoteAddress}:${socket._socket.remotePort}`);
-    socket.on('message', (message) => {
-        console.log('Received message:', message.toString());
-        const parsedMessage = JSON.parse(message);
-        switch (parsedMessage.type) {
-            case 'authenticate':
-                const userId = parsedMessage.userId;
-                usersWS[userId] = socket;
-                socket.userId = userId;
-                console.log(`User ${userId} authenticated for WebSocket`);
-                socket.send(JSON.stringify({ type: 'authenticated' }));
-                break;
-            
-        }
-    });
-
-    socket.on('close', () => {
-        console.log('WebSocket connection closed');
-        // Gérer la fermeture de la connexion WebSocket ici
-    });
-});    
+wss.on('connection', duelUtils.receiveSocket); // Utilisation de la fonction de gestion des connexions de duel   
