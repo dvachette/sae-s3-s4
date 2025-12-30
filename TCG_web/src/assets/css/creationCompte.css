@@ -53,6 +53,7 @@ main > a > button:active {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center; /* ajout de cette ligne */
   background-color: rgb(var(--jaune200));
   width: 100%;
   height: 65%;
@@ -99,6 +100,7 @@ form {
   justify-content: center;
   flex-wrap: nowrap;
   flex: 3;
+  width: 80%; /* ajout de cette ligne */
 }
 
 form > button {

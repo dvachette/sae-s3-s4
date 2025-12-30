@@ -23,7 +23,7 @@ h2 {
   font-size: 2rem;
 }
 
-form {
+.formulaire {
   display: flex;
   width: 70%;
   flex-direction: column;
@@ -32,7 +32,7 @@ form {
   flex: 3;
 }
 
-form button:active {
+.formulaire button:active {
   color: rgb(var(--orange700));
   background-color: rgb(var(--orange400));
   border: 3px solid rgb(var(--orange700));
@@ -48,7 +48,7 @@ label {
   margin: 0;
 }
 
-form input {
+.formulaire input {
   align-self: center;
   height: 15%;
   width: 100%;

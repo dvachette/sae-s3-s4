@@ -1,19 +1,38 @@
 <template>
   <div class="pageChangement">
     <h2>Changement de pseudo</h2>
-    <form>
+    <div class="formulaire">
       <label> Votre nouveau pseudo </label>
       <input type="text" id="n_pseudo" v-model="pseudo" />
-      <button type="submit" id="changer" @click="$emit('confirmer')">
-        Changer pseudo
-      </button>
+      <button id="changer" @click="changementPseudo">Changer pseudo</button>
       <button id="fermer" @click="$emit('fermer')">Retour</button>
-    </form>
+    </div>
   </div>
 </template>
 
 <script setup>
-const pseudo = '';
+import { ref } from 'vue';
+const pseudo = ref('');
+
+const emit = defineEmits(['fermer']);
+
+async function changementPseudo() {
+  const response = await fetch('http://localhost:3000/user', {
+    method: 'PUT',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name: pseudo.value }),
+  });
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data.message + ' reçues du serveur');
+    emit('fermer');
+  } else {
+    console.error(response);
+  }
+}
 </script>
 
 <style scopedS>

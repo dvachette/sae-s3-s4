@@ -2,9 +2,6 @@
   <div class="pageChangement">
     <h2>Changement d'adresse mail</h2>
     <form>
-      <label> Votre ancienne adresse mail</label>
-      <input type="text" id="a_mail" v-model="ancien_mail" />
-
       <label> Votre nouvelle adresse mail </label>
       <input type="text" id="n_mail" v-model="nouveau_mail" />
 

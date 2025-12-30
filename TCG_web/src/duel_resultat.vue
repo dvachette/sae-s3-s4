@@ -4,7 +4,7 @@
     <div class="mes_cartes">
       <Carte_membre :data="membres[0].card" largeur="140px" />
       <Carte_membre :data="membres[1].card" largeur="140px" />
-      <Carte_membre :data="deckMembre[2]" largeur="140px" />
+      <Carte_membre :data="membres[2].card" largeur="140px" />
       <Carte_membre :data="membres[3].card" largeur="140px" />
       <Carte_membre :data="membres[4].card" largeur="140px" />
       <Carte_familier :data="familiers[0].card" largeur="140px" />
@@ -58,42 +58,29 @@
       <Carte_membre :data="membres[4].card" largeur="140px" />
       <Carte_familier :data="familiers[0].card" largeur="140px" />
     </div>
-<<<<<<< HEAD
-    <Carte_familier :data="familiers[1].card" largeur="200px" />
-=======
->>>>>>> 03663e18b93320e109bf75ce2cbab7baa1a74e9b
   </main>
 </template>
 
 <script setup>
-<<<<<<< HEAD
 import { ref, computed } from 'vue';
-=======
-import { computed, ref, onMounted } from 'vue';
->>>>>>> 03663e18b93320e109bf75ce2cbab7baa1a74e9b
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 
-const victoire = false;
+const victoire = true;
 const mon_score = 5;
 const son_score = 2;
 const nom_j1 = 'Luke';
 const nom_j2 = 'Dark Vador';
 
 const userData = ref(JSON.parse(localStorage.getItem('userData')));
-<<<<<<< HEAD
-const collection = ref(userData.value.collection);
-=======
+
+const deckMembre = userData.value.deck.cards;
+const deckFamilier = userData.value.deck.pet;
 
 const collection = computed(() => {
   return userData.value.collection;
 });
 
-const deckMembre = userData.value.deck.cards;
-
-console.log(deckMembre);
-
->>>>>>> 03663e18b93320e109bf75ce2cbab7baa1a74e9b
 const membres = computed(() => {
   return collection.value.filter((carte) => carte.card._class === 'member');
 });
