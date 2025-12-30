@@ -68,26 +68,7 @@ class User {
             );
             user.collection.push(collectionItem);
         }
-        
-        static fromRow(row) {
-            const user = new User(row.userId, row.name, row.email, row.lastBoosterOppening, row.balance);
-            
-            // Récupération de la collection de l'utilisateur
-            const db = new Database("database.db");
-            
-            const getCollectionQuery = db.prepare('SELECT * FROM collection WHERE userId = ?');
-            const collectionRows = getCollectionQuery.all(user.userId);
-            
-            // Récuperer les amis de l'utilisateur
-            const getFriendsQuery = db.prepare('SELECT * FROM friends WHERE senderId = ? OR receiverId = ?');
-            const friendsRows = getFriendsQuery.all(user.userId, user.userId);
-            db.close();
-            
-            
-            for (const collRow of collectionRows) {
-                const collectionItem = new Collection(collRow.cardId, collRow.level, collRow.quantity);
-                user.collection.push(collectionItem);
-            }
+
             
             for (const friendRow of friendsRows) {
                 if (friendRow.status === 'accepted') {
