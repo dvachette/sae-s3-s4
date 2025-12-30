@@ -102,10 +102,11 @@ app.listen(PORT, () => {
 const wss = new ws.Server({ port: 8080 }); // Serveur WebSocket sur le port 8080
 // Gestion des connexions WebSocket
 
+const waitList = []; // Tableau pour stocker les utilisateurs en attente de combat
 const combats = []; // Tableau pour stocker les combats actifs
 const usersWS = {}; // Objet pour mapper les utilisateurs aux connexions WebSocket
 wss.on('connection', (socket) => {
-    
+    console.log(`New WebSocket connection established : ${socket._socket.remoteAddress}:${socket._socket.remotePort}`);
     socket.on('message', (message) => {
         console.log('Received message:', message.toString());
         const parsedMessage = JSON.parse(message);
@@ -117,6 +118,7 @@ wss.on('connection', (socket) => {
                 console.log(`User ${userId} authenticated for WebSocket`);
                 socket.send(JSON.stringify({ type: 'authenticated' }));
                 break;
+            
         }
     });
 
