@@ -35,16 +35,17 @@
       <Carte_membre :data="membres[1].card" largeur="200px" />
       <Carte_membre :data="membres[1].card" largeur="200px" />
     </div>
-    <Carte_familier :data="amiliers[1].card" largeur="200px" />
+    <Carte_familier :data="familiers[1].card" largeur="200px" />
   </main>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 
 const userData = ref(JSON.parse(localStorage.getItem('userData')));
-
+const collection = ref(userData.value.collection);
 const membres = computed(() => {
   return collection.value.filter((carte) => carte.card._class === 'member');
 });

@@ -129,7 +129,6 @@ const imgFaiblesse = images['../assets/imgs/carte/perso/faiblessesForces/'+faibl
 //partie fond
 const types = props.data.type;
 const imgFond = ref(images['../assets/imgs/carte/perso/fonds/fond_comm.png']?.default);
-
 if(types.length == 1){
   imgFond.value = images['../assets/imgs/carte/perso/fonds/fond_'+types[0].name+'.png']?.default;
 } else {
