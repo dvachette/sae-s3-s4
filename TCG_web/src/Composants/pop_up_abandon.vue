@@ -2,7 +2,7 @@
   <div class="abandon">
     <p>Voulez-vous vraiment abandonner ?</p>
     <div class="choix">
-      <router-link to="/booster" class="link" active-class="active">
+      <router-link to="/duel_resultat" class="link" active-class="active">
         <button>Oui, abandonner</button></router-link
       >
       <button @click="$emit('fermer')">Non, continuer</button>

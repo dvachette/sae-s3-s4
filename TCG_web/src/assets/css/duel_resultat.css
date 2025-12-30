@@ -2,7 +2,7 @@ main {
   position: relative;
   display: flex;
   flex-direction: row;
-  background-color: rgb(var(--blanc50));
+  background-color: rgb(var(--onyx));
   height: 100vh;
   justify-content: space-between;
   align-items: center;
@@ -11,7 +11,9 @@ main {
 main > img {
   position: absolute;
   width: 100%;
+  height: 100%;
   z-index: 0;
+  opacity: 30%;
 }
 
 .mes_cartes {
@@ -38,6 +40,7 @@ main > img {
   z-index: 1;
   justify-content: center;
   align-items: center;
+  gap: 12px;
 }
 
 .victoire {
@@ -51,6 +54,21 @@ main > img {
 }
 
 .victoire p {
+  color: rgb(var(--blanc50));
+  font-size: 3vw;
+}
+
+.défaite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(var(--rouge700));
+  width: 30vw;
+  height: 10vh;
+  border-radius: 50px;
+}
+
+.défaite p {
   color: rgb(var(--blanc50));
   font-size: 3vw;
 }
@@ -74,6 +92,9 @@ main > img {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+  justify-content: flex-end;
+  height: 30vh;
+  width: 36vw;
 }
 
 .personnes {
@@ -102,12 +123,13 @@ main > img {
   background-color: rgb(var(--blanc50));
   color: rgb(var(--onyx));
   width: 20vh;
-  height: 8vh;
+  height: 6vh;
   border-radius: 50px;
   font-size: 1.5vw;
   font-family: 'Mako';
   align-self: flex-end;
   margin: 0;
+  margin-top: 8px;
 }
 
 .mes_infos img,
@@ -120,21 +142,64 @@ main > img {
 }
 
 #ajout_ami {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: rgb(var(--jaune200));
   color: rgb(var(--onyx));
-  height: 8vh;
-  width: 8vh;
+  height: 6vh;
+  width: 6vh;
+  padding: 0;
   border: none;
-  font-size: 1.5vw;
+  font-size: 5.5vh;
   align-self: flex-end;
   margin-left: 4px;
   margin-bottom: 0;
+  font-family: Arial, sans-serif;
 }
 
 .récompenses {
-  background-color: rebeccapurple;
+  height: 20vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(var(--onyx), 0.7);
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.vide {
+  height: 20vh;
+  padding: 10px;
+}
+
+.récompenses p {
+  color: rgb(var(--blanc50));
+  font-size: 1.7vw;
+  margin: 0;
+}
+
+.récompenses img {
+  height: 14vh;
+  width: 14vh;
+}
+
+.nb_clefs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #continuer {
   border: none;
+  background-color: rgb(var(--orange400));
+  color: rgb(var(--blanc50));
+  width: 20vw;
+  height: 6vh;
+}
+
+#continuer:hover {
+  box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
