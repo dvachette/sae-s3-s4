@@ -30,7 +30,7 @@ import boutons_achat from '@/Composants/boutons_achat.vue';
 import MonHeader from '@/Composants/header.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
-const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); 
 
 </script>

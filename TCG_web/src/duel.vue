@@ -26,7 +26,7 @@
         <Vie_cartes :pv="combatState.opposant.main.carte4.hitPoints" :pvtotal="combatState.opposant.main.carte4.maxHitpoints" largeur="7vw" />
         
         <Carte_membre largeur="7vw" :data="combatState.opposant.main.carte5"/>
-        <Vie_cartes :pv="combatState.opposant.main.carte4.hitPoints" :pvtotal="combatState.opposant.main.carte5.maxHitpoints" largeur="7vw" />
+        <Vie_cartes :pv="combatState.opposant.main.carte5.hitPoints" :pvtotal="combatState.opposant.main.carte5.maxHitpoints" largeur="7vw" />
         
       </div>
       <div class="mon_deck">
@@ -47,12 +47,13 @@
         <Vie_cartes :pv="combatState.moi.main.carte4.hitPoints" :pvtotal="combatState.moi.main.carte4.maxHitpoints" largeur="7vw" />
         
         <Carte_membre largeur="7vw" :data="combatState.moi.main.carte5"/>
-        <Vie_cartes :pv="combatState.moi.main.carte4.hitPoints" :pvtotal="combatState.moi.main.carte5.maxHitpoints" largeur="7vw" />
+        <Vie_cartes :pv="combatState.moi.main.carte5.hitPoints" :pvtotal="combatState.moi.main.carte5.maxHitpoints" largeur="7vw" />
         
         <button v-for="attack of combatState.moi.main.carteActive.attacks">
           {{attack.name }}
           <p>{{ attack.description }}</p>
         </button>
+        <button @click="skipTurn">Passer</button>
         <button><img src="@/assets/imgs/echange.png" alt="echange" /></button>
       </div>
     </div>
@@ -69,12 +70,13 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { reactive, computed, ref, onMounted } from 'vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 import verifLogin from './Composants/verifLogin.vue';
 import Vie_cartes from './Composants/vie_cartes.vue';
 import pop_up_abandon from './Composants/pop_up_abandon.vue';
+
 import {
   EtatCombat, 
   EtatJoueur, 
@@ -92,7 +94,7 @@ let socket = ref(null);
 
 
 const afficher_abandon = ref(false);
-const combatState = ref(new EtatCombat(
+const combatState = reactive(new EtatCombat(
   1, // tour 
   true, // monTour
   new EtatJoueur(
@@ -134,16 +136,19 @@ const combatState = ref(new EtatCombat(
 function onLoginSuccess() {
   // Logique à exécuter après une connexion réussie
   console.log('Utilisateur connecté avec succès');
-  userData.value = JSON.parse(localStorage.getItem('userData'));
+  userData.value = JSON.parse(sessionStorage.getItem('userData'));
   // Initialiser la socket
   socket.value = new WebSocket('ws://localhost:8080');
   socket.value.onopen = () => {
     socket.value.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Message reçu du serveur:', message);
-      if (message.type === 'combat_update') {
+      if (message.type === 'duel_start') {
         // Mettre à jour l'état du combat avec les nouvelles données reçues
-        combatState.value = message.data;
+        Object.assign(combatState, message.combatState);
+        // Forcer la mise à jour de l'interface utilisateur si nécessaire
+        
+        console.log('État du combat mis à jour:', combatState);
       }
     };
 
@@ -152,6 +157,19 @@ function onLoginSuccess() {
     // Envoyer des données d'authentification si nécessaire
     socket.value.send(JSON.stringify({ type: 'authenticate', userId: userData.value.userId }));
   };
+}
+
+function skipTurn() {
+  if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+    socket.value.send(JSON.stringify({ type: 'skip' }));
+  }
+}
+
+
+function swapCards(index) {
+  if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+    socket.value.send(JSON.stringify({ type: 'swap', index: index }));
+  }
 }
 
 </script>

@@ -67,7 +67,7 @@ import Carte_terrain from './Composants/carte_terrain.vue';
 import Barre_progress from './Composants/barre_progress_carte.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
-const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 
 const collection = userData.value.collection; //test OK mais vide
 //console.log(collection[0].card.cardId);

@@ -98,7 +98,7 @@ const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
 
 let cards = [];
 
-const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici
 const obtainedKeys = ref(0);
 async function fetchBooster() {
@@ -113,10 +113,10 @@ async function fetchBooster() {
     return;
   }
   console.log('Booster ouvert:', data);
-  // Mettre à jour les clés dans le localStorage
+  // Mettre à jour les clés dans le sessionStorage
   nbCles.value += data.keys;
   obtainedKeys.value = data.keys;
-  localStorage.setItem('userData', JSON.stringify(userData.value));
+  sessionStorage.setItem('userData', JSON.stringify(userData.value));
   for (const cardInfo of data.cards) {
     const card = createCard(cardInfo.cardId, cardInfo);
     cards.push(card);

@@ -49,26 +49,15 @@
       <Carte_membre :data="membres[4].card" largeur="140px" />
       <Carte_familier :data="familiers[0].card" largeur="140px" />
     </div>
-<<<<<<< HEAD
-    <Carte_familier :data="familiers[1].card" largeur="200px" />
-=======
->>>>>>> 03663e18b93320e109bf75ce2cbab7baa1a74e9b
   </main>
 </template>
 
 <script setup>
-<<<<<<< HEAD
-import { ref, computed } from 'vue';
-=======
 import { computed, ref, onMounted } from 'vue';
->>>>>>> 03663e18b93320e109bf75ce2cbab7baa1a74e9b
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 
-const userData = ref(JSON.parse(localStorage.getItem('userData')));
-<<<<<<< HEAD
-const collection = ref(userData.value.collection);
-=======
+const userData = ref(JSON.parse(sessionStorage.getItem('userData')));
 
 const collection = computed(() => {
   return userData.value.collection;
@@ -78,7 +67,6 @@ const deckMembre = userData.value.deck.cards;
 
 console.log(deckMembre);
 
->>>>>>> 03663e18b93320e109bf75ce2cbab7baa1a74e9b
 const membres = computed(() => {
   return collection.value.filter((carte) => carte.card._class === 'member');
 });

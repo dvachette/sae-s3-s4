@@ -90,7 +90,7 @@ import amis_trouvé from './Composants/amis_trouve.vue';
 
 import MonHeader from '@/Composants/header.vue';
 
-const userData = ref(JSON.parse(localStorage.getItem('userData')));
+const userData = ref(JSON.parse(sessionStorage.getItem('userData')));
 
 const amis = ref(userData.value.friends);
 const demandesRecues = ref(userData.value.pendingIncomingRequests);
@@ -103,7 +103,7 @@ const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
 
 function updateFriendData() {
-  userData.value = JSON.parse(localStorage.getItem('userData'));
+  userData.value = JSON.parse(sessionStorage.getItem('userData'));
   amis.value = userData.value.friends;
   demandesRecues.value = userData.value.pendingIncomingRequests;
   demandesEnvoyees.value = userData.value.pendingFriendRequests;

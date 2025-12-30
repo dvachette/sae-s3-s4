@@ -151,12 +151,12 @@ function cancelP() {
   edit_P.value = false
   draft_P.value = pseudo.value
 }
-const user = ref(JSON.parse(localStorage.getItem('userData')));
+const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 
 console.log(user.value);
 const mail = ref('');
 function loadUserData() {
-  user.value = JSON.parse(localStorage.getItem('userData'));
+  user.value = JSON.parse(sessionStorage.getItem('userData'));
   mail.value = user.value ? user.value.email : '';
   pseudo.value = user.value ? user.value.username : '';
 }

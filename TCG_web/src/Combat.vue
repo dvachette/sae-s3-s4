@@ -131,7 +131,7 @@ const vw = ref(window.innerWidth / 100);
 const hmain = ref(vh.value * 87.5 - 278 - 20 * 2 + 'px');
 const gapCollec = ref(((vw.value * 100 - 40) * 0.7 - 200 * 5) / 5 + 'px'); //(100vw - padding de div deck)*0.7 pour en avoir 70% (14*5) - l'espace pris par les 5 cartes / tout divisé par 5 pour avoir un seul espace
 
-const userData = ref(JSON.parse(localStorage.getItem('userData'))); //OK
+const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance);
 
 const deckMembre = userData.value.deck.cards;

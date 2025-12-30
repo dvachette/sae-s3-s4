@@ -18,8 +18,8 @@ const router = useRouter()
         const data = await response.json(); // Récupération de la réponse JSON
         console.log('Réponse du serveur :', data);
         if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)
-          // Stockage des données dans localstorage
-          localStorage.setItem('userData', JSON.stringify(data.user));
+          // Stockage des données dans sessionStorage
+          sessionStorage.setItem('userData', JSON.stringify(data.user));
           // Emettre un événement pour indiquer la réussite de la connexion
           emit('loginSuccess');
         } else {
