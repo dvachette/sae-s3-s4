@@ -626,6 +626,5 @@ upgradeCard(cardId) {
         );
     }
 }
-}
 
 module.exports = User;
