@@ -16,10 +16,16 @@
       @supprimer="supprimer_ami"
       @garder_ami="afficher_supprami = false"
     />
+    <annuler_echange
+      id="s_echange"
+      v-if="afficher_annuler == true"
+      @confirmer="afficher_annuler = false"
+      @annuler="afficher_annuler = false"
+    />
     <div class="part_echange">
       <h2>Mes échanges</h2>
 
-      <mes_echanges class="e1" />
+      <mes_echanges class="e1" @click="afficher_annuler = true" />
       <new_echange class="e2" />
       <h2>Autres échanges</h2>
       <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
@@ -94,6 +100,7 @@ import VerifLogin from '@/Composants/verifLogin.vue';
 import pop_up_supprami from './Composants/pop_up_supprami.vue';
 import amis_trouvé from './Composants/amis_trouve.vue';
 import accepter_echange from './Composants/accepter_echange.vue';
+import annuler_echange from './Composants/annuler_echange.vue';
 
 import MonHeader from '@/Composants/header.vue';
 
@@ -109,6 +116,7 @@ const afficher_supprami = ref(false);
 const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
 const afficher_echange = ref(false);
+const afficher_annuler = ref(false);
 
 function updateFriendData() {
   userData.value = JSON.parse(sessionStorage.getItem('userData'));

@@ -9,9 +9,13 @@
       <div class="a_don">
         <p>Cartes à recevoir</p>
         <div class="los_cartos">
-          <carte_membre :data="membres[0].card" largeur="4.9vw" />
-          <carte_membre :data="membres[0].card" largeur="4.9vw" />
-          <carte_membre :data="membres[0].card" largeur="4.9vw" />
+          <carte_membre
+            v-for="index in 3"
+            :key="index"
+            class="carte_echange"
+            :data="membres[index].card"
+            largeur="4.9vw"
+          />
         </div>
       </div>
     </div>

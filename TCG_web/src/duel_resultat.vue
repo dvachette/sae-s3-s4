@@ -2,12 +2,30 @@
   <main>
     <img src="@/assets/imgs/combat_feyssine.png" alt="echange" />
     <div class="mes_cartes">
-      <Carte_membre :data="membres[0].card" largeur="140px" />
-      <Carte_membre :data="membres[1].card" largeur="140px" />
-      <Carte_membre :data="membres[2].card" largeur="140px" />
-      <Carte_membre :data="membres[3].card" largeur="140px" />
-      <Carte_membre :data="membres[4].card" largeur="140px" />
-      <Carte_familier :data="familiers[0].card" largeur="140px" />
+      <div
+        class="carteMembreDeck"
+        v-for="(carte, index) in deckMembre"
+        :key="index"
+      >
+        <img
+          v-if="!carte"
+          src="@/assets/imgs/carte/carte_ajout.png"
+          alt="Carte_à_Ajouter"
+        />
+
+        <Carte_membre v-else :data="carte" largeur="140px" />
+      </div>
+      <Carte_familier
+        v-if="deckFamilier"
+        :data="deckFamilier"
+        largeur="140px"
+      />
+      <img
+        v-else
+        src="@/assets/imgs/carte/carte_ajout.png"
+        alt="Carte_à_Ajouter"
+        id="familier"
+      />
     </div>
     <div class="resultat">
       <div class="victoire" v-if="victoire">
@@ -51,12 +69,30 @@
       >
     </div>
     <div class="autres_cartes">
-      <Carte_membre :data="membres[0].card" largeur="140px" />
-      <Carte_membre :data="membres[1].card" largeur="140px" />
-      <Carte_membre :data="membres[2].card" largeur="140px" />
-      <Carte_membre :data="membres[3].card" largeur="140px" />
-      <Carte_membre :data="membres[4].card" largeur="140px" />
-      <Carte_familier :data="familiers[0].card" largeur="140px" />
+      <div
+        class="carteMembreDeck"
+        v-for="(carte, index) in deckMembre"
+        :key="index"
+      >
+        <img
+          v-if="!carte"
+          src="@/assets/imgs/carte/carte_ajout.png"
+          alt="Carte_à_Ajouter"
+        />
+
+        <Carte_membre v-else :data="carte" largeur="140px" />
+      </div>
+      <Carte_familier
+        v-if="deckFamilier"
+        :data="deckFamilier"
+        largeur="140px"
+      />
+      <img
+        v-else
+        src="@/assets/imgs/carte/carte_ajout.png"
+        alt="Carte_à_Ajouter"
+        id="familier"
+      />
     </div>
   </main>
 </template>
@@ -66,7 +102,7 @@ import { ref, computed } from 'vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 
-const victoire = true;
+const victoire = false;
 const mon_score = 5;
 const son_score = 2;
 const nom_j1 = 'Luke';
