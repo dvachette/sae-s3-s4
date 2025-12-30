@@ -141,17 +141,17 @@ function onLoginSuccess() {
     socket.value.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Message reçu du serveur:', message);
-      // Gérer les messages reçus du serveur WebSocket ici
+      if (message.type === 'combat_update') {
+        // Mettre à jour l'état du combat avec les nouvelles données reçues
+        combatState.value = message.data;
+      }
     };
 
-    
+
     console.log('Connexion WebSocket établie');
     // Envoyer des données d'authentification si nécessaire
-    
     socket.value.send(JSON.stringify({ type: 'authenticate', userId: userData.value.userId }));
-
   };
-
 }
 
 </script>

@@ -1,5 +1,3 @@
-@import './style.css';
-
 @font-face {
   font-family: 'Lusitana';
   src: url('../fonts/Lusitana-Bold.ttf') format('truetype');
@@ -15,8 +13,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height : 87.5vh;
-  width : 100vw /*prend l'espace restant du body, donc l'espace restant visible sous le header*/
+  height: 87.5vh;
+  width: 100vw; /*prend l'espace restant du body, donc l'espace restant visible sous le header*/
 }
 
 .pageConnexion {
@@ -59,7 +57,7 @@ h2 {
   justify-content: center;
   font-family: 'Lusitana';
   font-weight: normal;
-  height : 15%;
+  height: 15%;
   margin: 0;
   padding: 0;
   font-size: 2rem;
@@ -70,7 +68,8 @@ form {
   flex-direction: column;
   justify-content: space-evenly;
   flex-wrap: nowrap;
-  flex : 3;
+  flex: 3;
+  width: 100%;
 }
 
 form > button {
@@ -88,7 +87,7 @@ form > button:active {
 label {
   display: flex;
   align-items: center;
-  height : 11.5%;
+  height: 11.5%;
   font-family: 'Mako';
   padding-left: 2%;
   font-size: 1.2rem;
@@ -96,7 +95,7 @@ label {
 }
 
 form > input {
-  height : 15%;
+  height: 15%;
   border-radius: 34px;
   border: none;
   background-color: rgb(var(--blanc50));
@@ -108,10 +107,10 @@ form > input {
 }
 
 form > p {
-  margin : 0 0 1vh 0;
+  margin: 0 0 1vh 0;
   font-family: 'Mako';
   font-size: medium;
-  color : rgb(var(--rouge600));
+  color: rgb(var(--rouge600));
 
   display: flex;
   align-items: center;
@@ -123,7 +122,7 @@ input:focus {
 }
 
 .pageConnexion > a {
-  height : 12%;
+  height: 12%;
   margin: 1vh 0 2vh 0;
   text-decoration: none;
 
