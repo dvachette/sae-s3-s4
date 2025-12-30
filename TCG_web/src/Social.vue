@@ -2,6 +2,12 @@
   <VerifLogin @login-success="updateFriendData" />
   <MonHeader />
   <main>
+    <accepter_echange
+      id="a_echange"
+      v-if="afficher_echange == true"
+      @confirmer="afficher_echange = false"
+      @annuler="afficher_echange = false"
+    />
     <pop_up_supprami
       v-if="afficher_supprami == true"
       :nom_ami="nom_ami_selectionne"
@@ -16,11 +22,11 @@
       <mes_echanges class="e1" />
       <new_echange class="e2" />
       <h2>Autres échanges</h2>
-      <echange nom_echangeur="Panoramix" />
-      <echange nom_echangeur="Panoramix" />
-      <echange nom_echangeur="Panoramix" />
-      <echange nom_echangeur="Panoramix" />
-      <echange nom_echangeur="Panoramix" />
+      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
+      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
+      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
+      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
+      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
     </div>
     <div class="les_amis">
       <div
@@ -87,6 +93,7 @@ import amis_attentes from '@/Composants/amis_attentes.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 import pop_up_supprami from './Composants/pop_up_supprami.vue';
 import amis_trouvé from './Composants/amis_trouve.vue';
+import accepter_echange from './Composants/accepter_echange.vue';
 
 import MonHeader from '@/Composants/header.vue';
 
@@ -101,6 +108,7 @@ const resultRecherche = ref([]);
 const afficher_supprami = ref(false);
 const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
+const afficher_echange = ref(false);
 
 function updateFriendData() {
   userData.value = JSON.parse(sessionStorage.getItem('userData'));

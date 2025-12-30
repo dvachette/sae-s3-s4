@@ -5,14 +5,14 @@
   </div>
 </template>
 
-<script setup>  
+<script setup>
 const props = defineProps({
-    "cles": {
-      type: Number,
-      required: false,
-      default: 0
-    }
-  });
+  cles: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
+});
 </script>
 
 <style scoped>
