@@ -8,9 +8,7 @@
       </div>
       <div class="lancement_partie">
         <img src="@/assets/imgs/ff_logo.png" alt="img terrain" />
-        <router-link to="/duel_resultat" active-class="active"
-          ><button>JOUER</button></router-link
-        >
+        <router-link to="/duel_resultat"><button>JOUER</button></router-link>
       </div>
       <div class="Compteur">
         <clef :cles="nbCles" />
