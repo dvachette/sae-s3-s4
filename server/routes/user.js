@@ -22,7 +22,7 @@ const User = require('../objects/user.js'); // Importation de l'objet User
  * @returns status 409 - Mail ou pseudo déjà utilisé.
  * @returns status 405 - Méthode non autorisée.
  */
-function createAccount(request, response) {
+async function createAccount(request, response) {
   // Forcer l'utilisation de la méthode POST
   if (request.method !== 'POST') {
     return response.status(405).send({ error: 'Methode non autorisée' });
@@ -57,7 +57,7 @@ function createAccount(request, response) {
   }
 
   // Insérer le nouvel utilisateur dans la base de données
-  const newUser = User.register(username, mail, password);
+  const newUser = await User.register(username, mail, password);
 
   // Connecter automatiquement l'utilisateur après la création du compte
   request.session.userId = newUser.userId;
@@ -77,7 +77,7 @@ function createAccount(request, response) {
  * @returns status 401 - Email ou mot de passe incorrect.
  * @returns status 405 - Méthode non autorisée.
  */
-function login(request, response) {
+async function login(request, response) {
   // Forcer l'utilisation de la méthode POST
   if (request.method !== 'POST') {
     return response.status(405).send({ error: 'Methode non autorisée' });
@@ -95,7 +95,7 @@ function login(request, response) {
     return response.status(400).send({ error: 'Information manquante' });
   }
 
-  const user = User.login(mail, password);
+  const user = await User.login(mail, password);
   if (!user) {
     return response
       .status(401)

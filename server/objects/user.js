@@ -4,6 +4,7 @@ const FriendRequest = require('./friendRequest.js');
 const Trade = require('./trade.js');
 const Card = require('./card.js');
 const Deck = require('./deck.js');
+const Hashage = require("../utils/hashing.js");
 class User {
     // Attibuts et méthodes de la classe User
     userId;
@@ -136,20 +137,6 @@ class User {
         }
     }
     
-    static fromId(id) {
-        const db = new Database('database.db');
-        
-        const getUserByIdQuery = db.prepare('SELECT * FROM user WHERE userId = ?');
-        const row = getUserByIdQuery.get(id);
-        
-        db.close();
-        
-        if (row) {
-            return User.fromRow(row);
-        } else {
-            return null;
-        }
-    }
     
     static fromEmail(email) {
         const db = new Database('database.db');
@@ -183,7 +170,7 @@ class User {
         }
     }
     
-    static login(email, password) {
+    static async login(email, password) {
         const db = new Database('database.db');
         const user = User.fromEmail(email);
         const getUserPasswordQuery = db.prepare(
@@ -191,20 +178,21 @@ class User {
         );
         const row = getUserPasswordQuery.get(email);
         db.close();
-        if (user && password === row.password && user.profileType !== 'deleted') {
+        if (user && await Hashage.checkPassword(password, row.password) && user.profileType !== 'deleted') {
             return user;
         } else {
             return null;
         }
     }
     
-    static register(username, email, password) {
+    static async register(username, email, password) {
         const db = new Database('database.db');
         
         const insertUserQuery = db.prepare(
             'INSERT INTO user (name, email, password) VALUES (?, ?, ?)'
         );
-        const result = insertUserQuery.run(username, email, password);
+        const hashedPassword = await Hashage.hashPassword(password);
+        const result = insertUserQuery.run(username, email, hashedPassword);
         
         db.close();
         
