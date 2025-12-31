@@ -1,6 +1,22 @@
 <template>
   <VerifLogin @login-success="onLoginSuccess" />
   <main :style="{ '--jauge_energie': jauge_energie }">
+    <div v-if="carteSurvolé" class="membre_pop_up">
+      <!-- Composant dupliqué au centre -->
+      <div class="membre_carte">
+        <Carte_membre largeur="25vw" :data="carteSurvolé" :isPreview="true" />
+      </div>
+    </div>
+    <div v-if="familierSurvolé" class="familier_pop_up">
+      <!-- Composant dupliqué au centre -->
+      <div class="familier_carte">
+        <Carte_familier
+          largeur="25vw"
+          :data="familierSurvolé"
+          :isPreview="true"
+        />
+      </div>
+    </div>
     <div class="page_chargement" v-if="adversaire == false">
       <div class="non_deck">
         <div class="vague">
@@ -37,13 +53,19 @@
           <div class="familier">
             <p>Familier</p>
             <Carte_familier
+              class="carte_de_combat"
               largeur="7vw"
               :data="combatState.opposant.familier"
+              @mouseenter="familierSurvolé = combatState.opposant.familier"
+              @mouseleave="familierSurvolé = null"
             />
           </div>
           <Carte_membre
+            class="carte_de_combat"
             largeur="7vw"
             :data="combatState.opposant.main.carte1"
+            @mouseenter="carteSurvolé = combatState.opposant.main.carte1"
+            @mouseleave="carteSurvolé = null"
           />
           <Vie_cartes
             :pv="combatState.opposant.main.carte1.hitPoints"
@@ -52,8 +74,11 @@
           />
 
           <Carte_membre
+            class="carte_de_combat"
             largeur="7vw"
             :data="combatState.opposant.main.carte2"
+            @mouseenter="carteSurvolé = combatState.opposant.main.carte2"
+            @mouseleave="carteSurvolé = null"
           />
           <Vie_cartes
             :pv="combatState.opposant.main.carte2.hitPoints"
@@ -62,18 +87,24 @@
           />
 
           <Carte_membre
+            class="carte_de_combat"
             largeur="10vw"
             :data="combatState.opposant.main.carteActive"
+            @mouseenter="carteSurvolé = combatState.opposant.main.carteActive"
+            @mouseleave="carteSurvolé = null"
           />
           <Vie_cartes
             :pv="combatState.opposant.main.carteActive.hitPoints"
             :pvtotal="combatState.opposant.main.carteActive.maxHitpoints"
-            largeur="7vw"
+            largeur="10vw"
           />
 
           <Carte_membre
+            class="carte_de_combat"
             largeur="7vw"
             :data="combatState.opposant.main.carte4"
+            @mouseenter="carteSurvolé = combatState.opposant.main.carte4"
+            @mouseleave="carteSurvolé = null"
           />
           <Vie_cartes
             :pv="combatState.opposant.main.carte4.hitPoints"
@@ -82,8 +113,11 @@
           />
 
           <Carte_membre
+            class="carte_de_combat"
             largeur="7vw"
             :data="combatState.opposant.main.carte5"
+            @mouseenter="carteSurvolé = combatState.opposant.main.carte5"
+            @mouseleave="carteSurvolé = null"
           />
           <Vie_cartes
             :pv="combatState.opposant.main.carte5.hitPoints"
@@ -94,16 +128,33 @@
         <div class="mon_deck">
           <div class="familier">
             <p>Familier</p>
-            <Carte_familier largeur="7vw" :data="combatState.moi.familier" />
+            <Carte_familier
+              class="carte_de_combat"
+              largeur="7vw"
+              :data="combatState.moi.familier"
+              @mouseenter="familierSurvolé = combatState.moi.familier"
+              @mouseleave="familierSurvolé = null"
+            />
           </div>
-          <Carte_membre largeur="7vw" :data="combatState.moi.main.carte1" />
+          <Carte_membre
+            class="carte_de_combat"
+            largeur="7vw"
+            :data="combatState.moi.main.carte1"
+            @mouseenter="carteSurvolé = combatState.moi.main.carte1"
+            @mouseleave="carteSurvolé = null"
+          />
           <Vie_cartes
             :pv="combatState.moi.main.carte1.hitPoints"
             :pvtotal="combatState.moi.main.carte1.maxHitpoints"
             largeur="7vw"
           />
 
-          <Carte_membre largeur="7vw" :data="combatState.moi.main.carte2" />
+          <Carte_membre
+            largeur="7vw"
+            :data="combatState.moi.main.carte2"
+            @mouseenter="carteSurvolé = combatState.moi.main.carte2"
+            @mouseleave="carteSurvolé = null"
+          />
           <Vie_cartes
             :pv="combatState.moi.main.carte2.hitPoints"
             :pvtotal="combatState.moi.main.carte2.maxHitpoints"
@@ -111,38 +162,63 @@
           />
 
           <Carte_membre
+            class="carte_de_combat"
             largeur="10vw"
             :data="combatState.moi.main.carteActive"
+            @mouseenter="carteSurvolé = combatState.moi.main.carteActive"
+            @mouseleave="carteSurvolé = null"
           />
           <Vie_cartes
             :pv="combatState.moi.main.carteActive.hitPoints"
             :pvtotal="combatState.moi.main.carteActive.maxHitpoints"
-            largeur="7vw"
+            largeur="10vw"
           />
 
-          <Carte_membre largeur="7vw" :data="combatState.moi.main.carte4" />
+          <Carte_membre
+            class="carte_de_combat"
+            largeur="7vw"
+            :data="combatState.moi.main.carte4"
+            @mouseenter="carteSurvolé = combatState.moi.main.carte4"
+            @mouseleave="carteSurvolé = null"
+          />
           <Vie_cartes
             :pv="combatState.moi.main.carte4.hitPoints"
             :pvtotal="combatState.moi.main.carte4.maxHitpoints"
             largeur="7vw"
           />
 
-          <Carte_membre largeur="7vw" :data="combatState.moi.main.carte5" />
+          <Carte_membre
+            class="carte_de_combat"
+            largeur="7vw"
+            :data="combatState.moi.main.carte5"
+            @mouseenter="carteSurvolé = combatState.moi.main.carte5"
+            @mouseleave="carteSurvolé = null"
+          />
           <Vie_cartes
             :pv="combatState.moi.main.carte5.hitPoints"
             :pvtotal="combatState.moi.main.carte5.maxHitpoints"
             largeur="7vw"
           />
-
-          <button v-for="attack of combatState.moi.main.carteActive.attacks">
-            {{ attack.name }}
-            <p>{{ attack.description }}</p>
-          </button>
-          <button @click="skipTurn">Passer</button>
-          <button><img src="@/assets/imgs/echange.png" alt="echange" /></button>
+          <div class="boutons_tour">
+            <button
+              v-for="attack of combatState.moi.main.carteActive.attacks"
+              class="attaques"
+            >
+              {{ attack.name }}
+              <p>{{ attack.description }}</p>
+            </button>
+            <button id="changement_carte">
+              <img src="@/assets/imgs/echange.png" alt="echange" />
+            </button>
+          </div>
         </div>
       </div>
       <div class="stats">
+        <div class="temps">
+          <img src="@/assets/imgs/Sablier.png" alt="echange" />
+          <p>30sec</p>
+          <button @click="skipTurn">Passer</button>
+        </div>
         <span>Score :</span>
         <span>1 - 0</span>
         <button @click="afficher_abandon = true">Abandonner</button>
@@ -172,14 +248,15 @@ import {
   Attaque,
 } from './types/duel';
 import VerifLogin from './Composants/verifLogin.vue';
-const energie = 7;
-const pourcentageValue = computed(() => (energie * 100) / 10);
+const pourcentageValue = computed(() => (combatState.moi.energie * 100) / 10);
 const jauge_energie = computed(() => pourcentageValue.value + '%');
 let userData = ref(null);
 let socket = ref(null);
 const adversaire = ref(true);
 const chargement = `Recherche d'adversaire...`;
 const letters = computed(() => chargement.split(''));
+const carteSurvolé = ref(null);
+const familierSurvolé = ref(null);
 
 const afficher_abandon = ref(false);
 const combatState = reactive(
