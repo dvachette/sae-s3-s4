@@ -203,6 +203,7 @@
             <button
               v-for="attack of combatState.moi.main.carteActive.attacks"
               class="attaques"
+              @click="attackCarte(combatState.moi.main.carteActive.attacks.indexOf(attack))"
             >
               {{ attack.name }}
               <p>{{ attack.description }}</p>
@@ -518,6 +519,12 @@ function skipTurn() {
 function swapCards(index) {
   if (socket.value && socket.value.readyState === WebSocket.OPEN) {
     socket.value.send(JSON.stringify({ type: 'swap', index: index }));
+  }
+}
+
+function attackCarte(index){
+  if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+    socket.value.send(JSON.stringify({ type: 'attack', attackIndex: index }));
   }
 }
 </script>

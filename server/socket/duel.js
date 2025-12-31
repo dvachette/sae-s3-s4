@@ -47,18 +47,38 @@ function receiveSocket(socket) {
                 }
                 break;
             case 'skip':
-                const combatPair = combats.find(c => c[0] === socket || c[1] === socket);
-                if (combatPair) {
-                    const combatInstance = combatPair[2];
+                const combatPairSkip = combats.find(c => c[0] === socket || c[1] === socket);
+                if (combatPairSkip) {
+                    const combatInstance = combatPairSkip[2];
                     const userId = socket.userId;
                     if (combatInstance.canPlay(userId)) {
                         combatInstance.tour += 1;
-                        const [player1Socket, player2Socket] = [combatPair[0], combatPair[1]];
+                        const [player1Socket, player2Socket] = [combatPairSkip[0], combatPairSkip[1]];
                         player1Socket.send(JSON.stringify({ type: 'duel_update', combatState: combatInstance.getPlayerState(player1Socket.userId) }));
                         player2Socket.send(JSON.stringify({ type: 'duel_update', combatState: combatInstance.getPlayerState(player2Socket.userId) }));
                         console.log(`User ${userId} skipped their turn`);
                     } else {
                         console.log(`User ${userId} attempted to skip turn out of turn`);
+                    }
+                }
+                break;
+            case 'attack':
+                const combatPairAttack = combats.find(c => c[0] === socket || c[1] === socket);
+                if(combatPairAttack){
+                    const combatInstanceAttack = combatPairAttack[2];
+                    const userIdAttack = socket.userId;
+                    const ennemiSocketAttack = combatPairAttack[(combatPairAttack.indexOf(socket)+1)%2];
+                    if(combatInstanceAttack.canPlay(userIdAttack)){
+                        const attackIndex = parsedMessage.attackIndex;
+                        const attack = combatInstanceAttack.getPlayerState(userIdAttack).moi.main.carteActive.attacks[attackIndex];
+                        if(attack.cost<=combatInstanceAttack.getPlayerState(userIdAttack).moi.energie){
+                            combatInstanceAttack.getPlayerState(ennemiSocketAttack.userId).moi.main.carteActive.hitPoints-=attack.effects.find(e=> e.type === 'damage').value;
+                            combatInstanceAttack.getPlayerState(userIdAttack).moi.energie-=attack.cost;
+                            combatInstanceAttack.tour+=1;
+                            socket.send(JSON.stringify({ type: 'duel_update', combatState: combatInstance.getPlayerState(socket.userId) }));
+                            ennemiSocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstance.getPlayerState(ennemiSocketAttack.userId) }));
+                            console.log("attaque lancé");
+                        }
                     }
                 }
                 break;
