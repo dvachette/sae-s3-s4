@@ -76,15 +76,63 @@ export class CombatState {
 
     advanceTurn() {
         this.tour += 1;
-        if (this.tour % 2 === 1) {
-            this.player1.energie += 1;
-        } else {
-            this.player2.energie += 1;
+        const toPlayPlayer = this.tour % 2 === 1 ? this.player1 : this.player2;
+        toPlayPlayer.energie += 1;
+    }
+
+    attack(attackerId, attackIndex) {
+        const attacker = this.player1.userId === attackerId ? this.player1 : this.player2;
+        const defender = this.player1.userId === attackerId ? this.player2 : this.player1;
+        const attack = attacker.main.carteActive.attacks[attackIndex];
+        if (attack.cost <= attacker.energie) {
+            for (const effect of attack.effects) {
+                if (effect.type === 'damage') {
+                    defender.main.carteActive.hitPoints -= effect.value;
+                    defender.main.carteActive.hitPoints = Math.max(defender.main.carteActive.hitPoints, 0);
+                }
+            }
+            attacker.energie -= attack.cost;
+            return true;
         }
+        return false;
+    }
+    
+    swapCard(userId, cardIndex) {
+        const player = this.player1.userId === userId ? this.player1 : this.player2;
+        const mainCards = [
+            player.main.carte1,
+            player.main.carte2,
+            player.main.carteActive,
+            player.main.carte4,
+            player.main.carte5
+        ];
+        if (cardIndex < 0 || cardIndex >= mainCards.length) {
+            return false; // Index invalide
+        }
+        const selectedCard = mainCards[cardIndex];
+        if (selectedCard.hitPoints <= 0) {
+            return false; // La carte sélectionnée est KO
+        }
+        // Échanger la carte active avec la carte sélectionnée
+        const temp = player.main.carteActive;
+        player.main.carteActive = selectedCard;
+        switch (cardIndex) {
+            case 0:
+                player.main.carte1 = temp;
+                break;
+            case 1:
+                player.main.carte2 = temp;
+                break;
+            case 3:
+                player.main.carte4 = temp;
+                break;
+            case 4:
+                player.main.carte5 = temp;
+                break;
+        }
+        return true;
     }
 }
-
-
 
 export class EtatCombatIndividuel {
     tour; // nombre (numéro du tour actuel)
