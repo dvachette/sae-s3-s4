@@ -1,4 +1,81 @@
-main {
+.page_chargement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+.non_deck {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+  height: 50vh;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.vague {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.espaces {
+  min-width: 0.5em; /* Largeur de l'espace */
+}
+
+.page_chargement h2 {
+  display: inline-block;
+  animation: wave 1.5s ease-in-out infinite;
+  justify-self: center;
+  font-size: 3vw;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.page_chargement button {
+  width: 18vw;
+  height: 5vh;
+  background-color: rgb(var(--orange500));
+  color: rgb(var(--blanc50));
+  border: none;
+}
+
+.page_chargement h3 {
+  font-size: 1.8vw;
+  font-family: 'Mako';
+}
+
+.chargement_deck {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 20vh;
+  gap: 4vw;
+  justify-content: space-evenly;
+  justify-items: flex-end;
+}
+
+.duel_principale {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -7,7 +84,7 @@ main {
   justify-content: center;
 }
 
-main > img {
+.duel_principale > img {
   position: absolute;
   width: 100%;
   height: 100%;
