@@ -73,7 +73,9 @@ function receiveSocket(socket) {
                     const combatInstanceAttack = combatPairAttack[2];
                     const userIdAttack = socket.userId;
                     if (combatInstanceAttack.canPlay(userIdAttack)) {
-                        const attackIndex = parsedMessage.index; // Récupération de l'index de l'attaque
+                        const attackIndex = parseInt(parsedMessage.attackIndex); // Récupération de l'index de l'attaque
+                        console.log(`User ${userIdAttack} is attempting to attack with index ${attackIndex}`);
+                        
                         const attackSuccess = combatInstanceAttack.attack(userIdAttack, attackIndex); // Tentative d'attaque
                         if (attackSuccess) { // Si l'attaque a réussi
                             combatInstanceAttack.advanceTurn(); // Avancer le tour

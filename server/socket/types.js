@@ -1,5 +1,23 @@
 import User from '../objects/user.js';
 
+const types = {
+    0: "presidence",
+    1: "communication",
+    2: "tresorerie",
+    3: "secretariat",
+    4: "projet",
+    5: "local",
+    6: "MA",
+    7: "MI",
+    8: "prevention",
+    9: "pioux",
+    10: "pls",
+    11: "superviseur",
+    12: "culture",
+    13: "suivi"
+};
+
+
 
 export class CombatState {
     tour;
@@ -84,17 +102,176 @@ export class CombatState {
         const attacker = this.player1.userId === attackerId ? this.player1 : this.player2;
         const defender = this.player1.userId === attackerId ? this.player2 : this.player1;
         const attack = attacker.main.carteActive.attacks[attackIndex];
+        console.log(`Available attacks (${attacker.main.carteActive.attacks.length}) : ${attacker.main.carteActive.attacks}`);
+        console.log(`Attacker ${attackerId} is attempting to use attack: ${attack}`);
+        console.log(`Attacker energy: ${attacker.energie}, Attack cost: ${attack.cost}`);
         if (attack.cost <= attacker.energie) {
             for (const effect of attack.effects) {
                 if (effect.type === 'damage') {
-                    defender.main.carteActive.hitPoints -= effect.value;
-                    defender.main.carteActive.hitPoints = Math.max(defender.main.carteActive.hitPoints, 0);
+                    let cardsToDamage = this.selectCards(attackerId, effect.target);
+                    for (const card of cardsToDamage) {
+                        card.hitPoints -= effect.value;
+                        if (card.hitPoints < 0) {
+                            card.hitPoints = 0;
+                        }
+                    }
                 }
             }
             attacker.energie -= attack.cost;
             return true;
         }
         return false;
+    }
+
+    /**
+     * Sélectionne les cartes cibles en fonction du sélecteur fourni.
+     * @param {number} attackerId - L'ID de l'attaquant.
+     * @param {string} selector - Le sélecteur définissant les cibles ('self', 'opponent', 'hand', 'opponentHand', etc.).
+     * selector.filter -> filtrer les cartes selon leur position (active, main, ...)
+     *      self -> sa carte active
+     *      opponent -> carte active de l'adversaire
+     *      hand -> sa main (sans la carte active)
+     *      opponentHand -> main de l'adversaire (sans sa carte active)
+     *      all -> toutes les cartes en jeu
+     *      allSelf -> toute ses cartes
+     *      allOpponent -> toutes les cartes de l'adversaire 
+     * 
+     * selector.mandat -> filtrer les cartes selon leur mandat (!<mandat> pour exclure un mandat)
+     *     SDI -> Seigneur des infos
+     *     FBI -> Federal Bureau of Info
+     *     MIB -> Men Info Black
+     *     SIB -> Super Info Bros
+     * 
+     * selector.pole -> filtrer les cartes par pôle (!<pole> pour exclure un pôle)
+     *      presidence
+     *      communication
+     *      tresorerie
+     *      secretariat
+     *      projet
+     *      local
+     *      MA
+     *      MI
+     *      prevention
+     *      pioux
+     *      pls
+     *      superviseur
+     *      culture
+     *      suivi
+     * 
+     * selector.hitpoints -> filtrer les cartes selon leurs points de vie (>, <, =, >=, <=, !=)
+     *      ex: >50, <=30, =100
+     * 
+     * selector.hasEffect -> filtrer les cartes qui ont un certain effet actif (poison, shield, ...)
+     *     TODO: Implémenter les effets actifs sur les cartes
+     * 
+     * { filter:selfAll, mandat:SDI, pole:!presidence, hitpoints:>50, hasEffect:poison }
+     * 
+     * @returns 
+     */
+    selectCards(attackerId, selector) {
+        const player = this.player1.userId === attackerId ? this.player1 : this.player2;
+        const opponent = this.player1.userId === attackerId ? this.player2 : this.player1;
+        let selectedCards = [
+            player.main.carte1,
+            player.main.carte2,
+            player.main.carteActive,
+            player.main.carte4,
+            player.main.carte5,
+            opponent.main.carte1,
+            opponent.main.carte2,
+            opponent.main.carteActive,
+            opponent.main.carte4,
+            opponent.main.carte5
+        ];
+
+        for (const critere in selector) {
+            switch (critere) {
+                case 'filter':
+                    if (selector.filter === 'self') {
+                        selectedCards = [player.main.carteActive];
+                    } else if (selector.filter === 'opponent') {
+                        selectedCards = [opponent.main.carteActive];
+                    } else if (selector.filter === 'hand') {
+                        selectedCards = [
+                            player.main.carte1,
+                            player.main.carte2,
+                            player.main.carte4,
+                            player.main.carte5
+                        ];
+                    } else if (selector.filter === 'opponentHand') {
+                        selectedCards = [
+                            opponent.main.carte1,
+                            opponent.main.carte2,
+                            opponent.main.carte4,
+                            opponent.main.carte5
+                        ];
+                    } else if (selector.filter === 'allSelf') {
+                        selectedCards = [
+                            player.main.carte1,
+                            player.main.carte2,
+                            player.main.carteActive,
+                            player.main.carte4,
+                            player.main.carte5
+                        ];
+                    } else if (selector.filter === 'allOpponent') {
+                        selectedCards = [
+                            opponent.main.carte1,
+                            opponent.main.carte2,
+                            opponent.main.carteActive,
+                            opponent.main.carte4,
+                            opponent.main.carte5
+                        ];
+                    } else if (selector.filter === 'all') {
+                        // ne rien faire, toutes les cartes sont déjà sélectionnées
+                    }
+                    break;
+                case 'mandat':
+                    selectedCards = selectedCards.filter(card => {
+                        if (selector.mandat.startsWith('!')) {
+                            return card.mandat !== selector.mandat.slice(1);
+                        } else {
+                            return card.mandat === selector.mandat;
+                        }
+                    });
+                    break;
+                case 'pole':
+                    selectedCards = selectedCards.filter(card => {
+                        const cardTypes = card.type.map(typeId => types[typeId]);
+                        if (selector.pole.startsWith('!')) {
+                            return !cardTypes.includes(selector.pole.slice(1));
+                        } else {
+                            return cardTypes.includes(selector.pole);
+                        }
+                    }); 
+                    break;
+                case 'hitpoints':
+                    const operator = selector.hitpoints.match(/(>=|<=|!=|=|>|<)/)[0];
+                    const value = parseInt(selector.hitpoints.replace(operator, ''));
+                    selectedCards = selectedCards.filter(card => {
+                        switch (operator) {
+                            case '>':
+                                return card.hitPoints > value;
+                            case '<':
+                                return card.hitPoints < value;
+                            case '=':
+                                return card.hitPoints === value;
+                            case '>=':
+                                return card.hitPoints >= value;
+                            case '<=':
+                                return card.hitPoints <= value;
+                            case '!=':
+                                return card.hitPoints !== value;
+                            default:
+                                return false;
+                        }
+                    });
+                    break;
+                    default:
+                        break;
+            }
+        }
+            
+        return selectedCards;
     }
     
     swapCard(userId, cardIndex) {
