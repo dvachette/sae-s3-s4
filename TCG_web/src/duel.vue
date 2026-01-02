@@ -496,8 +496,7 @@ function onLoginSuccess() {
       if (message.type === 'duel_start') {
         // Mettre à jour l'état du combat avec les nouvelles données reçues
         Object.assign(combatState, message.combatState);
-        // Forcer la mise à jour de l'interface utilisateur si nécessaire
-
+      
         console.log('État du combat mis à jour:', combatState);
       }
     };
