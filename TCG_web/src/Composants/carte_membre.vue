@@ -4,6 +4,7 @@
     <img src="@/assets/imgs/carte/perso/Maël.png" alt="imgCarte" />
     <div id="haut_carte">
       <p id="nom">{{nom}}</p>
+      <slot></slot> <!-- Sert à rajouter les images d'effets de status dans Duel -->
       <div class="PV">
         <p id="PV">{{pv}}</p>
         <p id="lblPV">PV</p>

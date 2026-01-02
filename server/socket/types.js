@@ -18,7 +18,7 @@ const types = {
 };
 
 
-
+//etat du combat general
 export class CombatState {
     tour;
     player1; // EtatJoueur
@@ -72,6 +72,7 @@ export class CombatState {
         return false;
     }
 
+    //etat individuel
     getPlayerState(userId) {
         if (this.player1.userId === userId) {
             return new EtatCombatIndividuel(
@@ -102,9 +103,7 @@ export class CombatState {
         const attacker = this.player1.userId === attackerId ? this.player1 : this.player2;
         const defender = this.player1.userId === attackerId ? this.player2 : this.player1;
         const attack = attacker.main.carteActive.attacks[attackIndex];
-        console.log(`Available attacks (${attacker.main.carteActive.attacks.length}) : ${attacker.main.carteActive.attacks}`);
-        console.log(`Attacker ${attackerId} is attempting to use attack: ${attack}`);
-        console.log(`Attacker energy: ${attacker.energie}, Attack cost: ${attack.cost}`);
+      
         if (attack.cost <= attacker.energie) {
             for (const effect of attack.effects) {
                 if (effect.type === 'damage') {

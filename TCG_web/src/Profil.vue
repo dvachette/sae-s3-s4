@@ -82,10 +82,10 @@
       <label><input type="checkbox" name="musique" value="pôle">Musique active</input></label>
       <label><input type="checkbox" name="effets" value="pôle">Effets Sonores</input></label>
       <h2>Statistiques :</h2>
-      <p>Cartes possédées : 46/71</p>
-      <p>Parties jouées : 12</p>
-      <p>Parties gagnées : 07</p>
-      <p>Amis : 27</p>
+      <p>Cartes possédées : {{cartesPossedees}}/{{cartesTotal}}</p>
+      <p>Parties jouées : {{parties}}</p>
+      <p>Parties gagnées : {{victoires}}</p>
+      <p>Amis : {{amis}}</p>
     </div>
   </main>
 </template>
@@ -109,6 +109,11 @@ const afficher_mdp = ref(false) ;
 const afficher_mail= ref(false) ;
 const afficher_pseudo = ref(false) ;
 const afficher_deco = ref(false) ;
+const cartesPossedees = ref('');
+const cartesTotal = ref('');
+const parties = ref('');
+const victoires = ref('');
+const amis = ref('');
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>
@@ -151,19 +156,23 @@ function cancelP() {
   edit_P.value = false
   draft_P.value = pseudo.value
 }
+
 const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 
+
 console.log(user.value);
+
 const mail = ref('');
 function loadUserData() {
   user.value = JSON.parse(sessionStorage.getItem('userData'));
   mail.value = user.value ? user.value.email : '';
   pseudo.value = user.value ? user.value.username : '';
+  cartesTotal.value = user.value ? user.value.stats.totalCartes : '0' ;
+  cartesPossedees.value = user.value ? user.value.stats.totalPossedees : '0' ;
+  parties.value = user.value ? user.value.stats.totalParties : '0' ;
+  victoires.value = user.value ? user.value.stats.totalVictoires : '0' ;
+  amis.value = user.value ? user.value.stats.totalAmis : '0' ;
 }
-
-
-
-
 
 const edit_M = ref(false)
 const draft_M = ref('')

@@ -102,7 +102,4 @@ app.listen(PORT, () => {
 const wss = new ws.Server({ port: 8080 }); // Serveur WebSocket sur le port 8080
 // Gestion des connexions WebSocket
 
-const waitList = []; // Tableau pour stocker les utilisateurs en attente de combat
-const combats = []; // Tableau pour stocker les combats actifs
-const usersWS = {}; // Objet pour mapper les utilisateurs aux connexions WebSocket
 wss.on('connection', duelUtils.receiveSocket); // Utilisation de la fonction de gestion des connexions de duel   

@@ -9,9 +9,9 @@ const attente = []; // Liste des userId en attente de duel (normalement un seul 
  * @param {*} socket 
  */
 function receiveSocket(socket) { 
-    console.log(`New WebSocket connection established : ${socket._socket.remoteAddress}:${socket._socket.remotePort}`);
+    console.log(`Nouvelle WebSocket connection etablie : ${socket._socket.remoteAddress}:${socket._socket.remotePort}`);
     socket.on('message', (message) => { // Écouteur des messages entrants
-        console.log(`Message received from ${socket._socket.remoteAddress}:${socket._socket.remotePort} : ${message}`);
+        console.log(`Message recu de ${socket._socket.remoteAddress}:${socket._socket.remotePort} : ${message}`);
         const parsedMessage = JSON.parse(message);
         switch (parsedMessage.type) {
             case 'authenticate': // Authentification de l'utilisateur (envoi du userId, une fois, à la connexion)
@@ -20,7 +20,7 @@ function receiveSocket(socket) {
                 socket.userId = userId; // Stockage du userId dans la socket pour un accès facile plus tard 
                 const userData = User.fromId(userId); // Récupération des données utilisateur
                 if (!userData) { // Validation de l'ID utilisateur
-                    console.log(`Authentication failed for userId: ${userId}`);
+                    console.log(`Identification echoue pour userId: ${userId}`);
                     socket.send(JSON.stringify({ type: 'authentication_failed' }));
                     connexions[userId] = null; // Suppression de la connexion invalide
                     socket.close(); // Fermeture de la connexion
@@ -28,7 +28,7 @@ function receiveSocket(socket) {
                 }
 
                 if (!userData.deck.isValid()) { // Validation du deck utilisateur
-                    console.log(`User ${userId} has an invalid deck`);
+                    console.log(`Utilisateur ${userId} a un invalide deck`);
                     socket.send(JSON.stringify({ type: 'invalid_deck' }));
                     connexions[userId] = null; // Suppression de la connexion invalide
                     socket.close(); // Fermeture de la connexion

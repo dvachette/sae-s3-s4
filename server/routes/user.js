@@ -10,6 +10,7 @@ const Database = require('better-sqlite3'); // Importation de la bibliothèque S
 
 // Modules internes
 const User = require('../objects/user.js'); // Importation de l'objet User
+const Hashing = require('../utils/hashing');
 
 /**
  * @brief Crée un nouveau compte utilisateur.
@@ -135,7 +136,7 @@ async function logout(request, response) {
  * @returns status 404 - Utilisateur non trouvé.
  * @returns status 405 - Méthode non autorisée.
  */
-function editAccount(request, response) {
+async function editAccount(request, response) {
   // Vérifier la methode HTTP
   if (request.method !== 'PUT') {
     return response.status(405).send({ error: 'Methode non autorisée' });
@@ -154,6 +155,14 @@ function editAccount(request, response) {
   const newMail = request.body.email || null;
   const newPassword = request.body.password || null;
   const newUsername = request.body.name || null;
+  const verifPassword = request.body.mdp_check || '';
+  const userVerif = User.fromId(userId);
+  const userLogin = await User.login(userVerif.email, verifPassword);
+  if(!userLogin && newUsername === null){
+    return response
+      .status(403)
+      .send({error : "Mot de passe incorrect"}) ;
+  } 
   console.log(request.body);
   // Vérifier qu'au moins une information est fournie
   if (!newMail && !newPassword && !newUsername) {
@@ -186,7 +195,7 @@ function editAccount(request, response) {
   }
   // Mettre à jour le mot de passe si fourni
   if (newPassword) {
-    user.password = newPassword; // TODO : Ajouter le hachage des mots de passe
+    user.password = await Hashing.hashPassword(newPassword);
   }
   // Mettre à jour le nom d'utilisateur si fourni
   if (newUsername) {
@@ -260,7 +269,7 @@ function getUserData(request, response) {
   if (!user) {
     return response.status(404).send({ error: 'Utilisateur non trouvé' });
   }
-
+  user.stats = user.getStats() ;
   return response.status(200).send({ user: user });
 }
 
