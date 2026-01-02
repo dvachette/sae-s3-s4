@@ -203,7 +203,11 @@
             <button
               v-for="attack of combatState.moi.main.carteActive.attacks"
               class="attaques"
-              @click="attackCarte(combatState.moi.main.carteActive.attacks.indexOf(attack))"
+              @click="
+                attackCarte(
+                  combatState.moi.main.carteActive.attacks.indexOf(attack)
+                )
+              "
             >
               {{ attack.name }}
               <p>{{ attack.description }}</p>
@@ -233,7 +237,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, ref, onMounted } from 'vue';
+import { reactive, computed, ref } from 'vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 import verifLogin from './Composants/verifLogin.vue';
@@ -522,7 +526,7 @@ function swapCards(index) {
   }
 }
 
-function attackCarte(index){
+function attackCarte(index) {
   if (socket.value && socket.value.readyState === WebSocket.OPEN) {
     socket.value.send(JSON.stringify({ type: 'attack', attackIndex: index }));
   }

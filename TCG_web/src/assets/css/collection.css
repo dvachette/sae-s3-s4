@@ -184,3 +184,59 @@ label {
 .carte {
   margin-top: 10px;
 }
+
+.membre_pop_up {
+  position: fixed; /* inset-0 */
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.membre_carte {
+  position: relative;
+  animation: scale-in 0.2s ease-out;
+}
+
+.familier_pop_up {
+  position: fixed; /* inset-0 */
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.familier_carte {
+  position: relative;
+  animation: scale-in 0.2s ease-out;
+}
+
+.terrain_pop_up {
+  position: fixed; /* inset-0 */
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.terrain_carte {
+  position: relative;
+  animation: scale-in 0.2s ease-out;
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
