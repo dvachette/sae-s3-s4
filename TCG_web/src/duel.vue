@@ -508,14 +508,14 @@ function onLoginSuccess() {
         combatState.opposant = message.combatState.opposant;
         combatState.tour = message.combatState.tour;
         combatState.monTour = message.combatState.monTour;
-        
+        if (message.type === 'duel_start') {
+          // L'adversaire a été trouvé, mettre à jour l'état et fermer la page de chargement
+        }
 
       
         console.log('État du combat mis à jour:', combatState);
-      } else if (message.type === 'opponent_found') {
-        // L'adversaire a été trouvé, mettre à jour l'état
       } else if (message.type === 'already_connected') {
-        // Popup d'erreur
+        // Deja connecté ailleurs, afficher un message d'erreur
       }
     };
 
