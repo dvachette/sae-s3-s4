@@ -502,11 +502,20 @@ function onLoginSuccess() {
     socket.value.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log('Message reçu du serveur:', message);
-      if (message.type === 'duel_start') {
+      if (message.type === 'duel_start' || message.type === 'duel_update') {
         // Mettre à jour l'état du combat avec les nouvelles données reçues
-        Object.assign(combatState, message.combatState);
+        combatState.moi = message.combatState.moi;
+        combatState.opposant = message.combatState.opposant;
+        combatState.tour = message.combatState.tour;
+        combatState.monTour = message.combatState.monTour;
+        
+
       
         console.log('État du combat mis à jour:', combatState);
+      } else if (message.type === 'opponent_found') {
+        // L'adversaire a été trouvé, mettre à jour l'état
+      } else if (message.type === 'already_connected') {
+        // Popup d'erreur
       }
     };
 
