@@ -15,6 +15,18 @@ function receiveSocket(socket) {
         const parsedMessage = JSON.parse(message);
         switch (parsedMessage.type) {
             case 'authenticate': // Authentification de l'utilisateur (envoi du userId, une fois, à la connexion)
+                // Si deja connecté sur une autre socket, ignorer
+                if (connexions[parsedMessage.userId]) {
+                    console.log(`L'utilisateur ${parsedMessage.userId} est deja connecte sur une autre socket, fermeture de la connexion actuelle`);
+                    socket.send(JSON.stringify({ type: 'already_connected' }));
+                    socket.close();
+                    return;
+                }
+                // If already authenticated, ignore
+                if (socket.userId) {
+                    console.log(`User ${socket.userId} already authenticated, ignoring authenticate message`);
+                    return;
+                }
                 const userId = parsedMessage.userId; // Récupération du userId envoyé par le client
                 connexions[userId] = socket; // Ajout de la connexion à la liste des connexions
                 socket.userId = userId; // Stockage du userId dans la socket pour un accès facile plus tard 
