@@ -7,8 +7,8 @@
       '--w': props.largeur,
     }"
   >
-    <div class="vie"></div>
     <p>{{ props.pv }}</p>
+    <div class="vie"></div>
   </div>
 </template>
 

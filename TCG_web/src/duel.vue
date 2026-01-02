@@ -66,7 +66,8 @@
             :data="combatState.opposant.main.carte1"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte1"
             @mouseleave="carteSurvolé = null"
-          />
+            ><img src="@/assets/imgs/effets/Effet_bouclier.png" alt="status"
+          /></Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte1.hitPoints"
             :pvtotal="combatState.opposant.main.carte1.maxHitpoints"
@@ -79,7 +80,8 @@
             :data="combatState.opposant.main.carte2"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte2"
             @mouseleave="carteSurvolé = null"
-          />
+            ><img src="@/assets/imgs/effets/Effet_confusion.png" alt="status"
+          /></Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte2.hitPoints"
             :pvtotal="combatState.opposant.main.carte2.maxHitpoints"
@@ -92,7 +94,7 @@
             :data="combatState.opposant.main.carteActive"
             @mouseenter="carteSurvolé = combatState.opposant.main.carteActive"
             @mouseleave="carteSurvolé = null"
-          />
+          ></Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carteActive.hitPoints"
             :pvtotal="combatState.opposant.main.carteActive.maxHitpoints"
@@ -105,7 +107,7 @@
             :data="combatState.opposant.main.carte4"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte4"
             @mouseleave="carteSurvolé = null"
-          />
+          ></Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte4.hitPoints"
             :pvtotal="combatState.opposant.main.carte4.maxHitpoints"
@@ -118,7 +120,8 @@
             :data="combatState.opposant.main.carte5"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte5"
             @mouseleave="carteSurvolé = null"
-          />
+            ><img src="@/assets/imgs/effets/Effet_fatigue.png" alt="status"
+          /></Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte5.hitPoints"
             :pvtotal="combatState.opposant.main.carte5.maxHitpoints"
@@ -142,7 +145,7 @@
             :data="combatState.moi.main.carte1"
             @mouseenter="carteSurvolé = combatState.moi.main.carte1"
             @mouseleave="carteSurvolé = null"
-          />
+          ></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte1.hitPoints"
             :pvtotal="combatState.moi.main.carte1.maxHitpoints"
@@ -154,7 +157,7 @@
             :data="combatState.moi.main.carte2"
             @mouseenter="carteSurvolé = combatState.moi.main.carte2"
             @mouseleave="carteSurvolé = null"
-          />
+          ></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte2.hitPoints"
             :pvtotal="combatState.moi.main.carte2.maxHitpoints"
@@ -167,7 +170,8 @@
             :data="combatState.moi.main.carteActive"
             @mouseenter="carteSurvolé = combatState.moi.main.carteActive"
             @mouseleave="carteSurvolé = null"
-          />
+            ><img src="@/assets/imgs/effets/Effet_poison.png" alt="status"
+          /></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carteActive.hitPoints"
             :pvtotal="combatState.moi.main.carteActive.maxHitpoints"
@@ -180,7 +184,7 @@
             :data="combatState.moi.main.carte4"
             @mouseenter="carteSurvolé = combatState.moi.main.carte4"
             @mouseleave="carteSurvolé = null"
-          />
+          ></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte4.hitPoints"
             :pvtotal="combatState.moi.main.carte4.maxHitpoints"
@@ -193,7 +197,8 @@
             :data="combatState.moi.main.carte5"
             @mouseenter="carteSurvolé = combatState.moi.main.carte5"
             @mouseleave="carteSurvolé = null"
-          />
+            ><img src="@/assets/imgs/effets/Effet_rage.png" alt="status"
+          /></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte5.hitPoints"
             :pvtotal="combatState.moi.main.carte5.maxHitpoints"
