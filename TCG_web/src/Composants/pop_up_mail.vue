@@ -1,8 +1,7 @@
-
 <template>
   <div class="pageChangement">
-    <h2>Changement d'adresse mail</h2>
-    <form>
+    <div class="formulaire">
+      <h2>Changement d'adresse mail</h2>
       <label> Votre nouvelle adresse mail </label>
       <input type="text" id="n_mail" v-model="nouveau_mail" />
 
@@ -11,11 +10,9 @@
 
       <label> Votre mot de passe </label>
       <input type="password" id="mdp" v-model="mdp" />
-      <button type="submit" id="changer" @click="$emit('fermer')">
-        Changer mail
-      </button>
+      <button id="changer" @click="changementMail">Changer mail</button>
       <button id="fermer" @click="$emit('fermer')">Retour</button>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -25,28 +22,31 @@ import { ref } from 'vue';
 const nouveau_mail = ref('');
 const confirmer_mail = ref('');
 const mdp = ref('');
-const userData = ref(JSON.parse(sessionStorage.getItem("userData")));
+const mdp_incorrect = ref(false);
+const mail_identiques = ref(false);
 
 const emit = defineEmits(['fermer']);
 
 async function changementMail() {
-  if(checkPassword(mdp,userData.password) && nouveau_mail===confirmer_mail){
-  const response = await fetch('http://localhost:3000/user', {
-    method: 'PUT',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ mdp: nouveau_mdp.value }),
-  });
-  if (response.ok) {
-    const data = await response.json();
-    console.log(data.message + ' reçues du serveur');
-    emit('fermer');
+  if (nouveau_mail.value === confirmer_mail.value) {
+    const response = await fetch('http://localhost:3000/user', {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: nouveau_mail.value, mdp_check: mdp.value }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.message + ' reçues du serveur');
+      emit('fermer');
+    } else {
+      console.error(response);
+    }
   } else {
-    console.error(response);
+    console.log('les 2 mails rentrés sont différents');
   }
-}
 }
 </script>
 

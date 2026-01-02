@@ -220,10 +220,18 @@ class User {
     save() {
         const db = new Database('database.db');
         
-        const updateUserQuery = db.prepare(
-            'UPDATE user SET name = ?, email = ? WHERE userId = ?'
-        );
-        updateUserQuery.run(this.username, this.email, this.userId);
+        if(this.password){
+            const updateUserQuery = db.prepare(
+                'UPDATE user SET name = ?, email = ?, password = ? WHERE userId = ?'
+            );
+            updateUserQuery.run(this.username, this.email, this.password, this.userId);
+        }
+        else {
+            const updateQuery = db.prepare(
+                'UPDATE user SET name = ?, email = ? WHERE userId = ?'
+            );
+            updateUserQuery.run(this.username, this.email, this.userId);
+        }
         console.log(this.username);
         
         db.close();
@@ -547,6 +555,21 @@ class User {
                 "L'utilisateur ne possède pas cette carte dans sa collection."
             );
         }
+    }
+
+    getStats() {
+        const db = new Database('database.db') ;
+        const totalCardQuery = db.prepare('SELECT COUNT(cardId) AS total FROM Card') ;
+        const totalCards = totalCardQuery.get().total ;
+        const cardQuery = db.prepare('SELECT COUNT(cardId) AS total FROM Collection WHERE userId = ?');
+        const cards = cardQuery.get(this.userId).total ;
+        const partiesJoueesQuery = db.prepare('SELECT COUNT(combatId) AS total FROM Historique_des_combats WHERE GagnantId = ? or PerdantId = ?') ;
+        const partiesJouees = partiesJoueesQuery.get(this.userId, this.userId).total ; 
+        const partiesGagneesQuery = db.prepare('SELECT COUNT(combatId) AS total FROM Historique_des_combats WHERE GagnantId = ? ') ;
+        const partiesGagnees = partiesGagneesQuery.get(this.userId).total ;  
+        const amisQuery = db.prepare("SELECT COUNT(friendId) AS total FROM Friends WHERE (senderId = ? or receiverId = ?) and status = 'accepted'") ;
+        const amis = amisQuery.get(this.userId, this.userId).total ;
+        return { totalCartes : totalCards , totalPossedees : cards, totalParties : partiesJouees, totalVictoires : partiesGagnees, totalAmis : amis};
     }
 }
 
