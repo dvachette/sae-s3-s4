@@ -27,8 +27,36 @@ export class CombatState {
         this.tour = tour;
         this.player1 = player1;
         this.player2 = player2;
+        
     }
     
+    init(){
+        for(let player of [this.player1,this.player2]){
+            const effetsFamilierJoueur = player.familier.modifier;
+            
+            for(let effect of effetsFamilierJoueur){
+                const carteAffectees = this.selectCards(player.userId,effect.target);
+                for(let carte of carteAffectees){
+                    switch(effect.on){
+                        case 'damage' :
+                            for(let attaque of carte.attacks){
+                                for(let effectAttaque of attaque.effects){
+                                    if(effectAttaque.type === 'damage'){
+                                        effectAttaque.value += effect.type === 'boost'?effect.value:-effect.value;
+                                    }
+                                }
+                            }
+                            break;
+                        case 'hitpoints' :
+                            carte.hitPoints += effect.type === 'boost'? effect.value:-effect.value;
+                            carte.maxHitpoints += effect.type === 'boost'? effect.value:-effect.value;
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
     static fromPlayersIds(userId1, userId2) {
         const player1UserData = User.fromId(userId1);
         const player2UserData = User.fromId(userId2);
@@ -343,45 +371,47 @@ export class CombatState {
             switch (critere) {
                 case 'filter':
                     if (selector.filter === 'self') {
-                        selectedCards = [player.main.carteActive];
+                        selectedCards =selectedCards.filter(card => [player.main.carteActive].includes(card));
                     } else if (selector.filter === 'opponent') {
-                        selectedCards = [opponent.main.carteActive];
+                        selectedCards =selectedCards.filter(card => [opponent.main.carteActive].includes(card));
                     } else if (selector.filter === 'hand') {
-                        selectedCards = [
+                        selectedCards = selectedCards.filter(card =>[
                             player.main.carte1,
                             player.main.carte2,
                             player.main.carte4,
                             player.main.carte5
-                        ];
+                        ].includes(card));
                     } else if (selector.filter === 'opponentHand') {
-                        selectedCards = [
+                        selectedCards = selectedCards.filter(card => [
                             opponent.main.carte1,
                             opponent.main.carte2,
                             opponent.main.carte4,
                             opponent.main.carte5
-                        ];
+                        ].includes(card));
                     } else if (selector.filter === 'allSelf') {
-                        selectedCards = [
+                        selectedCards = selectedCards.filter(card => [
                             player.main.carte1,
                             player.main.carte2,
                             player.main.carteActive,
                             player.main.carte4,
                             player.main.carte5
-                        ];
+                        ].includes(card));
                     } else if (selector.filter === 'allOpponent') {
-                        selectedCards = [
+                        selectedCards = selectedCards.filter(card => [
                             opponent.main.carte1,
                             opponent.main.carte2,
                             opponent.main.carteActive,
                             opponent.main.carte4,
                             opponent.main.carte5
-                        ];
+                        ].includes(card));
                     } else if (selector.filter === 'all') {
                         // ne rien faire, toutes les cartes sont déjà sélectionnées
                     }
                     break;
                 case 'mandat':
+                    console.log("mandat selectionne :",selector.mandat);
                     selectedCards = selectedCards.filter(card => {
+                        console.log("carte : ",card.name," mandat : ",card.mandat);
                         if (selector.mandat.startsWith('!')) {
                             return card.mandat !== selector.mandat.slice(1);
                         } else {

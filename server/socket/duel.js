@@ -52,6 +52,7 @@ function receiveSocket(socket) {
                 if (attente.length > 0) { // Si un autre utilisateur est en attente, démarrer un duel
                     const adversaireId = attente.shift(); // Récupération de l'ID de l'adversaire en attente (premier de la liste (file))
                     const combat = types.CombatState.fromPlayersIds(userId, adversaireId); // Création d'une nouvelle instance de combat
+                    combat.init();
                     combats.push([socket, connexions[adversaireId], combat]); // Ajout du combat à la liste des combats en cours
                     socket.send(JSON.stringify({ type: 'duel_start', adversaireId: adversaireId, combatState: combat.getPlayerState(userId) })); // Envoi du message de début de duel au client
                     connexions[adversaireId].send(JSON.stringify({ type: 'duel_start', adversaireId: userId, combatState: combat.getPlayerState(adversaireId) })); // Envoi du message de début de duel à l'adversaire
