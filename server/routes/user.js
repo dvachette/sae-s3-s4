@@ -155,10 +155,12 @@ async function editAccount(request, response) {
   const newMail = request.body.email || null;
   const newPassword = request.body.password || null;
   const newUsername = request.body.name || null;
+  const newProfilePicture = request.body.profilePicture || null;
   const verifPassword = request.body.mdp_check || '';
   const userVerif = User.fromId(userId);
   const userLogin = await User.login(userVerif.email, verifPassword);
-  if(!userLogin && newUsername === null){
+  // Vérifier le mot de passe avant de faire les modifications (pour mail et mdp uniquement)
+  if(!userLogin && newUsername === null && newProfilePicture === null){
     return response
       .status(403)
       .send({error : "Mot de passe incorrect"}) ;
@@ -200,6 +202,11 @@ async function editAccount(request, response) {
   // Mettre à jour le nom d'utilisateur si fourni
   if (newUsername) {
     user.username = newUsername;
+  }
+
+  // Mettre à jour la photo de profil si fournie
+  if (newProfilePicture) {
+    user.profilePicture = newProfilePicture;
   }
   // Exécuter la requête de mise à jour
   user.save();

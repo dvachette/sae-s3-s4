@@ -20,8 +20,9 @@ class User {
     receivedTrades;
     acceptedTrades;
     deck;
+    profilePicture;
     
-    constructor(userId, username, email, lastBoosterOpening, balance) {
+    constructor(userId, username, email, lastBoosterOpening, balance, profilePicture) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -35,6 +36,7 @@ class User {
         this.receivedTrades = [];
         this.acceptedTrades = [];
         this.deck = null;
+        this.profilePicture = profilePicture;
     }
     
     static fromRow(row) {
@@ -43,7 +45,8 @@ class User {
             row.name,
             row.email,
             row.lastBoosterOppening,
-            row.balance
+            row.balance,
+            row.profilePicture
         );
         
         // Récupération de la collection de l'utilisateur
@@ -222,15 +225,15 @@ class User {
         
         if(this.password){
             const updateUserQuery = db.prepare(
-                'UPDATE user SET name = ?, email = ?, password = ? WHERE userId = ?'
+                'UPDATE user SET name = ?, email = ?, profilePicture = ?, password = ? WHERE userId = ?'
             );
-            updateUserQuery.run(this.username, this.email, this.password, this.userId);
+            updateUserQuery.run(this.username, this.email, this.profilePicture, this.password, this.userId);
         }
         else {
             const updateQuery = db.prepare(
-                'UPDATE user SET name = ?, email = ? WHERE userId = ?'
+                'UPDATE user SET name = ?, email = ?, profilePicture = ? WHERE userId = ?'
             );
-            updateUserQuery.run(this.username, this.email, this.userId);
+            updateQuery.run(this.username, this.email, this.profilePicture, this.userId);
         }
         console.log(this.username);
         
