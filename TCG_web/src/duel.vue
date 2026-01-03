@@ -29,6 +29,7 @@
             {{ lettre === ' ' ? '\u00A0' : lettre }}
           </h2>
         </div>
+        <!-- TODO : Fermer la socket avant de quitter-->
         <router-link to="/combat"><button>annuler combat</button></router-link>
       </div>
       <h3>Votre deck :</h3>
