@@ -31,7 +31,7 @@
     />
     <div class="gestion_soi">
       <div class="pp">
-        <img src="@/assets/imgs/logoTCG.png" alt="pp"></img>
+        <img :src="pp" alt="pp" />
         <img src="@/assets/imgs/Appareil_photo.png" alt="edit" />
       </div>
       <div class="pseudo">
@@ -107,13 +107,14 @@ const inputEl = ref(null)
 const afficher_suppr = ref(false);
 const afficher_mdp = ref(false) ;
 const afficher_mail= ref(false) ;
-const afficher_pseudo = ref(false) ;
+const afficher_pseudo = ref(false) ; 
 const afficher_deco = ref(false) ;
 const cartesPossedees = ref('');
 const cartesTotal = ref('');
 const parties = ref('');
 const victoires = ref('');
 const amis = ref('');
+const pp = ref('@/assets/imgs/logoTCG.png');
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>
@@ -172,6 +173,7 @@ function loadUserData() {
   parties.value = user.value ? user.value.stats.totalParties : '0' ;
   victoires.value = user.value ? user.value.stats.totalVictoires : '0' ;
   amis.value = user.value ? user.value.stats.totalAmis : '0' ;
+  pp.value = user.value.profilePicture !== null ? `src/assets/imgs/images_de_profil/${user.value.profilePicture}.png` : 'src/assets/imgs/logoTCG.png' ;
 }
 
 const edit_M = ref(false)
