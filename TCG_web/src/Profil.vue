@@ -29,8 +29,13 @@
       @fermer="afficher_deco = false"
       @déconnexion="deconnexion"
     />
+    <choix_pp 
+      v-if="afficher_pp" 
+      id="pp_choix" 
+      @fermer="afficher_pp = false" />
+
     <div class="gestion_soi">
-      <div class="pp">
+      <div class="pp" @click="afficher_pp = true">
         <img :src="pp" alt="pp" />
         <img src="@/assets/imgs/Appareil_photo.png" alt="edit" />
       </div>
@@ -100,6 +105,7 @@ import pop_up_mdp from './Composants/pop_up_mdp.vue';
 import pop_up_mail from './Composants/pop_up_mail.vue';
 import pop_up_pseudo from './Composants/pop_up_pseudo.vue';
 import Pop_up_déco from './Composants/pop_up_déco.vue';
+import choix_pp from './choix_pp.vue';
 
 const password = ref('motdepasse123')
 const draftPassword = ref('')
@@ -115,6 +121,7 @@ const parties = ref('');
 const victoires = ref('');
 const amis = ref('');
 const pp = ref('@/assets/imgs/logoTCG.png');
+const afficher_pp = ref(false) ;
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>

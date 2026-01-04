@@ -65,7 +65,7 @@ label {
 
 .barre_progression {
   height: 4vh;
-  width: 50%;
+  width: var(--progress);
   background: linear-gradient(
     90deg,
     rgb(var(--jaune400)),
@@ -89,12 +89,19 @@ label {
   display: flex;
   flex-direction: column;
   align-items: start;
+  height: 100%;
+}
+
+.Tri_liste > label {
+  height: 100%;
+  justify-self: center;
 }
 
 label {
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 50%;
 }
 
 .Tri_liste > label > input {

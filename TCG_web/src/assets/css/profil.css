@@ -45,6 +45,14 @@ div > p {
   z-index: 10;
 }
 
+#pp_choix {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
 #deco {
   position: absolute;
   top: 50%;
@@ -72,6 +80,7 @@ div > p {
   width: 20vh;
   height: 20vh;
   position: relative;
+  cursor: pointer;
 }
 
 .pp > img:first-child {

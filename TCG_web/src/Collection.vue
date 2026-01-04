@@ -1,7 +1,9 @@
 <template>
   <VerifLogin/>
   <MonHeader />
-  <main>
+  <main :style="{
+      '--progress': pourcentage,
+    }">
     <div v-if="carteSurvolé" class="membre_pop_up">
       <!-- Composant dupliqué au centre -->
       <div class="membre_carte">
@@ -31,7 +33,7 @@
     <div class="tri_filtres">
       <div class="cartes_possédées">
         <h2>cartes possédées :</h2>
-        <h3>46/71</h3>
+        <h3>{{cartesPossedees}}/{{cartesTotal}}</h3>
         <div class="barre_total">
           <div class="barre_progression"></div>
         </div>
@@ -90,7 +92,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
 
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
@@ -100,6 +102,19 @@ import Barre_progress from './Composants/barre_progress_carte.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
+const cartesPossedees = ref('');
+const cartesTotal = ref('');
+
+function loadUserData() {
+  userData.value = JSON.parse(sessionStorage.getItem('userData'));
+  cartesTotal.value = userData.value ? userData.value.stats.totalCartes : '0' ;
+  cartesPossedees.value = userData.value ? userData.value.stats.totalPossedees : '0' ;
+}
+loadUserData();
+
+const pourcentageValue = computed(() => (cartesPossedees.value * 100) / cartesTotal.value);
+const pourcentage = computed(() => pourcentageValue.value + '%');
+
 const carteSurvolé = ref(null);
 const familierSurvolé = ref(null);
 const TerrainSurvolé = ref(null);
