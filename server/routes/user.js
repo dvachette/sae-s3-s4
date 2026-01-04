@@ -167,7 +167,7 @@ async function editAccount(request, response) {
   } 
   console.log(request.body);
   // Vérifier qu'au moins une information est fournie
-  if (!newMail && !newPassword && !newUsername) {
+  if (!newMail && !newPassword && !newUsername && !newProfilePicture) {
     return response
       .status(400)
       .send({ error: 'Aucune information à mettre à jour' });

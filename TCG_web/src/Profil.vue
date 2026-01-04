@@ -180,7 +180,7 @@ function loadUserData() {
   parties.value = user.value ? user.value.stats.totalParties : '0' ;
   victoires.value = user.value ? user.value.stats.totalVictoires : '0' ;
   amis.value = user.value ? user.value.stats.totalAmis : '0' ;
-  pp.value = user.value.profilePicture !== null ? `src/assets/imgs/images_de_profil/${user.value.profilePicture}.png` : 'src/assets/imgs/logoTCG.png' ;
+  pp.value = user.value.profilePicture !== null ? user.value.profilePicture : 'src/assets/imgs/logoTCG.png' ;
 }
 
 const edit_M = ref(false)
