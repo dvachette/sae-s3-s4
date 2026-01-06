@@ -36,8 +36,8 @@
     </div>
 
     <div class="bas_carte">
-      <p class="faibForce">Faiblesse</p>
       <p class="faibForce">Force</p>
+      <p class="faibForce">Faiblesse</p>
       <img
         :src="imgForce"
         alt="faiblesse"
