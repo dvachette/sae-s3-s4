@@ -121,10 +121,17 @@ export class CombatState {
         }
     }
 
+    detecterDefaite(playerId){   
+        const player=this.player1.userId === playerId ? this.player1 : this.player2;
+        return player.main.carte1.hitPoints<=0 && player.main.carte2.hitPoints<=0 && player.main.carteActive.hitPoints<=0 && player.main.carte4.hitPoints<=0 && player.main.carte5.hitPoints<=0;
+    }
+
     advanceTurn() {
         this.tour += 1;
         const toPlayPlayer = this.tour % 2 === 1 ? this.player1 : this.player2;
+        const finishedPlayer = this.tour % 2 === 1 ? this.player2 : this.player1;
         toPlayPlayer.energie += 1;
+
         for (const card of [
             toPlayPlayer.main.carte1,
             toPlayPlayer.main.carte2,
@@ -154,7 +161,7 @@ export class CombatState {
         }
 
         // Mettre à jour la durée des effets de statut du joueur dont le tour vient de se terminer
-        const finishedPlayer = this.tour % 2 === 1 ? this.player2 : this.player1;
+        
         for (const card of [
             finishedPlayer.main.carte1,
             finishedPlayer.main.carte2,
@@ -175,11 +182,15 @@ export class CombatState {
 
     attack(attackerId, attackIndex) {
 
+
         const attacker = this.player1.userId === attackerId ? this.player1 : this.player2;
         const defender = this.player1.userId === attackerId ? this.player2 : this.player1;
         const attack = attacker.main.carteActive.attacks[attackIndex];
         if (!attack) {
             return false; // Attaque invalide
+        }
+        if(attacker.main.carteActive.hitPoints<=0){
+            return false;
         }
 
         if (attacker.main.carteActive.statusEffects.some(se => se.type === 'stun')) {
@@ -196,6 +207,9 @@ export class CombatState {
             for (const effect of attack.effects) {
                 const cardsToAffect = this.selectCards(attackerId, effect.target);
                 for (const card of cardsToAffect) {
+                    if(card.hitPoints<=0){
+                        continue;
+                    }
                     switch (effect.type) {
                         case 'damage':
                             if (card.statusEffects.some(se => se.type === 'shield')) { // Vérifier si la carte a un effet de bouclier

@@ -58,107 +58,84 @@
     </div>
   </div>
 </template>
-
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   data: Object,
   largeur: String,
 });
 
-//chargement des images du dossier perso (**/* permet de charger tous les sous dossiers de perso)
-const images = import.meta.glob('../assets/imgs/carte/perso/**/*.png', { eager: true })
+// chargement des images
+const images = import.meta.glob('../assets/imgs/carte/perso/**/*.png', { eager: true });
 
-//partie haute
-const nom = props.data.name;
-const pv = props.data.maxHitpoints;
-const niv = props.data.level;
+// ===== partie haute =====
+const nom = computed(() => props.data.name);
+const pv = computed(() => props.data.hitPoints);
+const niv = computed(() => props.data.level);
 
-//partie attaques
-const attaques = props.data.attacks;
-  const effets = attaques[0].effects;
-  const degats1 = ref();
-  const degats2 = ref();  
+// ===== attaques =====
+const attaques = computed(() => props.data.attacks);
 
-  for(const effet of attaques[0].effects){
-    console.log(effet.type);
-    if(effet.type == 'damage'){
-      degats1.value = effet.value;
-    }
-  }
-  if(attaques.length == 2){
-    for(const effet of attaques[1].effects){
-      console.log(effet.type);
-      if(effet.type == 'damage'){
-        degats2.value = effet.value;
-      }
-    }
-  }
+const degats1 = computed(() => {
+  const effet = attaques.value[0]?.effects.find(e => e.type === 'damage');
+  return effet?.value;
+});
 
-//partie mandat
-const desc = props.data.description;
-const mandat = props.data.mandat;
-const imgMandat = images['../assets/imgs/carte/perso/mandats/'+props.data.mandat+'.png']?.default;
-//prends l'url dans la liste des images chargées dont la clé est le chemin d'acces a cette image,
-// ? permet de renvoyer undefined si l'img n'existe pas
-// .default permet d'accéder à l'url utilisable par l'attribut src de <img/> 
-const dateMandat = ref();
-if(mandat == "SDI"){
-  dateMandat.value = '2025 2026';
-} else if (mandat == "FBI"){
-  dateMandat.value = '2024 2025';
-} else if (mandat == "MIB"){
-  dateMandat.value = '2023 2024';
-} else {
-  dateMandat.value = '2022 2023';
-}
+const degats2 = computed(() => {
+  if (attaques.value.length !== 2) return undefined;
+  const effet = attaques.value[1]?.effects.find(e => e.type === 'damage');
+  return effet?.value;
+});
 
-//partie force et faiblesse
+// ===== mandat =====
+const desc = computed(() => props.data.description);
+const mandat = computed(() => props.data.mandat);
+
+const imgMandat = computed(() =>
+  images[`../assets/imgs/carte/perso/mandats/${mandat.value}.png`]?.default
+);
+
+const dateMandat = computed(() => {
+  if (mandat.value === 'SDI') return '2025 2026';
+  if (mandat.value === 'FBI') return '2024 2025';
+  if (mandat.value === 'MIB') return '2023 2024';
+  return '2022 2023';
+});
+
+// ===== force / faiblesse =====
 const poles = {
-0:"presidence", 1:"commRezo", 2:"tresorerie", 3:"secretariat",
-4:"projet", 5:"locviseur", 6:"ma", 7:"mi", 
-8:"culvention", 9:"bobopioux", 10:"bobopioux", 11:"locviseur",
-12:"culvention", 13:"suivi"}
+  0:"presidence", 1:"commRezo", 2:"tresorerie", 3:"secretariat",
+  4:"projet", 5:"locviseur", 6:"ma", 7:"mi", 
+  8:"culvention", 9:"bobopioux", 10:"bobopioux", 11:"locviseur",
+  12:"culvention", 13:"suivi"
+};
+const force = computed(() => poles[props.data.force[0]]);
+const faiblesse = computed(() => poles[props.data.faiblesse[0]]);
 
-const force = poles[props.data.force[0]];
-const faiblesse = poles[props.data.faiblesse[0]];
+const imgForce = computed(() =>
+  images[`../assets/imgs/carte/perso/faiblessesForces/${force.value}.png`]?.default
+);
 
-const imgForce = images['../assets/imgs/carte/perso/faiblessesForces/'+force+'.png']?.default; 
-const imgFaiblesse = images['../assets/imgs/carte/perso/faiblessesForces/'+faiblesse+'.png']?.default;
+const imgFaiblesse = computed(() =>
+  images[`../assets/imgs/carte/perso/faiblessesForces/${faiblesse.value}.png`]?.default
+);
 
-//partie fond
-const types = props.data.type;
-const imgFond = ref(images['../assets/imgs/carte/perso/fonds/fond_comm.png']?.default);
-if(types.length == 1){
-  imgFond.value = images['../assets/imgs/carte/perso/fonds/fond_'+types[0].name+'.png']?.default;
-} else {
-  let txtTypes = '';
-  for(let i=0; i<types.length; i++){
-    txtTypes = txtTypes + types[i].name.slice(0,4);
-    console.log(txtTypes);
+// ===== fond =====
+const imgFond = computed(() => {
+  const types = props.data.type;
+
+  if (types.length === 1) {
+    return images[`../assets/imgs/carte/perso/fonds/fond_${types[0].name}.png`]?.default;
   }
-  imgFond.value = images['../assets/imgs/carte/perso/fonds/fond_'+txtTypes+'.png']?.default;
-}
-/*const poles = {
-0:"presidence",
-1:"communication",
-2:"tresorerie",
-3:"secretariat",
-4:"projet",
-5:"local",
-6:"MA",
-7:"MI",
-8:"prevention",
-9:"pioux",
-10:"pls",
-11:"superviseur",
-12:"culture",
-13:"suivi",
-}*/
 
+  let txtTypes = '';
+  for (let i = 0; i < types.length; i++) {
+    txtTypes += types[i].name.slice(0, 4);
+  }
 
-
+  return images[`../assets/imgs/carte/perso/fonds/fond_${txtTypes}.png`]?.default;
+});
 </script>
 
 <style scoped>
