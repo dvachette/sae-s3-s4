@@ -121,6 +121,11 @@ export class CombatState {
         }
     }
 
+    detecterDefaite(playerId){   
+        const player=this.player1.userId === playerId ? this.player1 : this.player2;
+        return player.main.carte1.hitPoints<=0 && player.main.carte2.hitPoints<=0 && player.main.carteActive.hitPoints<=0 && player.main.carte4.hitPoints<=0 && player.main.carte5.hitPoints<=0;
+    }
+
     advanceTurn() {
         this.tour += 1;
         const toPlayPlayer = this.tour % 2 === 1 ? this.player1 : this.player2;

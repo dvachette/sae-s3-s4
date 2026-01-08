@@ -13,6 +13,8 @@ function receiveSocket(socket) {
     socket.on('message', (message) => { // Écouteur des messages entrants
         console.log(`Message recu de ${socket._socket.remoteAddress}:${socket._socket.remotePort} : ${message}`);
         const parsedMessage = JSON.parse(message);
+        let player1Mort=false;
+        let player2Mort = false;
         switch (parsedMessage.type) {
             case 'authenticate': // Authentification de l'utilisateur (envoi du userId, une fois, à la connexion)
                 // Si deja connecté sur une autre socket, ignorer
@@ -70,8 +72,29 @@ function receiveSocket(socket) {
                     if (combatInstance.canPlay(userId)) { // Vérifier si c'est bien le tour de l'utilisateur
                         combatInstance.advanceTurn(); // Avancer le tour
 
-                        // Envoyer la mise à jour du combat aux deux joueurs
+
+
                         const [player1Socket, player2Socket] = [combatPairSkip[0], combatPairSkip[1]];
+
+                        // Détecter les morts : 
+                        player1Mort = combatInstance.detecterDefaite(player1Socket.userId);
+                        player2Mort = combatInstance.detecterDefaite(player2Socket.userId);
+                        
+                        if (player1Mort || player2Mort) {
+                            if (player1Mort) {
+                                player1Socket.send(JSON.stringify({ type: 'defeat'}));
+                            } else {
+                                player1Socket.send(JSON.stringify({ type: 'victory'}));
+                            }
+                            if (player2Mort) {
+                                player2Socket.send(JSON.stringify({ type: 'defeat'}));
+                            } else {
+                                player2Socket.send(JSON.stringify({ type: 'victory'}));
+                            }
+                            return
+                        }
+                        // Envoyer la mise à jour du combat aux deux joueurs
+
                         player1Socket.send(JSON.stringify({ type: 'duel_update', combatState: combatInstance.getPlayerState(player1Socket.userId) }));
                         player2Socket.send(JSON.stringify({ type: 'duel_update', combatState: combatInstance.getPlayerState(player2Socket.userId) }));
                         console.log(`User ${userId} skipped their turn`);
@@ -95,6 +118,23 @@ function receiveSocket(socket) {
 
                             // Envoyer la mise à jour du combat aux deux joueurs
                             const [player1SocketAttack, player2SocketAttack] = [combatPairAttack[0], combatPairAttack[1]];
+                                // Détecter les morts : 
+                            player1Mort = combatInstanceAttack.detecterDefaite(player1SocketAttack.userId);
+                            player2Mort = combatInstanceAttack.detecterDefaite(player2SocketAttack.userId);
+                            
+                            if (player1Mort || player2Mort) {
+                                if (player1Mort) {
+                                    player1SocketAttack.send(JSON.stringify({ type: 'defeat'}));
+                                } else {
+                                    player1SocketAttack.send(JSON.stringify({ type: 'victory'}));
+                                }
+                                if (player2Mort) {
+                                    player2SocketAttack.send(JSON.stringify({ type: 'defeat'}));
+                                } else {
+                                    player2SocketAttack.send(JSON.stringify({ type: 'victory'}));
+                                }
+                                return
+                            }
                             player1SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player1SocketAttack.userId) }));
                             player2SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player2SocketAttack.userId) }));
                             console.log(`User ${userIdAttack} performed an attack with index ${attackIndex}`);
@@ -116,9 +156,27 @@ function receiveSocket(socket) {
                 if (combat.canPlay(userIdSwap)) {
                     if (combat.swapCard(userIdSwap, swapIndex)) {
                         combat.advanceTurn();
-
-                        // Envoyer la mise à jour du combat aux deux joueurs
                         const [player1SocketSwap, player2SocketSwap] = [combatPairSwap[0], combatPairSwap[1]];
+
+                        // Détecter les morts : 
+                        player1Mort = combat.detecterDefaite(player1SocketSwap.userId);
+                        player2Mort = combat.detecterDefaite(player2SocketSwap.userId);
+                        
+                        if (player1Mort || player2Mort) {
+                            if (player1Mort) {
+                                player1SocketSwap.send(JSON.stringify({ type: 'defeat'}));
+                            } else {
+                                player1SocketSwap.send(JSON.stringify({ type: 'victory'}));
+                            }
+                            if (player2Mort) {
+                                player2SocketSwap.send(JSON.stringify({ type: 'defeat'}));
+                            } else {
+                                player2SocketSwap.send(JSON.stringify({ type: 'victory'}));
+                            }
+                            return
+                        }
+                        // Envoyer la mise à jour du combat aux deux joueurs
+                        
                         player1SocketSwap.send(JSON.stringify({ type: 'duel_update', combatState: combat.getPlayerState(player1SocketSwap.userId) }));
                         player2SocketSwap.send(JSON.stringify({ type: 'duel_update', combatState: combat.getPlayerState(player2SocketSwap.userId) }));
                         console.log(`User ${userIdSwap} swapped card at index ${swapIndex}`);
