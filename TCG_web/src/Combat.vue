@@ -64,7 +64,7 @@
     ></div>
 
     <div class="collection" v-if="tailleCollection >= 1">
-      <div class="collecMembre" :style="{ '--wgap': gapCollec }">
+      <div class="collecMembre">
         <Carte_membre
           v-for="carte of membres"
           :key="carte.card.cardId"
@@ -111,7 +111,6 @@ import Carte_terrain from './Composants/carte_terrain.vue';
 const vh = ref(window.innerHeight / 100); //obtenir 1% de la hauteur de la fenetre, en px
 const vw = ref(window.innerWidth / 100);
 const hmain = ref(vh.value * 87.5 - 278 - 20 * 2 + 'px');
-const gapCollec = ref(((vw.value * 100 - 40) * 0.7 - 200 * 5) / 5 + 'px'); //(100vw - padding de div deck)*0.7 pour en avoir 70% (14*5) - l'espace pris par les 5 cartes / tout divisé par 5 pour avoir un seul espace
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance);
