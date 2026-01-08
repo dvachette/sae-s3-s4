@@ -69,27 +69,6 @@
           largeur="200px"
           class="membre"
         />
-        <Carte_membre
-          v-for="carte of membres"
-          :key="carte.card.cardId + 1"
-          :data="carte.card"
-          largeur="200px"
-          class="membre"
-        />
-        <Carte_membre
-          v-for="carte of membres"
-          :key="carte.card.cardId + 2"
-          :data="carte.card"
-          largeur="200px"
-          class="membre"
-        />
-        <Carte_membre
-          v-for="carte of membres"
-          :key="carte.card.cardId + 3"
-          :data="carte.card"
-          largeur="200px"
-          class="membre"
-        />
       </div>
 
       <div class="separateur"></div>
