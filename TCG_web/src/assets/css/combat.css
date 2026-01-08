@@ -1,29 +1,47 @@
 @import './style.css';
 
 header {
-  width:100%;
+  width: 100%;
   position: fixed;
   z-index: 100;
 }
 
 main {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: auto;
   margin-top: 12.5vh;
 }
 
+.pop_up_ff {
+  position: absolute;
+  position: fixed;
+  z-index: 112;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 87.5vh;
+  justify-content: center;
+  background-color: rgba(var(--onyx), 0.5);
+}
+
+.pop_up_ff > img {
+  max-height: 80vh;
+  max-width: 50vw;
+}
+
 .page_combat {
   height: var(
     --hPage
   ); /*70% des 87.5vh du main de "base" (donc de l'espace restant sur l'ecran sous le header*/
-  width : 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: 25% 50% 25%;
   grid-template-rows: var(--hPage);
-  
-  position : fixed;
-  z-index : 0;
+
+  position: fixed;
+  z-index: 0;
 }
 
 /*------------Forces et faiblesses-------------*/
@@ -135,7 +153,7 @@ main {
   z-index: 2;
 
   position: sticky; /*pour qu'il colle quand il arrive juste en dessous du header*/
-  top: 12.5vh; 
+  top: 12.5vh;
 }
 
 .deck > p {
@@ -172,7 +190,7 @@ main {
 
 .carteMembreDeck {
   grid-row: 2;
-  height: calc(1.39*200px);
+  height: calc(1.39 * 200px);
   width: 200px;
 
   justify-self: center;
@@ -204,7 +222,7 @@ main {
   grid-column: 8;
 }
 
-.deck > img{
+.deck > img {
   max-width: 200px;
   max-height: 278px;
   justify-self: center;
@@ -220,13 +238,13 @@ main {
 }
 /*-----------------Séparateur-------------------*/
 .separateurDeckCollection {
-  height : 5px;
+  height: 5px;
   width: 100%;
   background-color: rgb(var(--orange400));
 
   position: sticky;
-  top: calc(var(--vhPx)*12.5 + 318px); 
-  z-index:2;
+  top: calc(var(--vhPx) * 12.5 + 318px);
+  z-index: 2;
 }
 
 /*-----------------Partie Collection---------------------*/
@@ -236,7 +254,7 @@ main {
 
   background-color: rgb(var(--jaune200));
   padding: 0 1% 0 1%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 
   display: grid;
   grid-template-columns: 70% 2% 14% 14%;
@@ -245,7 +263,7 @@ main {
 }
 
 .collecMembre {
-  grid-column : 1;
+  grid-column: 1;
 
   display: flex;
   flex-wrap: wrap;
@@ -262,7 +280,8 @@ main {
   grid-column: 3;
 }
 
-.collecFamilier, .collecTerrain {
+.collecFamilier,
+.collecTerrain {
   display: flex;
   flex-direction: column;
   row-gap: 15px;

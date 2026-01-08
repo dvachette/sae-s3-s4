@@ -1,8 +1,8 @@
 <template>
   <div class="pop_up_pp">
     <div class="entete">
-      <img :src="pp" alt="pp" v-if="image_choisi === null"/>
-      <img v-else :src="image_choisi" :alt="`Image choisi`"/>
+      <img :src="pp" alt="pp" v-if="image_choisie === null"/>
+      <img v-else :src="image_choisie" :alt="`Image choisie`"/>
       <h2>Trié par :</h2>
       <div class="Tri">
         <div class="Tri_liste" v-for="item in options" :key="item.value">
@@ -32,12 +32,12 @@
             :src="image"
             :alt="`Image ${index}`"
             class="images"
-            @click="image_choisi = image"
-            :class="{ active: image_choisi === image }"
+            @click="image_choisie = image"
+            :class="{ active: image_choisie === image }"
           />
     </div>
     <div class="boutons_pp">
-        <button id="b_confirmer" @click="changementPP" v-if="image_choisi != null">Confirmer changement</button>
+        <button id="b_confirmer" @click="changementPP" v-if="image_choisie != null">Confirmer changement</button>
         <button id="n_confirmer" v-else>Confirmer changement</button>
         <button id="b_annuler" @click="$emit('fermer')">Annuler</button>
     </div>
@@ -48,16 +48,11 @@
 import { ref } from 'vue';
 
 const selected = ref(null);
-const pp = ref('@/assets/imgs/logoTCG.png');
+const pp = ref('/src/assets/imgs/logoTCG.png');
 
 const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 
-function loadUserData() {
-  pp.value = user.value.profilePicture !== null ? `src/assets/imgs/images_de_profil/${user.value.profilePicture}.png` : 'src/assets/imgs/logoTCG.png' ;
-}
-loadUserData() ;
-
-const image_choisi = ref(null) ;
+const image_choisie = ref(null) ;
 
 const collection_images = [
   "/src/assets/imgs/carte/perso/Maël.png",
@@ -70,6 +65,12 @@ const collection_images = [
   "/src/assets/imgs/carte/perso/mandats/FBI.png",
   "/src/assets/imgs/carte/perso/mandats/SIB.png",
 ];
+
+function loadUserData() {
+  pp.value = user.value.profilePicture !== null ? user.value.profilePicture : 'src/assets/imgs/logoTCG.png' ;
+    
+}
+loadUserData() ;
 
 const options = ref([
   { value: 'mandat', label: 'mandat', checkbox: 'chronologique', checkboxValue: false },
@@ -86,14 +87,14 @@ async function changementPP() {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ profilePicture: image_choisi }),
+    body: JSON.stringify({ profilePicture: image_choisie.value }),
   });
+  const data = await response.json();
   if (response.ok) {
-    const data = await response.json();
     console.log(data.message + ' reçues du serveur');
     emit('fermer');
   } else {
-    console.error(response);
+    console.error(data);
   }
 }
 </script>

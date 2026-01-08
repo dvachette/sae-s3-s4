@@ -10,7 +10,7 @@ header {
 .link {
   display: flex;
   text-decoration: none;
-  width: 15vw;
+  width: 14vw;
   flex: 1;
   align-self: center;
   height: 100%;
@@ -56,6 +56,21 @@ a > img {
   width: 12vh;
   height: 90%;
   justify-self: center;
+}
+
+.p_profil {
+  width: 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: none;
+}
+
+#photo_p {
+  width: 5vw;
+  height: 5vw;
+  padding: 0;
+  border-radius: 120px;
 }
 
 h1 {

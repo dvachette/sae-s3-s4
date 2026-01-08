@@ -1,10 +1,13 @@
 <template>
   <MonHeader />
   <main>
+  <div class="pop_up_ff" v-if="afficher_ff == true" @click="detecte_click_ff">
+    <img src="@/assets/imgs/Force_et_faiblesse.png" alt="forces et faiblesses"></img>
+  </div>
     <div class="page_combat" :style="{ '--hPage': hmain }">
       <div class="F_f">
         <img src="@/assets/imgs/ff_logo.png" alt="Page F/f" />
-        <button>Forces et faiblesses</button>
+        <button @click="afficher_ff = true">Forces et faiblesses</button>
       </div>
       <div class="lancement_partie">
         <img src="@/assets/imgs/ff_logo.png" alt="img terrain" />
@@ -137,6 +140,7 @@ const nbCles = ref(userData.value.balance);
 const deckMembre = userData.value.deck.cards;
 const deckFamilier = userData.value.deck.pet;
 const deckTerrain = userData.value.deck.arena;
+let afficher_ff = ref(false);
 
 const collection = computed(() => {
   return userData.value.collection;
@@ -155,6 +159,12 @@ const familiers = computed(() => {
 const terrains = computed(() => {
   return collection.value.filter((carte) => carte.card._class === 'arena');
 });
+
+function detecte_click_ff(evt) {
+  if(evt.target.tagName != ('IMG')) {
+    afficher_ff.value = false ;
+  }
+}
 </script>
 
 <style scoped>

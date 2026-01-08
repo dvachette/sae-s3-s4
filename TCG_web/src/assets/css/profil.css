@@ -74,6 +74,7 @@ div > p {
 .gestion_soi img {
   width: 4.8vh;
   height: 6vh;
+  border-radius: 120px;
 }
 
 .pp {
