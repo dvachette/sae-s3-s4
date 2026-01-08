@@ -175,11 +175,15 @@ export class CombatState {
 
     attack(attackerId, attackIndex) {
 
+
         const attacker = this.player1.userId === attackerId ? this.player1 : this.player2;
         const defender = this.player1.userId === attackerId ? this.player2 : this.player1;
         const attack = attacker.main.carteActive.attacks[attackIndex];
         if (!attack) {
             return false; // Attaque invalide
+        }
+        if(attacker.main.carteActive.hitPoints<=0){
+            return false;
         }
 
         if (attacker.main.carteActive.statusEffects.some(se => se.type === 'stun')) {
@@ -196,6 +200,9 @@ export class CombatState {
             for (const effect of attack.effects) {
                 const cardsToAffect = this.selectCards(attackerId, effect.target);
                 for (const card of cardsToAffect) {
+                    if(card.hitPoints<=0){
+                        continue;
+                    }
                     switch (effect.type) {
                         case 'damage':
                             if (card.statusEffects.some(se => se.type === 'shield')) { // Vérifier si la carte a un effet de bouclier
