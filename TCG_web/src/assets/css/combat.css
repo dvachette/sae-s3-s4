@@ -213,7 +213,6 @@ main {
   background-color: rgb(var(--orange400));
   justify-self: center;
 }
-
 .carte:nth-of-type(6) {
   grid-column: 7;
 }
@@ -263,21 +262,29 @@ main {
 }
 
 .collecMembre {
-  grid-column: 1;
-
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: var(--wgap);
-  row-gap: 15px;
-  align-content: flex-start; /*permet d'eviter que les lignes s'etire pour remplir la div*/
-
+  grid-column: 1/2;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  box-sizing: border-box;
   width: 100%;
+  justify-self: flex-start;
+  align-self: flex-start;
+  margin-top: 20px;
+  row-gap: 12px;
+}
 
-  margin: 20px auto 10px auto;
+.collecMembre .carte {
+  grid-row: auto !important;
+  grid-column: auto !important;
+}
+
+.membre {
+  justify-self: center;
+  align-self: center;
 }
 
 .collecFamilier {
-  grid-column: 3;
+  grid-column: 3/4;
 }
 
 .collecFamilier,
@@ -292,9 +299,9 @@ main {
 }
 
 .collecTerrain {
-  grid-column: 4;
+  grid-column: 4/5;
 }
 
 .collection > .separateur {
-  grid-column: 2;
+  grid-column: 2/3;
 }
