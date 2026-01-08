@@ -124,7 +124,9 @@ export class CombatState {
     advanceTurn() {
         this.tour += 1;
         const toPlayPlayer = this.tour % 2 === 1 ? this.player1 : this.player2;
+        const finishedPlayer = this.tour % 2 === 1 ? this.player2 : this.player1;
         toPlayPlayer.energie += 1;
+
         for (const card of [
             toPlayPlayer.main.carte1,
             toPlayPlayer.main.carte2,
@@ -154,7 +156,7 @@ export class CombatState {
         }
 
         // Mettre à jour la durée des effets de statut du joueur dont le tour vient de se terminer
-        const finishedPlayer = this.tour % 2 === 1 ? this.player2 : this.player1;
+        
         for (const card of [
             finishedPlayer.main.carte1,
             finishedPlayer.main.carte2,
