@@ -205,7 +205,8 @@
             :pvtotal="combatState.moi.main.carte5.maxHitpoints"
             largeur="7vw"
           />
-          <div class="boutons_tour">
+
+          <div class="boutons_tour" v-if="combatState.monTour">
             <button
               v-for="attack of combatState.moi.main.carteActive.attacks"
               class="attaques"
@@ -228,7 +229,7 @@
         <div class="temps">
           <img src="@/assets/imgs/Sablier.png" alt="echange" />
           <p>30sec</p>
-          <button @click="skipTurn">Passer</button>
+          <button @click="skipTurn" v-if="combatState.monTour">Passer</button>
         </div>
         <span>Score :</span>
         <span>1 - 0</span>
