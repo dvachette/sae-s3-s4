@@ -48,7 +48,7 @@ async function createAccount(request, response) {
   }
 
   if (!isPasswordStrong(password)) {
-    return response.status(400).send({ error: 'Mot de passe trop faible' });
+    return response.status(400).send({ error: 'Le mot de passe doit contenir au moins 8 caractères dont une MAJUSCULE, une minuscule, un chiffre et un caractère spécial' });
   }
 
   // Vérifier si l'email ou le nom d'utilisateur existe déjà
