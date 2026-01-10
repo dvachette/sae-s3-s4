@@ -219,8 +219,11 @@
               {{ attack.name }}
               <p>{{ attack.description }}</p>
             </button>
-            <button id="changement_carte">
+            <button id="changement_carte" @click="echangeCarte=true" v-if="echangeCarte==false">
               <img src="@/assets/imgs/echange.png" alt="echange" />
+            </button>
+            <button id="annuler_echange" @click="echangeCarte=false" v-else >
+              annuler échange
             </button>
           </div>
         </div>
@@ -269,7 +272,7 @@ const chargement = `Recherche d'adversaire...`;
 const letters = computed(() => chargement.split(''));
 const carteSurvolé = ref(null);
 const familierSurvolé = ref(null);
-
+const echangeCarte = ref(false);
 const afficher_abandon = ref(false);
 const combatState = reactive(
   new EtatCombat(
