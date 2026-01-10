@@ -11,6 +11,7 @@
   border-radius: 20px;
   font-size: 1.6rem;
   font-family: 'Mako';
+  cursor: pointer;
 }
 
 .bouton_achat:hover {
@@ -32,4 +33,5 @@ img {
 .bouton_achat > p {
   align-self: center;
   margin-left: 10%;
+  color: rgb(var(--onyx));
 }

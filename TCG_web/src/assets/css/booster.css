@@ -45,7 +45,7 @@ p {
 
   border-radius: 5px;
 
-  cursor : pointer;
+  cursor: pointer;
 }
 
 .jour:hover {
@@ -152,6 +152,10 @@ img {
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
+}
+
+.Booster_page > a {
+  text-decoration: none;
 }
 
 .Booster {

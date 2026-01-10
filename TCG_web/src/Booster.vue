@@ -1,7 +1,5 @@
 <template>
-  <VerifLogin
-    @login-success="updateUserData"
-  />
+  <VerifLogin @login-success="updateUserData" />
   <MonHeader />
   <main id="booster">
     <div class="Récompenses_quotidiennes">
@@ -42,11 +40,11 @@
       <router-link to="/ouverture"
         ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
       /></router-link>
-      <p>{{timerText}}</p>
-      <boutons_achat />
+      <p>{{ timerText }}</p>
+      <router-link :to="'/ouverture?buy=true'"><boutons_achat /></router-link>
     </div>
     <div class="Compteur">
-      <clef :cles="nbCles"/>
+      <clef :cles="nbCles" />
     </div>
   </main>
 </template>
@@ -59,26 +57,25 @@ import boutons_achat from '@/Composants/boutons_achat.vue';
 import MonHeader from '@/Composants/header.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
-
-
-
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
-const nbCles = ref(0); 
-const lastBoosterOpening = ref(new Date());  
+const nbCles = ref(0);
+const lastBoosterOpening = ref(new Date());
 // Get the next available booster time (12 hours after last opening)
 let now = new Date();
-let nextAvailableTime = ref(new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000));
+let nextAvailableTime = ref(
+  new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000)
+);
 // Calculate remaining time in milliseconds
 let remaining_time = nextAvailableTime.value - now;
-let timerText = ref("");
+let timerText = ref('');
 // Update every second
 setInterval(() => {
   let remaining_time = nextAvailableTime.value - new Date();
   let hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
-  let minutes = Math.floor((remaining_time / (1000 * 60)) %60);
+  let minutes = Math.floor((remaining_time / (1000 * 60)) % 60);
   let seconds = Math.floor((remaining_time / 1000) % 60);
   if (remaining_time <= 0) {
-    timerText.value = "Booster disponible !";
+    timerText.value = 'Booster disponible !';
     return;
   }
   timerText.value = `${hours}h ${minutes}min ${seconds}sec`;
@@ -87,7 +84,9 @@ function updateUserData() {
   userData.value = JSON.parse(sessionStorage.getItem('userData'));
   nbCles.value = userData.value.balance;
   lastBoosterOpening.value = new Date(userData.value.lastBoosterOpening * 1000);
-  nextAvailableTime.value = new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000);
+  nextAvailableTime.value = new Date(
+    lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000
+  );
 }
 </script>
 

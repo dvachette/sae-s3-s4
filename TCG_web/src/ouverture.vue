@@ -6,7 +6,7 @@
       muted
       playsinline
       @ended="onVideoEnd"
-      @play="fetchBooster"
+      @play="recupBooster"
     >
       <source src="@/assets/vidéos/boosteranim.mp4" type="video/mp4" />
     </video>
@@ -47,6 +47,7 @@
 
 <script setup>
 import { ref, watch, markRaw, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import Stack from '@/Composants/Stack.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 import carte_familier from './Composants/carte_familier.vue';
@@ -60,6 +61,7 @@ const showVideo = ref(true); // ← Remettez true pour la vidéo
 const introVideo = ref(null);
 const allCardsGone = ref(false);
 const cartesCollectees = ref([]);
+const route = useRoute();
 
 // Surveiller quand la vidéo est montée
 watch(introVideo, (videoElement) => {
@@ -126,6 +128,15 @@ const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici
 const obtainedKeys = ref(0);
 
+function recupBooster() {
+  console.log(route.query);
+  if (route.query.buy) {
+    buyBooster();
+  } else {
+    fetchBooster();
+  }
+}
+
 async function fetchBooster() {
   const response = await fetch('http://localhost:3000/booster/open', {
     method: 'POST',
@@ -140,6 +151,40 @@ async function fetchBooster() {
   console.log('Booster ouvert:', data);
   // Mettre à jour les clés dans le sessionStorage
   nbCles.value += data.keys;
+  obtainedKeys.value = data.keys;
+  sessionStorage.setItem('userData', JSON.stringify(userData.value));
+  for (const cardInfo of data.cards) {
+    if (cardInfo._class == 'member') {
+      console.log('member');
+      const card = createCardMember(cardInfo.cardId, cardInfo);
+      cards.push(card);
+    } else if (cardInfo._class == 'pet') {
+      console.log('pet');
+      const card = createCardPet(cardInfo.cardId, cardInfo);
+      cards.push(card);
+    } else if (cardInfo._class == 'arena') {
+      console.log('arena');
+      const card = createCardArena(cardInfo.cardId, cardInfo);
+      cards.push(card);
+    }
+  }
+  console.log('Cartes du booster:', cards);
+}
+
+async function buyBooster() {
+  const response = await fetch('http://localhost:3000/booster/buy', {
+    method: 'POST',
+    credentials: 'include',
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    console.error('Erreur ouverture booster:', data.error);
+    router.push('/booster');
+    return;
+  }
+  console.log('Booster ouvert:', data);
+  // Mettre à jour les clés dans le sessionStorage
+  nbCles.value += data.keys - 100;
   obtainedKeys.value = data.keys;
   sessionStorage.setItem('userData', JSON.stringify(userData.value));
   for (const cardInfo of data.cards) {
