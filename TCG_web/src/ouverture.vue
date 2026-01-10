@@ -49,6 +49,8 @@
 import { ref, watch, markRaw, computed } from 'vue';
 import Stack from '@/Composants/Stack.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
+import carte_familier from './Composants/carte_familier.vue';
+import carte_terrain from './Composants/carte_terrain.vue';
 import nouv_clef from './Composants/nouv_clef.vue';
 import clef from './Composants/clef.vue';
 import carteBooster from './carte-booster.vue';
@@ -84,11 +86,33 @@ const cardWidthVw = computed(() => '20vw');
 const cardWidthRecapVw = computed(() => '20vw');
 
 // Fonction pour créer les cartes avec la bonne largeur
-const createCard = (id, data, isNew = false, rarete = 'Commun') => ({
+const createCardMember = (id, data, isNew = false, rarete = 'Commun') => ({
   id,
   component: markRaw(carteBooster),
   props: {
     carteComponent: markRaw(carte_membre),
+    carteProps: {
+      largeur: cardWidthVw.value,
+      data, //doit modifier ca pour lui donner la carte
+    },
+  },
+});
+const createCardPet = (id, data, isNew = false, rarete = 'Commun') => ({
+  id,
+  component: markRaw(carteBooster),
+  props: {
+    carteComponent: markRaw(carte_familier),
+    carteProps: {
+      largeur: cardWidthVw.value,
+      data, //doit modifier ca pour lui donner la carte
+    },
+  },
+});
+const createCardArena = (id, data, isNew = false, rarete = 'Commun') => ({
+  id,
+  component: markRaw(carteBooster),
+  props: {
+    carteComponent: markRaw(carte_terrain),
     carteProps: {
       largeur: cardWidthVw.value,
       data, //doit modifier ca pour lui donner la carte
@@ -101,6 +125,7 @@ let cards = [];
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance); // TODO: Ajouter les clés gagnées ici
 const obtainedKeys = ref(0);
+
 async function fetchBooster() {
   const response = await fetch('http://localhost:3000/booster/open', {
     method: 'POST',
@@ -118,8 +143,19 @@ async function fetchBooster() {
   obtainedKeys.value = data.keys;
   sessionStorage.setItem('userData', JSON.stringify(userData.value));
   for (const cardInfo of data.cards) {
-    const card = createCard(cardInfo.cardId, cardInfo);
-    cards.push(card);
+    if (cardInfo._class == 'member') {
+      console.log('member');
+      const card = createCardMember(cardInfo.cardId, cardInfo);
+      cards.push(card);
+    } else if (cardInfo._class == 'pet') {
+      console.log('pet');
+      const card = createCardPet(cardInfo.cardId, cardInfo);
+      cards.push(card);
+    } else if (cardInfo._class == 'arena') {
+      console.log('arena');
+      const card = createCardArena(cardInfo.cardId, cardInfo);
+      cards.push(card);
+    }
   }
   console.log('Cartes du booster:', cards);
 }

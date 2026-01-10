@@ -405,3 +405,11 @@ a {
     opacity: 1;
   }
 }
+
+.change_carte {
+  cursor: pointer;
+}
+
+.change_carte:hover {
+  transform: scale(1.1);
+}

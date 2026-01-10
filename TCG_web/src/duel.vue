@@ -3,7 +3,7 @@
   <main :style="{ '--jauge_energie': jauge_energie }">
     <div v-if="carteSurvolé" class="membre_pop_up">
       <!-- Composant dupliqué au centre -->
-      <div class="membre_carte">
+      <div class="membre_carte" v-if="echangeCarte === false">
         <Carte_membre largeur="25vw" :data="carteSurvolé" :isPreview="true" />
       </div>
     </div>
@@ -146,6 +146,8 @@
             :data="combatState.moi.main.carte1"
             @mouseenter="carteSurvolé = combatState.moi.main.carte1"
             @mouseleave="carteSurvolé = null"
+            @click="swap_cartes"
+            :class="{ change_carte: echangeCarte }"
           ></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte1.hitPoints"
@@ -158,6 +160,8 @@
             :data="combatState.moi.main.carte2"
             @mouseenter="carteSurvolé = combatState.moi.main.carte2"
             @mouseleave="carteSurvolé = null"
+            @click="swap_cartes"
+            :class="{ change_carte: echangeCarte }"
           ></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte2.hitPoints"
@@ -171,6 +175,8 @@
             :data="combatState.moi.main.carteActive"
             @mouseenter="carteSurvolé = combatState.moi.main.carteActive"
             @mouseleave="carteSurvolé = null"
+            @click="swap_cartes"
+            :class="{ change_carte: echangeCarte }"
             ><img src="@/assets/imgs/effets/Effet_poison.png" alt="status"
           /></Carte_membre>
           <Vie_cartes
@@ -185,6 +191,8 @@
             :data="combatState.moi.main.carte4"
             @mouseenter="carteSurvolé = combatState.moi.main.carte4"
             @mouseleave="carteSurvolé = null"
+            @click="swap_cartes"
+            :class="{ change_carte: echangeCarte }"
           ></Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte4.hitPoints"
@@ -198,6 +206,8 @@
             :data="combatState.moi.main.carte5"
             @mouseenter="carteSurvolé = combatState.moi.main.carte5"
             @mouseleave="carteSurvolé = null"
+            @click="swap_cartes"
+            :class="{ change_carte: echangeCarte }"
             ><img src="@/assets/imgs/effets/Effet_rage.png" alt="status"
           /></Carte_membre>
           <Vie_cartes
@@ -208,6 +218,7 @@
 
           <div class="boutons_tour" v-if="combatState.monTour">
             <button
+              v-if="echangeCarte === false"
               v-for="attack of combatState.moi.main.carteActive.attacks"
               class="attaques"
               @click="
@@ -219,10 +230,14 @@
               {{ attack.name }}
               <p>{{ attack.description }}</p>
             </button>
-            <button id="changement_carte" @click="echangeCarte=true" v-if="echangeCarte==false">
+            <button
+              id="changement_carte"
+              @click="echangeCarte = true"
+              v-if="echangeCarte == false"
+            >
               <img src="@/assets/imgs/echange.png" alt="echange" />
             </button>
-            <button id="annuler_echange" @click="echangeCarte=false" v-else >
+            <button id="annuler_echange" @click="echangeCarte = false" v-else>
               annuler échange
             </button>
           </div>
@@ -517,7 +532,6 @@ function onLoginSuccess() {
           // L'adversaire a été trouvé, mettre à jour l'état et fermer la page de chargement
         }
 
-      
         console.log('État du combat mis à jour:', combatState);
       } else if (message.type === 'already_connected') {
         // Deja connecté ailleurs, afficher un message d'erreur
@@ -547,6 +561,12 @@ function swapCards(index) {
 function attackCarte(index) {
   if (socket.value && socket.value.readyState === WebSocket.OPEN) {
     socket.value.send(JSON.stringify({ type: 'attack', attackIndex: index }));
+  }
+}
+
+function swap_cartes(evt) {
+  if (echangeCarte.value === true) {
+    console.log('here');
   }
 }
 </script>

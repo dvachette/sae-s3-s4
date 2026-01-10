@@ -42,10 +42,10 @@ function openBooster(request, response) {
     } else if (user.delayBeforeNextBooster() <= 0) {
         drawnCards = Card.drawRandomCards(5);
     } else { // Trop tôt pour ouvrir un nouveau booster, renvoyer un to many request (429)
-        return response.status(429).send({ error: 'Booster non disponible pour le moment', delay: user.delayBeforeNextBooster() });
+       return response.status(429).send({ error: 'Booster non disponible pour le moment', delay: user.delayBeforeNextBooster() });
     }
     if (drawnCards.length === 0) {
-        return response.status(500).send({ error: 'Le booster ne peut pas être ouvert maintenant' });
+      return response.status(500).send({ error: 'Le booster ne peut pas être ouvert maintenant' });
     }
     for (const card of drawnCards) {
         user.addCardToCollection(card.cardId, 1);
