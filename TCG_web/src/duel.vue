@@ -170,7 +170,7 @@
             :data="combatState.moi.main.carte1"
             @mouseenter="carteSurvolé = combatState.moi.main.carte1"
             @mouseleave="carteSurvolé = null"
-            @click="swap_cartes"
+            @click="swap_cartes(0)"
             :class="{ change_carte: echangeCarte }"
           ></Carte_membre>
           <Vie_cartes
@@ -180,11 +180,12 @@
           />
 
           <Carte_membre
+            class="carte_de_combat"
             largeur="7vw"
             :data="combatState.moi.main.carte2"
             @mouseenter="carteSurvolé = combatState.moi.main.carte2"
             @mouseleave="carteSurvolé = null"
-            @click="swap_cartes"
+            @click="swap_cartes(1)"
             :class="{ change_carte: echangeCarte }"
           ></Carte_membre>
           <Vie_cartes
@@ -199,7 +200,6 @@
             :data="combatState.moi.main.carteActive"
             @mouseenter="carteSurvolé = combatState.moi.main.carteActive"
             @mouseleave="carteSurvolé = null"
-            @click="swap_cartes"
             :class="{ change_carte: echangeCarte }"
             ><img src="@/assets/imgs/effets/Effet_poison.png" alt="status"
           /></Carte_membre>
@@ -215,7 +215,7 @@
             :data="combatState.moi.main.carte4"
             @mouseenter="carteSurvolé = combatState.moi.main.carte4"
             @mouseleave="carteSurvolé = null"
-            @click="swap_cartes"
+            @click="swap_cartes(3)"
             :class="{ change_carte: echangeCarte }"
           ></Carte_membre>
           <Vie_cartes
@@ -230,7 +230,7 @@
             :data="combatState.moi.main.carte5"
             @mouseenter="carteSurvolé = combatState.moi.main.carte5"
             @mouseleave="carteSurvolé = null"
-            @click="swap_cartes"
+            @click="swap_cartes(4)"
             :class="{ change_carte: echangeCarte }"
             ><img src="@/assets/imgs/effets/Effet_rage.png" alt="status"
           /></Carte_membre>
@@ -595,9 +595,13 @@ function attackCarte(index) {
   }
 }
 
-function swap_cartes(evt) {
+function swap_cartes(index) {
   if (echangeCarte.value === true) {
-    console.log('here');
+    console.log(index);
+    if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+      socket.value.send(JSON.stringify({ type: 'swap', index: index }));
+      echangeCarte.value = false;
+    }
   }
 }
 </script>
