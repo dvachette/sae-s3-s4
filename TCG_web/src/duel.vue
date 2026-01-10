@@ -34,12 +34,36 @@
       </div>
       <h3>Votre deck :</h3>
       <div class="chargement_deck">
-        <Carte_membre largeur="10vw" :data="combatState.moi.main.carte1" />
-        <Carte_membre largeur="10vw" :data="combatState.moi.main.carte2" />
-        <Carte_membre largeur="10vw" :data="combatState.moi.main.carteActive" />
-        <Carte_membre largeur="10vw" :data="combatState.moi.main.carte4" />
-        <Carte_membre largeur="10vw" :data="combatState.moi.main.carte5" />
-        <Carte_familier largeur="10vw" :data="combatState.moi.familier" />
+        <Carte_membre
+          largeur="10vw"
+          :data="deckMembre[0]"
+          v-if="afficher_carte == true"
+        />
+        <Carte_membre
+          largeur="10vw"
+          :data="deckMembre[1]"
+          v-if="afficher_carte == true"
+        />
+        <Carte_membre
+          largeur="10vw"
+          :data="deckMembre[2]"
+          v-if="afficher_carte == true"
+        />
+        <Carte_membre
+          largeur="10vw"
+          :data="deckMembre[3]"
+          v-if="afficher_carte == true"
+        />
+        <Carte_membre
+          largeur="10vw"
+          :data="deckMembre[4]"
+          v-if="afficher_carte == true"
+        />
+        <Carte_familier
+          largeur="10vw"
+          :data="deckFamilier"
+          v-if="afficher_carte == true"
+        />
       </div>
     </div>
     <div class="duel_principale" v-else>
@@ -282,13 +306,16 @@ const pourcentageValue = computed(() => (combatState.moi.energie * 100) / 10);
 const jauge_energie = computed(() => pourcentageValue.value + '%');
 let userData = ref(null);
 let socket = ref(null);
-const adversaire = ref(true);
+const adversaire = ref(false);
 const chargement = `Recherche d'adversaire...`;
 const letters = computed(() => chargement.split(''));
 const carteSurvolé = ref(null);
 const familierSurvolé = ref(null);
 const echangeCarte = ref(false);
 const afficher_abandon = ref(false);
+let deckMembre = ref(null);
+let deckFamilier = ref(null);
+let afficher_carte = ref(false);
 const combatState = reactive(
   new EtatCombat(
     1, // tour
@@ -516,6 +543,10 @@ function onLoginSuccess() {
   // Logique à exécuter après une connexion réussie
   console.log('Utilisateur connecté avec succès');
   userData.value = JSON.parse(sessionStorage.getItem('userData'));
+  deckMembre = userData.value.deck.cards;
+  deckFamilier = userData.value.deck.pet;
+  console.log(deckMembre);
+  afficher_carte.value = true;
   // Initialiser la socket
   socket.value = new WebSocket('ws://localhost:8080');
   socket.value.onopen = () => {
@@ -529,7 +560,7 @@ function onLoginSuccess() {
         combatState.tour = message.combatState.tour;
         combatState.monTour = message.combatState.monTour;
         if (message.type === 'duel_start') {
-          // L'adversaire a été trouvé, mettre à jour l'état et fermer la page de chargement
+          adversaire.value = true;
         }
 
         console.log('État du combat mis à jour:', combatState);

@@ -30,7 +30,7 @@
 
 .page_chargement h2 {
   display: inline-block;
-  animation: wave s ease-in-out infinite;
+  animation: wave 1.5s ease-in-out infinite;
   justify-self: center;
   font-size: 3vw;
 }
