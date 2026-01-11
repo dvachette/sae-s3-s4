@@ -17,7 +17,7 @@
 
         <label for="password"> Mot de passe </label>
         <input type="password" id="password" v-model="mdp_utilisateur" />
-        <p id="Incorrect" v-show="Loginerror" v-text="texterror"></p>
+        <p id="Incorrect" v-show="Creatingerror" >	&#x26A0 {{ texterror }} &#x26A0</p>
 
         <button type="submit">Créer un compte</button>
       </form>

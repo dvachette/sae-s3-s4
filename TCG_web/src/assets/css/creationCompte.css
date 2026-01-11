@@ -139,6 +139,16 @@ form > input {
   color: rgb(var(--onyx));
 }
 
+form > #password {
+  margin-bottom: 0;
+}
+
+form > p {
+  color: rgb(var(--rouge600));
+  font-family: 'Mako';
+  font-size: medium;
+}
+
 input:focus {
   /*css qui s'applique quand l'utilisateur a le curseur dons l'input*/
   outline: 2px solid rgb(var(--orange500));
@@ -156,4 +166,5 @@ button {
   padding: 0;
   border-radius: 34px;
   margin: 0;
+  margin-top: 3vh;
 }
