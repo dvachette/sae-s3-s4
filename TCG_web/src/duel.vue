@@ -4,7 +4,9 @@
     <div v-if="carteSurvolé" class="membre_pop_up">
       <!-- Composant dupliqué au centre -->
       <div class="membre_carte" v-if="echangeCarte === false">
-        <Carte_membre largeur="25vw" :data="carteSurvolé" :isPreview="true" />
+        <Carte_membre largeur="25vw" :data="carteSurvolé" :isPreview="true">
+          <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of carteSurvolé.statusEffects"/>
+        </Carte_membre>
       </div>
     </div>
     <div v-if="familierSurvolé" class="familier_pop_up">
@@ -91,8 +93,9 @@
             :data="combatState.opposant.main.carte1"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte1"
             @mouseleave="carteSurvolé = null"
-            ><img src="@/assets/imgs/effets/Effet_bouclier.png" alt="status"
-          /></Carte_membre>
+            >
+            <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.opposant.main.carte1.statusEffects"/>
+          </Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte1.hitPoints"
             :pvtotal="combatState.opposant.main.carte1.maxHitpoints"
@@ -105,8 +108,9 @@
             :data="combatState.opposant.main.carte2"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte2"
             @mouseleave="carteSurvolé = null"
-            ><img src="@/assets/imgs/effets/Effet_confusion.png" alt="status"
-          /></Carte_membre>
+            >            
+            <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.opposant.main.carte2.statusEffects"/>
+            </Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte2.hitPoints"
             :pvtotal="combatState.opposant.main.carte2.maxHitpoints"
@@ -119,7 +123,9 @@
             :data="combatState.opposant.main.carteActive"
             @mouseenter="carteSurvolé = combatState.opposant.main.carteActive"
             @mouseleave="carteSurvolé = null"
-          ></Carte_membre>
+          >
+            <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.opposant.main.carteActive.statusEffects"/>
+            </Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carteActive.hitPoints"
             :pvtotal="combatState.opposant.main.carteActive.maxHitpoints"
@@ -132,7 +138,9 @@
             :data="combatState.opposant.main.carte4"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte4"
             @mouseleave="carteSurvolé = null"
-          ></Carte_membre>
+          >
+            <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.opposant.main.carte4.statusEffects"/>
+            </Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte4.hitPoints"
             :pvtotal="combatState.opposant.main.carte4.maxHitpoints"
@@ -145,8 +153,9 @@
             :data="combatState.opposant.main.carte5"
             @mouseenter="carteSurvolé = combatState.opposant.main.carte5"
             @mouseleave="carteSurvolé = null"
-            ><img src="@/assets/imgs/effets/Effet_fatigue.png" alt="status"
-          /></Carte_membre>
+            >
+            <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.opposant.main.carte5.statusEffects"/>
+            </Carte_membre>
           <Vie_cartes
             :pv="combatState.opposant.main.carte5.hitPoints"
             :pvtotal="combatState.opposant.main.carte5.maxHitpoints"
@@ -172,7 +181,9 @@
             @mouseleave="carteSurvolé = null"
             @click="swap_cartes(0)"
             :class="{ change_carte: echangeCarte }"
-          ></Carte_membre>
+          >
+          <img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.moi.main.carte1.statusEffects"/>
+        </Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte1.hitPoints"
             :pvtotal="combatState.moi.main.carte1.maxHitpoints"
@@ -187,7 +198,8 @@
             @mouseleave="carteSurvolé = null"
             @click="swap_cartes(1)"
             :class="{ change_carte: echangeCarte }"
-          ></Carte_membre>
+          ><img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.moi.main.carte2.statusEffects"/>
+        </Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte2.hitPoints"
             :pvtotal="combatState.moi.main.carte2.maxHitpoints"
@@ -201,8 +213,8 @@
             @mouseenter="carteSurvolé = combatState.moi.main.carteActive"
             @mouseleave="carteSurvolé = null"
             :class="{ change_carte: echangeCarte }"
-            ><img src="@/assets/imgs/effets/Effet_poison.png" alt="status"
-          /></Carte_membre>
+            ><img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.moi.main.carteActive.statusEffects"/>
+        </Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carteActive.hitPoints"
             :pvtotal="combatState.moi.main.carteActive.maxHitpoints"
@@ -217,7 +229,8 @@
             @mouseleave="carteSurvolé = null"
             @click="swap_cartes(3)"
             :class="{ change_carte: echangeCarte }"
-          ></Carte_membre>
+          ><img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.moi.main.carte4.statusEffects"/>
+        </Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte4.hitPoints"
             :pvtotal="combatState.moi.main.carte4.maxHitpoints"
@@ -232,8 +245,8 @@
             @mouseleave="carteSurvolé = null"
             @click="swap_cartes(4)"
             :class="{ change_carte: echangeCarte }"
-            ><img src="@/assets/imgs/effets/Effet_rage.png" alt="status"
-          /></Carte_membre>
+            ><img :src="`src/assets/imgs/effets/${ effect.type }.png`" alt="status" class="imgicontype" v-for="effect of combatState.moi.main.carte5.statusEffects"/>
+        </Carte_membre>
           <Vie_cartes
             :pv="combatState.moi.main.carte5.hitPoints"
             :pvtotal="combatState.moi.main.carte5.maxHitpoints"
