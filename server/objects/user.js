@@ -107,7 +107,7 @@ class User {
                 }
             }
         }
-        
+        console.log(JSON.stringify(user.collection));
         // Récupération du deck de l'utilisateur
         const deckCard1 = user.collection.find(item => item.card.cardId === row.card1Id)?.card || null;
         const deckCard2 = user.collection.find(item => item.card.cardId === row.card2Id)?.card || null;
