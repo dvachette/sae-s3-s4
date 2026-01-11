@@ -1,11 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 
-class SelectorUtility(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Selector Utility")
-        self.geometry("600x700")
+class EffectCreator(tk.Frame):
+    def __init__(self, master):
+        super().__init__(master)
+        
+        self.master = master
 
         self.mandatEnabled = tk.BooleanVar()
         self.poleEnabled = tk.BooleanVar()
@@ -13,6 +13,55 @@ class SelectorUtility(tk.Tk):
         self.excludeMandat = tk.BooleanVar()
         self.excludePole = tk.BooleanVar()
         self.selectorOutputVar = tk.StringVar()
+        
+        self.effectTypes = [
+            "damage",
+            "heal",
+            "poison",
+            "regen",
+            "fatigue",
+            "rage",
+            "strength",
+            "weakness",
+            "shield",
+            "stun"
+        ]
+        self.hasDuration = ["poison", "regen", "fatigue", "rage", "strength", "weakness", "stun"]
+        self.hasValue = ["damage", "heal", "poison", "regen", "fatigue", "rage", "strength", "weakness", "shield"]
+
+        # Combobox to chose effect type (damage, heal, ...)
+
+        self.effectTypeLabel = tk.Label(self, text="Selectionez le type d'effet :")
+        self.effectTypeLabel.pack(pady=10)
+        self.effectTypeCombo = ttk.Combobox(self, values=[
+            "Dégat (Inflige des dégats)",
+            "Soin (Restaure des points de vie)",
+            "Poison (Inflige des dégats sur la durée)",
+            "Régenération (Restaure des points de vie sur la durée)",
+            "Fatigue (Les attaques coutent plus cher)",
+            "Rage (Les attaques coutent moins cher)",
+            "Force (Augmente les points d'attaque)",
+            "Faiblesse (Diminue les points d'attaque)",
+            "Bouclier (Protège contre des coups)",
+            "Confusion (Empêche d'attaquer)"
+        ], state="readonly", width=40)
+        self.effectTypeCombo.current(0)
+        self.effectTypeCombo.pack(pady=5)
+
+        # Durée de l'effet
+
+        self.durationLabel = tk.Label(self, text="Durée de l'effet en tours :")
+        self.durationLabel.pack(pady=10)
+        self.durationSpinbox = tk.Spinbox(self, from_=1, to=100, width=10, state="disabled")
+        self.durationSpinbox.pack(pady=5)
+
+        # Puissance de l'effet
+        self.powerLabel = tk.Label(self, text="Puissance de l'effet :")
+        self.powerLabel.pack(pady=10)
+        self.powerSpinbox = tk.Spinbox(self, from_=1, to=1000, width=10, state="normal")
+        self.powerSpinbox.pack(pady=5)
+        self.effectSelectorSeparator = ttk.Separator(self, orient='horizontal')
+        self.effectSelectorSeparator.pack(fill='x', pady=10)
 
 
         # Combobox to chose between (toutes les cartes, carte active de l'utilisateur, carte active de l'adversaire, ...)
@@ -96,19 +145,11 @@ class SelectorUtility(tk.Tk):
         self.hpOperatorCombo.pack(pady=5)
         self.hpEntry = tk.Spinbox(self, from_=0, to=1000, state="disabled")
         self.hpEntry.pack(pady=5)
-
-
-        self.submitSeparator = ttk.Separator(self, orient='horizontal')
-        self.submitSeparator.pack(fill='x', pady=10)
-        self.submitButton = tk.Button(self, text="Valider", command=self.submit)
-        self.submitButton.pack(pady=5)
-        self.outputEntry = tk.Entry(self, textvariable=self.selectorOutputVar, state="readonly", width=70)
-        self.outputEntry.pack(pady=5)
-
         # Bind checkbox events to enable/disable related widgets
         self.mandatCheckbox.config(command=self.enable_mandat_filter)
         self.poleCheckbox.config(command=self.enable_pole_filter)
         self.hpCkeckbox.config(command=self.enable_hp_filter)
+        self.effectTypeCombo.bind("<<ComboboxSelected>>", self.onEffectTypeChange)
 
     def enable_mandat_filter(self):
         if self.mandatEnabled.get():
@@ -134,6 +175,21 @@ class SelectorUtility(tk.Tk):
             self.hpOperatorCombo.config(state="disabled")
             self.hpEntry.config(state="disabled")
 
+    def onEffectTypeChange(self, event):
+        if self.effectTypes[self.effectTypeCombo.current()] in self.hasDuration: 
+            self.durationSpinbox.config(state="normal")
+        else:
+            self.durationSpinbox.config(state="disabled")
+        if self.effectTypes[self.effectTypeCombo.current()] in self.hasValue:
+            self.powerSpinbox.config(state="normal")
+        else:
+            self.powerSpinbox.config(state="disabled")
+        if isinstance(self.master, ttk.Notebook):
+            # Update the name of the tab to reflect the selected effect type
+            tab_id = self.master.select()
+            tab_index = self.master.index(tab_id)
+            self.master.tab(tab_index, text=f"Effet {tab_index + 1} - {self.effectTypes[self.effectTypeCombo.current()].capitalize()}")
+            
     def submit(self):
         filterOptions = [
             "all",
@@ -165,17 +221,66 @@ class SelectorUtility(tk.Tk):
             hpCondition = self.hpOperatorCombo.get() + self.hpEntry.get()
         
         # Transform selections into output string (json format)
-        outputList = [f'"filter": "{selectedFilter}"']
+        filterList = [f'"filter": "{selectedFilter}"']
         if mandatFilter:
-            outputList.append(f'"mandat": "{mandatFilter}"')
+            filterList.append(f'"mandat": "{mandatFilter}"')
         if poleFilter:
-            outputList.append(f'"pole": "{poleFilter}"')
+            filterList.append(f'"pole": "{poleFilter}"')
         if hpCondition:
-            outputList.append(f'"hp": "{hpCondition}"')
+            filterList.append(f'"hp": "{hpCondition}"')
+        filterString = '"target" : {' + ", ".join(filterList) + "}"
+        outputList = [filterString]
+        effectType = self.effectTypes[self.effectTypeCombo.current()]
+        outputList.append(f'"type": "{effectType}"')
+        if effectType in self.hasDuration:
+            outputList.append(f'"duration": {self.durationSpinbox.get()}')
+        if effectType in self.hasValue:
+            outputList.append(f'"value": {self.powerSpinbox.get()}')
         outputString = "{" + ", ".join(outputList) + "}"
         self.selectorOutputVar.set(outputString)
+        return outputString
+        
 
 
 if __name__ == "__main__":
-    app = SelectorUtility()
+    app = tk.Tk()
+    app.title("Selector Utility")
+    app.geometry("900x1000")
+    
+    # Pouvoir combiner plusieurs effets dans une même carte
+    creatorContainer = ttk.Notebook(app)
+    creatorContainer.pack(fill='both', expand=True)
+
+    def add_effect_creator_tab():
+        effect_creator = EffectCreator(creatorContainer)
+        creatorContainer.add(effect_creator, text=f"Effet {len(creatorContainer.tabs()) + 1}")
+    buttonAddTab = tk.Button(app, text="Ajouter un effet", command=add_effect_creator_tab)
+    buttonAddTab.pack(pady=10)
+
+    boutonValider = tk.Button(app, text="Valider", command=lambda event=None: update_output_entry(event))
+    boutonValider.pack(pady=5)
+
+    outputLabel = tk.Label(app, text="Sortie à mettre dans le champ effect (cliquez pour copier dans le presse papier) :")
+    outputLabel.pack(pady=5)
+
+    outputEntry = tk.Entry(app, width=120, state="readonly")
+    outputEntry.pack(pady=5)
+
+    def update_output_entry(event):
+        effectList = []
+        for tab_id in creatorContainer.tabs():
+            tab = creatorContainer.nametowidget(tab_id)
+            effectList.append(tab.submit())
+        finalOutput = "[" + ", ".join(effectList) + "]"
+        outputEntry.config(state="normal")
+        outputEntry.delete(0, tk.END)
+        outputEntry.insert(0, finalOutput)
+        outputEntry.config(state="readonly")
+
+    def on_output_entry_click(event):
+        app.clipboard_clear()
+        app.clipboard_append(outputEntry.get())
+    
+    outputEntry.bind("<Button-1>", on_output_entry_click)
+
     app.mainloop()
