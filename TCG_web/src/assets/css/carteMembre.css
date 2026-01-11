@@ -296,3 +296,17 @@ p {
 
   line-height: calc(var(--w) * 0.025);
 }
+
+div.effetsCarteMembre {
+  /* Étaler les effets de status verticalement */
+  position:absolute;
+  top:15%;
+  right:-9%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--w) * 0.22);
+  height: calc(var(--w) * 1.1);
+}
+
+

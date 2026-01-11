@@ -255,14 +255,9 @@ a {
   position: relative;
 }
 
-.carte_de_combat img {
-  position: absolute;
-  width: 25%;
-  aspect-ratio: 1 / 1;
-  z-index: 1;
-  top: 30%;
-  left: 82%;
-}
+
+
+
 
 .son_deck > .familier,
 .son_deck > .carte {
