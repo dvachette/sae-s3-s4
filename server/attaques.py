@@ -14,6 +14,21 @@ class EffectCreator(tk.Frame):
         self.excludePole = tk.BooleanVar()
         self.selectorOutputVar = tk.StringVar()
         
+        #   Defining areas
+
+        self.effectArea = tk.Frame(self)
+        self.effectTypeArea = tk.Frame(self.effectArea)
+        self.effectDurationArea = tk.Frame(self.effectArea)
+        self.effectPowerArea = tk.Frame(self.effectArea)
+
+
+        self.selectorArea = tk.Frame(self)
+        self.selectorFiltersArea = tk.Frame(self.selectorArea)
+        self.selectorMandatsArea = tk.Frame(self.selectorArea)
+        self.selectorPolesArea = tk.Frame(self.selectorArea)
+        self.selectorHpArea = tk.Frame(self.selectorArea)
+
+
         self.effectTypes = [
             "damage",
             "heal",
@@ -31,9 +46,9 @@ class EffectCreator(tk.Frame):
 
         # Combobox to chose effect type (damage, heal, ...)
 
-        self.effectTypeLabel = tk.Label(self, text="Selectionez le type d'effet :")
+        self.effectTypeLabel = tk.Label(self.effectTypeArea, text="Selectionez le type d'effet :")
         self.effectTypeLabel.pack(pady=10)
-        self.effectTypeCombo = ttk.Combobox(self, values=[
+        self.effectTypeCombo = ttk.Combobox(self.effectTypeArea, values=[
             "Dégat (Inflige des dégats)",
             "Soin (Restaure des points de vie)",
             "Poison (Inflige des dégats sur la durée)",
@@ -50,16 +65,29 @@ class EffectCreator(tk.Frame):
 
         # Durée de l'effet
 
-        self.durationLabel = tk.Label(self, text="Durée de l'effet en tours :")
+        self.durationLabel = tk.Label(self.effectDurationArea, text="Durée de l'effet en tours :")
         self.durationLabel.pack(pady=10)
-        self.durationSpinbox = tk.Spinbox(self, from_=1, to=100, width=10, state="disabled")
+        self.durationSpinbox = tk.Spinbox(self.effectDurationArea, from_=1, to=100, width=10, state="disabled")
         self.durationSpinbox.pack(pady=5)
 
         # Puissance de l'effet
-        self.powerLabel = tk.Label(self, text="Puissance de l'effet :")
+        self.powerLabel = tk.Label(self.effectPowerArea, text="Puissance de l'effet :")
         self.powerLabel.pack(pady=10)
-        self.powerSpinbox = tk.Spinbox(self, from_=1, to=1000, width=10, state="normal")
+        self.powerSpinbox = tk.Spinbox(self.effectPowerArea, from_=1, to=1000, width=10, state="normal")
         self.powerSpinbox.pack(pady=5)
+
+
+        
+        self.effectTypeArea.pack(side='left', padx=10)
+        self.effectSeparator1 = ttk.Separator(self.effectArea, orient='vertical')
+        self.effectSeparator1.pack(side='left', fill='y')
+        self.effectDurationArea.pack(side='left', padx=10)
+        self.effectSeparator2 = ttk.Separator(self.effectArea, orient='vertical')
+        self.effectSeparator2.pack(side='left', fill='y')
+        self.effectPowerArea.pack(side='left', padx=10)
+        self.effectArea.pack(pady=10)
+
+
         self.effectSelectorSeparator = ttk.Separator(self, orient='horizontal')
         self.effectSelectorSeparator.pack(fill='x', pady=10)
 
@@ -80,13 +108,11 @@ class EffectCreator(tk.Frame):
         self.filterCombo.pack(pady=5)
 
         # Combobox to chose the mandat to seleect (FBI, SDI, MIB, SIB)
-        self.mandatSeparator = ttk.Separator(self, orient='horizontal')
-        self.mandatSeparator.pack(fill='x', pady=10)
-        self.mandatCheckbox = tk.Checkbutton(self, text="Filtrer par mandat", variable=self.mandatEnabled)
+        self.mandatCheckbox = tk.Checkbutton(self.selectorMandatsArea, text="Filtrer par mandat", variable=self.mandatEnabled)
         self.mandatCheckbox.pack(pady=5)
-        self.mandatLabel = tk.Label(self, text="Selectionez le mandat :")
+        self.mandatLabel = tk.Label(self.selectorMandatsArea, text="Selectionez le mandat :")
         self.mandatLabel.pack(pady=5)
-        self.mandatCombo = ttk.Combobox(self, values=[
+        self.mandatCombo = ttk.Combobox(self.selectorMandatsArea, values=[
             "FBI",
             "SDI",
             "MIB",
@@ -94,17 +120,15 @@ class EffectCreator(tk.Frame):
         ], state="disabled")
         self.mandatCombo.current(0)
         self.mandatCombo.pack(pady=5)
-        self.excludeMandatCheck = tk.Checkbutton(self, text="Inverser la sélection du mandat", state="disabled", variable=self.excludeMandat)
+        self.excludeMandatCheck = tk.Checkbutton(self.selectorMandatsArea, text="Inverser la sélection du mandat", state="disabled", variable=self.excludeMandat)
         self.excludeMandatCheck.pack(pady=5)
 
         # Combobox to chose the pole to select 
-        self.poleSeparator = ttk.Separator(self, orient='horizontal')
-        self.poleSeparator.pack(fill='x', pady=10)
-        self.poleCheckbox = tk.Checkbutton(self, text="Filtrer par pôle", variable=self.poleEnabled)
+        self.poleCheckbox = tk.Checkbutton(self.selectorPolesArea, text="Filtrer par pôle", variable=self.poleEnabled)
         self.poleCheckbox.pack(pady=5)
-        self.poleLabel = tk.Label(self, text="Selectionez le pôle :")
+        self.poleLabel = tk.Label(self.selectorPolesArea, text="Selectionez le pôle :")
         self.poleLabel.pack(pady=5)
-        self.poleCombo = ttk.Combobox(self, values=[
+        self.poleCombo = ttk.Combobox(self.selectorPolesArea, values=[
             "presidence",
             "communication",
             "tresorerie",
@@ -122,18 +146,16 @@ class EffectCreator(tk.Frame):
         ], state="disabled")
         self.poleCombo.current(0)
         self.poleCombo.pack(pady=5)
-        self.excludePoleCheck = tk.Checkbutton(self, text="Inverser la sélection du pôle", state="disabled", variable=self.excludePole)
+        self.excludePoleCheck = tk.Checkbutton(self.selectorPolesArea, text="Inverser la sélection du pôle", state="disabled", variable=self.excludePole)
         self.excludePoleCheck.pack(pady=5)
 
 
         # Spinbox to chose the hp condition
-        self.hpSeparator = ttk.Separator(self, orient='horizontal')
-        self.hpSeparator.pack(fill='x', pady=10)
-        self.hpCkeckbox = tk.Checkbutton(self, text="Filtrer par points de vie", variable=self.hpEnabled)
+        self.hpCkeckbox = tk.Checkbutton(self.selectorHpArea, text="Filtrer par points de vie", variable=self.hpEnabled)
         self.hpCkeckbox.pack(pady=5)
-        self.hpLabel = tk.Label(self, text="Points de vie :")
+        self.hpLabel = tk.Label(self.selectorHpArea, text="Points de vie :")
         self.hpLabel.pack(pady=5)
-        self.hpOperatorCombo = ttk.Combobox(self, values=[
+        self.hpOperatorCombo = ttk.Combobox(self.selectorHpArea, values=[
             "=",
             "<",
             "<=",
@@ -143,13 +165,31 @@ class EffectCreator(tk.Frame):
         ], state="disabled")
         self.hpOperatorCombo.current(0)
         self.hpOperatorCombo.pack(pady=5)
-        self.hpEntry = tk.Spinbox(self, from_=0, to=1000, state="disabled")
+        self.hpEntry = tk.Spinbox(self.selectorHpArea, from_=0, to=1000, state="disabled")
         self.hpEntry.pack(pady=5)
-        # Bind checkbox events to enable/disable related widgets
+        
+        self.selectorMandatsArea.pack(side='left', padx=10)
+        self.selectorSeparator1 = ttk.Separator(self.selectorArea, orient='vertical')
+        self.selectorSeparator1.pack(side='left', fill='y')
+        self.selectorPolesArea.pack(side='left', padx=10)
+        self.selectorSeparator2 = ttk.Separator(self.selectorArea, orient='vertical')
+        self.selectorSeparator2.pack(side='left', fill='y')
+        self.selectorHpArea.pack(side='left', padx=10)
+        self.selectorArea.pack(pady=10)
+        
+        self.removeSelfButton = tk.Button(self, text="Supprimer cet effet", command=lambda: self.master.forget(self))
+        self.removeSelfButton.pack(pady=10)
+        
+        # Bind events to enable/disable related widgets
+
+
         self.mandatCheckbox.config(command=self.enable_mandat_filter)
         self.poleCheckbox.config(command=self.enable_pole_filter)
         self.hpCkeckbox.config(command=self.enable_hp_filter)
         self.effectTypeCombo.bind("<<ComboboxSelected>>", self.onEffectTypeChange)
+
+        self.pack()
+        self.after(100, self.onEffectTypeChange, None)  # Initial update based on default selection
 
     def enable_mandat_filter(self):
         if self.mandatEnabled.get():
@@ -185,11 +225,10 @@ class EffectCreator(tk.Frame):
         else:
             self.powerSpinbox.config(state="disabled")
         if isinstance(self.master, ttk.Notebook):
-            # Update the name of the tab to reflect the selected effect type
-            tab_id = self.master.select()
-            tab_index = self.master.index(tab_id)
+            # Update the name of current tab and not the selected one
+            tab_index = self.master.index(self)
             self.master.tab(tab_index, text=f"Effet {tab_index + 1} - {self.effectTypes[self.effectTypeCombo.current()].capitalize()}")
-            
+
     def submit(self):
         filterOptions = [
             "all",
@@ -245,7 +284,7 @@ class EffectCreator(tk.Frame):
 if __name__ == "__main__":
     app = tk.Tk()
     app.title("Selector Utility")
-    app.geometry("900x1000")
+    app.geometry("900x600")
     
     # Pouvoir combiner plusieurs effets dans une même carte
     creatorContainer = ttk.Notebook(app)
@@ -254,11 +293,19 @@ if __name__ == "__main__":
     def add_effect_creator_tab():
         effect_creator = EffectCreator(creatorContainer)
         creatorContainer.add(effect_creator, text=f"Effet {len(creatorContainer.tabs()) + 1}")
-    buttonAddTab = tk.Button(app, text="Ajouter un effet", command=add_effect_creator_tab)
-    buttonAddTab.pack(pady=10)
+        creatorContainer.select(len(creatorContainer.tabs()) - 1)
+    
+    buttonFrame = tk.Frame(app)
+    buttonFrame.pack()
 
-    boutonValider = tk.Button(app, text="Valider", command=lambda event=None: update_output_entry(event))
-    boutonValider.pack(pady=5)
+    buttonAddTab = tk.Button(buttonFrame, text="Ajouter un effet", command=add_effect_creator_tab)
+    buttonAddTab.pack(side='left', padx=10, pady=5)
+
+    buttonReset = tk.Button(buttonFrame, text="Réinitialiser les effets", command=lambda event=None: reset_effects(event))
+    buttonReset.pack(side='left', padx=10, pady=5)
+
+    boutonValider = tk.Button(buttonFrame, text="Valider", command=lambda event=None: update_output_entry(event))
+    boutonValider.pack(side='left', padx=10, pady=5)
 
     outputLabel = tk.Label(app, text="Sortie à mettre dans le champ effect (cliquez pour copier dans le presse papier) :")
     outputLabel.pack(pady=5)
@@ -281,6 +328,12 @@ if __name__ == "__main__":
         app.clipboard_clear()
         app.clipboard_append(outputEntry.get())
     
+    def reset_effects(event):
+        for tab_id in creatorContainer.tabs():
+            tab = creatorContainer.nametowidget(tab_id)
+            creatorContainer.forget(tab)
+        update_output_entry(None)
+
     outputEntry.bind("<Button-1>", on_output_entry_click)
 
     app.mainloop()
