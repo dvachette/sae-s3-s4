@@ -227,6 +227,7 @@ export class CombatState {
                                 .reduce((acc, se) => acc + se.value, 0);
                             const totalDamage = Math.max(0, effect.value + damageBonus - damagePenalty);
                             card.hitPoints -= totalDamage
+                            console.log(`Card ${card.name} takes ${totalDamage} damage, remaining HP: ${card.hitPoints}`);
                             if (card.hitPoints < 0) {
                                 card.hitPoints = 0;
                             }
@@ -435,13 +436,15 @@ export class CombatState {
                     break;
                 case 'pole':
                     selectedCards = selectedCards.filter(card => {
-                        const cardTypes = card.type.map(typeId => types[typeId]);
+                        const cardTypes = card.type.map(type => types[type.typeId]);
+                        console.log("carte : ",card.name," types : ",cardTypes, " filtre pole : ",selector.pole);
                         if (selector.pole.startsWith('!')) {
                             return !cardTypes.includes(selector.pole.slice(1));
                         } else {
                             return cardTypes.includes(selector.pole);
                         }
                     }); 
+                    console.log("cartes après filtre pole :",JSON.stringify(selectedCards));
                     break;
                 case 'hitpoints':
                     const operator = selector.hitpoints.match(/(>=|<=|!=|=|>|<)/)[0];
