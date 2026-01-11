@@ -63,7 +63,7 @@
       v-if="tailleCollection >= 1"
     ></div>
 
-    <div class="collection" v-if="tailleCollection >= 1">
+    <div class="collection" v-if="tailleCollection >= 1" @click="selectionCarteCollection">
       <div class="collecMembre">
         <Carte_membre
           v-for="carte of membres"
@@ -71,6 +71,7 @@
           :data="carte.card"
           largeur="200px"
           class="membre"
+          :class="{ dansDeck: estDansDeck(carte.card) }"
         />
       </div>
 
@@ -83,6 +84,7 @@
           :data="carte.card"
           largeur="200px"
           class="familier"
+          :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
         />
       </div>
 
@@ -93,6 +95,7 @@
           :data="carte.card"
           largeur="200px"
           class="terrain"
+          :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
         />
       </div>
     </div>
@@ -115,9 +118,9 @@ const hmain = ref(vh.value * 87.5 - 278 - 20 * 2 + 'px');
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const nbCles = ref(userData.value.balance);
 
-const deckMembre = userData.value.deck.cards;
-const deckFamilier = userData.value.deck.pet;
-const deckTerrain = userData.value.deck.arena;
+const deckMembre = computed(()=>{return userData.value.deck.cards;});
+const deckFamilier = computed(()=>{return userData.value.deck.pet;});
+const deckTerrain = computed(()=>{return userData.value.deck.arena;});
 let afficher_ff = ref(false);
 
 const collection = computed(() => {
@@ -141,6 +144,37 @@ const terrains = computed(() => {
 function detecte_click_ff(evt) {
   if(evt.target.tagName != ('IMG')) {
     afficher_ff.value = false ;
+  }
+}
+
+
+/*----------------Script pour changement de deck------------------*/
+//faire la classe selection CSS
+//faire la clase dansDeck CSS
+const carteSelectionnée = ref();
+
+
+function selectionCarteCollection(evt){
+  console.log("click dans collection");
+  const carteSelect = evt.target.closest(".carte"); //renvoie l'element parent correspondant au Selecteur CSS .membre ou null si aucun ne correspond
+  console.log(carteSelect);
+  if(carteSelectionnée.value){
+      carteSelectionnée.value.classList.remove("selection");
+      carteSelectionnée.value = null;
+    }
+    
+  if(carteSelect != null && !carteSelect.classList.contains("dansDeck")){
+    console.log("click dans une carte");
+    carteSelect.classList.add("selection");
+    carteSelectionnée.value = carteSelect;
+  }
+}
+
+function estDansDeck(carte){
+  if(deckMembre.value?.some(c => c?.cardId == carte?.cardId) || deckFamilier.value?.cardId==carte?.cardId){ //verifie pour chaque element c de deckMembre si y'en a 1 qui a c.id == carte.id
+    return true;
+  } else {
+    return false;
   }
 }
 </script>

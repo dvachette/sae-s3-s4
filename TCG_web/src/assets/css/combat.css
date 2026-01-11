@@ -305,3 +305,24 @@ main {
 .collection > .separateur {
   grid-column: 2/3;
 }
+
+.selection {
+  border: 3px solid rgb(var(--rouge600));
+  border-radius: 7px;
+  position:relative;
+}
+
+
+
+.dansDeck {
+  position:relative;
+}
+
+.dansDeck::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index: 3;
+
+  background: rgba(var(--rouge700), 0.4);
+}
