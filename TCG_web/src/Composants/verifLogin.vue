@@ -3,13 +3,14 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
+import config from '@/config.json'
 const emit = defineEmits(['loginSuccess']);
 const router = useRouter()
     async function connexion() {
       try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          'http://localhost:3000/user', // URL de l'API de connexion
+          `http://${config.hosts.api}/user`, // URL de l'API de connexion
           {
             method: 'GET', // Méthode GET pour récupérer les données
             credentials: "include", // Inclure les cookies dans la requête

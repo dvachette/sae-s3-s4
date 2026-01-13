@@ -21,6 +21,8 @@ const collectionRoutes= require('./routes/collection.js');// Importation des rou
 const tradeRoutes= require('./routes/trade.js');// Importation des routes trade
 const deckRoutes= require('./routes/deck.js');// Importation des routes deck
 const duelUtils = require('./socket/duel.js'); // Importation des utilitaires de duel
+const shopRoutes = require('./routes/shop.js'); // Importation des routes shop
+
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
 const app = express(); // Création de l'application Express
@@ -93,6 +95,11 @@ app.post('/trade/accept', tradeRoutes.acceptTrade);
 
 app.get("/deck", deckRoutes.getDeck);
 app.post("/deck/replaceCard", deckRoutes.replaceCardInDeck);
+
+// Routes pour la boutique
+app.get('/shop', shopRoutes.getShop);
+app.post('/shop/buy', shopRoutes.buyOffer);
+
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
 app.listen(PORT, () => {
     console.log('ATTENTION, SERVEUR EN MODE DÉVELOPPEMENT, NE PAS UTILISER EN PRODUCTION !');

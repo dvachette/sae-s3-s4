@@ -27,6 +27,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import config from '@/config.json';
 </script>
 
 <script>
@@ -45,7 +46,7 @@ export default {
       try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          'http://localhost:3000/user', // URL de l'API de connexion
+          `http://${config.hosts.api}/user`, // URL de l'API de connexion
           {
             method: 'POST', // Méthode POST pour envoyer les données
             headers: {

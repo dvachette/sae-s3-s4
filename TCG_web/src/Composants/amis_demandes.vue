@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import config from '@/config.json'
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,
@@ -22,7 +22,7 @@ const emit = defineEmits(['accepter', 'refuser', 'erreur']);
 
 async function accept_ami() {
   try {
-    const response = await fetch('http://localhost:3000/friends/accept', {
+    const response = await fetch(`http://${config.hosts.api}/friends/accept`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -44,7 +44,7 @@ async function accept_ami() {
 
 async function refus_ami() {
   try {
-    const response = await fetch('http://localhost:3000/friends/reject', {
+    const response = await fetch(`http://${config.hosts.api}/friends/reject`, {
       method: 'POST',
       credentials: 'include',
       headers: {

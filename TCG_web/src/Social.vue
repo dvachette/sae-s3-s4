@@ -101,7 +101,7 @@ import pop_up_supprami from './Composants/pop_up_supprami.vue';
 import amis_trouvé from './Composants/amis_trouve.vue';
 import accepter_echange from './Composants/accepter_echange.vue';
 import annuler_echange from './Composants/annuler_echange.vue';
-
+import config from '@/config.json'
 import MonHeader from '@/Composants/header.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData')));
@@ -179,7 +179,7 @@ function demander_ami(data) {
 async function afficher_liste(event) {
   if (event.key === 'Enter') {
     try {
-      const response = await fetch('http://localhost:3000/user/search', {
+      const response = await fetch(`http://${config.hosts.api}/user/search`, {
         method: 'POST',
         credentials: 'include',
         headers: {

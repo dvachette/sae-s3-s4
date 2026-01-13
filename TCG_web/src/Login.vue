@@ -38,7 +38,7 @@ export default {
       try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          'http://localhost:3000/login', // URL de l'API de connexion
+          `http://${config.hosts.api}/login`, // URL de l'API de connexion
           {
             method: 'POST', // Méthode POST pour envoyer les données
             headers: {
@@ -76,6 +76,7 @@ export default {
 </script>
 <script setup>
 import { ref } from 'vue';
+import config from '@/config.json';
 </script>
 
 <style scoped>

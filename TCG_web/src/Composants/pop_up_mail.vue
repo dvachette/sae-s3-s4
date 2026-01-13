@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import config from '@/config.json';
 const nouveau_mail = ref('');
 const confirmer_mail = ref('');
 const mdp = ref('');
@@ -29,7 +29,7 @@ const emit = defineEmits(['fermer']);
 
 async function changementMail() {
   if (nouveau_mail.value === confirmer_mail.value) {
-    const response = await fetch('http://localhost:3000/user', {
+    const response = await fetch(`http://${config.hosts.api}/user`, {
       method: 'PUT',
       credentials: 'include',
       headers: {

@@ -106,6 +106,7 @@ import pop_up_mail from './Composants/pop_up_mail.vue';
 import pop_up_pseudo from './Composants/pop_up_pseudo.vue';
 import Pop_up_déco from './Composants/pop_up_déco.vue';
 import choix_pp from './choix_pp.vue';
+import config from '@/config.json'
 
 const password = ref('motdepasse123')
 const draftPassword = ref('')
@@ -208,7 +209,7 @@ async function deconnexion(){
   try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          'http://localhost:3000/logout', // URL de l'API de connexion
+          `http://${config.hosts.api}/logout`, // URL de l'API de connexion
           {
             method: 'GET', // Méthode GET pour récupérer les données
             credentials: "include", // Inclure les cookies dans la requête
@@ -225,7 +226,7 @@ async function deconnexion(){
 
 async function supprimerCompte() {
   try {
-    const response = await fetch('http://localhost:3000/user',
+    const response = await fetch(`http://${config.hosts.api}/user`,
     {
       method: 'DELETE',
       credentials: 'include'

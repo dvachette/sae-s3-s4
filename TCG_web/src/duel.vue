@@ -305,7 +305,7 @@ import Carte_familier from './Composants/carte_familier.vue';
 import verifLogin from './Composants/verifLogin.vue';
 import Vie_cartes from './Composants/vie_cartes.vue';
 import pop_up_abandon from './Composants/pop_up_abandon.vue';
-
+import config from '@/config.json';
 import {
   EtatCombat,
   EtatJoueur,
@@ -561,7 +561,7 @@ function onLoginSuccess() {
   console.log(deckMembre);
   afficher_carte.value = true;
   // Initialiser la socket
-  socket.value = new WebSocket('ws://localhost:8080');
+  socket.value = new WebSocket(`ws://${config.hosts.socket}`);
   socket.value.onopen = () => {
     socket.value.onmessage = (event) => {
       const message = JSON.parse(event.data);

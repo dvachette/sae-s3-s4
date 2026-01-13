@@ -1,0 +1,6 @@
+{
+    "hosts": {
+        "api":"localhost:3000",
+        "socket":"localhost:8080"
+    }
+}

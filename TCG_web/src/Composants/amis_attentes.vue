@@ -8,6 +8,7 @@
 </template>
 
 <script setup>
+  import config from '@/config.json'
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,
@@ -17,7 +18,7 @@ const emit = defineEmits(['annuler', 'erreur']);
 
 async function annuler_demande() {
   try {
-    const response = await fetch('http://localhost:3000/friends/request', {
+    const response = await fetch(`http://${config.hosts.api}/friends/request`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {

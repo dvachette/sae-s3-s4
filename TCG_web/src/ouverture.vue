@@ -56,7 +56,7 @@ import nouv_clef from './Composants/nouv_clef.vue';
 import clef from './Composants/clef.vue';
 import carteBooster from './carte-booster.vue';
 import router from './router';
-
+import config from '@/config.json'
 const showVideo = ref(true); // ← Remettez true pour la vidéo
 const introVideo = ref(null);
 const allCardsGone = ref(false);
@@ -138,7 +138,7 @@ function recupBooster() {
 }
 
 async function fetchBooster() {
-  const response = await fetch('http://localhost:3000/booster/open', {
+  const response = await fetch(`http://${config.hosts.api}/booster/open`, {
     method: 'POST',
     credentials: 'include',
   });
@@ -172,7 +172,7 @@ async function fetchBooster() {
 }
 
 async function buyBooster() {
-  const response = await fetch('http://localhost:3000/booster/buy', {
+  const response = await fetch(`http://${config.hosts.api}/booster/buy`, {
     method: 'POST',
     credentials: 'include',
   });

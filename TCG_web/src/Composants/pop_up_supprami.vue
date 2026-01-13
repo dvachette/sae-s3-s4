@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+  import config from '@/config.json'
 const props = defineProps({
   nom_ami: String,
   id_ami: Number,
@@ -17,7 +18,7 @@ const props = defineProps({
 const emit = defineEmits(['supprimer', 'erreur', 'garder_ami']);
 async function supprimer_ami() {
   try {
-    const response = await fetch('http://localhost:3000/friends', {
+    const response = await fetch(`http://${config.hosts.api}/friends`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {

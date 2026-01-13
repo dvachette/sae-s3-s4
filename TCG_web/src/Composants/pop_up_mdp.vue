@@ -22,6 +22,7 @@ const user = ref('');
 
 <script setup>
 import { ref } from 'vue';
+import config from '@/config.json'; 
 
 const ancien_mdp = ref('');
 const nouveau_mdp = ref('');
@@ -32,7 +33,7 @@ const emit = defineEmits(['fermer']);
 
 async function changementMdp() {
   if (nouveau_mdp.value === confirmer_mdp.value) {
-    const response = await fetch('http://localhost:3000/user', {
+    const response = await fetch(`http://${config.hosts.api}/user`, {
       method: 'PUT',
       credentials: 'include',
       headers: {

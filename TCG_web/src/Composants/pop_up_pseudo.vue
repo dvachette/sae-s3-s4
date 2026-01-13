@@ -12,12 +12,13 @@
 
 <script setup>
 import { ref } from 'vue';
+import config from '@/config.json';
 const pseudo = ref('');
 
 const emit = defineEmits(['fermer']);
 
 async function changementPseudo() {
-  const response = await fetch('http://localhost:3000/user', {
+  const response = await fetch(`http://${config.hosts.api}/user`, {
     method: 'PUT',
     credentials: 'include',
     headers: {
