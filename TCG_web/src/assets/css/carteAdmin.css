@@ -1,0 +1,50 @@
+@import './style.css';
+
+div.playerCard {
+    width:200px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background-color: #9E0000;
+    color: white;
+    border-radius: 30px;
+    padding: 20px 10px;
+    height:fit-content
+}
+
+
+
+div.playerCard img {
+    width:150px;
+    height:auto;
+    border-radius:200px;
+}
+
+div.imgBg {
+    width:auto;
+    height:auto;
+    border-radius:200px;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:10px;
+    background-color: #FF8201;
+}
+div.playerCard button {
+    background-color: #FF8201;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+div.playerCard button:active {
+    background-color: #e27100;
+    box-shadow: none;
+}
+

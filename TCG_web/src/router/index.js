@@ -11,6 +11,7 @@ import Ouverture from '../ouverture.vue';
 import Socket from '../Socket.vue';
 import duel from '../duel.vue';
 import duel_resultat from '@/duel_resultat.vue';
+import Admin from '../Admin.vue';
 
 const routes = [
   { path: '/booster', component: Booster },
@@ -25,11 +26,13 @@ const routes = [
   { path: '/socket', component: Socket },
   { path: '/duel', component: duel },
   { path: '/duel_resultat', component: duel_resultat },
+  { path: '/admin', component: Admin },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
 
 export default router;
