@@ -26,7 +26,9 @@
       <h2>Mes échanges</h2>
 
       <mes_echanges class="e1" @click="afficher_annuler = true" />
-      <new_echange class="e2" />
+      <router-link to="/creation_echange"
+        ><new_echange class="e2"
+      /></router-link>
       <h2>Autres échanges</h2>
       <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
       <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
@@ -101,7 +103,7 @@ import pop_up_supprami from './Composants/pop_up_supprami.vue';
 import amis_trouvé from './Composants/amis_trouve.vue';
 import accepter_echange from './Composants/accepter_echange.vue';
 import annuler_echange from './Composants/annuler_echange.vue';
-import config from '@/config.json'
+import config from '@/config.json';
 import MonHeader from '@/Composants/header.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData')));
