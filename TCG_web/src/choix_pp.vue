@@ -57,11 +57,11 @@ const image_choisie = ref(null) ;
 
 const collection_images = [
   "/src/assets/imgs/carte/perso/Maël.png",
-  "/src/assets/imgs/carte/perso/Mzhdunosaure.png",
-  "/src/assets/imgs/carte/perso/cléLocal.png",
-  "/src/assets/imgs/carte/pet/Carbonara.png",
-  "/src/assets/imgs/carte/pet/Le coffre.png",
-  "/src/assets/imgs/carte/pet/Where_cle.png",
+  "/src/assets/imgs/carte/perso/36.png",
+  "/src/assets/imgs/carte/perso/21.png",
+  "/src/assets/imgs/carte/perso/43.png",
+  "/src/assets/imgs/carte/perso/39.png",
+  "/src/assets/imgs/carte/perso/40.png",
   "/src/assets/imgs/carte/perso/mandats/SDI.png",
   "/src/assets/imgs/carte/perso/mandats/FBI.png",
   "/src/assets/imgs/carte/perso/mandats/SIB.png",

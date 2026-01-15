@@ -41,14 +41,14 @@
         <div class="personnes">
           <div class="mes_infos">
             <img
-              src="@/assets/imgs/carte/perso/Mzhdunosaure.png"
+              src="@/assets/imgs/carte/perso/36.png"
               alt="Logo du site"
             />
             <p>{{ nom_j1 }}</p>
           </div>
           <div class="autres_infos">
             <img
-              src="@/assets/imgs/carte/perso/Mzhdunosaure.png"
+              src="@/assets/imgs/carte/perso/36.png"
               alt="photo de profil"
             />
             <p>{{ nom_j2 }}</p>

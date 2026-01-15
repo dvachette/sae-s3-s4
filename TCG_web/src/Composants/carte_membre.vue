@@ -1,7 +1,7 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
     <img :src="imgFond" alt="carte" />
-    <img src="@/assets/imgs/carte/perso/Maël.png" alt="imgCarte" />
+    <img :src="imgCarte" alt="imgCarte" />
     <div id="haut_carte">
       <p id="nom">{{ nom }}</p>
       <div class="PV">
@@ -67,6 +67,13 @@ const images = import.meta.glob('../assets/imgs/carte/perso/**/*.png', {
 const nom = computed(() => props.data.name);
 const pv = computed(() => props.data.hitPoints);
 const niv = computed(() => props.data.level);
+const id = computed(()=> props.data.cardId);
+
+const imgCarte = computed(
+  () =>
+    images[`../assets/imgs/carte/perso/${id.value}.png`]
+      ?.default
+);
 
 // ===== attaques =====
 const attaques = computed(() => props.data.attacks);

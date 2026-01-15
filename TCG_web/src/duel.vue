@@ -84,7 +84,7 @@
         <div class="son_deck">
           <div class="ses_infos">
             <img
-              src="@/assets/imgs/carte/perso/Ail La Kiche.png"
+              src="@/assets/imgs/carte/perso/43.png"
               alt="pp_adverse"
             />
             <p>Son pseudo</p>
