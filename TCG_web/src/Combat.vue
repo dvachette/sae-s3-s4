@@ -77,7 +77,7 @@
           largeur="200px"
           class="membre"
           :class="{ dansDeck: estDansDeck(carte.card) }"
-          @click="selectionCarteCollection(carte.card.cardId, $event)"
+          @click="selectionCarteCollection(carte.card, $event)"
         />
       </div>
 
@@ -91,7 +91,7 @@
           largeur="200px"
           class="familier"
           :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
-          @click="selectionCarteCollection(carte.card.cardId, $event)"
+          @click="selectionCarteCollection(carte.card, $event)"
         />
       </div>
 
@@ -103,6 +103,7 @@
           largeur="200px"
           class="terrain"
           :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
+          @click="selectionCarteCollection(carte.card, $event)"
         />
       </div>
     </div>
@@ -160,29 +161,37 @@ function detecte_click_ff(evt) {
 
 const carteSelectionnée = ref();
 const idCarteSelectionnée = ref();
+const classCarteSelectionnée = ref();
 
 
-function selectionCarteCollection(cardId, evt){
+function selectionCarteCollection(card, evt){
   console.log("click dans collection");
   const carteSelect = evt.currentTarget;//.closest(".carte"); //renvoie l'element parent correspondant au Selecteur CSS .membre ou null si aucun ne correspond
   console.log(carteSelect);
-
     
   if(carteSelect != null && !carteSelect.classList.contains("dansDeck")){
     console.log("click dans une carte");
     carteSelect.classList.add("selection");
+    carteSelectionnée.value?.classList.remove("selection");
+
     carteSelectionnée.value = carteSelect;
     console.log(carteSelectionnée.value.data);
-    idCarteSelectionnée.value = cardId;
+
+    idCarteSelectionnée.value = card.cardId;
+    classCarteSelectionnée.value = card._class;
   }
+
+  console.log(classCarteSelectionnée.value);
 }
 
 function deselection(evt){
   const carteSelect = evt.target.closest(".carte");
   if((!carteSelect || carteSelect.classList.contains("dansDeck")) && carteSelectionnée.value){
       carteSelectionnée.value.classList.remove("selection");
+      
       carteSelectionnée.value = null;
       idCarteSelectionnée.value = null;
+      classCarteSelectionnée.value = null;
     }
 }
   
@@ -197,7 +206,7 @@ function estDansDeck(carte){
 async function echangeDeck(carte, evt){
   const verifIndex = /^[0-4]$/;
 
-  if(idCarteSelectionnée){
+  if(idCarteSelectionnée.value){
     let pos = null;
     console.log("carte: "+carte?.name+" id: "+evt.target?.id);
     if(carte?._class == "member"){
@@ -217,7 +226,7 @@ async function echangeDeck(carte, evt){
 
 
     console.log("position : "+pos);
-    const response = await fetch();
+    const response = "bloup";
   }
   
 }
