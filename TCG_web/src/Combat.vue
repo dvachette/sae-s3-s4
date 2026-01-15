@@ -31,9 +31,11 @@
           v-if="!carte"
           src="@/assets/imgs/carte/carte_ajout.png"
           alt="Carte_à_Ajouter"
+          :id="index"
+          @click="echangeDeck(carte, $event)"
         />
 
-        <Carte_membre v-else :data="carte" largeur="200px" />
+        <Carte_membre v-else :data="carte" largeur="200px" @click="echangeDeck(carte, $event)"/>
       </div>
       <div class="separateur"></div>
 
@@ -41,19 +43,22 @@
         v-if="deckFamilier"
         :data="deckFamilier"
         largeur="200px"
+        @click="echangeDeck(deckFamilier, $event)"
       />
       <img
         v-else
         src="@/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="familier"
+        @click="echangeDeck(deckFamilier, $event)"
       />
-      <Carte_terrain v-if="deckTerrain" :data="deckTerrain" largeur="200px" />
+      <Carte_terrain v-if="deckTerrain" :data="deckTerrain" largeur="200px" @click="echangeDeck(deckTerrain, $event)"/>
       <img
         v-else
         src="@/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="terrain"
+        @click="echangeDeck(deckTerrain, $event)"
       />
     </div>
 
@@ -63,7 +68,7 @@
       v-if="tailleCollection >= 1"
     ></div>
 
-    <div class="collection" v-if="tailleCollection >= 1" @click="selectionCarteCollection">
+    <div class="collection" v-if="tailleCollection >= 1" @click="deselection($event)">
       <div class="collecMembre">
         <Carte_membre
           v-for="carte of membres"
@@ -72,6 +77,7 @@
           largeur="200px"
           class="membre"
           :class="{ dansDeck: estDansDeck(carte.card) }"
+          @click="selectionCarteCollection(carte.card.cardId, $event)"
         />
       </div>
 
@@ -85,6 +91,7 @@
           largeur="200px"
           class="familier"
           :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
+          @click="selectionCarteCollection(carte.card.cardId, $event)"
         />
       </div>
 
@@ -110,6 +117,7 @@ import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 import Carte_terrain from './Composants/carte_terrain.vue';
+import { number } from 'motion-v';
 
 const vh = ref(window.innerHeight / 100); //obtenir 1% de la hauteur de la fenetre, en px
 const vw = ref(window.innerWidth / 100);
@@ -149,33 +157,69 @@ function detecte_click_ff(evt) {
 
 
 /*----------------Script pour changement de deck------------------*/
-//faire la classe selection CSS
-//faire la clase dansDeck CSS
+
 const carteSelectionnée = ref();
+const idCarteSelectionnée = ref();
 
 
-function selectionCarteCollection(evt){
+function selectionCarteCollection(cardId, evt){
   console.log("click dans collection");
-  const carteSelect = evt.target.closest(".carte"); //renvoie l'element parent correspondant au Selecteur CSS .membre ou null si aucun ne correspond
+  const carteSelect = evt.currentTarget;//.closest(".carte"); //renvoie l'element parent correspondant au Selecteur CSS .membre ou null si aucun ne correspond
   console.log(carteSelect);
-  if(carteSelectionnée.value){
-      carteSelectionnée.value.classList.remove("selection");
-      carteSelectionnée.value = null;
-    }
+
     
   if(carteSelect != null && !carteSelect.classList.contains("dansDeck")){
     console.log("click dans une carte");
     carteSelect.classList.add("selection");
     carteSelectionnée.value = carteSelect;
+    console.log(carteSelectionnée.value.data);
+    idCarteSelectionnée.value = cardId;
   }
 }
 
+function deselection(evt){
+  const carteSelect = evt.target.closest(".carte");
+  if((!carteSelect || carteSelect.classList.contains("dansDeck")) && carteSelectionnée.value){
+      carteSelectionnée.value.classList.remove("selection");
+      carteSelectionnée.value = null;
+      idCarteSelectionnée.value = null;
+    }
+}
+  
 function estDansDeck(carte){
   if(deckMembre.value?.some(c => c?.cardId == carte?.cardId) || deckFamilier.value?.cardId==carte?.cardId){ //verifie pour chaque element c de deckMembre si y'en a 1 qui a c.id == carte.id
     return true;
   } else {
     return false;
   }
+}
+
+async function echangeDeck(carte, evt){
+  const verifIndex = /^[0-4]$/;
+
+  if(idCarteSelectionnée){
+    let pos = null;
+    console.log("carte: "+carte?.name+" id: "+evt.target?.id);
+    if(carte?._class == "member"){
+      pos = deckMembre.value.findIndex(elem => elem.cardId === carte.cardId);
+      
+    } else if (evt.target.tagName == 'IMG' && verifIndex.test(evt.target.id)){
+      console.log("Click dans une carte membre absente, id: "+evt.target.id);
+      pos = +evt.target.id; //le + permet de convertir en number
+
+    }else if(carte?._class == "pet" || (evt.target.tagName == 'IMG' && evt.target.id == 'familier')){
+      pos = "pet";
+
+    } else if (carte?._class == "arena" || (evt.target.tagName == 'IMG' && evt.target.id == 'terrain')){
+      pos = "arena";
+
+    }
+
+
+    console.log("position : "+pos);
+    const response = await fetch();
+  }
+  
 }
 </script>
 

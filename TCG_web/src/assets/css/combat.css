@@ -12,6 +12,7 @@ main {
   flex-direction: column;
   height: auto;
   margin-top: 12.5vh;
+  width: 100%;
 }
 
 .pop_up_ff {
@@ -153,7 +154,9 @@ main {
   z-index: 2;
 
   position: sticky; /*pour qu'il colle quand il arrive juste en dessous du header*/
-  top: 12.5vh;
+  top: 12vh;
+  left: 0;
+  right:0;
 }
 
 .deck > p {
@@ -237,12 +240,13 @@ main {
 }
 /*-----------------Séparateur-------------------*/
 .separateurDeckCollection {
-  height: 5px;
+  height: 6px;
   width: 100%;
   background-color: rgb(var(--orange400));
 
   position: sticky;
-  top: calc(var(--vhPx) * 12.5 + 318px);
+  top: calc(var(--vhPx) * 12 + 318px);
+
   z-index: 2;
 }
 
