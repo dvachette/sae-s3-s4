@@ -330,3 +330,7 @@ main {
 
   background: rgba(var(--rouge700), 0.4);
 }
+
+.carte:not(.dansDeck), .deck > img, .deck>.carteMembreDeck>img{
+  cursor:pointer;
+}

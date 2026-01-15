@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+  import { computed } from 'vue';
 const images = import.meta.glob('../assets/imgs/carte/pet/*.png', { eager: true });
 
 const props = defineProps({
@@ -29,13 +30,14 @@ const props = defineProps({
   largeur: String
 });
 
-const nom = props.data.name;
-const niv = props.data.level;
-const desc = props.data.description;
-const effet = props.data.modifierText;
+const nom = computed(() => props.data.name);
+const niv = computed(() => props.data.level);
+const desc = computed(() => props.data.description);
+const effet = computed(() => props.data.modifierText);
+const id = computed(() => props.data.cardId);
 
 //partie image
-const imgFamilier = images['../assets/imgs/carte/pet/'+nom+'.png']?.default;
+const imgFamilier = computed(() => images['../assets/imgs/carte/pet/'+id.value+'.png']?.default);
 
 
 </script>
