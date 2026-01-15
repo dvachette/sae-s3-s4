@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-
+import {computed } from 'vue';
 const images = import.meta.glob('../assets/imgs/carte/arena/cartes/*.png', { eager: true });
 
 const props = defineProps({
@@ -26,12 +26,13 @@ const props = defineProps({
   largeur: String
 });
 
-const nom = props.data.name;
-const niv = props.data.level;
-const desc = props.data.description;
+const nom = computed(()=> props.data.name);
+const niv = computed(() => props.data.level);
+const desc = computed(() => props.data.description);
+const id = computed(() => props.data.cardId);
 
 //partie image
-const imgTerrain = images['../assets/imgs/carte/arena/cartes/'+nom+'.png']?.default;
+const imgTerrain = computed(() => images['../assets/imgs/carte/arena/cartes/'+id.value+'.png']?.default);
 
 </script>
 
