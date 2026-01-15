@@ -113,6 +113,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import clef from '@/Composants/clef.vue';
+import config from '@/config.json';
 
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
@@ -171,8 +172,9 @@ function selectionCarteCollection(card, evt){
     
   if(carteSelect != null && !carteSelect.classList.contains("dansDeck")){
     console.log("click dans une carte");
-    carteSelect.classList.add("selection");
     carteSelectionnée.value?.classList.remove("selection");
+    carteSelect.classList.add("selection");
+    
 
     carteSelectionnée.value = carteSelect;
     console.log(carteSelectionnée.value.data);
@@ -181,14 +183,14 @@ function selectionCarteCollection(card, evt){
     classCarteSelectionnée.value = card._class;
   }
 
-  console.log(classCarteSelectionnée.value);
+  console.log("classe : "+classCarteSelectionnée.value+" CardId : "+idCarteSelectionnée.value);
 }
 
 function deselection(evt){
   const carteSelect = evt.target.closest(".carte");
   if((!carteSelect || carteSelect.classList.contains("dansDeck")) && carteSelectionnée.value){
       carteSelectionnée.value.classList.remove("selection");
-      
+
       carteSelectionnée.value = null;
       idCarteSelectionnée.value = null;
       classCarteSelectionnée.value = null;
@@ -208,25 +210,35 @@ async function echangeDeck(carte, evt){
 
   if(idCarteSelectionnée.value){
     let pos = null;
-    console.log("carte: "+carte?.name+" id: "+evt.target?.id);
-    if(carte?._class == "member"){
+    console.log("dans Echangedeck carte: "+carte?.name+" id: "+evt.target?.id);
+    if(carte?._class == "member" && classCarteSelectionnée.value == "member"){
       pos = deckMembre.value.findIndex(elem => elem.cardId === carte.cardId);
       
-    } else if (evt.target.tagName == 'IMG' && verifIndex.test(evt.target.id)){
+    } else if (evt.target.tagName == 'IMG' && verifIndex.test(evt.target.id) && classCarteSelectionnée.value == "member"){
       console.log("Click dans une carte membre absente, id: "+evt.target.id);
       pos = +evt.target.id; //le + permet de convertir en number
 
-    }else if(carte?._class == "pet" || (evt.target.tagName == 'IMG' && evt.target.id == 'familier')){
+    }else if((carte?._class == "pet" || (evt.target.tagName == 'IMG' && evt.target.id == 'familier')) && classCarteSelectionnée.value == "pet"){
       pos = "pet";
 
-    } else if (carte?._class == "arena" || (evt.target.tagName == 'IMG' && evt.target.id == 'terrain')){
+    } else if ((carte?._class == "arena" || (evt.target.tagName == 'IMG' && evt.target.id == 'terrain')) && classCarteSelectionnée.value == "arena"){
       pos = "arena";
 
     }
 
 
     console.log("position : "+pos);
-    const response = "bloup";
+
+    const response = await fetch(`http://${config.hosts.api}/deck/replaceCard`, {
+      credentials : 'include',
+      method : 'POST',
+      headers : {'Content-Type':'application/json'},
+      body : JSON.stringify({index : pos, newCardId : idCarteSelectionnée.value})
+    });
+    const data = await response.json();
+    
+    userData.value.deck = data.deck;
+
   }
   
 }
