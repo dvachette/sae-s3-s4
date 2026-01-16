@@ -74,7 +74,7 @@
       </div>
     </div>
     <div class="duel_principale" v-else>
-      <img src="@/assets/imgs/combat_feyssine.png" alt="echange"  />
+      <img :src="backgroundImageSrc" alt="echange" @error="resetBackground()" />
       <pop_up_abandon
         v-if="afficher_abandon"
         id="abandon"
@@ -389,6 +389,15 @@ const carteSurvolé = ref(null);
 const familierSurvolé = ref(null);
 const echangeCarte = ref(false);
 const afficher_abandon = ref(false);
+const backgroundImageSrc = ref(
+  'src/assets/imgs/combat_feyssine.png'
+);
+
+function resetBackground() {
+  console.log('Erreur de chargement de l\'image de fond, réinitialisation à l\'image par défaut.');
+  backgroundImageSrc.value = 'src/assets/imgs/combat_feyssine.png';
+}
+
 let deckMembre = ref(null);
 let deckFamilier = ref(null);
 let afficher_carte = ref(false);
@@ -637,6 +646,8 @@ function onLoginSuccess() {
         combatState.monTour = message.combatState.monTour;
         if (message.type === 'duel_start') {
           adversaire.value = true;
+          backgroundImageSrc.value =
+            `src/assets/imgs/carte/arena/fond/${message.combatState.moi.terrain.cardId}.png`;
         }
 
         console.log('État du combat mis à jour:', combatState);
