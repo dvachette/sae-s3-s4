@@ -15,6 +15,10 @@ main {
   width: 100%;
 }
 
+img#imageCarreTerrain {
+  border-radius: 20px;
+}
+
 .pop_up_ff {
   position: absolute;
   position: fixed;

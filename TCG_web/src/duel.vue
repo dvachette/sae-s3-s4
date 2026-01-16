@@ -74,7 +74,7 @@
       </div>
     </div>
     <div class="duel_principale" v-else>
-      <img src="@/assets/imgs/combat_feyssine.png" alt="echange" />
+      <img src="@/assets/imgs/combat_feyssine.png" alt="echange"  />
       <pop_up_abandon
         v-if="afficher_abandon"
         id="abandon"
@@ -641,8 +641,8 @@ function onLoginSuccess() {
 
         console.log('État du combat mis à jour:', combatState);
       } else if (message.type === 'already_connected') {
-        // Deja connecté ailleurs, afficher un message d'erreur
-      }
+        // Deja connecté ailleurs, afficher un message d'erreurù
+      } 
     };
 
     console.log('Connexion WebSocket établie');

@@ -10,7 +10,7 @@
         <button @click="afficher_ff = true">Forces et faiblesses</button>
       </div>
       <div class="lancement_partie">
-        <img src="@/assets/imgs/ff_logo.png" alt="img terrain" />
+      <img id="imageCarreTerrain" :src="imageSrc" alt="img terrain" @error="onImageError"/>
         <router-link to="/duel"><button>JOUER</button></router-link>
       </div>
       <div class="Compteur">
@@ -111,15 +111,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import clef from '@/Composants/clef.vue';
 import config from '@/config.json';
-
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 import Carte_terrain from './Composants/carte_terrain.vue';
-import { number } from 'motion-v';
 
 const vh = ref(window.innerHeight / 100); //obtenir 1% de la hauteur de la fenetre, en px
 const vw = ref(window.innerWidth / 100);
@@ -132,6 +130,25 @@ const deckMembre = computed(()=>{return userData.value.deck.cards;});
 const deckFamilier = computed(()=>{return userData.value.deck.pet;});
 const deckTerrain = computed(()=>{return userData.value.deck.arena;});
 let afficher_ff = ref(false);
+const terrainCarre = computed(() => {
+  if (deckTerrain.value) { 
+      return `/src/assets/imgs/carte/arena/carre/${deckTerrain.value.cardId}.png`;
+  } else {
+      return `/src/assets/imgs/ff_logo.png`;
+  }
+}); 
+
+const imageSrc = ref(terrainCarre.value)
+
+watch(terrainCarre, (newVal) => {
+  console.log("terrainCarre a changé :", newVal);
+  imageSrc.value = newVal
+})
+
+const onImageError = () => {
+  console.log("Erreur de chargement de l'image, image de remplacement utilisée.");
+  imageSrc.value = '/src/assets/imgs/ff_logo.png'
+}
 
 const collection = computed(() => {
   return userData.value.collection;
