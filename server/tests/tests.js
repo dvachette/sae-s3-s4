@@ -1,16 +1,9 @@
-const Offer = require("../objects/shop.js");
+const User = require('../objects/user.js');
 
-const offers = Offer.getAllOffers();
-console.log("All Offers in the Shop:");
-offers.forEach(offer => {
-    console.log(`Offer ID: ${offer.id}, Cost: ${offer.cost}, Content: ${JSON.stringify(offer.content)}`);
-});
+const elise = User.fromId(8);
 
-const dailyOffers = Offer.generateDailyShop(3);
-Offer.saveDailyShop(dailyOffers);
+console.log("Collection d'Elise :", elise.collection.length);
 
-const todayOffers = Offer.getTodayShop();
-console.log("Today's Offers:");
-todayOffers.forEach(offer => {
-    console.log(`Offer ID: ${offer.id}, Cost: ${offer.cost}, Content: ${JSON.stringify(offer.content)}`);
-});
+for (const item of elise.collection) {
+    console.log(`Carte ID: ${item.card.cardId}, Quantité: ${item.quantity}`);
+}
