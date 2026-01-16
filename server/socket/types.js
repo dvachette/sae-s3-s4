@@ -17,6 +17,13 @@ const types = {
     13: "suivi"
 };
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[array[i], array[j]] = [array[j], array[i]]
+  }
+  return array
+}
 
 //etat du combat general
 export class CombatState {
@@ -61,6 +68,11 @@ export class CombatState {
         const player1UserData = User.fromId(userId1);
         const player2UserData = User.fromId(userId2);
         const initialEnergy = 3;
+
+        // Mélanger les decks des joueurs
+        shuffle(player1UserData.deck.cards);
+        shuffle(player2UserData.deck.cards);
+        player2UserData.deck
         const player1 = new EtatJoueur(
             userId1,
             3, // énergie initiale
@@ -72,8 +84,11 @@ export class CombatState {
                 player1UserData.deck.cards[3],
                 player1UserData.deck.cards[4]
             ),
-            player1UserData.deck.arena
+            player1UserData.deck.arena,
+            player1UserData.profilePicture,
+            player1UserData.username,
         );
+
         const player2 = new EtatJoueur(
             userId2,
             3, // énergie initiale
@@ -85,7 +100,9 @@ export class CombatState {
                 player2UserData.deck.cards[3],
                 player2UserData.deck.cards[4]
             ),
-            player2UserData.deck.arena
+            player2UserData.deck.arena,
+            player2UserData.profilePicture,
+            player2UserData.username,
         );
         return new CombatState(1, player1, player2);
 
@@ -528,16 +545,20 @@ export class EtatCombatIndividuel {
 
 export class EtatJoueur {
     userId;
+    profilePicture;
+    playerName;
     energie; // nombre
     familier; // CarteFamilier
     main; // Objet main
     terrain; // tableau de CarteMembre
-    constructor(userId, energie, familier, main, terrain) {
+    constructor(userId, energie, familier, main, terrain, profilePicture, playerName) {
         this.userId = userId;
         this.energie = energie;
         this.familier = familier;
         this.main = main;
         this.terrain = terrain;
+        this.profilePicture = profilePicture;
+        this.playerName = playerName;
     }
 }
 

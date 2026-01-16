@@ -84,10 +84,10 @@
         <div class="son_deck">
           <div class="ses_infos">
             <img
-              src="@/assets/imgs/carte/perso/43.png"
+              :src="combatState.opposant.profilePicture"
               alt="pp_adverse"
             />
-            <p>Son pseudo</p>
+            <p>{{ combatState.opposant.playerName }}</p>
           </div>
           <div class="familier">
             <p>Familier</p>
