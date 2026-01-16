@@ -33,9 +33,11 @@
           alt="Carte_à_Ajouter"
           :id="index"
           @click="echangeDeck(carte, $event)"
+          @dragover.prevent
+          @drop="endDragImageCarteOnMemberSlot(index)"
         />
 
-        <Carte_membre v-else :data="carte" largeur="200px" @click="echangeDeck(carte, $event)"/>
+        <Carte_membre v-else :data="carte" largeur="200px" @click="echangeDeck(carte, $event)" @dragover.prevent @drop="endDragImageCarteOnMemberSlot(index)"/>
       </div>
       <div class="separateur"></div>
 
@@ -44,6 +46,8 @@
         :data="deckFamilier"
         largeur="200px"
         @click="echangeDeck(deckFamilier, $event)"
+        @dragover.prevent
+        @drop="endDragImageCarteOnPetSlot()"
       />
       <img
         v-else
@@ -51,14 +55,18 @@
         alt="Carte_à_Ajouter"
         id="familier"
         @click="echangeDeck(deckFamilier, $event)"
+        @dragover.prevent
+        @drop="endDragImageCarteOnPetSlot()"
       />
-      <Carte_terrain v-if="deckTerrain" :data="deckTerrain" largeur="200px" @click="echangeDeck(deckTerrain, $event)"/>
+      <Carte_terrain v-if="deckTerrain" :data="deckTerrain" largeur="200px" @click="echangeDeck(deckTerrain, $event)" @dragover.prevent @drop="endDragImageCarteOnArenaSlot()"/>
       <img
         v-else
         src="@/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="terrain"
         @click="echangeDeck(deckTerrain, $event)"
+        @dragover.prevent
+        @drop="endDragImageCarteOnArenaSlot()"
       />
     </div>
 
@@ -78,6 +86,8 @@
           class="membre"
           :class="{ dansDeck: estDansDeck(carte.card) }"
           @click="selectionCarteCollection(carte.card, $event)"
+          draggable="true"
+          @dragstart="beginDragImageCarteMembre($event)"
         />
       </div>
 
@@ -92,6 +102,8 @@
           class="familier"
           :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
           @click="selectionCarteCollection(carte.card, $event)"
+          draggable="true"
+          @dragstart="beginDragImageCarteFamilier($event)"
         />
       </div>
 
@@ -104,6 +116,8 @@
           class="terrain"
           :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
           @click="selectionCarteCollection(carte.card, $event)"
+          draggable="true"
+          @dragstart="beginDragImageCarteTerrain($event)"
         />
       </div>
     </div>
@@ -222,6 +236,70 @@ function estDansDeck(carte){
   }
 }
 
+
+
+function beginDragImageCarteMembre(evt){
+  if (evt.target.classList.contains("dansDeck")){
+    evt.preventDefault();
+    return; //ne rien faire si la carte est dans le deck
+  }
+  classCarteSelectionnée.value = "member";
+  idCarteSelectionnée.value = evt.target.__vueParentComponent.props.data.cardId;
+  carteSelectionnée.value?.classList.remove("selection");
+  console.log("debut drag image" + JSON.stringify(evt.target.__vueParentComponent.props.data) + "id selectionnée : "+idCarteSelectionnée.value, "class selectionnée : "+classCarteSelectionnée.value);
+}
+
+function beginDragImageCarteFamilier(evt){
+  if (evt.target.classList.contains("dansDeck")){
+    evt.preventDefault();
+    return; //ne rien faire si la carte est dans le deck
+  }
+  classCarteSelectionnée.value = "pet";
+  idCarteSelectionnée.value = evt.target.__vueParentComponent.props.data.cardId;
+  carteSelectionnée.value?.classList.remove("selection");
+  console.log("debut drag image" + JSON.stringify(evt.target.__vueParentComponent.props.data) + "id selectionnée : "+idCarteSelectionnée.value, "class selectionnée : "+classCarteSelectionnée.value);
+}
+
+function beginDragImageCarteTerrain(evt){
+  if (evt.target.classList.contains("dansDeck")){
+    evt.preventDefault();
+    return; //ne rien faire si la carte est dans le deck
+  }
+  classCarteSelectionnée.value = "arena";
+  idCarteSelectionnée.value = evt.target.__vueParentComponent.props.data.cardId;
+  carteSelectionnée.value?.classList.remove("selection");
+  console.log("debut drag image" + JSON.stringify(evt.target.__vueParentComponent.props.data) + "id selectionnée : "+idCarteSelectionnée.value, "class selectionnée : "+classCarteSelectionnée.value);
+}
+
+
+async function endDragImageCarteOnMemberSlot(index){
+  console.log("fin drag image sur slot membre");
+  if (classCarteSelectionnée.value != "member"){
+    console.log("carte selectionnée n'est pas un membre, annulation");
+    return; //ne rien faire si la carte selectionnée n'est pas un membre
+  }
+  await swapCardsInDeck(idCarteSelectionnée.value, index);
+}
+
+async function endDragImageCarteOnPetSlot(){
+  console.log("fin drag image sur slot familier");
+  if (classCarteSelectionnée.value != "pet"){
+    console.log("carte selectionnée n'est pas un familier, annulation");
+    return; //ne rien faire si la carte selectionnée n'est pas un familier
+  }
+  await swapCardsInDeck(idCarteSelectionnée.value, "pet");
+}
+
+async function endDragImageCarteOnArenaSlot(){
+  console.log("fin drag image sur slot terrain");
+  if (classCarteSelectionnée.value != "arena"){
+    console.log("carte selectionnée n'est pas un terrain, annulation");
+    return; //ne rien faire si la carte selectionnée n'est pas un terrain
+  }
+  await swapCardsInDeck(idCarteSelectionnée.value, "arena");
+}
+
+
 async function echangeDeck(carte, evt){
   const verifIndex = /^[0-4]$/;
 
@@ -230,6 +308,7 @@ async function echangeDeck(carte, evt){
     console.log("dans Echangedeck carte: "+carte?.name+" id: "+evt.target?.id);
     if(carte?._class == "member" && classCarteSelectionnée.value == "member"){
       pos = deckMembre.value.findIndex(elem => elem.cardId === carte.cardId);
+      console.log("position dans le deck membre : "+pos);
       
     } else if (evt.target.tagName == 'IMG' && verifIndex.test(evt.target.id) && classCarteSelectionnée.value == "member"){
       console.log("Click dans une carte membre absente, id: "+evt.target.id);
@@ -237,28 +316,38 @@ async function echangeDeck(carte, evt){
 
     }else if((carte?._class == "pet" || (evt.target.tagName == 'IMG' && evt.target.id == 'familier')) && classCarteSelectionnée.value == "pet"){
       pos = "pet";
+      console.log("position : familier");
 
     } else if ((carte?._class == "arena" || (evt.target.tagName == 'IMG' && evt.target.id == 'terrain')) && classCarteSelectionnée.value == "arena"){
       pos = "arena";
+      console.log("position : terrain");
 
     }
-
+    await swapCardsInDeck(idCarteSelectionnée.value, pos);
 
     console.log("position : "+pos);
 
+
+  }
+}
+
+  async function swapCardsInDeck(cardId, pos) {
     const response = await fetch(`http://${config.hosts.api}/deck/replaceCard`, {
       credentials : 'include',
       method : 'POST',
       headers : {'Content-Type':'application/json'},
-      body : JSON.stringify({index : pos, newCardId : idCarteSelectionnée.value})
+      body : JSON.stringify({index : pos, newCardId : cardId})
     });
     const data = await response.json();
     
-    userData.value.deck = data.deck;
-
+    if (response.ok){
+      userData.value.deck = data.deck;
+      sessionStorage.setItem('userData', JSON.stringify(userData.value));
+    } else {
+      console.error("Erreur lors de la mise à jour du deck :", data);
+    }
   }
-  
-}
+
 </script>
 
 <style scoped>
