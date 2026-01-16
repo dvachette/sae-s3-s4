@@ -11,6 +11,7 @@ import Social from './Social.vue';
 import Profil from './Profil.vue';
 import Duel from './duel.vue';
 import duel_resultat from './duel_resultat.vue';
+import creation_echange from './Composants/creation_echange.vue';
 
 const app = createApp(App);
 createApp(App).use(router).mount('#app');
