@@ -57,7 +57,11 @@ const props = defineProps({
     default: () => [],
   },
 });
-
+console.log('Cards data reçues dans Stack.vue:', props.cardsData);
+console.log('Nombre de cartes reçues:', props.cardsData.length);
+for (const card of props.cardsData) {
+  console.log('Carte ID:', card.id, 'Composant:', card.component, 'Props:', card.props);
+}
 const cards = ref(props.cardsData.length ? props.cardsData : []);
 const cardPositions = ref({});
 const isDragging = ref(null);

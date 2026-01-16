@@ -1,4 +1,5 @@
 <template>
+  <verifLogin />
   <MonHeader />
   <main>
   <div class="pop_up_ff" v-if="afficher_ff == true" @click="detecte_click_ff">
@@ -132,6 +133,7 @@ import MonHeader from '@/Composants/header.vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
 import Carte_terrain from './Composants/carte_terrain.vue';
+import verifLogin from '@/Composants/verifLogin.vue';
 
 const vh = ref(window.innerHeight / 100); //obtenir 1% de la hauteur de la fenetre, en px
 const vw = ref(window.innerWidth / 100);

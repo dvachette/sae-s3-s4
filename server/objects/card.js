@@ -95,6 +95,7 @@ class Card {
 
     static getRandomWeightedCard(cards) {
         let totalWeight = 0;
+        cards = cards.filter(card => card !== null); // Filtrer les cartes nulles
         for (const card of cards) {
             console.log(card);
             totalWeight += card.weight;
@@ -102,7 +103,7 @@ class Card {
         console.log("Total weight:", totalWeight);
         // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
         if (totalWeight === 0) {
-            return null; // Ou gérer cela d'une autre manière appropriée
+            return null;
         }
 
         let randomNum = Math.random() * totalWeight;
