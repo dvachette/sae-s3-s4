@@ -1,6 +1,6 @@
 <template>
   <VerifLogin @loginSuccess="loadUserData"/>
-  <MonHeader />
+  <MonHeader :trigger="updateHeaderTrigger" />
   <main>
     <pop_up_suppression
       v-if="afficher_suppr"
@@ -32,7 +32,8 @@
     <choix_pp 
       v-if="afficher_pp" 
       id="pp_choix" 
-      @fermer="afficher_pp = false" />
+      @fermer="afficher_pp = false"
+      @changement-p-p="loadUserData()" />
 
     <div class="gestion_soi">
       <div class="pp" @click="afficher_pp = true">
@@ -123,6 +124,7 @@ const victoires = ref('');
 const amis = ref('');
 const pp = ref('@/assets/imgs/logoTCG.png');
 const afficher_pp = ref(false) ;
+const updateHeaderTrigger = ref(0);
 
 // mot de passe masqué pour l'affichage
 const maskedPassword = computed(() =>
@@ -182,6 +184,7 @@ function loadUserData() {
   victoires.value = user.value ? user.value.stats.totalVictoires : '0' ;
   amis.value = user.value ? user.value.stats.totalAmis : '0' ;
   pp.value = user.value.profilePicture !== null ? user.value.profilePicture : 'src/assets/imgs/logoTCG.png' ;
+  updateHeaderTrigger.value++;
 }
 
 const edit_M = ref(false)

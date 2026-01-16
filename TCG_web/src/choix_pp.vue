@@ -45,8 +45,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import config from '@/config.json';
+
 
 const selected = ref(null);
 const pp = ref('/src/assets/imgs/logoTCG.png');
@@ -55,7 +56,7 @@ const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 
 const image_choisie = ref(null) ;
 
-const collection_images = [
+const collection_images = ref([
   "/src/assets/imgs/carte/perso/Maël.png",
   "/src/assets/imgs/carte/perso/36.png",
   "/src/assets/imgs/carte/perso/21.png",
@@ -65,11 +66,27 @@ const collection_images = [
   "/src/assets/imgs/carte/perso/mandats/SDI.png",
   "/src/assets/imgs/carte/perso/mandats/FBI.png",
   "/src/assets/imgs/carte/perso/mandats/SIB.png",
-];
+]);
 
 function loadUserData() {
   pp.value = user.value.profilePicture !== null ? user.value.profilePicture : 'src/assets/imgs/logoTCG.png' ;
-    
+  collection_images.value = [] ;
+  for (let elem of user.value.collection) {
+    console.log(elem.card.cardId);
+    switch (elem.card._class) {
+      case 'member':
+        collection_images.value.push(`/src/assets/imgs/carte/perso/${elem.card.cardId}.png`);
+        break;
+      case 'pet':
+        collection_images.value.push(`/src/assets/imgs/carte/pet/${elem.card.cardId}.png`);
+        break;
+      case 'arena':
+        collection_images.value.push(`/src/assets/imgs/carte/arena/carre/${elem.card.cardId}.png`);
+        break;
+      default:
+        break;
+    }
+  }
 }
 loadUserData() ;
 
@@ -79,7 +96,7 @@ const options = ref([
   { value: 'pôle',   label: 'pôle', checkbox: null },
 ]);
 
-const emit = defineEmits(['fermer']);
+const emit = defineEmits(['fermer', 'changementPP']);
 
 async function changementPP() {
   const response = await fetch(`http://${config.hosts.api}/user`, {
@@ -92,7 +109,10 @@ async function changementPP() {
   });
   const data = await response.json();
   if (response.ok) {
+    user.value.profilePicture = image_choisie.value ;
+    sessionStorage.setItem('userData', JSON.stringify(user.value));
     console.log(data.message + ' reçues du serveur');
+    emit('changementPP');
     emit('fermer');
   } else {
     console.error(data);

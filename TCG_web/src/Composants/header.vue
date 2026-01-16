@@ -25,11 +25,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+
+const props = defineProps({trigger: Number});
+
+watch(
+  () => props.trigger,
+  () => {
+    console.log('Header mis à jour');
+    loadUserData();
+  }
+);
+
 const pp = ref('/src/assets/imgs/logoTCG.png');
 
 const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 function loadUserData() {
+  user.value = JSON.parse(sessionStorage.getItem('userData'));
   pp.value =
     user.value.profilePicture !== null
       ? user.value.profilePicture
