@@ -27,7 +27,7 @@ function proposeTrade(request, response) {
     const { askedCardId, offeredCardId1, offeredCardId2, offeredCardId3 } = request.body;
 
     // Vérification des paramètres
-    if (!askedCardId || !offeredCardId1 || !offeredCardId2 || !offeredCardId3) {
+    if (!askedCardId || (!offeredCardId1 && !offeredCardId2 && !offeredCardId3)) {
         return response.status(400).send({ error: 'Paramètres manquants.' });
     }
 
