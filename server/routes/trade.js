@@ -256,10 +256,30 @@ function getSelfTradeRequests(request, response) {
     const trades = getTradesQuery.all(userId, userId);
     return response.status(200).send({ trades:trades });
 }
+
+function getAllCard(request, response) {
+    // Vérification de la méthode HTTP
+    if (request.method !== 'GET') {
+        return response.status(405).send({ error: 'Méthode non autorisée. Utilisez GET.' });
+    }
+    // Vérification que l'utilisateur est connecté
+    if (!request.session || !request.session.userId) {
+        return response.status(401).send({ error: 'Utilisateur non authentifié.' });
+    }
+
+    
+
+    // Récupérer les propositions d'échanges des amis de l'utilisateur
+
+    const cartes = Card.getAll();
+    
+    return response.status(200).send({ cartes:cartes });
+}
 module.exports = {
     proposeTrade,
     getTrades,
     acceptTrade,
     deleteTrade,
-    getSelfTradeRequests
+    getSelfTradeRequests,
+    getAllCard
 };
