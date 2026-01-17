@@ -26,10 +26,8 @@
     </div>
     <div class="page_chargement" v-if="adversaire == false">
       <div class="non_deck">
-        <p>{{  errorMessage }}</p>
         <div class="vague">
           <h2
-            v-if="!errorMessage"
             v-for="(lettre, index) in chargement"
             :key="index"
             :class="{ espaces: lettre === ' ' }"
@@ -38,10 +36,10 @@
             {{ lettre === ' ' ? '\u00A0' : lettre }}
           </h2>
         </div>
-        <router-link to="/combat"><button @click="closeSocket()">{{ btnCancelText }}</button></router-link>
+        <router-link to="/combat"><button>Annuler</button></router-link>
       </div>
-      <h3>Votre deck :</h3>
-      <div class="chargement_deck">
+      <h3 v-if="deckMembre">Votre deck :</h3>
+      <div class="chargement_deck" v-if="deckMembre">
         <Carte_membre
           largeur="10vw"
           :data="deckMembre[0]"
@@ -393,8 +391,7 @@ const afficher_abandon = ref(false);
 const backgroundImageSrc = ref(
   'src/assets/imgs/combat_feyssine.png'
 );
-const errorMessage = ref('');
-const btnCancelText = ref('Annuler le combat');
+
 
 
 function resetBackground() {
@@ -656,14 +653,11 @@ function onLoginSuccess() {
 
         console.log('État du combat mis à jour:', combatState);
       } else if (message.type === 'already_connected') {
-        errorMessage.value = 'Vous êtes déjà connecté dans un autre duel.';
-        btnCancelText.value = 'Quitter';
+        console.log('Déjà connecté ailleurs');
       } else if (message.type === 'invalid_deck') {
-        errorMessage.value = 'Votre deck est invalide. Veuillez le vérifier.';
-        btnCancelText.value = 'Quitter';
+        console.log('Deck invalide');
       } else if (message.type === 'authentication_failed') {
-        errorMessage.value = 'Échec de l\'authentification. Veuillez vous reconnecter.';
-        btnCancelText.value = 'Quitter';
+        console.log('Échec de l\'authentification'); 
       } else if (message.type === 'duel_end') {
         // Gérer la fin du duel
         console.log('Duel terminé:', message.reason);
