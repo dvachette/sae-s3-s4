@@ -26,8 +26,10 @@
     </div>
     <div class="page_chargement" v-if="adversaire == false">
       <div class="non_deck">
+        <p id="errorMessageDuel">{{ errorMessage }}</p>
         <div class="vague">
           <h2
+            v-if="!errorMessage"
             v-for="(lettre, index) in chargement"
             :key="index"
             :class="{ espaces: lettre === ' ' }"
@@ -36,7 +38,7 @@
             {{ lettre === ' ' ? '\u00A0' : lettre }}
           </h2>
         </div>
-        <router-link to="/combat"><button>Annuler</button></router-link>
+        <router-link to="/combat"><button @click="closeSocket()">{{ btnCancelText }}</button></router-link>
       </div>
       <h3 v-if="deckMembre">Votre deck :</h3>
       <div class="chargement_deck" v-if="deckMembre">
@@ -68,7 +70,7 @@
         <Carte_familier
           largeur="10vw"
           :data="deckFamilier"
-          v-if="afficher_carte == true"
+          v-if="deckFamilier && afficher_carte == true"
         />
       </div>
     </div>
@@ -377,6 +379,11 @@ import {
   Attaque,
 } from './types/duel';
 import VerifLogin from './Composants/verifLogin.vue';
+
+
+
+const errorMessage = ref('');
+const btnCancelText = ref('Annuler');
 const pourcentageValue = computed(() => (combatState.moi.energie * 100) / 10);
 const jauge_energie = computed(() => pourcentageValue.value + '%');
 let userData = ref(null);
@@ -629,10 +636,14 @@ function onLoginSuccess() {
   // Logique à exécuter après une connexion réussie
   console.log('Utilisateur connecté avec succès');
   userData.value = JSON.parse(sessionStorage.getItem('userData'));
-  deckMembre = userData.value.deck.cards;
-  deckFamilier = userData.value.deck.pet;
-  console.log(deckMembre);
-  afficher_carte.value = true;
+  deckMembre.value = userData.value.deck.cards.every(card => card !== null)
+    ? userData.value.deck.cards
+    : null;
+  deckFamilier.value = userData.value.deck.pet ? userData.value.deck.pet : null;
+  console.log("DeckMmebre :" , deckMembre);
+  afficher_carte.value = userData.value.deck.cards.every(card => card !== null);
+  console.log("Afficher carte :", afficher_carte.value);
+  console.log("DeckFamilier :", deckFamilier.value);
   // Initialiser la socket
   socket.value = new WebSocket(`ws://${config.hosts.socket}`);
   socket.value.onopen = () => {
@@ -654,10 +665,18 @@ function onLoginSuccess() {
         console.log('État du combat mis à jour:', combatState);
       } else if (message.type === 'already_connected') {
         console.log('Déjà connecté ailleurs');
+        errorMessage.value = 'Vous êtes déjà connecté ailleurs.';
+        btnCancelText.value = 'Retour';
+        deckFamilier.value = null;
+        deckMembre.value = null;
       } else if (message.type === 'invalid_deck') {
         console.log('Deck invalide');
+        errorMessage.value = 'Votre deck est invalide. Veuillez le modifier.';
+        btnCancelText.value = 'Modifier le deck';
       } else if (message.type === 'authentication_failed') {
-        console.log('Échec de l\'authentification'); 
+        console.log('Échec de l\'authentification');
+        errorMessage.value = 'Échec de l\'authentification. Veuillez vous reconnecter.';
+        btnCancelText.value = 'Retour'; 
       } else if (message.type === 'duel_end') {
         // Gérer la fin du duel
         console.log('Duel terminé:', message.reason);
