@@ -160,7 +160,7 @@ img#imageCarreTerrain {
   position: sticky; /*pour qu'il colle quand il arrive juste en dessous du header*/
   top: 12vh;
   left: 0;
-  right:0;
+  right: 0;
 }
 
 .deck > p {
@@ -317,24 +317,26 @@ img#imageCarreTerrain {
 .selection {
   border: 3px solid rgb(var(--rouge600));
   border-radius: 7px;
-  position:relative;
+  position: relative;
 }
-
-
 
 .dansDeck {
-  position:relative;
+  position: relative;
 }
 
-.dansDeck::before{
-  content:'';
-  position:absolute;
-  inset:0;
+.dansDeck::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   z-index: 3;
+  border-radius: 5px;
+  border-radius: 5px;
 
   background: rgba(var(--rouge700), 0.4);
 }
 
-.carte:not(.dansDeck), .deck > img, .deck>.carteMembreDeck>img{
-  cursor:pointer;
+.carte:not(.dansDeck),
+.deck > img,
+.deck > .carteMembreDeck > img {
+  cursor: pointer;
 }

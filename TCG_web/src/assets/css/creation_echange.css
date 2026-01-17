@@ -16,13 +16,23 @@ header {
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background-color: rgb(var(--blanc50));
   position: fixed;
   z-index: 12;
   height: 40vh;
   margin-top: 12.5vh;
+}
+
+.recap_fixe button {
+  width: 15vw;
+  border: none;
+  color: rgb(var(--blanc50));
+}
+
+#annuler_echange {
+  background-color: rgb(var(--rouge700));
 }
 
 .mon_echange {
@@ -37,11 +47,6 @@ header {
   box-shadow: 0 5px 10px rgba(var(--onyx), 0.5);
   font-size: 1.1vw;
   font-family: 'Mako';
-  cursor: pointer;
-}
-
-.mon_echange:hover {
-  border: solid 5px rgb(var(--orange500));
 }
 
 .demande {
@@ -51,6 +56,10 @@ header {
   height: 100%;
   justify-content: center;
   align-items: center;
+}
+
+.demande > p {
+  text-align: center;
 }
 
 .don {
@@ -63,10 +72,6 @@ header {
   border-left: solid 3px rgb(var(--jaune300));
 }
 
-.mon_echange:hover .don {
-  border-left: solid 3px rgb(var(--orange500));
-}
-
 .demande > p,
 .don > p {
   margin-top: 0vh;
@@ -75,18 +80,36 @@ header {
 }
 
 .demande > img {
-  width: 7vw;
+  width: 7.5vw;
+  height: 10.4vw;
+  cursor: pointer;
 }
 
 .les_cartes_don {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
   width: 100%;
 }
 
 .les_cartes_don > img {
   width: 7vw;
+  height: 10.4vw;
+  cursor: pointer;
+}
+
+#validation_ok {
+  background-color: rgb(var(--vert));
+}
+
+#validation_non {
+  background-color: rgb(var(--onyx));
+  cursor: default;
+}
+
+#validation_non:hover {
+  box-shadow: none;
 }
 
 h2 {
@@ -110,7 +133,9 @@ h2 {
   flex-wrap: wrap;
   gap: 20px;
   width: var(--width);
-  margin: 59vh 6vw 20px 6vw;
+  padding-left: 4vw;
+  padding-right: 4vw;
+  margin: 59vh 0vw 20px 0vw;
 }
 
 .une_carte {
@@ -120,62 +145,29 @@ h2 {
   gap: 10px;
 }
 
-.carte {
-  margin-top: 10px;
-}
-
-.membre_pop_up {
-  position: fixed; /* inset-0 */
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.membre_carte {
+.selection {
+  border: 3px solid rgb(var(--orange600));
+  border-radius: 7px;
   position: relative;
-  animation: scale-in 0.2s ease-out;
 }
 
-.familier_pop_up {
-  position: fixed; /* inset-0 */
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.familier_carte {
+.dansEchange {
   position: relative;
-  animation: scale-in 0.2s ease-out;
 }
 
-.terrain_pop_up {
-  position: fixed; /* inset-0 */
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  pointer-events: none;
+.dansEchange::before {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+
+  background: rgba(var(--rouge700), 0.4);
 }
 
-.terrain_carte {
-  position: relative;
-  animation: scale-in 0.2s ease-out;
-}
-
-@keyframes scale-in {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+.carte:not(.dansEchange),
+.deck > img,
+.deck > .carteMembreDeck > img {
+  cursor: pointer;
 }
