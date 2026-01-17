@@ -107,7 +107,6 @@ class User {
                 }
             }
         }
-        console.log(JSON.stringify(user.collection));
         // Récupération du deck de l'utilisateur
         const deckCard1 = user.collection.find(item => item.card.cardId === row.card1Id)?.card || null;
         const deckCard2 = user.collection.find(item => item.card.cardId === row.card2Id)?.card || null;
@@ -116,8 +115,6 @@ class User {
         const deckCard5 = user.collection.find(item => item.card.cardId === row.card5Id)?.card || null;
         const petCard = user.collection.find(item => item.card.cardId === row.petId)?.card || null;
         const arenaCard = user.collection.find(item => item.card.cardId === row.arenaId)?.card || null;
-        console.log(row.card1Id, row.card2Id, row.card3Id, row.card4Id, row.card5Id, row.petId, row.arenaId);
-        console.log(deckCard1, deckCard2, deckCard3, deckCard4, deckCard5, petCard, arenaCard);
         
         const deckCards = [deckCard1, deckCard2, deckCard3, deckCard4, deckCard5];
         user.deck = new Deck(deckCards, petCard, arenaCard);
@@ -235,7 +232,6 @@ class User {
             );
             updateQuery.run(this.username, this.email, this.profilePicture, this.userId);
         }
-        console.log(this.username);
         
         db.close();
     }
@@ -428,7 +424,6 @@ class User {
             const newCard = new Collection(cardId, 1, quantity);
             this.collection.push(newCard);
         }
-        console.log(existingCard);
         const db = new Database('database.db');
         
         if (existingCard) {

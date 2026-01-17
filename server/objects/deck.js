@@ -47,8 +47,6 @@ class Deck {
 
 
     isValid() {
-
-        console.log(this.cards.toString());
         return this.cards.filter(card => card !== null).length === 5
     }
 
