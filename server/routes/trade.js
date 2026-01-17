@@ -16,6 +16,7 @@ const Card = require('../objects/card');
  * @param offeredCardId3 L'ID d'une autre carte offerte
  */
 function proposeTrade(request, response) {
+
     // Vérification de la méthode HTTP
     if (request.method !== 'POST') {
         return response.status(405).send({ error: 'Méthode non autorisée. Utilisez POST.' });
@@ -24,8 +25,12 @@ function proposeTrade(request, response) {
     if (!request.session || !request.session.userId) {
         return response.status(401).send({ error: 'Utilisateur non authentifié.' });
     }
-
-    const { askedCardId, offeredCardId1, offeredCardId2, offeredCardId3 } = request.body;
+    const {
+        askedCardId,
+        offeredCardId1 = null,
+        offeredCardId2 = null,
+        offeredCardId3 = null
+    } = request.body;
 
     // Vérification des paramètres
     if (!askedCardId || (!offeredCardId1 && !offeredCardId2 && !offeredCardId3)) {
@@ -42,7 +47,7 @@ function proposeTrade(request, response) {
     `);
     const ownershipResult = checkCardOwnership.get(userId, offeredCardId1, offeredCardId2, offeredCardId3);
     
-    if (ownershipResult.count < 3) {
+    if (ownershipResult.count < 1) {
         return response.status(400).send({ error: 'Vous ne possédez pas toutes les cartes offertes.' });
     }
     // La demmande d'échange expire après 7 jours
@@ -57,7 +62,7 @@ function proposeTrade(request, response) {
     const insertTradeQuery = db.prepare(`
         INSERT INTO traderequest (senderId, askedCardId, offeredCard1Id, offeredCard2Id, offeredCard3Id, expirationDate) VALUES (?, ?, ?, ?, ?, ?)
     `);
-    insertTradeQuery.run(userId, askedCardId, offeredCardId1, offeredCardId2, offeredCardId3, expirationTimestamp);
+    insertTradeQuery.run(userId, askedCardId, offeredCardId1 ?? null, offeredCardId2?? null, offeredCardId3?? null, expirationTimestamp);
 
     // Enlever les cartes offertes de la collection de l'utilisateur
     const removeCardsQuery = db.prepare(`

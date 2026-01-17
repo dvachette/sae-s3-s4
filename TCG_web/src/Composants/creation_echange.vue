@@ -1,4 +1,5 @@
 <template>
+  <verifLogin />
   <MonHeader />
   <div class="creation">
     <div class="recap_fixe">
@@ -221,6 +222,7 @@ import Carte_membre from '@/Composants/carte_membre.vue';
 import Carte_familier from '@/Composants/carte_familier.vue';
 import Carte_terrain from '@/Composants/carte_terrain.vue';
 import barre_progress_carte from './barre_progress_carte.vue';
+import verifLogin from '@/Composants/verifLogin.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const collection = ref(userData.value.collection);
@@ -329,20 +331,27 @@ async function obtenirCartes() {
 }
 
 async function validerEchange() {
-  console.log(carteaDonnee2.value.cardId);
   try {
+    const body = {
+      askedCardId: carteDemandee.value?.cardId,
+    };
+
+    if (carteaDonnee1.value?.cardId) {
+      body.offeredCardId1 = carteaDonnee1.value.cardId;
+    }
+    if (carteaDonnee2.value?.cardId) {
+      body.offeredCardId2 = carteaDonnee2.value.cardId;
+    }
+    if (carteaDonnee3.value?.cardId) {
+      body.offeredCardId3 = carteaDonnee3.value.cardId;
+    }
     const response = await fetch(`http://${config.hosts.api}/trade/request`, {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        askedCardId: carteDemandee.value.cardId,
-        offeredCardId1: carteaDonnee1.value.cardId,
-        offeredCardId2: carteaDonnee2.value.cardId,
-        offeredCardId3: carteaDonnee3.value.cardId,
-      }),
+      body: JSON.stringify(body),
     });
     if (response.ok) {
       console.log('echange crée');
