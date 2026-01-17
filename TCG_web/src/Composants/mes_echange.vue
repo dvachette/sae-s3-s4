@@ -23,6 +23,11 @@
 import { ref, computed } from 'vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 
+defineProps({
+  carteDemandee: Object,
+  cartesADonner: Object,
+});
+
 const userData = ref(JSON.parse(sessionStorage.getItem('userData')));
 
 const collection = computed(() => {

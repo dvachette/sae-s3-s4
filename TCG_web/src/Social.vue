@@ -25,8 +25,18 @@
     <div class="part_echange">
       <h2>Mes échanges</h2>
 
-      <mes_echanges class="e1" @click="afficher_annuler = true" />
-      <router-link to="/creation_echange"
+      <mes_echanges
+        v-if="listeMesEchanges[0]"
+        class="e1"
+        :data="
+          (listeAmisEchanges[0].askedCardId,
+          listeAmisEchanges[0].offredCard1Id,
+          listeAmisEchanges[0].offredCard2Id,
+          listeAmisEchanges[0].offredCard3Id)
+        "
+        @click="afficher_annuler = true"
+      />
+      <router-link to="/creation_echange" v-else
         ><new_echange class="e2"
       /></router-link>
       <h2>Autres échanges</h2>
@@ -119,6 +129,10 @@ const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
 const afficher_echange = ref(false);
 const afficher_annuler = ref(false);
+const listeAmisEchanges = ref(null);
+let listeMesEchanges = ref([]);
+
+obtenirMesEchanges();
 
 function updateFriendData() {
   userData.value = JSON.parse(sessionStorage.getItem('userData'));
@@ -131,7 +145,7 @@ function demande_ami_acceptee(data) {
   const accepted_id = data.ami_id;
   const accepted_name = data.ami_nom;
   demandesRecues.value = demandesRecues.value.filter(
-    (friend) => friend.fromUserId != accepted_id
+    (friend) => friend.fromUserId != accepted_id,
   );
   amis.value.push({ userId: accepted_id, name: accepted_name });
 }
@@ -139,14 +153,14 @@ function demande_ami_acceptee(data) {
 function demande_ami_refusee(data) {
   const refused_id = data.ami_id;
   demandesRecues.value = demandesRecues.value.filter(
-    (friend) => friend.fromUserId != refused_id
+    (friend) => friend.fromUserId != refused_id,
   );
 }
 
 function annuler_demande(data) {
   const annulee_id = data.ami_id;
   demandesEnvoyees.value = demandesEnvoyees.value.filter(
-    (friend) => friend.toUserId != annulee_id
+    (friend) => friend.toUserId != annulee_id,
   );
 }
 
@@ -199,6 +213,30 @@ async function afficher_liste(event) {
     } catch (erreur) {
       console.error(erreur);
     }
+  }
+}
+
+async function obtenirMesEchanges() {
+  try {
+    const response = await fetch(
+      `http://${config.hosts.api}/trade/requests/me`,
+      {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(),
+      },
+    );
+    const data = await response.json();
+    if (response.ok) {
+      listeMesEchanges = data;
+    } else {
+      console.error(data);
+    }
+  } catch (erreur) {
+    console.error(erreur);
   }
 }
 

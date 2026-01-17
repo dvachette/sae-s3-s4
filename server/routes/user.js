@@ -165,7 +165,6 @@ async function editAccount(request, response) {
       .status(403)
       .send({error : "Mot de passe incorrect"}) ;
   } 
-  console.log(request.body);
   // Vérifier qu'au moins une information est fournie
   if (!newMail && !newPassword && !newUsername && !newProfilePicture) {
     return response
@@ -323,7 +322,6 @@ function searchUsers(request, response) {
 
   const query = request.body.query;
   const ret = User.search(query);
-  console.log(ret);
 
   return response.status(200).send({ users: ret });
 }

@@ -56,7 +56,6 @@ function upgradeCard(request, response) {
     const userId = request.session.userId;
     const { cardId } = request.body;
 
-    console.log(`Demande d'amélioration de la carte ${cardId} par l'utilisateur ${userId}`);
     const user = User.fromId(userId);
 
     try {
