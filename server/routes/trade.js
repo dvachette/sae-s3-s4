@@ -257,9 +257,9 @@ function getSelfTradeRequests(request, response) {
 
     const getTradesQuery = db.prepare(`
         SELECT tr.tradeRequestId, tr.senderId, tr.askedCardId, tr.offeredCard1Id, tr.offeredCard2Id, tr.offeredCard3Id, tr.expirationDate
-        FROM traderequest WHERE tr.senderId = ?
+        FROM traderequest tr WHERE tr.senderId = ?
     `);
-    const trades = getTradesQuery.all(userId, userId);
+    const trades = getTradesQuery.all(userId);
     return response.status(200).send({ trades:trades });
 }
 
