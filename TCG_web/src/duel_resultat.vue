@@ -40,17 +40,11 @@
       <div class="infos">
         <div class="personnes">
           <div class="mes_infos">
-            <img
-              src="@/assets/imgs/carte/perso/36.png"
-              alt="Logo du site"
-            />
+            <img src="@/assets/imgs/carte/perso/36.png" alt="Logo du site" />
             <p>{{ nom_j1 }}</p>
           </div>
           <div class="autres_infos">
-            <img
-              src="@/assets/imgs/carte/perso/36.png"
-              alt="photo de profil"
-            />
+            <img src="@/assets/imgs/carte/perso/36.png" alt="photo de profil" />
             <p>{{ nom_j2 }}</p>
           </div>
         </div>
@@ -123,7 +117,7 @@ const membres = computed(() => {
 const familiers = computed(() => {
   //computed : prend une fonction en parametre : elle est recalculée dès que collection change
   return collection.value.filter(
-    (carte) => carte.card._class === 'pet' //condition fonction fléchée)qui doit etre a true pour etre selectionnée par filter
+    (carte) => carte.card._class === 'pet', //condition fonction fléchée)qui doit etre a true pour etre selectionnée par filter
     // carte est l'élément examiné par filter lorsqu'il parcours collection
   );
 });

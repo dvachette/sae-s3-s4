@@ -229,7 +229,7 @@ function deselection(evt){
       classCarteSelectionnée.value = null;
     }
 }
-  
+
 function estDansDeck(carte){
   if(deckMembre.value?.some(c => c?.cardId == carte?.cardId) || deckFamilier.value?.cardId==carte?.cardId){ //verifie pour chaque element c de deckMembre si y'en a 1 qui a c.id == carte.id
     return true;
