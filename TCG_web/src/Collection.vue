@@ -54,17 +54,17 @@
       </div>
       <div class="Filtres">
         <h2>Filtré par :</h2>
-        <label><input type="checkbox" name="filtre" value="possédées">possédées</input></label>
-        <label><input type="checkbox" name="filtre" value="mon_deck">mon deck</input></label>
-        <label><input type="checkbox" name="filtre" value="membres">membres</input></label>
-        <label><input type="checkbox" name="filtre" value="familiers">familiers</input></label>
-        <label><input type="checkbox" name="filtre" value="arènes">arènes</input></label>
+        <!--<label><input type="checkbox" name="filtre" value="possédées">possédées</input></label>-->
+        <label><input type="checkbox" name="filtre" value="mon_deck" v-model="filtreDeck" @change="filtrage">mon deck</input></label>
+        <label><input type="checkbox" name="filtre" value="member" v-model="filtreClasse" @change="filtrage">membres</input></label>
+        <label><input type="checkbox" name="filtre" value="pet" v-model="filtreClasse" @change="filtrage">familiers</input></label>
+        <label><input type="checkbox" name="filtre" value="arena" v-model="filtreClasse" @change="filtrage">arènes</input></label>
       </div>
     </div>
     <div class="collection">
       <div class="conteneur_cartes" :style="{'--width': widthFlexCartes}">
         <div class="une_carte"
-          v-for="carte in collection"
+          v-for="carte in collecVisible"
           :key="carte.card.cardId"
          >
           <Carte_membre v-if="carte.card._class == 'member'" 
@@ -119,8 +119,53 @@ const carteSurvolé = ref(null);
 const familierSurvolé = ref(null);
 const TerrainSurvolé = ref(null);
 
-const collection = userData.value.collection; //test OK mais vide
+const collection = computed(()=> userData.value.collection); //test OK mais vide
 console.log("Collection de l'utilisateur :", collection);
+const collecVisible = ref(collection.value); //variable pour la collection affichée, par défaut la collection entiere non triée
+triParType(collecVisible.value);
+
+const deck = ref(userData.value.deck.cards);
+deck.value?.push(userData.value.deck.arena);
+deck.value?.push(userData.value.deck.pet);
+
+//----------------Filtrage de la collection--------------------//
+const filtreClasse = ref([]);
+const filtreDeck = ref();
+
+function filtrage(){
+  console.log("------------filtrage---------------")
+  if(filtreDeck.value){
+    console.log("filtre dans le deck");
+    collecVisible.value = collection.value.filter(elem => deck.value.some(carte => carte.cardId == elem.card.cardId));
+  } else {
+    collecVisible.value = collection.value;
+  }
+
+  if(filtreClasse.value.length < 3 && filtreClasse.value.length > 0){
+    const terrains = ref([]);
+    const familiers = ref([]);
+    const membres = ref([]);
+    if(filtreClasse.value.includes("member")){
+      membres.value = collecVisible.value.filter(elem => elem.card._class == 'member');
+    }
+    if(filtreClasse.value.includes("pet")){
+      familiers.value = collecVisible.value.filter(elem => elem.card._class == 'pet');
+    }
+    if(filtreClasse.value.includes("arena")){
+      terrains.value = collecVisible.value.filter(elem => elem.card._class == 'arena');
+    }
+
+    collecVisible.value = [...membres.value, ...familiers.value, ...terrains.value];
+  }
+}
+
+//----------------Tri de la collection--------------------//
+function triParType(liste){
+  const ordre = ['member', 'pet', 'arena'];
+  liste.sort((a,b) => {
+    return ordre.indexOf(a.card._class) - ordre.indexOf(b.card._class);
+  });
+}
 
 const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
 const width = ref((Math.floor(80 * vw.value / 220))*220);
