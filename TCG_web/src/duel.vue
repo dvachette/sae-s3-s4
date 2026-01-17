@@ -80,6 +80,7 @@
         v-if="afficher_abandon"
         id="abandon"
         @fermer="afficher_abandon = false"
+        @confirm="closeSocket(); $router.push('/duel_resultat')"
       />
       <div class="cartes_combat">
         <div class="son_deck">
