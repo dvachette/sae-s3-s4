@@ -203,6 +203,7 @@
           draggable="true"
           @dragstart="selectionCarteEchange(carte.card, $event)"
         />
+        <barre_progress_carte :niv="carte.quantity" />
       </div>
     </div>
   </div>
@@ -214,6 +215,7 @@ import MonHeader from '@/Composants/header.vue';
 import Carte_membre from '@/Composants/carte_membre.vue';
 import Carte_familier from '@/Composants/carte_familier.vue';
 import Carte_terrain from '@/Composants/carte_terrain.vue';
+import barre_progress_carte from './barre_progress_carte.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
 const collection = userData.value.collection;
