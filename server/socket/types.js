@@ -236,9 +236,19 @@ export class CombatState {
                                 }
                                 break; // Sortir du switch sans infliger de dégâts
                             }
-                            const damageBonus = attacker.main.carteActive.statusEffects
+                            let damageBonus = attacker.main.carteActive.statusEffects
                                 .filter(se => se.type === 'strength')
                                 .reduce((acc, se) => acc + se.value, 0);
+                            console.log("Types de la carte attaquante :", attacker.main.carteActive.type);
+                            console.log("Types de la carte cible :", card.type);
+                            console.log("Forces de la carte attaquante :", attacker.main.carteActive.force);
+                            console.log("Faiblesses de la carte attaquante :", attacker.main.carteActive.faiblesse);
+                            if (attacker.main.carteActive.force.some(typeId => card.type.find(type => type.typeId === typeId))) {
+                                damageBonus += 10; // Bonus de dégâts pour la force
+                            }
+                            if (attacker.main.carteActive.faiblesse.some(typeId => card.type.find(type => type.typeId === typeId))) {
+                                damageBonus -= 10; // Malus de dégâts pour la faiblesse
+                            }
                             const damagePenalty = attacker.main.carteActive.statusEffects
                                 .filter(se => se.type === 'weakness')
                                 .reduce((acc, se) => acc + se.value, 0);
