@@ -115,7 +115,7 @@
           :data="carte.card"
           largeur="200px"
           class="terrain"
-          :class="{ dansDeck: carte.card.cardId ==  deckFamilier?.cardId}"
+          :class="{ dansDeck: carte.card.cardId ==  deckTerrain?.cardId}"
           @click="selectionCarteCollection(carte.card, $event)"
           draggable="true"
           @dragstart="beginDragImageCarteTerrain($event)"

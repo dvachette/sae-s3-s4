@@ -157,53 +157,57 @@
         </div>
       </div>
       <router-link to="/social" v-if="echange_valide"
-        ><button id="validation_ok">valider échange</button></router-link
+        ><button id="validation_ok" @click="validerEchange">
+          valider échange
+        </button></router-link
       >
       <button id="validation_non" v-else>valider échange</button>
     </div>
   </div>
-  <h2>Choisir des cartes à donner :</h2>
+  <h2>Choisir des cartes à échanger :</h2>
   <div class="les_cartes">
     <div
       class="conteneur_cartes"
       :style="{ '--width': widthFlexCartes }"
       @click="deselection($event)"
     >
-      <div
-        class="une_carte"
-        v-for="carte in collection"
-        :key="carte.card.cardId"
-      >
+      <div class="une_carte" v-for="carte in touteCartes" :key="carte.cardId">
         <Carte_membre
-          v-if="carte.card._class == 'member'"
-          :data="carte.card"
+          v-if="carte._class == 'member'"
+          :data="carte"
           largeur="200px"
-          :class="{ dansEchange: estDansEchange(carte.card) }"
-          @click="selectionCarteEchange(carte.card, $event)"
+          :class="{ dansEchange: estDansEchange(carte) }"
+          @click="selectionCarteEchange(carte, $event)"
           draggable="true"
-          @dragstart="selectionCarteEchange(carte.card, $event)"
+          @dragstart="selectionCarteEchange(carte, $event)"
         />
 
         <Carte_familier
-          v-if="carte.card._class == 'pet'"
-          :data="carte.card"
+          v-if="carte._class == 'pet'"
+          :data="carte"
           largeur="200px"
-          :class="{ dansEchange: estDansEchange(carte.card) }"
-          @click="selectionCarteEchange(carte.card, $event)"
+          :class="{ dansEchange: estDansEchange(carte) }"
+          @click="selectionCarteEchange(carte, $event)"
           draggable="true"
-          @dragstart="selectionCarteEchange(carte.card, $event)"
+          @dragstart="selectionCarteEchange(carte, $event)"
         />
 
         <Carte_terrain
-          v-if="carte.card._class == 'arena'"
-          :data="carte.card"
+          v-if="carte._class == 'arena'"
+          :data="carte"
           largeur="200px"
-          :class="{ dansEchange: estDansEchange(carte.card) }"
-          @click="selectionCarteEchange(carte.card, $event)"
+          :class="{ dansEchange: estDansEchange(carte) }"
+          @click="selectionCarteEchange(carte, $event)"
           draggable="true"
-          @dragstart="selectionCarteEchange(carte.card, $event)"
+          @dragstart="selectionCarteEchange(carte, $event)"
         />
-        <barre_progress_carte :niv="carte.quantity" />
+        <barre_progress_carte
+          :niv="
+            collection.find((c) => c.card.cardId === carte.cardId)
+              ? collection.find((c) => c.card.cardId === carte.cardId).quantity
+              : 0
+          "
+        />
       </div>
     </div>
   </div>
@@ -211,6 +215,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import config from '@/config.json';
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from '@/Composants/carte_membre.vue';
 import Carte_familier from '@/Composants/carte_familier.vue';
@@ -218,14 +223,17 @@ import Carte_terrain from '@/Composants/carte_terrain.vue';
 import barre_progress_carte from './barre_progress_carte.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
-const collection = userData.value.collection;
+const collection = ref(userData.value.collection);
 const echange_valide = ref(false);
+const touteCartes = ref(null);
+obtenirCartes();
 
 const carteDemandee = ref(null);
 const carteaDonnee1 = ref(null);
 const carteaDonnee2 = ref(null);
 const carteaDonnee3 = ref(null);
 const carteSelectionnée = ref(null);
+const quantitySelectionnée = ref(null);
 const carteChangement = ref(null);
 
 function selectionCarteEchange(card, evt) {
@@ -237,6 +245,11 @@ function selectionCarteEchange(card, evt) {
 
     carteSelectionnée.value = carteSelect;
     carteChangement.value = card;
+    quantitySelectionnée.value = collection.value.find(
+      (c) => c.card.cardId === card.cardId,
+    )
+      ? collection.value.find((c) => c.card.cardId === card.cardId).quantity
+      : 0;
   }
 }
 
@@ -262,15 +275,18 @@ function valide_echange() {
 }
 
 function ajout_carte(index) {
+  console.log(quantitySelectionnée.value);
   if (carteChangement) {
     if (index == 0) {
       carteDemandee.value = carteChangement.value;
-    } else if (index == 1) {
-      carteaDonnee1.value = carteChangement.value;
-    } else if (index == 2) {
-      carteaDonnee2.value = carteChangement.value;
-    } else if (index == 3) {
-      carteaDonnee3.value = carteChangement.value;
+    } else if (quantitySelectionnée.value > 0) {
+      if (index == 1) {
+        carteaDonnee1.value = carteChangement.value;
+      } else if (index == 2) {
+        carteaDonnee2.value = carteChangement.value;
+      } else if (index == 3) {
+        carteaDonnee3.value = carteChangement.value;
+      }
     }
     valide_echange();
   }
@@ -290,7 +306,53 @@ function estDansEchange(carte) {
   }
 }
 
-/*----------------Partie drag and drop------------------*/
+async function obtenirCartes() {
+  try {
+    const response = await fetch(`http://${config.hosts.api}/trade/cards`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      touteCartes.value = data.cartes;
+      console.log(touteCartes.value);
+    } else {
+      console.log('erreur');
+    }
+  } catch (erreur) {
+    console.error(erreur);
+  }
+}
+
+async function validerEchange() {
+  console.log(carteaDonnee2.value.cardId);
+  try {
+    const response = await fetch(`http://${config.hosts.api}/trade/request`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        askedCardId: carteDemandee.value.cardId,
+        offeredCardId1: carteaDonnee1.value.cardId,
+        offeredCardId2: carteaDonnee2.value.cardId,
+        offeredCardId3: carteaDonnee3.value.cardId,
+      }),
+    });
+    if (response.ok) {
+      console.log('echange crée');
+    } else {
+      console.log('erreur');
+    }
+  } catch (erreur) {
+    console.error(erreur);
+  }
+}
 </script>
 
 <style scoped>
