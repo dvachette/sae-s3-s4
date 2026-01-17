@@ -91,7 +91,7 @@ app.get('/trade/requests', tradeRoutes.getTrades);
 app.get('/trade/requests/me', tradeRoutes.getSelfTradeRequests);
 app.delete('/trade/request', tradeRoutes.deleteTrade);
 app.post('/trade/accept', tradeRoutes.acceptTrade);
-app.get('/trade/request', tradeRoutes.getAllCard);
+app.get('/trade/cards', tradeRoutes.getAllCard);
 
 
 app.get("/deck", deckRoutes.getDeck);
