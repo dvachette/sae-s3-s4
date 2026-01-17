@@ -82,7 +82,6 @@ class Card {
 
         const cards = [];
         for (const row of rows) {
-            console.log(row);
             cards.push(Card.fromId(row.cardId, 1));
         }
         return cards;
@@ -97,10 +96,8 @@ class Card {
         let totalWeight = 0;
         cards = cards.filter(card => card !== null); // Filtrer les cartes nulles
         for (const card of cards) {
-            console.log(card);
             totalWeight += card.weight;
         }
-        console.log("Total weight:", totalWeight);
         // Si la plage de poids est nulle (toutes les cartes ont un poids de 0), on évite la division par zéro
         if (totalWeight === 0) {
             return null;
@@ -129,7 +126,6 @@ class Card {
         const drawnCards = [];
         for (let i = 0; i < nb; i++) {
             const drawnCard = Card.getRandomWeightedCard(allCards);
-            console.log("Drawn card:", drawnCard);
             if (drawnCard) {
                 drawnCards.push(drawnCard);
             }

@@ -79,7 +79,6 @@ class Offer {
             }
             allOffers = allOffers.filter(o => !selectedOffers.includes(o));
         }
-        console.log("Generated daily shop offers:", selectedOffers.map(o => o.id));
         return selectedOffers;
 
     }
@@ -90,14 +89,12 @@ class Offer {
         const checkStmt = db.prepare("SELECT * FROM daily_shop WHERE date = ?");
         const existingEntry = checkStmt.get(dateStr);
         if (existingEntry) {
-            console.log("Daily shop for today already exists. Skipping save.");
             return;
         }
 
         const insertStmt = db.prepare("INSERT INTO daily_shop (date, offer1Id, offer2Id, offer3Id) VALUES (?, ?, ?, ?)");
 
         const offerIds = offers.map(offer => offer.id);
-        console.log("Saving daily shop for date:", dateStr, "with offers:", offerIds);
         insertStmt.run(dateStr, ...offerIds);
     }
 

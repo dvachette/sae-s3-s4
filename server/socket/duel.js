@@ -164,14 +164,14 @@ function receiveSocket(socket) {
                         
                         if (player1Mort || player2Mort) {
                             if (player1Mort) {
-                                player1SocketSwap.send(JSON.stringify({ type: 'defeat'}));
+                                player1SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                             } else {
-                                player1SocketSwap.send(JSON.stringify({ type: 'victory'}));
+                                player1SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
                             }
                             if (player2Mort) {
-                                player2SocketSwap.send(JSON.stringify({ type: 'defeat'}));
+                                player2SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                             } else {
-                                player2SocketSwap.send(JSON.stringify({ type: 'victory'}));
+                                player2SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
                             }
                             return
                         }

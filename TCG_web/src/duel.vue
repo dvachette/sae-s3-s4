@@ -26,8 +26,10 @@
     </div>
     <div class="page_chargement" v-if="adversaire == false">
       <div class="non_deck">
+        <p>{{  errorMessage }}</p>
         <div class="vague">
           <h2
+            v-if="!errorMessage"
             v-for="(lettre, index) in chargement"
             :key="index"
             :class="{ espaces: lettre === ' ' }"
@@ -36,8 +38,7 @@
             {{ lettre === ' ' ? '\u00A0' : lettre }}
           </h2>
         </div>
-        <!-- TODO : Fermer la socket avant de quitter-->
-        <router-link to="/combat"><button>annuler combat</button></router-link>
+        <router-link to="/combat"><button @click="closeSocket()">{{ btnCancelText }}</button></router-link>
       </div>
       <h3>Votre deck :</h3>
       <div class="chargement_deck">
@@ -392,6 +393,9 @@ const afficher_abandon = ref(false);
 const backgroundImageSrc = ref(
   'src/assets/imgs/combat_feyssine.png'
 );
+const errorMessage = ref('');
+const btnCancelText = ref('Annuler le combat');
+
 
 function resetBackground() {
   console.log('Erreur de chargement de l\'image de fond, réinitialisation à l\'image par défaut.');
@@ -652,7 +656,18 @@ function onLoginSuccess() {
 
         console.log('État du combat mis à jour:', combatState);
       } else if (message.type === 'already_connected') {
-        // Deja connecté ailleurs, afficher un message d'erreurù
+        errorMessage.value = 'Vous êtes déjà connecté dans un autre duel.';
+        btnCancelText.value = 'Quitter';
+      } else if (message.type === 'invalid_deck') {
+        errorMessage.value = 'Votre deck est invalide. Veuillez le vérifier.';
+        btnCancelText.value = 'Quitter';
+      } else if (message.type === 'authentication_failed') {
+        errorMessage.value = 'Échec de l\'authentification. Veuillez vous reconnecter.';
+        btnCancelText.value = 'Quitter';
+      } else if (message.type === 'duel_end') {
+        // Gérer la fin du duel
+        console.log('Duel terminé:', message.reason);
+        // Rediriger vers une autre page ou afficher les résultats
       } 
     };
 
@@ -689,6 +704,13 @@ function swap_cartes(index) {
       socket.value.send(JSON.stringify({ type: 'swap', index: index }));
       echangeCarte.value = false;
     }
+  }
+}
+
+function closeSocket() {
+  if (socket.value) {
+    socket.value.close();
+    console.log('Socket fermée');
   }
 }
 </script>
