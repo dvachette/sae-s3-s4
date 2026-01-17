@@ -42,12 +42,12 @@
         <h2>Trié par :</h2>
         <div class="Tri_liste" v-for="item in options" :key="item.value">
     <label>
-      <input type="radio" name="tri" v-model="selected" :value="item.value">
+      <input type="radio" name="tri" v-model="selected" :value="item.value" @change="triRadio(item.value)">
       {{ item.label }}
     </label>
     <!-- Checkbox visible uniquement si ce radio est sélectionné -->
     <label v-if="selected === item.value && item.checkbox">
-      <input type="checkbox" v-model="item.checkboxValue">
+      <input type="checkbox" v-model="item.checkboxValue" @change="triRadio(item.value)">
       {{ item.checkbox }}
     </label>
   </div>
@@ -165,6 +165,78 @@ function triParType(liste){
   liste.sort((a,b) => {
     return ordre.indexOf(a.card._class) - ordre.indexOf(b.card._class);
   });
+}
+
+function triParMandat(liste, triChronologique){
+  const ordreChrono = ['SIB','MIB', 'FBI', 'SDI', 'ALL'];
+  const ordreAntiChrono = ['SDI', 'FBI', 'MIB', 'SIB', 'ALL'];
+  
+  const SDI = liste.filter(elem => elem.card.mandat == 'SDI');
+  const FBI = liste.filter(elem => elem.card.mandat == 'FBI');
+  const MIB = liste.filter(elem => elem.card.mandat == 'MIB');
+  const SIB = liste.filter(elem => elem.card.mandat == 'SIB');
+  const ALL = liste.filter(elem => elem.card.mandat == 'ALL');
+
+  triParPole(SDI);
+  triParPole(FBI);
+  triParPole(MIB);
+  triParPole(SIB);
+  triParPole(ALL);
+
+
+  if(triChronologique){
+    collecVisible.value = [...SIB, ...MIB, ...FBI, ...SDI, ...ALL];
+  }else {
+    collecVisible.value = [...SDI, ...FBI, ...MIB, ...SIB, ...ALL];
+  }
+}
+
+function triParNiveau(liste, croissant){
+  if(croissant){
+    liste.sort((a,b) => {
+      return a.quantity - b.quantity;
+    });
+  } else {
+    liste.sort((a,b) => {
+      return b.quantity - a.quantity;
+    });
+  }
+}
+
+function triParPole(liste){
+  const poles = [
+    'presidence',
+    'tresorerie',
+    'secretariat',
+    'projet',
+    'communication',
+    'local',
+    'superviseur',
+    'pioux',
+    'culture',
+    'prevention',
+    'bobo',
+    'MA',
+    'MI',
+    'suivi', 
+    'pet',
+    'arena'];
+
+  liste.sort((a,b) => {
+      let A = (a.card._class == 'member') ? poles.indexOf(a.card.type[0].name) : poles.indexOf(a.card._class);
+      let B = (b.card._class == 'member') ? poles.indexOf(b.card.type[0].name) : poles.indexOf(b.card._class);
+      return A - B;
+    });
+}
+
+function triRadio(critere){
+  if(critere == 'mandat'){
+    triParMandat(collecVisible.value, options.value[0].checkboxValue);
+  } else if(critere == 'niveau'){
+    triParNiveau(collecVisible.value, options.value[1].checkboxValue);
+  } else if(critere == 'pôle'){
+    triParPole(collecVisible.value);
+  }
 }
 
 const vw = ref(window.innerWidth / 100); //obtenir 1% de la largeur de la fenetre, en px
