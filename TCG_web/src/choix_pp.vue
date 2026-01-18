@@ -99,7 +99,7 @@ const options = ref([
 const emit = defineEmits(['fermer', 'changementPP']);
 
 async function changementPP() {
-  const response = await fetch(`http://${config.hosts.api}/user`, {
+  const response = await fetch(`${config.hosts.api}/user`, {
     method: 'PUT',
     credentials: 'include',
     headers: {

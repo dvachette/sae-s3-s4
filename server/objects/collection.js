@@ -6,6 +6,9 @@ class Collection {
 
     constructor(cardId, level, quantity) {
         this.card = Card.fromId(cardId, level);
+        if (this.card._class === 'pet') {
+            console.log("Init collection - Pet : ", this.card);
+        }
         this.quantity = quantity;
     }
 }

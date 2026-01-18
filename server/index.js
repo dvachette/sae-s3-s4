@@ -6,6 +6,7 @@
 */
 
 // Modules NPM
+const http = require('http'); // Importation du module HTTP natif de Node.js
 const express = require('express'); // Importation du framework Express
 const session = require('express-session'); // Importation de l'outil de gestion de sessions
 const cors = require('cors'); // Importation de l'outil CORS pour gérer les requêtes multi-origines
@@ -26,7 +27,7 @@ const shopRoutes = require('./routes/shop.js'); // Importation des routes shop
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
 const app = express(); // Création de l'application Express
-
+const server = http.createServer(app); // Création du serveur HTTP avec l'application Express
 // Configuration de l'application Express
 const SESSION_KEY = 'LaSuperClefDeSession'
 
@@ -102,12 +103,12 @@ app.get('/shop', shopRoutes.getShop);
 app.post('/shop/buy', shopRoutes.buyOffer);
 
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
-app.listen(PORT, () => {
-    console.log('ATTENTION, SERVEUR EN MODE DÉVELOPPEMENT, NE PAS UTILISER EN PRODUCTION !');
-    console.log(`Server is running on port ${PORT}`);
-});
 
-const wss = new ws.Server({ port: 8080 }); // Serveur WebSocket sur le port 8080
+const wss = new ws.WebSocketServer({server}); // Serveur WebSocket sur le port 8080
 // Gestion des connexions WebSocket
 
 wss.on('connection', duelUtils.receiveSocket); // Utilisation de la fonction de gestion des connexions de duel   
+
+server.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+});

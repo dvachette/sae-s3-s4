@@ -18,7 +18,7 @@ const emit = defineEmits(['annuler', 'erreur']);
 
 async function annuler_demande() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/request`, {
+    const response = await fetch(`${config.hosts.api}/friends/request`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {

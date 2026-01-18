@@ -646,7 +646,7 @@ function onLoginSuccess() {
   console.log("Afficher carte :", afficher_carte.value);
   console.log("DeckFamilier :", deckFamilier.value);
   // Initialiser la socket
-  socket.value = new WebSocket(`ws://${config.hosts.socket}`);
+  socket.value = new WebSocket(`${config.hosts.socket}`);
   socket.value.onopen = () => {
     socket.value.onmessage = (event) => {
       const message = JSON.parse(event.data);

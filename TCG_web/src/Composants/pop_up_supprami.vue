@@ -18,7 +18,7 @@ const props = defineProps({
 const emit = defineEmits(['supprimer', 'erreur', 'garder_ami']);
 async function supprimer_ami() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends`, {
+    const response = await fetch(`${config.hosts.api}/friends`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {

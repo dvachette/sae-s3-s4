@@ -10,7 +10,7 @@ const router = useRouter()
       try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          `http://${config.hosts.api}/user`, // URL de l'API de connexion
+          `${config.hosts.api}/user`, // URL de l'API de connexion
           {
             method: 'GET', // Méthode GET pour récupérer les données
             credentials: "include", // Inclure les cookies dans la requête

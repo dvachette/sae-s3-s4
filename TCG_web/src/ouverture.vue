@@ -138,7 +138,7 @@ function recupBooster() {
 }
 
 async function fetchBooster() {
-  const response = await fetch(`http://${config.hosts.api}/booster/open`, {
+  const response = await fetch(`${config.hosts.api}/booster/open`, {
     method: 'POST',
     credentials: 'include',
   });
@@ -185,7 +185,7 @@ async function fetchBooster() {
 }
 
 async function buyBooster() {
-  const response = await fetch(`http://${config.hosts.api}/booster/buy`, {
+  const response = await fetch(`${config.hosts.api}/booster/buy`, {
     method: 'POST',
     credentials: 'include',
   });

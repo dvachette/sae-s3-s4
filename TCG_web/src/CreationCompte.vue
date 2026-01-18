@@ -46,7 +46,7 @@ export default {
       try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          `http://${config.hosts.api}/user`, // URL de l'API de connexion
+          `${config.hosts.api}/user`, // URL de l'API de connexion
           {
             method: 'POST', // Méthode POST pour envoyer les données
             headers: {

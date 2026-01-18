@@ -22,7 +22,7 @@ const emit = defineEmits(['accepter', 'refuser', 'erreur']);
 
 async function accept_ami() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/accept`, {
+    const response = await fetch(`${config.hosts.api}/friends/accept`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -44,7 +44,7 @@ async function accept_ami() {
 
 async function refus_ami() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/reject`, {
+    const response = await fetch(`${config.hosts.api}/friends/reject`, {
       method: 'POST',
       credentials: 'include',
       headers: {

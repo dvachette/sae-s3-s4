@@ -211,7 +211,7 @@ function demander_ami(data) {
 async function afficher_liste(event) {
   if (event.key === 'Enter') {
     try {
-      const response = await fetch(`http://${config.hosts.api}/user/search`, {
+      const response = await fetch(`${config.hosts.api}/user/search`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -234,7 +234,7 @@ async function afficher_liste(event) {
 async function obtenirMesEchanges() {
   try {
     const response = await fetch(
-      `http://${config.hosts.api}/trade/requests/me`,
+      `${config.hosts.api}/trade/requests/me`,
       {
         method: 'GET',
         credentials: 'include',
@@ -257,7 +257,7 @@ async function obtenirMesEchanges() {
 
 async function obtenirEchanges() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/trade/requests`, {
+    const response = await fetch(`${config.hosts.api}/trade/requests`, {
       method: 'GET',
       credentials: 'include',
       headers: {

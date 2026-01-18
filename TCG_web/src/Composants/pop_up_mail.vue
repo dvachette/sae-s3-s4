@@ -29,7 +29,7 @@ const emit = defineEmits(['fermer']);
 
 async function changementMail() {
   if (nouveau_mail.value === confirmer_mail.value) {
-    const response = await fetch(`http://${config.hosts.api}/user`, {
+    const response = await fetch(`${config.hosts.api}/user`, {
       method: 'PUT',
       credentials: 'include',
       headers: {

@@ -310,7 +310,7 @@ function estDansEchange(carte) {
 
 async function obtenirCartes() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/trade/cards`, {
+    const response = await fetch(`${config.hosts.api}/trade/cards`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -345,7 +345,7 @@ async function validerEchange() {
     if (carteaDonnee3.value?.cardId) {
       body.offeredCardId3 = carteaDonnee3.value.cardId;
     }
-    const response = await fetch(`http://${config.hosts.api}/trade/request`, {
+    const response = await fetch(`${config.hosts.api}/trade/request`, {
       method: 'POST',
       credentials: 'include',
       headers: {

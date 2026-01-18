@@ -17,7 +17,7 @@ const emit = defineEmits(['demander', 'erreur']);
 
 async function demander_ami() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/request`, {
+    const response = await fetch(`${config.hosts.api}/friends/request`, {
       method: 'POST',
       credentials: 'include',
       headers: {

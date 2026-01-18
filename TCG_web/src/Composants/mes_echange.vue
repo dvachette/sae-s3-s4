@@ -118,7 +118,7 @@ let carteaDonnee3 = ref(null);
 async function obtenirMesEchanges() {
   try {
     const response = await fetch(
-      `http://${config.hosts.api}/trade/requests/me`,
+      `${config.hosts.api}/trade/requests/me`,
       {
         method: 'GET',
         credentials: 'include',
@@ -143,7 +143,7 @@ async function obtenirMesEchanges() {
 
 async function obtenirCartes() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/trade/cards`, {
+    const response = await fetch(`${config.hosts.api}/trade/cards`, {
       method: 'GET',
       credentials: 'include',
       headers: {
