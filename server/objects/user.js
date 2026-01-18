@@ -77,9 +77,9 @@ class User {
         for (const friendRow of friendsRows) {
             if (friendRow.status === 'accepted') {
                 const friendId = (friendRow.senderId === user.userId) ? friendRow.receiverId : friendRow.senderId;
-                const friendNameQuery = new Database("database.db").prepare('SELECT name FROM user WHERE userId = ?');
-                const friendNameRow = friendNameQuery.get(friendId);    
-                user.friends.push({userId: friendId, name: friendNameRow.name});
+                const friendNamePPQuery = new Database("database.db").prepare('SELECT name, profilePicture FROM user WHERE userId = ?');
+                const friendNamePPRow = friendNamePPQuery.get(friendId);    
+                user.friends.push({userId: friendId, name: friendNamePPRow.name, profilePicture: friendNamePPRow.profilePicture});
             } else if (friendRow.status === 'pending') {
                 const request = FriendRequest.fromRow(friendRow);
                 if (friendRow.receiverId === user.userId) {

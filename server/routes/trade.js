@@ -104,6 +104,11 @@ function getTrades(request, response) {
         JOIN friends f ON (tr.senderId = f.senderId AND f.receiverId = ?) OR (tr.senderId = f.receiverId AND f.senderId = ?) WHERE f.status = 'accepted'
     `);
     const trades = getTradesQuery.all(userId, userId);
+    for (let trade of trades) {
+        const sender = User.fromId(trade.senderId);
+        trade.senderUsername = sender.username;
+        trade.senderProfilePicture = sender.profilePicture;
+    }
     return response.status(200).send({ trades:trades });
 }
 
