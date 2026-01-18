@@ -32,8 +32,8 @@
                 :data="carteaDonnee1"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 1"
+                :class="{ active: carte_selectionee === 1 }"
               />
 
               <Carte_familier
@@ -41,8 +41,8 @@
                 :data="carteaDonnee1"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 1"
+                :class="{ active: carte_selectionee === 1 }"
               />
 
               <Carte_terrain
@@ -50,8 +50,8 @@
                 :data="carteaDonnee1"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 1"
+                :class="{ active: carte_selectionee === 1 }"
               />
             </div>
             <div class="carte2" v-if="carteaDonnee2">
@@ -60,8 +60,8 @@
                 :data="carteaDonnee2"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 2"
+                :class="{ active: carte_selectionee === 2 }"
               />
 
               <Carte_familier
@@ -69,8 +69,8 @@
                 :data="carteaDonnee2"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 2"
+                :class="{ active: carte_selectionee === 2 }"
               />
 
               <Carte_terrain
@@ -78,8 +78,8 @@
                 :data="carteaDonnee2"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 2"
+                :class="{ active: carte_selectionee === 2 }"
               />
             </div>
             <div class="carte3" v-if="carteaDonnee3">
@@ -88,8 +88,8 @@
                 :data="carteaDonnee3"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 3"
+                :class="{ active: carte_selectionee === 3 }"
               />
 
               <Carte_familier
@@ -97,8 +97,8 @@
                 :data="carteaDonnee3"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 3"
+                :class="{ active: carte_selectionee === 3 }"
               />
 
               <Carte_terrain
@@ -106,8 +106,8 @@
                 :data="carteaDonnee3"
                 largeur="4.9vw"
                 class="carte_echange"
-                @click="carte_selectionee = index"
-                :class="{ active: carte_selectionee === index }"
+                @click="carte_selectionee = 3"
+                :class="{ active: carte_selectionee === 3 }"
               />
             </div>
           </div>
@@ -117,13 +117,13 @@
     <div class="les_boutons">
       <button
         id="b_confirmer"
-        @click="$emit('confirmer')"
+        @click="$emit('fermer')"
         v-if="carte_selectionee != null"
       >
         confirmer échange
       </button>
       <button id="n_confirmer" v-else>confirmer échange</button>
-      <button id="b_annuler" @click="$emit('annuler')">annuler échange</button>
+      <button id="b_annuler" @click="$emit('fermer')">annuler échange</button>
     </div>
   </div>
 </template>
@@ -141,6 +141,7 @@ const props = defineProps({
 
 let sonEchange = ref(null);
 const touteCartes = ref(null);
+const carte_selectionee = ref(null);
 obtenirEchanges();
 obtenirCartes();
 
