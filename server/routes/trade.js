@@ -140,9 +140,9 @@ function acceptTrade(request, response) {
         return response.status(404).send({ error: 'Proposition d\'échange non trouvée.' });
     }
     // Vérifier que l'utilisateur est ami avec l'expéditeur
-    if (!areFriends(userId, trade.senderId)) {
-        return response.status(403).send({ error: 'Vous n\'êtes pas ami avec l\'expéditeur de cette proposition d\'échange.' });
-    }
+    //if (!areFriends(userId, trade.senderId)) {
+       // return response.status(403).send({ error: 'Vous n\'êtes pas ami avec l\'expéditeur de cette proposition d\'échange.' });
+    //}
     // Vérifier que l'échange n'a pas expiré
     const currentTimestamp = Math.floor(Date.now() / 1000);
     if (trade.expirationDate < currentTimestamp) {

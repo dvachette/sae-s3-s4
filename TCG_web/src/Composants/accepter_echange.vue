@@ -31,8 +31,8 @@
               :data="carteaDonnee1"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 1"
-              :class="{ active: carte_selectionee === 1 }"
+              @click="carte_selectionee = carteaDonnee1.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee1.cardId }"
             />
 
             <Carte_familier
@@ -40,8 +40,8 @@
               :data="carteaDonnee1"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 1"
-              :class="{ active: carte_selectionee === 1 }"
+              @click="carte_selectionee = carteaDonnee1.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee1.cardId }"
             />
 
             <Carte_terrain
@@ -49,8 +49,8 @@
               :data="carteaDonnee1"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 1"
-              :class="{ active: carte_selectionee === 1 }"
+              @click="carte_selectionee = carteaDonnee1.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee1.cardId }"
             />
           </div>
           <div class="carte2" v-if="carteaDonnee2">
@@ -59,8 +59,8 @@
               :data="carteaDonnee2"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 2"
-              :class="{ active: carte_selectionee === 2 }"
+              @click="carte_selectionee = carteaDonnee2.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee2.cardId }"
             />
 
             <Carte_familier
@@ -68,8 +68,8 @@
               :data="carteaDonnee2"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 2"
-              :class="{ active: carte_selectionee === 2 }"
+              @click="carte_selectionee = carteaDonnee2.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee2.cardId }"
             />
 
             <Carte_terrain
@@ -77,8 +77,8 @@
               :data="carteaDonnee2"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 2"
-              :class="{ active: carte_selectionee === 2 }"
+              @click="carte_selectionee = carteaDonnee2.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee2.cardId }"
             />
           </div>
           <div class="carte3" v-if="carteaDonnee3">
@@ -87,8 +87,8 @@
               :data="carteaDonnee3"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 3"
-              :class="{ active: carte_selectionee === 3 }"
+              @click="carte_selectionee = carteaDonnee3.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee3.cardId }"
             />
 
             <Carte_familier
@@ -96,8 +96,8 @@
               :data="carteaDonnee3"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 3"
-              :class="{ active: carte_selectionee === 3 }"
+              @click="carte_selectionee = carteaDonnee3.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee3.cardId }"
             />
 
             <Carte_terrain
@@ -105,8 +105,8 @@
               :data="carteaDonnee3"
               largeur="4.9vw"
               class="carte_echange"
-              @click="carte_selectionee = 3"
-              :class="{ active: carte_selectionee === 3 }"
+              @click="carte_selectionee = carteaDonnee3.cardId"
+              :class="{ active: carte_selectionee === carteaDonnee3.cardId }"
             />
           </div>
         </div>
@@ -115,7 +115,7 @@
     <div class="les_boutons">
       <button
         id="b_confirmer"
-        @click="$emit('fermer')"
+        @click="requeteAccepterEchange"
         v-if="carte_selectionee != null"
       >
         confirmer échange
@@ -137,6 +137,7 @@ const props = defineProps({
   echange_id: Number,
 });
 
+const emit = defineEmits(['fermer']);
 let sonEchange = ref(null);
 const touteCartes = ref(null);
 const carte_selectionee = ref(null);
@@ -198,6 +199,31 @@ async function obtenirCartes() {
       );
     } else {
       console.log('erreur');
+    }
+  } catch (erreur) {
+    console.error(erreur);
+  }
+}
+
+async function requeteAccepterEchange() {
+  try {
+    const response = await fetch(`http://${config.hosts.api}/trade/accept`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tradeRequestId: props.echange_id,
+        acceptedCardId: carte_selectionee.value,
+      }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log('Echange terminé');
+      emit('fermer');
+    } else {
+      console.error(data);
     }
   } catch (erreur) {
     console.error(erreur);

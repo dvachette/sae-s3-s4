@@ -170,6 +170,7 @@ const collection = computed(() => {
   return userData.value.collection;
 });
 const tailleCollection = collection.value.length;
+console.log( collection.value);
 const membres = computed(() => {
   return collection.value.filter((carte) => carte.card._class === 'member');
 });
