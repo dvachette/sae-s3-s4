@@ -195,6 +195,12 @@ async function requestSupprimerEchange() {
     });
     const data = await response.json();
     if (response.ok) {
+      // Enlever l'échange de la liste de SessionStorage
+      const userData = JSON.parse(sessionStorage.getItem('userData'));
+      userData.sentTrades = userData.sentTrades.filter(
+        (item) => item.tradeRequestId !== props.echange_id,
+      );
+      sessionStorage.setItem('userData', JSON.stringify(userData));
       console.log('échange supprimé');
       emit('fermer');
     } else {

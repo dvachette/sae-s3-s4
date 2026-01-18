@@ -20,7 +20,7 @@
       id="s_echange"
       v-if="afficher_annuler == true"
       :echange_id="id_echange"
-      @fermer="afficher_annuler = false"
+      @fermer="fermerAnnulerEchange()"
     />
     <div class="part_echange">
       <h2>Mes échanges</h2>
@@ -285,6 +285,12 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside);
 });
+
+function fermerAnnulerEchange() {
+  afficher_annuler.value = false;
+  userData.value = JSON.parse(sessionStorage.getItem('userData'));
+  obtenirMesEchanges();
+}
 </script>
 
 <style scoped>
