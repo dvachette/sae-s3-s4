@@ -49,13 +49,13 @@
         ><new_echange class="e2"
       /></router-link>
       <h2>Échanges de vos amis</h2>
-      <div class="ses_echanges" v-if="listeAmisEchanges.trades?.[0] != null">
+      <div class="ses_echanges" v-if="listeAmisEchanges[0] != null">
         <echange
           v-for="echange in listeAmisEchanges"
-          :echange_id="listeAmisEchanges.trades?.[echange].tradeRequestId"
+          :echange_id="echange.tradeRequestId"
           @click="
             afficher_echange = true;
-            id_ami_echange = listeAmisEchanges.trades?.[echange].tradeRequestId;
+            id_ami_echange = echange.tradeRequestId;
           "
         />
       </div>
@@ -268,7 +268,7 @@ async function obtenirEchanges() {
     });
     const data = await response.json();
     if (response.ok) {
-      listeAmisEchanges.value = data;
+      listeAmisEchanges.value = data.trades;
       console.log('Amis échanges : ', listeAmisEchanges.value);
     } else {
       console.error(data);

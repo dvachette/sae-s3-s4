@@ -16,6 +16,8 @@ const router = useRouter()
             credentials: "include", // Inclure les cookies dans la requête
           }
         );
+        console.log('Tentative de connexion...');
+        console.log(response);
         const data = await response.json(); // Récupération de la réponse JSON
         console.log('Réponse du serveur :', data);
         if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)

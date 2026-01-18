@@ -103,7 +103,7 @@ class User {
                 if (trade.receiverId === user.userId) {
                     user.acceptedTrades.push(trade);
                 } else if (trade.receiverId === null) {
-                    this.receivedTrades.push(trade);
+                    user.receivedTrades.push(trade);
                 }
             }
         }
