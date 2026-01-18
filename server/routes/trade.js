@@ -128,7 +128,7 @@ function acceptTrade(request, response) {
     
     const db = new Database('database.db');
     const userId = request.session.userId;
-
+    const user = User.fromId(userId);
     // Vérifier que l'échange existe
     const getTradeQuery = db.prepare(`
         SELECT * FROM traderequest WHERE tradeRequestId = ?
@@ -140,9 +140,9 @@ function acceptTrade(request, response) {
         return response.status(404).send({ error: 'Proposition d\'échange non trouvée.' });
     }
     // Vérifier que l'utilisateur est ami avec l'expéditeur
-    //if (!areFriends(userId, trade.senderId)) {
-       // return response.status(403).send({ error: 'Vous n\'êtes pas ami avec l\'expéditeur de cette proposition d\'échange.' });
-    //}
+    if (!user.isFriendWith(trade.senderId)) {
+        return response.status(403).send({ error: 'Vous n\'êtes pas ami avec l\'expéditeur de cette proposition d\'échange.' });
+    }
     // Vérifier que l'échange n'a pas expiré
     const currentTimestamp = Math.floor(Date.now() / 1000);
     if (trade.expirationDate < currentTimestamp) {
@@ -165,7 +165,6 @@ function acceptTrade(request, response) {
         return response.status(400).send({ error: 'Vous ne possédez pas la carte demandée.' });
     }
 
-    const user = User.fromId(userId);
     const sender = User.fromId(trade.senderId);
     // Effectuer l'échange
     user.addCardToCollection(acceptedCardId, 1);
