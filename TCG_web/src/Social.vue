@@ -49,16 +49,15 @@
         ><new_echange class="e2"
       /></router-link>
       <h2>Échanges de vos amis</h2>
-      <div class="ses_echanges" v-if="listeAmisEchanges[0] != null">
-        <echange
-          v-for="echange in listeAmisEchanges"
-          :echange_id="echange.tradeRequestId"
-          @click="
-            afficher_echange = true;
-            id_ami_echange = echange.tradeRequestId;
-          "
-        />
-      </div>
+      <echange
+        v-if="listeAmisEchanges[0] != null"
+        v-for="echange in listeAmisEchanges"
+        :echange_id="echange.tradeRequestId"
+        @click="
+          afficher_echange = true;
+          id_ami_echange = echange.tradeRequestId;
+        "
+      />
     </div>
     <div class="les_amis">
       <div
