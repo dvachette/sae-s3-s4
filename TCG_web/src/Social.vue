@@ -19,22 +19,31 @@
     <annuler_echange
       id="s_echange"
       v-if="afficher_annuler == true"
-      @confirmer="afficher_annuler = false"
-      @annuler="afficher_annuler = false"
+      :echange_id="id_echange"
+      @fermer="afficher_annuler = false"
     />
     <div class="part_echange">
       <h2>Mes échanges</h2>
-
       <mes_echanges
-        v-if="listeMesEchanges[0]"
+        v-if="listeMesEchanges.trades?.[0]"
         class="e1"
-        :data="
-          (listeAmisEchanges[0].askedCardId,
-          listeAmisEchanges[0].offredCard1Id,
-          listeAmisEchanges[0].offredCard2Id,
-          listeAmisEchanges[0].offredCard3Id)
+        :echange_id="listeMesEchanges.trades?.[0].tradeRequestId"
+        @click="
+          afficher_annuler = true;
+          id_echange = listeMesEchanges.trades?.[0].tradeRequestId;
         "
-        @click="afficher_annuler = true"
+      />
+      <router-link to="/creation_echange" v-else
+        ><new_echange class="e2"
+      /></router-link>
+      <mes_echanges
+        v-if="listeMesEchanges.trades?.[1]"
+        class="e1"
+        :echange_id="listeMesEchanges.trades?.[1].tradeRequestId"
+        @click="
+          afficher_annuler = true;
+          id_echange = listeMesEchanges.trades?.[1].tradeRequestId;
+        "
       />
       <router-link to="/creation_echange" v-else
         ><new_echange class="e2"
@@ -128,9 +137,10 @@ const afficher_supprami = ref(false);
 const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
 const afficher_echange = ref(false);
+const id_echange = ref(null);
 const afficher_annuler = ref(false);
 const listeAmisEchanges = ref(null);
-let listeMesEchanges = ref([]);
+const listeMesEchanges = ref([]);
 
 obtenirMesEchanges();
 
@@ -206,7 +216,6 @@ async function afficher_liste(event) {
       const data = await response.json();
       if (response.ok) {
         resultRecherche.value = data.users;
-        console.log(resultRecherche.value);
       } else {
         console.error(data);
       }
@@ -231,7 +240,7 @@ async function obtenirMesEchanges() {
     );
     const data = await response.json();
     if (response.ok) {
-      listeMesEchanges = data;
+      listeMesEchanges.value = data;
     } else {
       console.error(data);
     }
@@ -239,7 +248,6 @@ async function obtenirMesEchanges() {
     console.error(erreur);
   }
 }
-
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
