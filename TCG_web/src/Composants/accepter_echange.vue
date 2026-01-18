@@ -25,91 +25,89 @@
       <div class="a_don">
         <p>Choisir une carte</p>
         <div class="los_cartos">
-          <div class="los_cartos">
-            <div class="carte1" v-if="carteaDonnee1">
-              <Carte_membre
-                v-if="carteaDonnee1._class == 'member'"
-                :data="carteaDonnee1"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 1"
-                :class="{ active: carte_selectionee === 1 }"
-              />
+          <div class="carte1" v-if="carteaDonnee1">
+            <Carte_membre
+              v-if="carteaDonnee1._class == 'member'"
+              :data="carteaDonnee1"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 1"
+              :class="{ active: carte_selectionee === 1 }"
+            />
 
-              <Carte_familier
-                v-else-if="carteaDonnee1._class == 'pet'"
-                :data="carteaDonnee1"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 1"
-                :class="{ active: carte_selectionee === 1 }"
-              />
+            <Carte_familier
+              v-else-if="carteaDonnee1._class == 'pet'"
+              :data="carteaDonnee1"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 1"
+              :class="{ active: carte_selectionee === 1 }"
+            />
 
-              <Carte_terrain
-                v-else-if="carteaDonnee1._class == 'arena'"
-                :data="carteaDonnee1"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 1"
-                :class="{ active: carte_selectionee === 1 }"
-              />
-            </div>
-            <div class="carte2" v-if="carteaDonnee2">
-              <Carte_membre
-                v-if="carteaDonnee2._class == 'member'"
-                :data="carteaDonnee2"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 2"
-                :class="{ active: carte_selectionee === 2 }"
-              />
+            <Carte_terrain
+              v-else-if="carteaDonnee1._class == 'arena'"
+              :data="carteaDonnee1"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 1"
+              :class="{ active: carte_selectionee === 1 }"
+            />
+          </div>
+          <div class="carte2" v-if="carteaDonnee2">
+            <Carte_membre
+              v-if="carteaDonnee2._class == 'member'"
+              :data="carteaDonnee2"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 2"
+              :class="{ active: carte_selectionee === 2 }"
+            />
 
-              <Carte_familier
-                v-else-if="carteaDonnee2._class == 'pet'"
-                :data="carteaDonnee2"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 2"
-                :class="{ active: carte_selectionee === 2 }"
-              />
+            <Carte_familier
+              v-else-if="carteaDonnee2._class == 'pet'"
+              :data="carteaDonnee2"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 2"
+              :class="{ active: carte_selectionee === 2 }"
+            />
 
-              <Carte_terrain
-                v-else-if="carteaDonnee2._class == 'arena'"
-                :data="carteaDonnee2"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 2"
-                :class="{ active: carte_selectionee === 2 }"
-              />
-            </div>
-            <div class="carte3" v-if="carteaDonnee3">
-              <Carte_membre
-                v-if="carteaDonnee3._class == 'member'"
-                :data="carteaDonnee3"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 3"
-                :class="{ active: carte_selectionee === 3 }"
-              />
+            <Carte_terrain
+              v-else-if="carteaDonnee2._class == 'arena'"
+              :data="carteaDonnee2"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 2"
+              :class="{ active: carte_selectionee === 2 }"
+            />
+          </div>
+          <div class="carte3" v-if="carteaDonnee3">
+            <Carte_membre
+              v-if="carteaDonnee3._class == 'member'"
+              :data="carteaDonnee3"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 3"
+              :class="{ active: carte_selectionee === 3 }"
+            />
 
-              <Carte_familier
-                v-else-if="carteaDonnee3._class == 'pet'"
-                :data="carteaDonnee3"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 3"
-                :class="{ active: carte_selectionee === 3 }"
-              />
+            <Carte_familier
+              v-else-if="carteaDonnee3._class == 'pet'"
+              :data="carteaDonnee3"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 3"
+              :class="{ active: carte_selectionee === 3 }"
+            />
 
-              <Carte_terrain
-                v-else-if="carteaDonnee3._class == 'arena'"
-                :data="carteaDonnee3"
-                largeur="4.9vw"
-                class="carte_echange"
-                @click="carte_selectionee = 3"
-                :class="{ active: carte_selectionee === 3 }"
-              />
-            </div>
+            <Carte_terrain
+              v-else-if="carteaDonnee3._class == 'arena'"
+              :data="carteaDonnee3"
+              largeur="4.9vw"
+              class="carte_echange"
+              @click="carte_selectionee = 3"
+              :class="{ active: carte_selectionee === 3 }"
+            />
           </div>
         </div>
       </div>
