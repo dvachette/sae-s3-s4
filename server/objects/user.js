@@ -419,8 +419,11 @@ class User {
     }
     
     addCardToCollection(cardId, quantity) {
+        console.log("ADD CARD TO COLLECTION");
+        this.collection.map(item => console.log(item ? item.card : null));
+        console.log("CARD ID TO ADD :", cardId, "QUANTITY :", quantity);
         const existingCard = this.collection.find(
-            (item) => item.card.cardId === cardId
+            (item) =>item ? item.card.cardId === cardId : null
         );
         if (existingCard) {
             existingCard.quantity += quantity;
