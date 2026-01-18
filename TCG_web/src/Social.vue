@@ -5,8 +5,8 @@
     <accepter_echange
       id="a_echange"
       v-if="afficher_echange == true"
-      @confirmer="afficher_echange = false"
-      @annuler="afficher_echange = false"
+      :echange_id="id_ami_echange"
+      @fermer="afficher_echange = false"
     />
     <pop_up_supprami
       v-if="afficher_supprami == true"
@@ -48,12 +48,17 @@
       <router-link to="/creation_echange" v-else
         ><new_echange class="e2"
       /></router-link>
-      <h2>Autres échanges</h2>
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
+      <h2>Échanges de vos amis</h2>
+      <div class="ses_echanges" v-if="listeAmisEchanges.trades?.[0] != null">
+        <echange
+          v-for="echange in listeAmisEchanges"
+          :echange_id="listeAmisEchanges.trades?.[echange].tradeRequestId"
+          @click="
+            afficher_echange = true;
+            id_ami_echange = listeAmisEchanges.trades?.[echange].tradeRequestId;
+          "
+        />
+      </div>
     </div>
     <div class="les_amis">
       <div
@@ -138,11 +143,13 @@ const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
 const afficher_echange = ref(false);
 const id_echange = ref(null);
+const id_ami_echange = ref(null);
 const afficher_annuler = ref(false);
-const listeAmisEchanges = ref(null);
+const listeAmisEchanges = ref([]);
 const listeMesEchanges = ref([]);
 
 obtenirMesEchanges();
+obtenirEchanges();
 
 function updateFriendData() {
   userData.value = JSON.parse(sessionStorage.getItem('userData'));
@@ -248,6 +255,29 @@ async function obtenirMesEchanges() {
     console.error(erreur);
   }
 }
+
+async function obtenirEchanges() {
+  try {
+    const response = await fetch(`http://${config.hosts.api}/trade/requests`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      listeAmisEchanges.value = data;
+      console.log('Amis échanges : ', listeAmisEchanges.value);
+    } else {
+      console.error(data);
+    }
+  } catch (erreur) {
+    console.error(erreur);
+  }
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
