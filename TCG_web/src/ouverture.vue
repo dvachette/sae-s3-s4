@@ -56,7 +56,7 @@ import nouv_clef from './Composants/nouv_clef.vue';
 import clef from './Composants/clef.vue';
 import carteBooster from './carte-booster.vue';
 import router from './router';
-import config from '@/config.json'
+import config from '@/config.json';
 const showVideo = ref(true); // ← Remettez true pour la vidéo
 const introVideo = ref(null);
 const allCardsGone = ref(false);
@@ -153,33 +153,33 @@ async function fetchBooster() {
   nbCles.value += data.keys;
   obtainedKeys.value = data.keys;
   sessionStorage.setItem('userData', JSON.stringify(userData.value));
-    for (const cardInfo of data.cards) {
+  for (const cardInfo of data.cards) {
     if (cardInfo._class == 'member') {
       console.log('member');
       const card = createCardMember(cardInfo.cardId, cardInfo);
-      if (cards.find(c => c.id === card.id)) {
-        console.log('Carte déjà présente, changer l\'ID');
+      if (cards.find((c) => c.id === card.id)) {
+        console.log("Carte déjà présente, changer l'ID");
         card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
       }
       cards.push(card);
     } else if (cardInfo._class == 'pet') {
       console.log('pet');
       const card = createCardPet(cardInfo.cardId, cardInfo);
-      if (cards.find(c => c.id === card.id)) {
-        console.log('Carte déjà présente, changer l\'ID');
+      if (cards.find((c) => c.id === card.id)) {
+        console.log("Carte déjà présente, changer l'ID");
         card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
       }
       cards.push(card);
     } else if (cardInfo._class == 'arena') {
       console.log('arena');
       const card = createCardArena(cardInfo.cardId, cardInfo);
-      if (cards.find(c => c.id === card.id)) {
-        console.log('Carte déjà présente, changer l\'ID');
+      if (cards.find((c) => c.id === card.id)) {
+        console.log("Carte déjà présente, changer l'ID");
         card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
       }
       cards.push(card);
     }
-    console.log("Info carte : " , cardInfo);
+    console.log('Info carte : ', cardInfo);
   }
   console.log('Cartes du booster:', cards);
 }
@@ -206,29 +206,29 @@ async function buyBooster() {
     if (cardInfo._class == 'member') {
       console.log('member');
       const card = createCardMember(cardInfo.cardId, cardInfo);
-      if (cards.find(c => c.id === card.id)) {
-        console.log('Carte déjà présente, changer l\'ID');
+      if (cards.find((c) => c.id === card.id)) {
+        console.log("Carte déjà présente, changer l'ID");
         card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
       }
       cards.push(card);
     } else if (cardInfo._class == 'pet') {
       console.log('pet');
       const card = createCardPet(cardInfo.cardId, cardInfo);
-      if (cards.find(c => c.id === card.id)) {
-        console.log('Carte déjà présente, changer l\'ID');
+      if (cards.find((c) => c.id === card.id)) {
+        console.log("Carte déjà présente, changer l'ID");
         card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
       }
       cards.push(card);
     } else if (cardInfo._class == 'arena') {
       console.log('arena');
       const card = createCardArena(cardInfo.cardId, cardInfo);
-      if (cards.find(c => c.id === card.id)) {
-        console.log('Carte déjà présente, changer l\'ID');
+      if (cards.find((c) => c.id === card.id)) {
+        console.log("Carte déjà présente, changer l'ID");
         card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
       }
       cards.push(card);
     }
-    console.log("Info carte : " , cardInfo);
+    console.log('Info carte : ', cardInfo);
   }
   console.log('Cartes du booster:', cards);
 }

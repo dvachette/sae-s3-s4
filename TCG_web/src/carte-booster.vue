@@ -19,12 +19,13 @@
       class="carte-principale"
     />
     <div class="barre_simple">
-      <Barre_progress :niv="carteProps.data?.niveau || 0" />
+      <Barre_progress :niv="quantity" />
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, computed } from 'vue';
 import carte_membre from '@/Composants/carte_membre.vue';
 import carte_familier from './Composants/carte_familier.vue';
 import carte_terrain from './Composants/carte_terrain.vue';
@@ -36,7 +37,18 @@ const props = defineProps({
 
 const classe = props.carteProps.data._class;
 
-console.log(classe);
+const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
+const collection = computed(() => userData.value.collection);
+
+const quantity = computed(
+  () =>
+    collection.value.find((c) => c.card.cardId === props.carteProps.data.cardId)
+      ?.quantity ?? 0,
+);
+
+console.log('collection : ', collection.value);
+console.log('Carte Props : ', props.carteProps.data.cardId);
+console.log('quantité : ', quantity.value);
 </script>
 
 <style scoped>

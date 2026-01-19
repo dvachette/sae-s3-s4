@@ -57,11 +57,6 @@ const props = defineProps({
     default: () => [],
   },
 });
-console.log('Cards data reçues dans Stack.vue:', props.cardsData);
-console.log('Nombre de cartes reçues:', props.cardsData.length);
-for (const card of props.cardsData) {
-  console.log('Carte ID:', card.id, 'Composant:', card.component, 'Props:', card.props);
-}
 const cards = ref(props.cardsData.length ? props.cardsData : []);
 const cardPositions = ref({});
 const isDragging = ref(null);
@@ -76,10 +71,9 @@ watch(
   () => cards.value.length,
   (newLength) => {
     if (newLength === 0) {
-      console.log('Toutes les cartes sont parties !');
       emit('allCardsGone', collectedCards.value);
     }
-  }
+  },
 );
 
 onMounted(() => {
@@ -189,10 +183,6 @@ function throwCard(cardId) {
 
   if (collectedCard) {
     collectedCards.value.push(collectedCard);
-    console.log(
-      "Cartes collectées jusqu'à maintenant:",
-      collectedCards.value.length
-    );
     emit('cardCollected', collectedCard);
   }
 
