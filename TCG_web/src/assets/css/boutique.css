@@ -42,7 +42,7 @@ img {
   grid-column: 3/4;
 }
 
-#bouton_none {
+.bouton_none {
   background-color: rgb(var(--rouge700));
   cursor: default;
 }
@@ -72,6 +72,35 @@ img {
 .cartes_proposés > div:nth-child(4) {
   grid-row: 2/3;
   grid-column: 3/4;
+}
+div.offre {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+p.offerCount {
+  position:absolute;
+  display:block;
+  top: 0;
+  right: -1vh;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  height:3vw;
+  width:3vw;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 3vw;
+  font-size: 1vw;
+  background-color: rgb(var(--jaune400));
+  color: rgb(var(--onyx));
+  text-shadow: 1px 1px 2px black;
+}
+
+.btn_achat {
+  align-self: center;
+  justify-self: center;
+  margin-top: 2vh;
 }
 
 .c1,

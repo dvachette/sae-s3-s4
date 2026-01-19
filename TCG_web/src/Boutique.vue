@@ -11,17 +11,16 @@
         <router-link :to="'/ouverture?buy=true'" v-if="nbCles >= 100"
           ><boutons_achat :prix="100"
         /></router-link>
-        <boutons_achat id="bouton_none" :prix="100" v-else />
+        <boutons_achat class="bouton_none" :prix="100" v-else />
       </div>
       <div class="cartes_proposés">
         <clef class="compteur_boutique" :cles="nbCles" />
         <div class="offre" v-for="offer of offers" :key="offer.id">
-          <carte_membre v-if="offer.content.type === 'card' && offer.cardDetail._class === 'member'" :data="offer.cardDetail" largeur="20vw"></carte_membre>
-          <carte_familier v-else-if="offer.content.type === 'card' && offer.cardDetail._class === 'pet'" :data="offer.cardDetail" largeur="20vw"></carte_familier>
-          <carte_terrain v-else-if="offer.content.type === 'card' && offer.cardDetail._class === 'arena'" :data="offer.cardDetail" largeur="20vw"></carte_terrain>
-          <boutons_achat :prix="offer.cost" @click="buyOffer(offer.id)" :disabled="offer.remaining === 0"/>
-          <p v-if="offer.remaining === 0" class="sold_out">Épuisé</p>
-          <p v-else-if="offer.remaining !== undefined" class="remaining">Restant : {{ offer.remaining }}</p>
+          <p class="offerCount">{{ offer.remaining }} / {{ offer.maxUsage }}</p>
+          <carte_membre class="carte_offre" v-if="offer.content.type === 'card' && offer.cardDetail._class === 'member'" :data="offer.cardDetail" largeur="20vw"></carte_membre>
+          <carte_familier class="carte_offre" v-else-if="offer.content.type === 'card' && offer.cardDetail._class === 'pet'" :data="offer.cardDetail" largeur="20vw"></carte_familier>
+          <carte_terrain class="carte_offre" v-else-if="offer.content.type === 'card' && offer.cardDetail._class === 'arena'" :data="offer.cardDetail" largeur="20vw"></carte_terrain>
+          <boutons_achat class="btn_achat" :prix="offer.cost" @click="buyOffer(offer.id)" :disabled="offer.remaining === 0" :class="offer.remaining == 0 ? 'bouton_none':'' "/>
         </div>
       </div>
     </div>
@@ -90,6 +89,37 @@ async function buyOffer(offerId) {
 onMounted(async () => {
   await loadOffers();
 });
+
+
+const lastBoosterOpening = ref(new Date());
+// Get the next available booster time (12 hours after last opening)
+let now = new Date();
+let nextAvailableTime = ref(
+  new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000),
+);
+// Calculate remaining time in milliseconds
+let remaining_time = nextAvailableTime.value - now;
+let timerText = ref('');
+// Update every second
+setInterval(() => {
+  let remaining_time = nextAvailableTime.value - new Date();
+  let hours = Math.floor((remaining_time / (1000 * 60 * 60)) % 24);
+  let minutes = Math.floor((remaining_time / (1000 * 60)) % 60);
+  let seconds = Math.floor((remaining_time / 1000) % 60);
+  if (remaining_time <= 0) {
+    timerText.value = 'Booster disponible !';
+    return;
+  }
+  timerText.value = `${hours}h ${minutes}min ${seconds}sec`;
+}, 1000);
+function updateUserData() {
+  userData.value = JSON.parse(sessionStorage.getItem('userData'));
+  nbCles.value = userData.value.balance;
+  lastBoosterOpening.value = new Date(userData.value.lastBoosterOpening * 1000);
+  nextAvailableTime.value = new Date(
+    lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000,
+  );
+}
 
 </script>
 
