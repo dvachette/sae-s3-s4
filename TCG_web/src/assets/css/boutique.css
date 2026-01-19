@@ -59,17 +59,17 @@ img {
   font-family: 'Mako';
 }
 
-.cartes_proposés > p:nth-child(2) {
+.cartes_proposés > div:nth-child(2) {
   grid-row: 2/3;
   grid-column: 1/2;
 }
 
-.cartes_proposés > p:nth-child(3) {
+.cartes_proposés > div:nth-child(3) {
   grid-row: 2/3;
   grid-column: 2/3;
 }
 
-.cartes_proposés > p:nth-child(4) {
+.cartes_proposés > div:nth-child(4) {
   grid-row: 2/3;
   grid-column: 3/4;
 }
