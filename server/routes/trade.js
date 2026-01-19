@@ -43,7 +43,7 @@ function proposeTrade(request, response) {
     const userId = request.session.userId;
     const checkCardOwnership = db.prepare(`
         SELECT COUNT(*) AS count FROM collection 
-        WHERE userId = ? AND cardId IN (?, ?, ?) AND quantity > 0
+        WHERE userId = ? AND cardId IN (?, ?, ?) AND quantity > 1
     `);
     const ownershipResult = checkCardOwnership.get(userId, offeredCardId1, offeredCardId2, offeredCardId3);
     
