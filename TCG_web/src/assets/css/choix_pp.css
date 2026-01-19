@@ -15,97 +15,25 @@
 }
 
 .entete {
-  width: 100%;
+  width: 80vws;
   height: 25%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .entete > img {
   width: 8%;
 }
 
-.Tri {
-  display: flex;
-  flex-direction: column;
-  align-items: first baseline;
-  gap: 0.5vh;
-  width: 17%;
-}
-
-.Tri_liste {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
-
-label {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.Tri_liste > label > input {
-  appearance: none; /* supprime le rendu natif */
-  -webkit-appearance: none;
-  width: 1.5vh;
-  height: 1.5vh;
-  border: 2px solid rgb(var(--onyx));
-  border-radius: 100%;
-  background-color: rgb(var(--jaune300));
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.Tri_liste > label > input:checked {
-  background-color: rgb(var(--orange600));
-  border: 2px solid rgb(var(--orange700));
-  cursor: pointer;
-}
-
-.Filtres > label > input {
-  appearance: none; /* supprime le rendu natif */
-  -webkit-appearance: none;
-  width: 1.5vh;
-  height: 1.5vh;
-  border: 2px solid rgb(var(--onyx));
-  border-radius: 2px;
-  background-color: rgb(var(--jaune300));
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.Filtres > label > input:checked {
-  background-color: rgb(var(--orange600));
-  border: 2px solid rgb(var(--orange700));
-  cursor: pointer;
-}
-
-.Tri_liste > label > input[type='checkbox'],
-.Tri_liste > label > input[type='checkbox'] {
-  margin-left: 2vw;
-}
-
-.input[type='checkbox'] > label {
-  display: flex;
-  align-items: center;
-}
-
-.Filtres {
-  display: flex;
-  flex-direction: column;
-  align-items: first baseline;
-}
-
-.Filtres > label {
-  display: flex;
-  align-items: center;
+.entete > p {
+  font-size: 1.5vw;
+  margin-right: 24px;
 }
 
 .liste_pp {
-  width: 100%;
+  max-width: 100%;
   height: 65%;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -114,6 +42,7 @@ label {
   padding-left: 10%;
   gap: 2vw;
   overflow-y: auto; /* Rend l'élément scrollable */
+  overflow-x: hidden;
   justify-content: flex-start;
   align-content: flex-start;
   box-sizing: border-box;

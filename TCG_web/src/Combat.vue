@@ -163,7 +163,7 @@ watch(terrainCarre, (newVal) => {
 
 const onImageError = () => {
   console.log("Erreur de chargement de l'image, image de remplacement utilisée.");
-  imageSrc.value = '/src/assets/imgs/ff_logo.png'
+  imageSrc.value = '/src/assets/imgs/Combat.png'
 }
 
 const collection = computed(() => {
