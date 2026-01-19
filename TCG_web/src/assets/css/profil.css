@@ -7,6 +7,10 @@ main {
   font-family: 'Mako';
 }
 
+.hidden_param{
+  display: none!important;
+}
+
 div > p {
   font-size: 1.2rem;
 }

@@ -71,7 +71,7 @@
           class="edit-icon"
         />
         </div>
-        <div class="historiques">
+        <div class="historiques hidden_param">
           <router-link to="/social" class="h_combat" active-class="active"
             ><p>historique des combats</p></router-link
           >
@@ -83,10 +83,12 @@
         <button id="Supprimer" @click="afficher_suppr = true">Supprimer le compte</button>
     </div>
     <div class="param_stats">
-      <h2>Paramètres :</h2>
-      <label><input type="checkbox" name="apparence" value="pôle">Thème Sombre</input></label>
-      <label><input type="checkbox" name="musique" value="pôle">Musique active</input></label>
-      <label><input type="checkbox" name="effets" value="pôle">Effets Sonores</input></label>
+      <div class="hidden_param">
+        <h2 class="hidden_param">Paramètres :</h2>
+        <label class="hidden_param"><input class="hidden_param" type="checkbox" name="apparence" value="pôle">Thème Sombre</input></label>
+        <label class="hidden_param"><input class="hidden_param" type="checkbox" name="musique" value="pôle">Musique active</input></label>
+        <label class="hidden_param"><input class="hidden_param" type="checkbox" name="effets" value="pôle">Effets Sonores</input></label>
+      </div>
       <h2>Statistiques :</h2>
       <p>Cartes possédées : {{cartesPossedees}}/{{cartesTotal}}</p>
       <p>Parties jouées : {{parties}}</p>
