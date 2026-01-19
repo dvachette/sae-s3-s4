@@ -13,36 +13,36 @@
             v-if="!carteDemandee"
             src="@/assets/imgs/carte/carte_ajout.png"
             alt="Carte_à_Ajouter"
-            @click="ajout_carte(0)"
+            @click="ajout_carte(0, $event)"
             @dragover.prevent
-            @drop="ajout_carte(0)"
+            @drop="ajout_carte(0, $event)"
           />
 
           <Carte_membre
             v-else-if="carteDemandee?._class == 'member'"
             :data="carteDemandee"
             largeur="7.5vw"
-            @click="ajout_carte(0)"
+            @click="ajout_carte(0, $event)"
             @dragover.prevent
-            @drop="ajout_carte(0)"
+            @drop="ajout_carte(0, $event)"
           />
 
           <Carte_familier
             v-else-if="carteDemandee?._class == 'pet'"
             :data="carteDemandee"
             largeur="7.5vw"
-            @click="ajout_carte(0)"
+            @click="ajout_carte(0, $event)"
             @dragover.prevent
-            @drop="ajout_carte(0)"
+            @drop="ajout_carte(0, $event)"
           />
 
           <Carte_terrain
             v-else-if="carteDemandee?._class == 'arena'"
             :data="carteDemandee"
             largeur="7.5vw"
-            @click="ajout_carte(0)"
+            @click="ajout_carte(0, $event)"
             @dragover.prevent
-            @drop="ajout_carte(0)"
+            @drop="ajout_carte(0, $event)"
           />
         </div>
         <div class="don">
@@ -52,106 +52,106 @@
               v-if="!carteaDonnee1"
               src="@/assets/imgs/carte/carte_ajout.png"
               alt="Carte_à_Ajouter"
-              @click="ajout_carte(1)"
+              @click="ajout_carte(1, $event)"
               @dragover.prevent
-              @drop="ajout_carte(1)"
+              @drop="ajout_carte(1, $event)"
             />
 
             <Carte_membre
               v-else-if="carteaDonnee1?._class == 'member'"
               :data="carteaDonnee1"
               largeur="7.5vw"
-              @click="ajout_carte(1)"
+              @click="ajout_carte(1, $event)"
               @dragover.prevent
-              @drop="ajout_carte(1)"
+              @drop="ajout_carte(1, $event)"
             />
 
             <Carte_familier
               v-else-if="carteaDonnee1?._class == 'pet'"
               :data="carteaDonnee1"
               largeur="7.5vw"
-              @click="ajout_carte(1)"
+              @click="ajout_carte(1, $event)"
               @dragover.prevent
-              @drop="ajout_carte(1)"
+              @drop="ajout_carte(1, $event)"
             />
 
             <Carte_terrain
               v-else-if="carteaDonnee1?._class == 'arena'"
               :data="carteaDonnee1"
               largeur="7.5vw"
-              @click="ajout_carte(1)"
+              @click="ajout_carte(1, $event)"
               @dragover.prevent
-              @drop="ajout_carte(1)"
+              @drop="ajout_carte(1, $event)"
             />
             <img
               v-if="!carteaDonnee2"
               src="@/assets/imgs/carte/carte_ajout.png"
               alt="Carte_à_Ajouter"
-              @click="ajout_carte(2)"
+              @click="ajout_carte(2, $event)"
               @dragover.prevent
-              @drop="ajout_carte(2)"
+              @drop="ajout_carte(2, $event)"
             />
 
             <Carte_membre
               v-else-if="carteaDonnee2?._class == 'member'"
               :data="carteaDonnee2"
               largeur="7.5vw"
-              @click="ajout_carte(2)"
+              @click="ajout_carte(2, $event)"
               @dragover.prevent
-              @drop="ajout_carte(2)"
+              @drop="ajout_carte(2, $event)"
             />
 
             <Carte_familier
               v-else-if="carteaDonnee2?._class == 'pet'"
               :data="carteaDonnee2"
               largeur="7.5vw"
-              @click="ajout_carte(2)"
+              @click="ajout_carte(2, $event)"
               @dragover.prevent
-              @drop="ajout_carte(2)"
+              @drop="ajout_carte(2, $event)"
             />
 
             <Carte_terrain
               v-else-if="carteaDonnee2?._class == 'arena'"
               :data="carteaDonnee2"
               largeur="7.5vw"
-              @click="ajout_carte(2)"
+              @click="ajout_carte(2, $event)"
               @dragover.prevent
-              @drop="ajout_carte(2)"
+              @drop="ajout_carte(2, $event)"
             />
             <img
               v-if="!carteaDonnee3"
               src="@/assets/imgs/carte/carte_ajout.png"
               alt="Carte_à_Ajouter"
-              @click="ajout_carte(3)"
+              @click="ajout_carte(3, $event)"
               @dragover.prevent
-              @drop="ajout_carte(3)"
+              @drop="ajout_carte(3, $event)"
             />
 
             <Carte_membre
               v-if="carteaDonnee3?._class == 'member'"
               :data="carteaDonnee3"
               largeur="7.5vw"
-              @click="ajout_carte(3)"
+              @click="ajout_carte(3, $event)"
               @dragover.prevent
-              @drop="ajout_carte(3)"
+              @drop="ajout_carte(3, $event)"
             />
 
             <Carte_familier
               v-else-if="carteaDonnee3?._class == 'pet'"
               :data="carteaDonnee3"
               largeur="7.5vw"
-              @click="ajout_carte(3)"
+              @click="ajout_carte(3, $event)"
               @dragover.prevent
-              @drop="ajout_carte(3)"
+              @drop="ajout_carte(3, $event)"
             />
 
             <Carte_terrain
               v-else-if="carteaDonnee3?._class == 'arena'"
               :data="carteaDonnee3"
               largeur="7.5vw"
-              @click="ajout_carte(3)"
+              @click="ajout_carte(3, $event)"
               @dragover.prevent
-              @drop="ajout_carte(3)"
+              @drop="ajout_carte(3, $event)"
             />
           </div>
           <div class="les_cartes"></div>
@@ -257,11 +257,15 @@ function selectionCarteEchange(card, evt) {
 
 function deselection(evt) {
   const carteSelect = evt.target.closest('.carte');
-  if (!carteSelect && carteSelectionnée.value) {
+  if (
+    (!carteSelect && carteSelectionnée.value) ||
+    (evt.target.closest('.mon_echange') && carteSelectionnée.value)
+  ) {
     carteSelectionnée.value.classList.remove('selection');
 
     carteSelectionnée.value = null;
     carteChangement.value = null;
+    console.log('Carte : ', carteChangement.value);
   }
 }
 
@@ -276,9 +280,8 @@ function valide_echange() {
   }
 }
 
-function ajout_carte(index) {
-  console.log(quantitySelectionnée.value);
-  if (carteChangement) {
+function ajout_carte(index, evt) {
+  if (carteChangement.value) {
     if (index == 0) {
       carteDemandee.value = carteChangement.value;
     } else if (quantitySelectionnée.value > 0) {
@@ -292,6 +295,7 @@ function ajout_carte(index) {
     }
     valide_echange();
   }
+  deselection(evt);
 }
 
 function estDansEchange(carte) {
@@ -301,7 +305,6 @@ function estDansEchange(carte) {
     carte == carteaDonnee2.value ||
     carte == carteaDonnee3.value
   ) {
-    console.log('true');
     return true;
   } else {
     return false;

@@ -1,9 +1,9 @@
 <template>
   <div class="comp-echange">
-    <p>échange de : {{ sonEchange }}</p>
+    <p v-if="sonEchange">échange de : {{ sonEchange.senderUsername }}</p>
     <div class="autres_echange">
       <div class="reception" v-if="carteDemandee">
-        <p>Carte donnée</p>
+        <p>Carte à donner</p>
         <Carte_membre
           v-if="carteDemandee._class == 'member'"
           :data="carteDemandee"
@@ -112,6 +112,7 @@
         </div>
       </div>
     </div>
+    <p v-if="textError">{{ textError }}</p>
     <div class="les_boutons">
       <button
         id="b_confirmer"
@@ -148,6 +149,7 @@ let carteDemandee = ref(null);
 let carteaDonnee1 = ref(null);
 let carteaDonnee2 = ref(null);
 let carteaDonnee3 = ref(null);
+const textError = ref(null);
 
 async function obtenirEchanges() {
   try {
@@ -224,9 +226,11 @@ async function requeteAccepterEchange() {
       emit('fermer');
     } else {
       console.error(data);
+      textError.value = data.error;
     }
   } catch (erreur) {
     console.error(erreur);
+    textError.value = erreur;
   }
 }
 </script>

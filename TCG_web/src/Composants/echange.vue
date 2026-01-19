@@ -1,6 +1,6 @@
 <template>
   <div class="comp-echange">
-    <p>échange de : {{ sonEchange }}</p>
+    <p v-if="sonEchange">échange de : {{ sonEchange.senderUsername }}</p>
     <div class="autres_echange">
       <div class="reception" v-if="carteDemandee">
         <p>Carte demandée</p>
