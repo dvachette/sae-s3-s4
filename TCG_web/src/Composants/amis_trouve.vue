@@ -1,5 +1,6 @@
 <template>
   <div class="trouvés">
+    <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
     <p>{{ nom_ami }}</p>
     <p @click="demander_ami">+</p>
   </div>
@@ -11,6 +12,7 @@
 const props = defineProps({
   nom_ami: String,
   id_ami: Number,
+  profile_picture: String,
 });
 
 const emit = defineEmits(['demander', 'erreur']);

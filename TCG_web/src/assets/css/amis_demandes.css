@@ -75,3 +75,10 @@
   width: 2.9vh;
   height: 4vh;
 }
+
+img.pp_amis {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50px;
+  object-fit: cover;
+}

@@ -1,5 +1,6 @@
 <template>
   <div class="attente">
+    <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
     <p>{{ nom_ami }}</p>
     <div class="annuler" @click="annuler_demande">
       <img src="@/assets/imgs/croix_blanche.png" alt="croix" />
@@ -12,6 +13,7 @@
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,
+  profile_picture: String,
 });
 
 const emit = defineEmits(['annuler', 'erreur']);
