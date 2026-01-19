@@ -2,8 +2,13 @@
 
 #booster {
   display: flex;
-  flex-direction: row;
-  justify-content: end; /* TODO : Changer quand on aura les récompenses quotidiennes */
+  flex-direction: column-reverse;
+  justify-content: start; /* TODO : Changer quand on aura les récompenses quotidiennes */
+  align-items: center;
+}
+
+div.Compteur {
+  align-self: flex-end;
 }
 
 p {
@@ -174,7 +179,8 @@ img {
 #bouton_none:hover {
   box-shadow: none;
 }
-
+/*
 .Compteur {
   width: 11.5vw;
 }
+*/
