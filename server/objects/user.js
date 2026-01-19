@@ -399,7 +399,7 @@ class User {
     }
     
     isFriendWith(userId) {
-        return this.friends.includes(userId);
+        return this.friends.some((friend) => friend.userId === userId);
     }
     
     delayBeforeNextBooster() {

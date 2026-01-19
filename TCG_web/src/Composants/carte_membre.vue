@@ -13,7 +13,7 @@
         <p id="niv">{{ niv }}</p>
       </div>
     </div>
-    <!--<div class="effetsCarteMembre"><slot></slot></div> Sert à rajouter les images d'effets de status dans Duel -->
+    <div class="effetsCarteMembre" v-if="data.statusEffects.length > 0"><slot></slot></div>
 
     <div class="attaques">
       <p class="cout">{{ attaques[0].cost }}</p>
