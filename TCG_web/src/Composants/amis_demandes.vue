@@ -1,5 +1,6 @@
 <template>
   <div class="demande" id="props.ami_id">
+    <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
     <p>{{ nom_ami }}</p>
     <div class="accepter" @click="accept_ami">
       <img src="@/assets/imgs/check_blanc.png" alt="check" />
@@ -16,6 +17,7 @@ import config from '@/config.json'
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,
+  profile_picture: String,
 });
 
 const emit = defineEmits(['accepter', 'refuser', 'erreur']);

@@ -75,6 +75,7 @@
           :key="p_trouvés.userId"
           :nom_ami="p_trouvés.name"
           :id_ami="p_trouvés.userId"
+          :profile_picture="p_trouvés.profilePicture || 'src/assets/imgs/logoTCG.png'"
           @demander="demander_ami"
         />
       </div>
@@ -82,6 +83,7 @@
         v-for="m_ami in amis"
         :key="m_ami.userId"
         :nom_ami="m_ami.name"
+        :profile_picture="m_ami.profilePicture || 'src/assets/imgs/logoTCG.png'"
         @appel_pop_up="
           afficher_supprami = true;
           nom_ami_selectionne = m_ami.name;
@@ -96,6 +98,7 @@
         :key="demande.fromUserId"
         :nom_ami="demande.fromUserName"
         :ami_id="demande.fromUserId"
+        :profile_picture="demande.fromUserProfilePicture || 'src/assets/imgs/logoTCG.png'"
         @accepter="demande_ami_acceptee"
         @refuser="demande_ami_refusee"
       />
@@ -107,6 +110,7 @@
         :key="demande.toUserId"
         :nom_ami="demande.toUserName"
         :ami_id="demande.toUserId"
+        :profile_picture="demande.toUserProfilePicture || 'src/assets/imgs/logoTCG.png'"
         @annuler="annuler_demande"
       />
     </div>
@@ -200,9 +204,11 @@ function supprimer_ami(data) {
 function demander_ami(data) {
   const demande_id = data.ami_id;
   const demande_name = data.ami_nom;
+  const demande_pp = data.profile_picture;
   demandesEnvoyees.value.push({
     toUserId: demande_id,
     toUserName: demande_name,
+    toUserProfilePicture: demande_pp,
   });
   chercheAmi.value = false;
   resultRecherche.value = [];

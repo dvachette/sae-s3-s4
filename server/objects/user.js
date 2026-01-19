@@ -212,7 +212,7 @@ class User {
     static search(query) {
         const db = new Database('database.db');
         const fetchUserQuery = db.prepare(
-            'SELECT name, userId FROM user WHERE name LIKE ?'
+            'SELECT name, userId, profilePicture FROM user WHERE name LIKE ?'
         );
         const result = fetchUserQuery.all(query);
         

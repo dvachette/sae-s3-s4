@@ -203,3 +203,9 @@ main > img {
 #continuer:hover {
   box-shadow: 0 1px 3px rgba(var(--onyx), 0.5);
 }
+
+p.reasonDuelResult {
+  color: rgb(var(--blanc50));
+  font-size: 1.5vw;
+  margin: 0;
+}
