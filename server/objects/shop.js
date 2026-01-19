@@ -16,7 +16,7 @@ class Offer {
         const stmt = db.prepare("SELECT * FROM offer WHERE offerId = ?");
         const row = stmt.get(id);
         if (!row) return null;
-        return new Offer(row.offerId, row.cost, row.weight, row.image, JSON.parse(row.content), row.maxUsage);
+        return new Offer(row.offerId, row.cost, row.weight, row.image, JSON.parse(row.content), row.maxUse);
     }
 
     remainingUsage(userId) {
@@ -47,11 +47,16 @@ class Offer {
                 throw new Error("Unknown offer content type.");
         }
         user.save();
-
-        const insertStmt = db.prepare("INSERT INTO historique_des_achats (userId, offerId, date, count) VALUES (?, ?, ?, 1) ON CONFLICT(userId, offerId, date) DO UPDATE SET count = count + 1");
-        insertStmt.run(userId, this.id, new Date().toISOString().slice(0, 10));
-        console.warn("FUNCTION PURCHASE NOT FULLY IMPLEMENTED: Granting offer content to user is not handled yet.");
-        
+        // Si l n'y a pas encore d'entrée pour aujourd'hui, en créer une, sinon mettre à jour le compteur
+        const checkStmt = db.prepare("SELECT * FROM historique_des_achats WHERE userId = ? AND offerId = ? AND date = ?");
+        const existingEntry = checkStmt.get(userId, this.id, new Date().toISOString().slice(0, 10));
+        if (existingEntry) {
+            const updateStmt = db.prepare("UPDATE historique_des_achats SET count = count + 1 WHERE userId = ? AND offerId = ? AND date = ?");
+            updateStmt.run(userId, this.id, new Date().toISOString().slice(0, 10));
+        } else {
+            const insertStmt = db.prepare("INSERT INTO historique_des_achats (userId, offerId, date, count) VALUES (?, ?, ?, ?)");
+            insertStmt.run(userId, this.id, new Date().toISOString().slice(0, 10), 1);
+        }        
     }
 
     static getAllOffers() {
@@ -114,6 +119,7 @@ class Offer {
         }
         return offers;
     }
+    
 }
 
 module.exports = Offer;

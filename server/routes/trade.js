@@ -43,7 +43,7 @@ function proposeTrade(request, response) {
     const userId = request.session.userId;
     const checkCardOwnership = db.prepare(`
         SELECT COUNT(*) AS count FROM collection 
-        WHERE userId = ? AND cardId IN (?, ?, ?) AND quantity > 0
+        WHERE userId = ? AND cardId IN (?, ?, ?) AND quantity > 1
     `);
     const ownershipResult = checkCardOwnership.get(userId, offeredCardId1, offeredCardId2, offeredCardId3);
     
@@ -103,12 +103,24 @@ function getTrades(request, response) {
         FROM traderequest tr
         JOIN friends f ON (tr.senderId = f.senderId AND f.receiverId = ?) OR (tr.senderId = f.receiverId AND f.senderId = ?) WHERE f.status = 'accepted'
     `);
+    const now = new Date();
+
     const trades = getTradesQuery.all(userId, userId);
     for (let trade of trades) {
         const sender = User.fromId(trade.senderId);
         trade.senderUsername = sender.username;
         trade.senderProfilePicture = sender.profilePicture;
+        if (now > new Date(trade.expirationDate * 1000)) {
+            // Échange expiré, rendre les cartes proposées à l'utilisateur
+            if (trade.offeredCard1Id) sender.addCardToCollection(trade.offeredCard1Id, 1);
+            if (trade.offeredCard2Id) sender.addCardToCollection(trade.offeredCard2Id, 1);
+            if (trade.offeredCard3Id) sender.addCardToCollection(trade.offeredCard3Id, 1);
+            // Supprimer l'échange de la base de données
+            const deleteTradeQuery = db.prepare('DELETE FROM traderequest WHERE tradeRequestId = ?');
+            deleteTradeQuery.run(trade.tradeRequestId);
+        } 
     }
+    // Gerer les échanges expirés
     return response.status(200).send({ trades:trades });
 }
 
@@ -166,8 +178,8 @@ function acceptTrade(request, response) {
     `);
     const ownershipResult = checkCardOwnership.get(userId, trade.askedCardId);
 
-    if (ownershipResult.count < 1) {
-        return response.status(400).send({ error: 'Vous ne possédez pas la carte demandée.' });
+    if (ownershipResult.count < 2) {
+        return response.status(400).send({ error: 'Vous ne possédez pas assez d\'exemplaires de la carte demandée.' });
     }
 
     const sender = User.fromId(trade.senderId);
@@ -267,6 +279,22 @@ function getSelfTradeRequests(request, response) {
         FROM traderequest tr WHERE tr.senderId = ?
     `);
     const trades = getTradesQuery.all(userId);
+    // Enlever les échanges expirés
+    const now = new Date();
+    for (let trade of trades) {
+        const sender = User.fromId(trade.senderId);
+        if (now > new Date(trade.expirationDate * 1000)) {
+            // Échange expiré, rendre les cartes proposées à l'utilisateur
+            if (trade.offeredCard1Id) sender.addCardToCollection(trade.offeredCard1Id, 1);
+            if (trade.offeredCard2Id) sender.addCardToCollection(trade.offeredCard2Id, 1);
+            if (trade.offeredCard3Id) sender.addCardToCollection(trade.offeredCard3Id, 1);
+            // Supprimer l'échange de la base de données
+            const deleteTradeQuery = db.prepare('DELETE FROM traderequest WHERE tradeRequestId = ?');
+            deleteTradeQuery.run(trade.tradeRequestId);
+        } 
+
+    }
+    trades.filter(trade => now <= new Date(trade.expirationDate * 1000));
     return response.status(200).send({ trades:trades });
 }
 

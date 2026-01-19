@@ -143,7 +143,7 @@ class Trade {
         const receiver = User.fromId(receiverId);
         
         // Vérifier que le receveur possède la carte demandée
-        if (receiver.getCardQuantity(this.requestedCard) <= 0) {
+        if (receiver.getCardQuantity(this.requestedCard) < 1) {
             throw new Error('Vous ne possédez pas la carte demandée pour cet échange.');
         }
         // Vérifier que la carte acceptée est bien l'une des cartes offertes
