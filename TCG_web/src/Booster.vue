@@ -41,7 +41,10 @@
         ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
       /></router-link>
       <p>{{ timerText }}</p>
-      <router-link :to="'/ouverture?buy=true'"><boutons_achat /></router-link>
+      <router-link :to="'/ouverture?buy=true'" v-if="nbCles >= 100"
+        ><boutons_achat
+      /></router-link>
+      <boutons_achat v-else id="bouton_none" />
     </div>
     <div class="Compteur">
       <clef :cles="nbCles" />
@@ -63,7 +66,7 @@ const lastBoosterOpening = ref(new Date());
 // Get the next available booster time (12 hours after last opening)
 let now = new Date();
 let nextAvailableTime = ref(
-  new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000)
+  new Date(lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000),
 );
 // Calculate remaining time in milliseconds
 let remaining_time = nextAvailableTime.value - now;
@@ -85,7 +88,7 @@ function updateUserData() {
   nbCles.value = userData.value.balance;
   lastBoosterOpening.value = new Date(userData.value.lastBoosterOpening * 1000);
   nextAvailableTime.value = new Date(
-    lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000
+    lastBoosterOpening.value.getTime() + 12 * 60 * 60 * 1000,
   );
 }
 </script>

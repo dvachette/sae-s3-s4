@@ -1,7 +1,9 @@
 <template>
   <div class="demande" id="props.ami_id">
-    <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
-    <p>{{ nom_ami }}</p>
+    <div class="ami_info">
+      <img :src="profile_picture" alt="Profile Picture" class="pp_amis" />
+      <p>{{ nom_ami }}</p>
+    </div>
     <div class="accepter" @click="accept_ami">
       <img src="@/assets/imgs/check_blanc.png" alt="check" />
     </div>
@@ -13,7 +15,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import config from '@/config.json'
+import config from '@/config.json';
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,

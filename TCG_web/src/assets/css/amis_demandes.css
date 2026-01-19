@@ -29,6 +29,13 @@
   font-size: 120%;
 }
 
+.ami_info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
 .accepter {
   grid-column: 2/3;
   display: flex;

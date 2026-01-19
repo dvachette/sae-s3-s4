@@ -15,6 +15,10 @@
   align-items: center;
 }
 
+.le_booster > a {
+  text-decoration: none;
+}
+
 .cartes_proposés {
   display: grid;
   width: 70%;
@@ -36,6 +40,15 @@ img {
   margin-right: 1.5vw;
   grid-row: 1/2;
   grid-column: 3/4;
+}
+
+#bouton_none {
+  background-color: rgb(var(--rouge700));
+  cursor: default;
+}
+
+#bouton_none:hover {
+  box-shadow: none;
 }
 
 .cartes_proposés > p {

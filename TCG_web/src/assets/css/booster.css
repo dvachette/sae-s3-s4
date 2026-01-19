@@ -165,6 +165,15 @@ img {
   /*box-shadow: 0 10px 10px rgba(var(--onyx), 1);*/
 }
 
+#bouton_none {
+  background-color: rgb(var(--rouge700));
+  cursor: default;
+}
+
+#bouton_none:hover {
+  box-shadow: none;
+}
+
 .Compteur {
   width: 11.5vw;
 }
