@@ -3,6 +3,7 @@
 #booster {
   display: flex;
   flex-direction: row;
+  justify-content: end; /* TODO : Changer quand on aura les récompenses quotidiennes */
 }
 
 p {

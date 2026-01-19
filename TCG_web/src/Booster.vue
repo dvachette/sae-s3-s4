@@ -2,7 +2,8 @@
   <VerifLogin @login-success="updateUserData" />
   <MonHeader />
   <main id="booster">
-    <div class="Récompenses_quotidiennes">
+    <!-- TODO : Enlever la balise style quand on aura les récompenses quotidiennes-->
+    <div class="Récompenses_quotidiennes" style="display: none;">
       <h2>Récompenses quotidiennes</h2>
       <div class="jour fait" id="j1">
         <p>Jour 1</p>
