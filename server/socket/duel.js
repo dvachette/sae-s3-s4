@@ -125,10 +125,12 @@ function receiveSocket(socket) {
                             player2SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player2SocketAttack.userId) }));
                             
                             if (player1Mort || player2Mort) {
+
                                 if (player1Mort) {
                                     player1SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                                 } else {
                                     let winnerUser = User.fromId(player1SocketAttack.userId);
+                                    winnerUser.logCombat(player2SocketAttack.userId, true);
                                     winnerUser.addKeys(12);
                                     winnerUser.save()
                                     player1SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
@@ -137,6 +139,7 @@ function receiveSocket(socket) {
                                     player2SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                                 } else {
                                     let winnerUser = User.fromId(player2SocketAttack.userId);
+                                    winnerUser.logCombat(player2SocketAttack.userId, true);
                                     winnerUser.addKeys(12);
                                     winnerUser.save()
                                     player2SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
@@ -177,6 +180,7 @@ function receiveSocket(socket) {
                                 player1SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                             } else {
                                 let winnerUser = User.fromId(player1SocketSwap.userId);
+                                winnerUser.logCombat(player2SocketSwap.userId, true);
                                 winnerUser.addKeys(12);
                                 winnerUser.save()
                                 player1SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
@@ -185,6 +189,7 @@ function receiveSocket(socket) {
                                 player2SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                             } else {
                                 let winnerUser = User.fromId(player2SocketSwap.userId);
+                                winnerUser.logCombat(player1SocketSwap.userId, true);
                                 winnerUser.addKeys(12);
                                 winnerUser.save()
                                 player2SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
@@ -213,6 +218,7 @@ function receiveSocket(socket) {
                     adversaireSocketForfeit.send(JSON.stringify({ type: 'duel_end', reason: 'opponent_forfeit' }));
                     // Retirer le combat de la liste des combats en cours
                     let winnerUserForfeit = User.fromId(adversaireSocketForfeit.userId);
+                    winnerUserForfeit.logCombat(userIdForfeit, true);
                     winnerUserForfeit.addKeys(12);
                     winnerUserForfeit.save()
                     const combatIndexForfeit = combats.indexOf(combatPairForfeit);
@@ -243,6 +249,7 @@ function receiveSocket(socket) {
             if (combat.includes(socket)) {
                 const adversaireSocket = combat[0] === socket ? combat[1] : combat[0];
                 let userWinner = User.fromId(adversaireSocket.userId);
+                userWinner.logCombat(userId, true);
                 userWinner.addKeys(12);
                 userWinner.save()
                 adversaireSocket.send(JSON.stringify({ type: 'duel_end', reason: 'opponent_disconnected' }));

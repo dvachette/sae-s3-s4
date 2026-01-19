@@ -9,18 +9,18 @@
         /></router-link>
         <p>{{ timerText }}</p>
         <router-link :to="'/ouverture?buy=true'" v-if="nbCles >= 100"
-          ><boutons_achat
+          ><boutons_achat :prix="100"
         /></router-link>
-        <boutons_achat id="bouton_none" v-else />
+        <boutons_achat id="bouton_none" :prix="100" v-else />
       </div>
       <div class="cartes_proposés">
         <clef class="compteur_boutique" :cles="nbCles" />
         <p>2/3</p>
         <p>3/3</p>
         <p>1/3</p>
-        <boutons_achat class="b1"></boutons_achat>
-        <boutons_achat class="b2"></boutons_achat>
-        <boutons_achat class="b3"></boutons_achat>
+        <boutons_achat :prix="20" class="b1"></boutons_achat>
+        <boutons_achat :prix="20" class="b2"></boutons_achat>
+        <boutons_achat :prix="20" class="b3"></boutons_achat>
       </div>
     </div>
   </main>

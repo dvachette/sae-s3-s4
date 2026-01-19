@@ -42,9 +42,9 @@
       /></router-link>
       <p>{{ timerText }}</p>
       <router-link :to="'/ouverture?buy=true'" v-if="nbCles >= 100"
-        ><boutons_achat
+        ><boutons_achat :prix="100"
       /></router-link>
-      <boutons_achat v-else id="bouton_none" />
+      <boutons_achat :prix="100" v-else id="bouton_none" />
     </div>
     <div class="Compteur">
       <clef :cles="nbCles" />

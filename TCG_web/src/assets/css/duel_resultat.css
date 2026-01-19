@@ -122,10 +122,9 @@ main > img {
   align-items: center;
   background-color: rgb(var(--blanc50));
   color: rgb(var(--onyx));
-  width: 20vh;
+  width: 100%;
   height: 6vh;
   border-radius: 50px;
-  font-size: 1.5vw;
   font-family: 'Mako';
   align-self: flex-end;
   margin: 0;

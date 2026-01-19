@@ -399,7 +399,7 @@ class User {
     }
     
     isFriendWith(userId) {
-        return this.friends.includes(userId);
+        return this.friends.some((friend) => friend.userId === userId);
     }
     
     delayBeforeNextBooster() {
@@ -560,6 +560,20 @@ class User {
                 "L'utilisateur ne possède pas cette carte dans sa collection."
             );
         }
+    }
+
+    logCombat(opponentId, didWin) {
+        const db = new Database('database.db');
+        const insertCombatQuery = db.prepare(
+            'INSERT INTO Historique_des_combats (GagnantId, PerdantId, date) VALUES (?, ?, ?)'
+        );
+        const now = Math.floor(Date.now() / 1000);
+        if (didWin) {
+            insertCombatQuery.run(this.userId, opponentId, now);
+        } else {
+            insertCombatQuery.run(opponentId, this.userId, now);
+        }
+        db.close();
     }
 
     getStats() {
