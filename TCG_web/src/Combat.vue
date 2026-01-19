@@ -170,6 +170,7 @@ const collection = computed(() => {
   return userData.value.collection;
 });
 const tailleCollection = collection.value.length;
+console.log( collection.value);
 const membres = computed(() => {
   return collection.value.filter((carte) => carte.card._class === 'member');
 });
@@ -334,7 +335,7 @@ async function echangeDeck(carte, evt){
 }
 
   async function swapCardsInDeck(cardId, pos) {
-    const response = await fetch(`http://${config.hosts.api}/deck/replaceCard`, {
+    const response = await fetch(`${config.hosts.api}/deck/replaceCard`, {
       credentials : 'include',
       method : 'POST',
       headers : {'Content-Type':'application/json'},

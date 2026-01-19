@@ -18,7 +18,7 @@ const pseudo = ref('');
 const emit = defineEmits(['fermer']);
 
 async function changementPseudo() {
-  const response = await fetch(`http://${config.hosts.api}/user`, {
+  const response = await fetch(`${config.hosts.api}/user`, {
     method: 'PUT',
     credentials: 'include',
     headers: {

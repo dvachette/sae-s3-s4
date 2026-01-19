@@ -80,7 +80,7 @@
         v-if="afficher_abandon"
         id="abandon"
         @fermer="afficher_abandon = false"
-        @confirm="closeSocket(); $router.push('/duel_resultat')"
+        @confirm="forfeit();"
       />
       <div class="cartes_combat">
         <div class="son_deck">
@@ -380,6 +380,7 @@ import {
   Attaque,
 } from './types/duel';
 import VerifLogin from './Composants/verifLogin.vue';
+import { useRouter } from 'vue-router';
 
 
 
@@ -399,6 +400,7 @@ const afficher_abandon = ref(false);
 const backgroundImageSrc = ref(
   'src/assets/imgs/combat_feyssine.png'
 );
+const router = useRouter();
 
 
 
@@ -646,7 +648,7 @@ function onLoginSuccess() {
   console.log("Afficher carte :", afficher_carte.value);
   console.log("DeckFamilier :", deckFamilier.value);
   // Initialiser la socket
-  socket.value = new WebSocket(`ws://${config.hosts.socket}`);
+  socket.value = new WebSocket(`${config.hosts.socket}`);
   socket.value.onopen = () => {
     socket.value.onmessage = (event) => {
       const message = JSON.parse(event.data);
@@ -679,9 +681,31 @@ function onLoginSuccess() {
         errorMessage.value = 'Échec de l\'authentification. Veuillez vous reconnecter.';
         btnCancelText.value = 'Retour'; 
       } else if (message.type === 'duel_end') {
-        // Gérer la fin du duel
-        console.log('Duel terminé:', message.reason);
-        // Rediriger vers une autre page ou afficher les résultats
+        const victory = ['victory', 'opponent_disconnected', 'opponent_forfeit'].includes(message.reason);
+        console.log('Duel terminé. Victoire :', victory);
+        // Compter le nombre de cartes restantes dans le deck
+        let myScore = combatState.moi.main.carte1.hitPoints > 0 ? 1 : 0;
+        if (combatState.moi.main.carte2.hitPoints > 0) myScore++;
+        if (combatState.moi.main.carteActive.hitPoints > 0) myScore++;
+        if (combatState.moi.main.carte4.hitPoints > 0) myScore++;
+        if (combatState.moi.main.carte5.hitPoints > 0) myScore++;
+        let hisScore = combatState.opposant.main.carte1.hitPoints > 0 ? 1 : 0;
+        if (combatState.opposant.main.carte2.hitPoints > 0) hisScore++;
+        if (combatState.opposant.main.carteActive.hitPoints > 0) hisScore++;
+        if (combatState.opposant.main.carte4.hitPoints > 0) hisScore++;
+        if (combatState.opposant.main.carte5.hitPoints > 0) hisScore++;
+        // Stocker les informations nécessaires dans le sessionStorage
+        sessionStorage.setItem('duelResult', JSON.stringify({
+          victoire: victory,
+          mon_score: myScore,
+          son_score: hisScore,
+          combatState: combatState,
+          reason: message.reason
+        }));
+        socket.value.close();
+        // Rediriger vers la page des résultats après un court délai
+        setTimeout(() => router.push('/duel_resultat'), 500);
+
       } 
     };
 
@@ -718,6 +742,12 @@ function swap_cartes(index) {
       socket.value.send(JSON.stringify({ type: 'swap', index: index }));
       echangeCarte.value = false;
     }
+  }
+}
+
+function forfeit() {
+  if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+    socket.value.send(JSON.stringify({ type: 'forfeit' }));
   }
 }
 

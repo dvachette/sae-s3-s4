@@ -127,7 +127,7 @@ let carteaDonnee3 = ref(null);
 async function obtenirMesEchanges() {
   try {
     const response = await fetch(
-      `http://${config.hosts.api}/trade/requests/me`,
+      `${config.hosts.api}/trade/requests/me`,
       {
         method: 'GET',
         credentials: 'include',
@@ -152,7 +152,7 @@ async function obtenirMesEchanges() {
 
 async function obtenirCartes() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/trade/cards`, {
+    const response = await fetch(`${config.hosts.api}/trade/cards`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -185,7 +185,7 @@ async function obtenirCartes() {
 
 async function requestSupprimerEchange() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/trade/request`, {
+    const response = await fetch(`${config.hosts.api}/trade/request`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -195,6 +195,12 @@ async function requestSupprimerEchange() {
     });
     const data = await response.json();
     if (response.ok) {
+      // Enlever l'échange de la liste de SessionStorage
+      const userData = JSON.parse(sessionStorage.getItem('userData'));
+      userData.sentTrades = userData.sentTrades.filter(
+        (item) => item.tradeRequestId !== props.echange_id,
+      );
+      sessionStorage.setItem('userData', JSON.stringify(userData));
       console.log('échange supprimé');
       emit('fermer');
     } else {

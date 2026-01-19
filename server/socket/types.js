@@ -40,7 +40,8 @@ export class CombatState {
     init(){
         for(let player of [this.player1,this.player2]){
             const effetsFamilierJoueur = player.familier.modifier;
-            
+            if (!effetsFamilierJoueur) continue;
+            console.log("Effets du familier :",effetsFamilierJoueur);
             for(let effect of effetsFamilierJoueur){
                 const carteAffectees = this.selectCards(player.userId,effect.target);
                 for(let carte of carteAffectees){
@@ -72,7 +73,8 @@ export class CombatState {
         // Mélanger les decks des joueurs
         shuffle(player1UserData.deck.cards);
         shuffle(player2UserData.deck.cards);
-        player2UserData.deck
+        console.log("Familier joueur 1 :",player1UserData.deck.pet);
+        console.log("Familier joueur 2 :",player2UserData.deck.pet);
         const player1 = new EtatJoueur(
             userId1,
             3, // énergie initiale
@@ -105,7 +107,6 @@ export class CombatState {
             player2UserData.username,
         );
         return new CombatState(1, player1, player2);
-
     }
 
     canPlay(userId) {

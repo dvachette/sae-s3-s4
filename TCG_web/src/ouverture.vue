@@ -138,7 +138,7 @@ function recupBooster() {
 }
 
 async function fetchBooster() {
-  const response = await fetch(`http://${config.hosts.api}/booster/open`, {
+  const response = await fetch(`${config.hosts.api}/booster/open`, {
     method: 'POST',
     credentials: 'include',
   });
@@ -153,26 +153,39 @@ async function fetchBooster() {
   nbCles.value += data.keys;
   obtainedKeys.value = data.keys;
   sessionStorage.setItem('userData', JSON.stringify(userData.value));
-  for (const cardInfo of data.cards) {
+    for (const cardInfo of data.cards) {
     if (cardInfo._class == 'member') {
       console.log('member');
       const card = createCardMember(cardInfo.cardId, cardInfo);
+      if (cards.find(c => c.id === card.id)) {
+        console.log('Carte déjà présente, changer l\'ID');
+        card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
+      }
       cards.push(card);
     } else if (cardInfo._class == 'pet') {
       console.log('pet');
       const card = createCardPet(cardInfo.cardId, cardInfo);
+      if (cards.find(c => c.id === card.id)) {
+        console.log('Carte déjà présente, changer l\'ID');
+        card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
+      }
       cards.push(card);
     } else if (cardInfo._class == 'arena') {
       console.log('arena');
       const card = createCardArena(cardInfo.cardId, cardInfo);
+      if (cards.find(c => c.id === card.id)) {
+        console.log('Carte déjà présente, changer l\'ID');
+        card.id = `${card.id}-${Date.now()}`; // Ajouter un timestamp pour rendre l'ID unique
+      }
       cards.push(card);
     }
+    console.log("Info carte : " , cardInfo);
   }
   console.log('Cartes du booster:', cards);
 }
 
 async function buyBooster() {
-  const response = await fetch(`http://${config.hosts.api}/booster/buy`, {
+  const response = await fetch(`${config.hosts.api}/booster/buy`, {
     method: 'POST',
     credentials: 'include',
   });

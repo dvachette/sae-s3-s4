@@ -212,7 +212,7 @@ async function deconnexion(){
   try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          `http://${config.hosts.api}/logout`, // URL de l'API de connexion
+          `${config.hosts.api}/logout`, // URL de l'API de connexion
           {
             method: 'GET', // Méthode GET pour récupérer les données
             credentials: "include", // Inclure les cookies dans la requête
@@ -229,7 +229,7 @@ async function deconnexion(){
 
 async function supprimerCompte() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/user`,
+    const response = await fetch(`${config.hosts.api}/user`,
     {
       method: 'DELETE',
       credentials: 'include'

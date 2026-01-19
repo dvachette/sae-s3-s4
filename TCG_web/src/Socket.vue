@@ -13,13 +13,13 @@ import { onMounted, ref } from 'vue';
 import config from '@/config.json'
 async function setupWebSocket() {
     // Récuperer les informations de l'utilisateur connecté depuis le serveur
-    const response = await fetch(`http://${config.hosts.api}/user`, {method: 'GET',credentials: 'include'});
+    const response = await fetch(`${config.hosts.api}/user`, {method: 'GET',credentials: 'include'});
     const userData = await response.json();
     console.log('Utilisateur connecté:', userData);
 
 
 
-    const socket = new WebSocket(`ws://{config.hosts.socket}`);
+    const socket = new WebSocket(`{config.hosts.socket}`);
     
     socket.onopen = () => {
         console.log('WebSocket connection established');

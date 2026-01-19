@@ -6,12 +6,14 @@
 */
 
 // Modules NPM
+const http = require('http'); // Importation du module HTTP natif de Node.js
 const express = require('express'); // Importation du framework Express
 const session = require('express-session'); // Importation de l'outil de gestion de sessions
 const cors = require('cors'); // Importation de l'outil CORS pour gérer les requêtes multi-origines
 const ws = require('ws'); // Importation du module WebSocket
 const cookie = require('cookie');
 const signature = require('cookie-signature');
+const dotenv = require('dotenv'); // Importation du module dotenv pour gérer les variables d'environnement
 
 // Modules internes
 const friendsRoutes = require('./routes/friends.js'); // Importation des routes d'amis
@@ -23,16 +25,17 @@ const deckRoutes= require('./routes/deck.js');// Importation des routes deck
 const duelUtils = require('./socket/duel.js'); // Importation des utilitaires de duel
 const shopRoutes = require('./routes/shop.js'); // Importation des routes shop
 
+dotenv.config(); // Chargement des variables d'environnement depuis le fichier .env
+
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
 
 const app = express(); // Création de l'application Express
-
+const server = http.createServer(app); // Création du serveur HTTP avec l'application Express
 // Configuration de l'application Express
-const SESSION_KEY = 'LaSuperClefDeSession'
+const SESSION_KEY = process.env.SESSION_KEY
 
 app.use(
     session({
-        // TODO: CHANGER LA CLÉ SECRÈTE AVANT DE METTRE EN PRODUCTION 
         secret: SESSION_KEY, // Clé secrète pour signer le cookie de session
         resave: false, // Ne pas sauvegarder la session si elle n'a pas été modifiée
         saveUninitialized: true, // Sauvegarder les sessions non initialisées
@@ -46,7 +49,7 @@ app.use(
 // Autorisation des requêtes CORS sur localhost:5173 (port par défaut de Vite)
 
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173', // Autoriser les requêtes provenant de cette origine
     credentials: true // Autoriser l'envoi de cookies avec les requêtes CORS
 }));
 app.use(express.json()); // Outil pour parser le JSON dans les requêtes entrantes
@@ -102,12 +105,12 @@ app.get('/shop', shopRoutes.getShop);
 app.post('/shop/buy', shopRoutes.buyOffer);
 
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
-app.listen(PORT, () => {
-    console.log('ATTENTION, SERVEUR EN MODE DÉVELOPPEMENT, NE PAS UTILISER EN PRODUCTION !');
-    console.log(`Server is running on port ${PORT}`);
-});
 
-const wss = new ws.Server({ port: 8080 }); // Serveur WebSocket sur le port 8080
+const wss = new ws.WebSocketServer({server}); // Serveur WebSocket sur le port 8080
 // Gestion des connexions WebSocket
 
 wss.on('connection', duelUtils.receiveSocket); // Utilisation de la fonction de gestion des connexions de duel   
+
+server.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
+});

@@ -1,5 +1,6 @@
 <template>
   <div class="demande" id="props.ami_id">
+    <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
     <p>{{ nom_ami }}</p>
     <div class="accepter" @click="accept_ami">
       <img src="@/assets/imgs/check_blanc.png" alt="check" />
@@ -16,13 +17,14 @@ import config from '@/config.json'
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,
+  profile_picture: String,
 });
 
 const emit = defineEmits(['accepter', 'refuser', 'erreur']);
 
 async function accept_ami() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/accept`, {
+    const response = await fetch(`${config.hosts.api}/friends/accept`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -44,7 +46,7 @@ async function accept_ami() {
 
 async function refus_ami() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/reject`, {
+    const response = await fetch(`${config.hosts.api}/friends/reject`, {
       method: 'POST',
       credentials: 'include',
       headers: {

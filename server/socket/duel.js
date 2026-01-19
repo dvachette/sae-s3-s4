@@ -121,19 +121,30 @@ function receiveSocket(socket) {
                                 // Détecter les morts : 
                             player1Mort = combatInstanceAttack.detecterDefaite(player1SocketAttack.userId);
                             player2Mort = combatInstanceAttack.detecterDefaite(player2SocketAttack.userId);
+                            player1SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player1SocketAttack.userId) }));
+                            player2SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player2SocketAttack.userId) }));
                             
                             if (player1Mort || player2Mort) {
+
                                 if (player1Mort) {
-                                    player1SocketAttack.send(JSON.stringify({ type: 'defeat'}));
+                                    player1SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                                 } else {
-                                    player1SocketAttack.send(JSON.stringify({ type: 'victory'}));
+                                    let winnerUser = User.fromId(player1SocketAttack.userId);
+                                    winnerUser.logCombat(player2SocketAttack.userId, true);
+                                    winnerUser.addKeys(12);
+                                    winnerUser.save()
+                                    player1SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
                                 }
                                 if (player2Mort) {
-                                    player2SocketAttack.send(JSON.stringify({ type: 'defeat'}));
+                                    player2SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                                 } else {
-                                    player2SocketAttack.send(JSON.stringify({ type: 'victory'}));
+                                    let winnerUser = User.fromId(player2SocketAttack.userId);
+                                    winnerUser.logCombat(player2SocketAttack.userId, true);
+                                    winnerUser.addKeys(12);
+                                    winnerUser.save()
+                                    player2SocketAttack.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
                                 }
-                                return
+                                return;
                             }
                             player1SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player1SocketAttack.userId) }));
                             player2SocketAttack.send(JSON.stringify({ type: 'duel_update', combatState: combatInstanceAttack.getPlayerState(player2SocketAttack.userId) }));
@@ -162,17 +173,27 @@ function receiveSocket(socket) {
                         player1Mort = combat.detecterDefaite(player1SocketSwap.userId);
                         player2Mort = combat.detecterDefaite(player2SocketSwap.userId);
                         
+                        player1SocketSwap.send(JSON.stringify({ type: 'duel_update', combatState: combat.getPlayerState(player1SocketSwap.userId) }));
+                        player2SocketSwap.send(JSON.stringify({ type: 'duel_update', combatState: combat.getPlayerState(player2SocketSwap.userId) }));
                         if (player1Mort || player2Mort) {
                             if (player1Mort) {
                                 player1SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                             } else {
+                                let winnerUser = User.fromId(player1SocketSwap.userId);
+                                winnerUser.logCombat(player2SocketSwap.userId, true);
+                                winnerUser.addKeys(12);
+                                winnerUser.save()
                                 player1SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
                             }
                             if (player2Mort) {
                                 player2SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'defeat'}));
                             } else {
+                                let winnerUser = User.fromId(player2SocketSwap.userId);
+                                winnerUser.logCombat(player1SocketSwap.userId, true);
+                                winnerUser.addKeys(12);
+                                winnerUser.save()
                                 player2SocketSwap.send(JSON.stringify({ type: 'duel_end', reason: 'victory'}));
-                            }
+                            };
                             return
                         }
                         // Envoyer la mise à jour du combat aux deux joueurs
@@ -187,6 +208,25 @@ function receiveSocket(socket) {
                     console.log(`User ${userIdSwap} requested to swap card at index ${swapIndex}`);
                 }
                 break;
+            case 'forfeit': // Abandonner le duel
+                const combatPairForfeit = combats.find(c => c[0] === socket || c[1] === socket); // Trouver le combat correspondant à la socket
+                if (combatPairForfeit) {
+                    const [player1SocketForfeit, player2SocketForfeit] = [combatPairForfeit[0], combatPairForfeit[1]];
+                    const userIdForfeit = socket.userId;
+                    const adversaireSocketForfeit = player1SocketForfeit === socket ? player2SocketForfeit : player1SocketForfeit;
+                    socket.send(JSON.stringify({ type: 'duel_end', reason: 'forfeit' }));
+                    adversaireSocketForfeit.send(JSON.stringify({ type: 'duel_end', reason: 'opponent_forfeit' }));
+                    // Retirer le combat de la liste des combats en cours
+                    let winnerUserForfeit = User.fromId(adversaireSocketForfeit.userId);
+                    winnerUserForfeit.logCombat(userIdForfeit, true);
+                    winnerUserForfeit.addKeys(12);
+                    winnerUserForfeit.save()
+                    const combatIndexForfeit = combats.indexOf(combatPairForfeit);
+                    if (combatIndexForfeit !== -1) {
+                        combats.splice(combatIndexForfeit, 1);
+                    }
+                    console.log(`User ${userIdForfeit} forfeited the duel`);
+                }
             default:
                 console.log(`Unknown message type received: ${parsedMessage.type}`);
         }
@@ -208,6 +248,10 @@ function receiveSocket(socket) {
             const combat = combats[i];
             if (combat.includes(socket)) {
                 const adversaireSocket = combat[0] === socket ? combat[1] : combat[0];
+                let userWinner = User.fromId(adversaireSocket.userId);
+                userWinner.logCombat(userId, true);
+                userWinner.addKeys(12);
+                userWinner.save()
                 adversaireSocket.send(JSON.stringify({ type: 'duel_end', reason: 'opponent_disconnected' }));
                 combats.splice(i, 1);
                 console.log(`Duel involving user ${userId} ended due to disconnection`);

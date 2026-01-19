@@ -1,6 +1,6 @@
 <template>
   <main>
-    <img src="@/assets/imgs/combat_feyssine.png" alt="echange" />
+    <img :src="background" alt="echange" @error="background.value = '/src/assets/imgs/combat_feyssine.png'"/>
     <div class="mes_cartes">
       <div
         class="carteMembreDeck"
@@ -34,18 +34,19 @@
       <div class="défaite" v-else>
         <p>DÉFAITE</p>
       </div>
+      <p class="reasonDuelResult">{{ reason }}</p>
       <div class="score">
         <p>{{ mon_score }} - {{ son_score }}</p>
       </div>
       <div class="infos">
         <div class="personnes">
           <div class="mes_infos">
-            <img src="@/assets/imgs/carte/perso/36.png" alt="Logo du site" />
-            <p>{{ nom_j1 }}</p>
+            <img :src="myPP" alt="Logo du site" />
+            <p>{{ myName }}</p>
           </div>
           <div class="autres_infos">
-            <img src="@/assets/imgs/carte/perso/36.png" alt="photo de profil" />
-            <p>{{ nom_j2 }}</p>
+            <img :src="hisPP" alt="photo de profil" />
+            <p>{{ hisName }}</p>
           </div>
         </div>
         <button id="ajout_ami">+</button>
@@ -65,7 +66,7 @@
     <div class="autres_cartes">
       <div
         class="carteMembreDeck"
-        v-for="(carte, index) in deckMembre"
+        v-for="(carte, index) in opposantMembres"
         :key="index"
       >
         <img
@@ -77,8 +78,8 @@
         <Carte_membre v-else :data="carte" largeur="140px" />
       </div>
       <Carte_familier
-        v-if="deckFamilier"
-        :data="deckFamilier"
+        v-if="opposantFamilier"
+        :data="opposantFamilier"
         largeur="140px"
       />
       <img
@@ -95,32 +96,72 @@
 import { ref, computed } from 'vue';
 import Carte_membre from './Composants/carte_membre.vue';
 import Carte_familier from './Composants/carte_familier.vue';
-
-const victoire = false;
-const mon_score = 5;
-const son_score = 2;
-const nom_j1 = 'Luke';
-const nom_j2 = 'Dark Vador';
-
+const victoire = ref(false);
+const mon_score = ref(5);
+const son_score = ref(2);
+const myName = ref('');
+const hisName = ref('');
+const hisPP = ref('');
+const myPP = ref('');
+const reason = ref('');
 const userData = ref(JSON.parse(sessionStorage.getItem('userData')));
-
+const duelResult = ref(JSON.parse(sessionStorage.getItem('duelResult')));
 const deckMembre = userData.value.deck.cards;
 const deckFamilier = userData.value.deck.pet;
-
-const collection = computed(() => {
-  return userData.value.collection;
+const combatState = duelResult.value.combatState;
+const background = combatState.moi.terrain ? `/src/assets/imgs/carte/arena/fond/${combatState.moi.terrain.cardId}.png` : '/src/assets/imgs/combat_feyssine.png'; 
+victoire.value = duelResult.value.victoire;
+hisName.value = combatState.opposant.playerName;
+hisPP.value = combatState.opposant.profilePicture;
+myName.value = userData.value.username;
+myPP.value = userData.value.profilePicture;
+mon_score.value = duelResult.value.mon_score;
+son_score.value = duelResult.value.son_score;
+switch (duelResult.value.reason) {
+  case 'victory':
+    reason.value = "Vous avez vaincu votre adversaire !";
+    break;
+  case 'defeat':
+    reason.value = "Vous avez été vaincu par votre adversaire.";
+    break;
+  case 'opponent_disconnected':
+    reason.value = "Votre adversaire à quitté la partie.";
+    break;
+  case 'forfeit':
+    reason.value = "Vous avez abandonné la partie.";
+    break;
+  case 'opponent_forfeit':
+    reason.value = "Votre adversaire a abandonné la partie.";
+    break;
+  default:
+    reason.value = "";
+}
+const opposantMembres = computed(() => {
+  return [combatState.opposant.main.carte1,
+    combatState.opposant.main.carte2,
+    combatState.opposant.main.carteActive,
+    combatState.opposant.main.carte4,
+    combatState.opposant.main.carte5
+  ];
 });
 
-const membres = computed(() => {
-  return collection.value.filter((carte) => carte.card._class === 'member');
+const opposantFamilier = computed(() => {
+  return combatState.opposant.familier;
+});
+
+const mesMembres = computed(() => {
+  return [combatState.moi.main.carte1,
+    combatState.moi.main.carte2,
+    combatState.moi.main.carteActive,
+    combatState.moi.main.carte4,
+    combatState.moi.main.carte5
+  ];
 });
 const familiers = computed(() => {
   //computed : prend une fonction en parametre : elle est recalculée dès que collection change
-  return collection.value.filter(
-    (carte) => carte.card._class === 'pet', //condition fonction fléchée)qui doit etre a true pour etre selectionnée par filter
-    // carte est l'élément examiné par filter lorsqu'il parcours collection
-  );
+  return combatState.moi.familier;
 });
+
 </script>
 
 <style scoped>

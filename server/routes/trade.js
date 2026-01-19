@@ -6,7 +6,7 @@
 
 const Database = require('better-sqlite3');
 const Card = require('../objects/card');
-
+const User = require('../objects/user');
 
 /**
  * 
@@ -69,9 +69,9 @@ function proposeTrade(request, response) {
         UPDATE collection SET quantity = quantity - 1 
         WHERE userId = ? AND cardId = ? AND quantity > 0
     `);
-    removeCardsQuery.run(userId, offeredCardId1);
-    removeCardsQuery.run(userId, offeredCardId2);
-    removeCardsQuery.run(userId, offeredCardId3);
+    if (offeredCardId1) removeCardsQuery.run(userId, offeredCardId1);
+    if (offeredCardId2) removeCardsQuery.run(userId, offeredCardId2);
+    if (offeredCardId3) removeCardsQuery.run(userId, offeredCardId3);
 
     return response.status(200).send({ message: 'Proposition d\'échange envoyée avec succès.' });
 }
@@ -104,6 +104,11 @@ function getTrades(request, response) {
         JOIN friends f ON (tr.senderId = f.senderId AND f.receiverId = ?) OR (tr.senderId = f.receiverId AND f.senderId = ?) WHERE f.status = 'accepted'
     `);
     const trades = getTradesQuery.all(userId, userId);
+    for (let trade of trades) {
+        const sender = User.fromId(trade.senderId);
+        trade.senderUsername = sender.username;
+        trade.senderProfilePicture = sender.profilePicture;
+    }
     return response.status(200).send({ trades:trades });
 }
 
@@ -128,7 +133,7 @@ function acceptTrade(request, response) {
     
     const db = new Database('database.db');
     const userId = request.session.userId;
-
+    const user = User.fromId(userId);
     // Vérifier que l'échange existe
     const getTradeQuery = db.prepare(`
         SELECT * FROM traderequest WHERE tradeRequestId = ?
@@ -140,7 +145,7 @@ function acceptTrade(request, response) {
         return response.status(404).send({ error: 'Proposition d\'échange non trouvée.' });
     }
     // Vérifier que l'utilisateur est ami avec l'expéditeur
-    if (!areFriends(userId, trade.senderId)) {
+    if (!user.isFriendWith(trade.senderId)) {
         return response.status(403).send({ error: 'Vous n\'êtes pas ami avec l\'expéditeur de cette proposition d\'échange.' });
     }
     // Vérifier que l'échange n'a pas expiré
@@ -164,12 +169,14 @@ function acceptTrade(request, response) {
     if (ownershipResult.count < 1) {
         return response.status(400).send({ error: 'Vous ne possédez pas la carte demandée.' });
     }
+
+    const sender = User.fromId(trade.senderId);
     // Effectuer l'échange
-    addCardToCollection(userId, acceptedCardId)
-    addCardToCollection(trade.senderId, trade.askedCardId)
+    user.addCardToCollection(acceptedCardId, 1);
+    if (acceptedCardId) sender.addCardToCollection(trade.askedCardId, 1);
     offeredCards = offeredCards.filter(cardId => cardId !== acceptedCardId);
-    addCardToCollection(trade.senderId, offeredCards[0])
-    addCardToCollection(trade.senderId, offeredCards[1])
+    if (offeredCards[0]) sender.addCardToCollection(offeredCards[0], 1);
+    if (offeredCards[1]) sender.addCardToCollection(offeredCards[1], 1);
 
     // Retirer les cartes de la collection des utilisateurs
     const removeCardQuery = db.prepare(`
@@ -203,7 +210,7 @@ function deleteTrade(request,response){
     const tradeRequestId = request.body.tradeRequestId;
     const db = new Database('database.db');
     const userId = request.session.userId;
-
+    const user = User.fromId(userId);
     // Vérifier que l'échange existe
     const getTradeQuery = db.prepare(`
         SELECT * FROM traderequest WHERE tradeRequestId = ?
@@ -223,9 +230,9 @@ function deleteTrade(request,response){
 
     //rendre les cartes
 
-    addCardToCollection(userId, trade.offeredCard1Id);
-    addCardToCollection(userId, trade.offeredCard2Id);
-    addCardToCollection(userId, trade.offeredCard3Id);
+    if (trade.offeredCard1Id) user.addCardToCollection(trade.offeredCard1Id, 1);
+    if (trade.offeredCard2Id) user.addCardToCollection(trade.offeredCard2Id, 1);
+    if (trade.offeredCard3Id) user.addCardToCollection(trade.offeredCard3Id, 1);
 
 
     //supprime la demande d'echange

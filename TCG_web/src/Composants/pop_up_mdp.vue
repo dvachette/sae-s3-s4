@@ -33,7 +33,7 @@ const emit = defineEmits(['fermer']);
 
 async function changementMdp() {
   if (nouveau_mdp.value === confirmer_mdp.value) {
-    const response = await fetch(`http://${config.hosts.api}/user`, {
+    const response = await fetch(`${config.hosts.api}/user`, {
       method: 'PUT',
       credentials: 'include',
       headers: {

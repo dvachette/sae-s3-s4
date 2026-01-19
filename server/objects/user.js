@@ -77,9 +77,9 @@ class User {
         for (const friendRow of friendsRows) {
             if (friendRow.status === 'accepted') {
                 const friendId = (friendRow.senderId === user.userId) ? friendRow.receiverId : friendRow.senderId;
-                const friendNameQuery = new Database("database.db").prepare('SELECT name FROM user WHERE userId = ?');
-                const friendNameRow = friendNameQuery.get(friendId);    
-                user.friends.push({userId: friendId, name: friendNameRow.name});
+                const friendNamePPQuery = new Database("database.db").prepare('SELECT name, profilePicture FROM user WHERE userId = ?');
+                const friendNamePPRow = friendNamePPQuery.get(friendId);    
+                user.friends.push({userId: friendId, name: friendNamePPRow.name, profilePicture: friendNamePPRow.profilePicture});
             } else if (friendRow.status === 'pending') {
                 const request = FriendRequest.fromRow(friendRow);
                 if (friendRow.receiverId === user.userId) {
@@ -103,7 +103,7 @@ class User {
                 if (trade.receiverId === user.userId) {
                     user.acceptedTrades.push(trade);
                 } else if (trade.receiverId === null) {
-                    this.receivedTrades.push(trade);
+                    user.receivedTrades.push(trade);
                 }
             }
         }
@@ -118,7 +118,6 @@ class User {
         const arenaCard = user.collection.find(item => item.card.cardId === row.arenaId)?.card || null;
         console.log(row.card1Id, row.card2Id, row.card3Id, row.card4Id, row.card5Id, row.petId, row.arenaId);
         console.log(deckCard1, deckCard2, deckCard3, deckCard4, deckCard5, petCard, arenaCard);
-        
         const deckCards = [deckCard1, deckCard2, deckCard3, deckCard4, deckCard5];
         user.deck = new Deck(deckCards, petCard, arenaCard);
         return user;
@@ -213,7 +212,7 @@ class User {
     static search(query) {
         const db = new Database('database.db');
         const fetchUserQuery = db.prepare(
-            'SELECT name, userId FROM user WHERE name LIKE ?'
+            'SELECT name, userId, profilePicture FROM user WHERE name LIKE ?'
         );
         const result = fetchUserQuery.all(query);
         
@@ -400,7 +399,7 @@ class User {
     }
     
     isFriendWith(userId) {
-        return this.friends.includes(userId);
+        return this.friends.some((friend) => friend.userId === userId);
     }
     
     delayBeforeNextBooster() {
@@ -419,8 +418,11 @@ class User {
     }
     
     addCardToCollection(cardId, quantity) {
+        console.log("ADD CARD TO COLLECTION");
+        this.collection.map(item => console.log(item ? item.card : null));
+        console.log("CARD ID TO ADD :", cardId, "QUANTITY :", quantity);
         const existingCard = this.collection.find(
-            (item) => item.card.cardId === cardId
+            (item) =>item ? item.card.cardId === cardId : null
         );
         if (existingCard) {
             existingCard.quantity += quantity;
@@ -558,6 +560,20 @@ class User {
                 "L'utilisateur ne possède pas cette carte dans sa collection."
             );
         }
+    }
+
+    logCombat(opponentId, didWin) {
+        const db = new Database('database.db');
+        const insertCombatQuery = db.prepare(
+            'INSERT INTO Historique_des_combats (GagnantId, PerdantId, date) VALUES (?, ?, ?)'
+        );
+        const now = Math.floor(Date.now() / 1000);
+        if (didWin) {
+            insertCombatQuery.run(this.userId, opponentId, now);
+        } else {
+            insertCombatQuery.run(opponentId, this.userId, now);
+        }
+        db.close();
     }
 
     getStats() {

@@ -1,5 +1,6 @@
 const Database = require("better-sqlite3");
 const Member = require("./member.js");
+const Card = require("./card.js");
 
 class Deck {
     cards;
@@ -21,7 +22,7 @@ class Deck {
         const cards = [];
         for (let i = 1; i <= 5; i++) {
             if (row[`card${i}Id`]) {
-                const card = Member.getMemberById(row[`card${i}Id`]);
+                const card = Card.fromId(row[`card${i}Id`]);
                 cards.push(card);
             } else {
                 cards.push(null);
@@ -30,12 +31,12 @@ class Deck {
 
         let pet = null;
         if (row.petId) {
-            pet = Member.getMemberById(row.petId);
+            pet = Card.fromId(row.petId);
         }
 
         let arena = null;
         if (row.arenaId) {
-            arena = Member.getMemberById(row.arenaId);
+            arena = Card.fromId(row.arenaId);
         }
 
         db.close();

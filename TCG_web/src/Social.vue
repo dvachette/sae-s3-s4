@@ -5,8 +5,8 @@
     <accepter_echange
       id="a_echange"
       v-if="afficher_echange == true"
-      @confirmer="afficher_echange = false"
-      @annuler="afficher_echange = false"
+      :echange_id="id_ami_echange"
+      @fermer="afficher_echange = false"
     />
     <pop_up_supprami
       v-if="afficher_supprami == true"
@@ -20,7 +20,7 @@
       id="s_echange"
       v-if="afficher_annuler == true"
       :echange_id="id_echange"
-      @fermer="afficher_annuler = false"
+      @fermer="fermerAnnulerEchange()"
     />
     <div class="part_echange">
       <h2>Mes échanges</h2>
@@ -48,12 +48,16 @@
       <router-link to="/creation_echange" v-else
         ><new_echange class="e2"
       /></router-link>
-      <h2>Autres échanges</h2>
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
-      <echange nom_echangeur="Panoramix" @click="afficher_echange = true" />
+      <h2>Échanges de vos amis</h2>
+      <echange
+        v-if="listeAmisEchanges[0] != null"
+        v-for="echange in listeAmisEchanges"
+        :echange_id="echange.tradeRequestId"
+        @click="
+          afficher_echange = true;
+          id_ami_echange = echange.tradeRequestId;
+        "
+      />
     </div>
     <div class="les_amis">
       <div
@@ -71,6 +75,7 @@
           :key="p_trouvés.userId"
           :nom_ami="p_trouvés.name"
           :id_ami="p_trouvés.userId"
+          :profile_picture="p_trouvés.profilePicture || 'src/assets/imgs/logoTCG.png'"
           @demander="demander_ami"
         />
       </div>
@@ -78,6 +83,7 @@
         v-for="m_ami in amis"
         :key="m_ami.userId"
         :nom_ami="m_ami.name"
+        :profile_picture="m_ami.profilePicture || 'src/assets/imgs/logoTCG.png'"
         @appel_pop_up="
           afficher_supprami = true;
           nom_ami_selectionne = m_ami.name;
@@ -92,6 +98,7 @@
         :key="demande.fromUserId"
         :nom_ami="demande.fromUserName"
         :ami_id="demande.fromUserId"
+        :profile_picture="demande.fromUserProfilePicture || 'src/assets/imgs/logoTCG.png'"
         @accepter="demande_ami_acceptee"
         @refuser="demande_ami_refusee"
       />
@@ -103,6 +110,7 @@
         :key="demande.toUserId"
         :nom_ami="demande.toUserName"
         :ami_id="demande.toUserId"
+        :profile_picture="demande.toUserProfilePicture || 'src/assets/imgs/logoTCG.png'"
         @annuler="annuler_demande"
       />
     </div>
@@ -138,11 +146,13 @@ const nom_ami_selectionne = ref('');
 const id_ami_selectionne = ref('');
 const afficher_echange = ref(false);
 const id_echange = ref(null);
+const id_ami_echange = ref(null);
 const afficher_annuler = ref(false);
-const listeAmisEchanges = ref(null);
+const listeAmisEchanges = ref([]);
 const listeMesEchanges = ref([]);
 
 obtenirMesEchanges();
+obtenirEchanges();
 
 function updateFriendData() {
   userData.value = JSON.parse(sessionStorage.getItem('userData'));
@@ -194,9 +204,11 @@ function supprimer_ami(data) {
 function demander_ami(data) {
   const demande_id = data.ami_id;
   const demande_name = data.ami_nom;
+  const demande_pp = data.profile_picture;
   demandesEnvoyees.value.push({
     toUserId: demande_id,
     toUserName: demande_name,
+    toUserProfilePicture: demande_pp,
   });
   chercheAmi.value = false;
   resultRecherche.value = [];
@@ -205,7 +217,7 @@ function demander_ami(data) {
 async function afficher_liste(event) {
   if (event.key === 'Enter') {
     try {
-      const response = await fetch(`http://${config.hosts.api}/user/search`, {
+      const response = await fetch(`${config.hosts.api}/user/search`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -228,7 +240,7 @@ async function afficher_liste(event) {
 async function obtenirMesEchanges() {
   try {
     const response = await fetch(
-      `http://${config.hosts.api}/trade/requests/me`,
+      `${config.hosts.api}/trade/requests/me`,
       {
         method: 'GET',
         credentials: 'include',
@@ -248,6 +260,29 @@ async function obtenirMesEchanges() {
     console.error(erreur);
   }
 }
+
+async function obtenirEchanges() {
+  try {
+    const response = await fetch(`${config.hosts.api}/trade/requests`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      listeAmisEchanges.value = data.trades;
+      console.log('Amis échanges : ', listeAmisEchanges.value);
+    } else {
+      console.error(data);
+    }
+  } catch (erreur) {
+    console.error(erreur);
+  }
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside);
 });
@@ -255,6 +290,12 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside);
 });
+
+function fermerAnnulerEchange() {
+  afficher_annuler.value = false;
+  userData.value = JSON.parse(sessionStorage.getItem('userData'));
+  obtenirMesEchanges();
+}
 </script>
 
 <style scoped>

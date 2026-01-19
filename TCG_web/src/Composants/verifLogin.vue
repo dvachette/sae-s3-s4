@@ -10,12 +10,14 @@ const router = useRouter()
       try {
         // Envoi de la requête de connexion au serveur
         const response = await fetch(
-          `http://${config.hosts.api}/user`, // URL de l'API de connexion
+          `${config.hosts.api}/user`, // URL de l'API de connexion
           {
             method: 'GET', // Méthode GET pour récupérer les données
             credentials: "include", // Inclure les cookies dans la requête
           }
         );
+        console.log('Tentative de connexion...');
+        console.log(response);
         const data = await response.json(); // Récupération de la réponse JSON
         console.log('Réponse du serveur :', data);
         if (response.ok) { // Vérification du succès de la connexion (code 200 ou 201)

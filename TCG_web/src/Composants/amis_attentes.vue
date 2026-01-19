@@ -1,5 +1,6 @@
 <template>
   <div class="attente">
+    <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
     <p>{{ nom_ami }}</p>
     <div class="annuler" @click="annuler_demande">
       <img src="@/assets/imgs/croix_blanche.png" alt="croix" />
@@ -12,13 +13,14 @@
 const props = defineProps({
   nom_ami: String,
   ami_id: Number,
+  profile_picture: String,
 });
 
 const emit = defineEmits(['annuler', 'erreur']);
 
 async function annuler_demande() {
   try {
-    const response = await fetch(`http://${config.hosts.api}/friends/request`, {
+    const response = await fetch(`${config.hosts.api}/friends/request`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
