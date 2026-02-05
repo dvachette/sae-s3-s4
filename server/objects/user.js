@@ -21,8 +21,9 @@ class User {
     acceptedTrades;
     deck;
     profilePicture;
+    role;
     
-    constructor(userId, username, email, lastBoosterOpening, balance, profilePicture) {
+    constructor(userId, username, email, lastBoosterOpening, balance, profilePicture, role) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -37,6 +38,7 @@ class User {
         this.acceptedTrades = [];
         this.deck = null;
         this.profilePicture = profilePicture;
+        this.role = role;
     }
     
     static fromRow(row) {
@@ -46,7 +48,8 @@ class User {
             row.email,
             row.lastBoosterOppening,
             row.balance,
-            row.profilePicture
+            row.profilePicture,
+            row.profileType
         );
         
         // Récupération de la collection de l'utilisateur
@@ -107,7 +110,6 @@ class User {
                 }
             }
         }
-        console.log(JSON.stringify(user.collection));
         // Récupération du deck de l'utilisateur
         const deckCard1 = user.collection.find(item => item.card.cardId === row.card1Id)?.card || null;
         const deckCard2 = user.collection.find(item => item.card.cardId === row.card2Id)?.card || null;
@@ -116,8 +118,6 @@ class User {
         const deckCard5 = user.collection.find(item => item.card.cardId === row.card5Id)?.card || null;
         const petCard = user.collection.find(item => item.card.cardId === row.petId)?.card || null;
         const arenaCard = user.collection.find(item => item.card.cardId === row.arenaId)?.card || null;
-        console.log(row.card1Id, row.card2Id, row.card3Id, row.card4Id, row.card5Id, row.petId, row.arenaId);
-        console.log(deckCard1, deckCard2, deckCard3, deckCard4, deckCard5, petCard, arenaCard);
         const deckCards = [deckCard1, deckCard2, deckCard3, deckCard4, deckCard5];
         user.deck = new Deck(deckCards, petCard, arenaCard);
         return user;
@@ -135,7 +135,7 @@ class User {
         if (row) {
             return User.fromRow(row);
         } else {
-            user.pendingFriendRequests.push(request);
+            return null;
         }
     }
     
@@ -234,7 +234,6 @@ class User {
             );
             updateQuery.run(this.username, this.email, this.profilePicture, this.userId);
         }
-        console.log(this.username);
         
         db.close();
     }
@@ -418,9 +417,6 @@ class User {
     }
     
     addCardToCollection(cardId, quantity) {
-        console.log("ADD CARD TO COLLECTION");
-        this.collection.map(item => console.log(item ? item.card : null));
-        console.log("CARD ID TO ADD :", cardId, "QUANTITY :", quantity);
         const existingCard = this.collection.find(
             (item) =>item ? item.card.cardId === cardId : null
         );
@@ -430,7 +426,6 @@ class User {
             const newCard = new Collection(cardId, 1, quantity);
             this.collection.push(newCard);
         }
-        console.log(existingCard);
         const db = new Database('database.db');
         
         if (existingCard) {
@@ -590,6 +585,24 @@ class User {
         const amis = amisQuery.get(this.userId, this.userId).total ;
         return { totalCartes : totalCards , totalPossedees : cards, totalParties : partiesJouees, totalVictoires : partiesGagnees, totalAmis : amis};
     }
+
+    static getAllUsers() {
+        const db = new Database('database.db');
+        const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture FROM user');
+        const users = getAllUsersQuery.all();
+        db.close();
+        return users;
+    }
+
+    isAdmin() {
+        const db = new Database('database.db');
+        const getUserProfileTypeQuery = db.prepare('SELECT profileType FROM user WHERE userId = ?');
+        const row = getUserProfileTypeQuery.get(this.userId);
+        db.close();
+        console.log(`User ${this.userId} profile type: ${row.profileType}`);
+        return row.profileType === 'admin';
+    }
+
 }
 
 module.exports = User;
