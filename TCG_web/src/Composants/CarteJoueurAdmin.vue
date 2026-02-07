@@ -17,7 +17,7 @@
     });
 
     const pictureURLDisplay = computed(() => {
-        return playerPicture ? playerPicture : 'src/assets/imgs/logoTCG.png';
+        return playerPicture ? playerPicture : '/src/assets/imgs/logoTCG.png';
     });
 
     const playerIdDisplay = computed(() => {

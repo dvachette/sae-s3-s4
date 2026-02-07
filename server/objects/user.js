@@ -481,6 +481,52 @@ class User {
     }
     
     setCardQuantity(cardId, quantity) {
+        if (quantity < 0) {
+            throw new Error('La quantité ne peut pas être négative.');
+        }
+        if (quantity === 0) {
+            const db = new Database('database.db');
+            const deleteQuery = db.prepare(
+                'DELETE FROM collection WHERE userId = ? AND cardId = ?'
+            );
+            deleteQuery.run(this.userId, cardId);
+            this.collection = this.collection.filter(
+                (item) => item.card.cardId !== cardId
+            );
+            // Vérifier si la carte est dans le deck et la retirer si c'est le cas
+            const isDeletedCardInDeckQuery = db.prepare(
+                'SELECT card1Id, card2Id, card3Id, card4Id, card5Id, petId, arenaId FROM user WHERE userId = ?'
+            );
+            const deckRow = isDeletedCardInDeckQuery.get(this.userId);
+            const deckCardIds = [deckRow.card1Id, deckRow.card2Id, deckRow.card3Id, deckRow.card4Id, deckRow.card5Id];
+            let deckUpdated = false;
+            for (let i = 0; i < deckCardIds.length; i++) {
+                if (deckCardIds[i] === cardId) {
+                    const updateDeckQuery = db.prepare(
+                        `UPDATE user SET card${i + 1}Id = NULL WHERE userId = ?`
+                    );
+                    updateDeckQuery.run(this.userId);
+                    deckUpdated = true;
+                }
+            }
+            if (deckRow.petId === cardId) {
+                const updatePetQuery = db.prepare(
+                    'UPDATE user SET petId = NULL WHERE userId = ?'
+                );
+                updatePetQuery.run(this.userId);
+                deckUpdated = true;
+            }
+            if (deckRow.arenaId === cardId) {
+                const updateArenaQuery = db.prepare(
+                    'UPDATE user SET arenaId = NULL WHERE userId = ?'
+                );
+                updateArenaQuery.run(this.userId);
+                deckUpdated = true;
+            }
+            
+            db.close();
+            return;
+        }
         const existingCard = this.collection.find(
             (item) => item.card.cardId === cardId
         );
@@ -493,9 +539,7 @@ class User {
             updateQuery.run(quantity, this.userId, cardId);
             db.close();
         } else {
-            throw new Error(
-                "L'utilisateur ne possède pas cette carte dans sa collection."
-            );
+            this.addCardToCollection(cardId, quantity);
         }
     }
     
@@ -603,6 +647,18 @@ class User {
         return row.profileType === 'admin';
     }
 
+
+    setRole(role) {
+        const validRoles = ['user', 'admin'];
+        if (!validRoles.includes(role)) {
+            throw new Error('Rôle invalide. Les rôles valides sont : user, admin.');
+        }
+        const db = new Database('database.db');
+        const updateRoleQuery = db.prepare('UPDATE user SET profileType = ? WHERE userId = ?');
+        updateRoleQuery.run(role, this.userId);
+        this.role = role;
+        db.close();
+    }
 }
 
 module.exports = User;

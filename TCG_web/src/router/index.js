@@ -13,7 +13,7 @@ import duel from '../duel.vue';
 import duel_resultat from '@/duel_resultat.vue';
 import Admin from '../Admin.vue';
 import creation_echange from '@/Composants/creation_echange.vue';
-
+import AdminCollection from '@/AdminCollection.vue';
 const routes = [
   { path: '/booster', component: Booster },
   { path: '/', component: Login },
@@ -27,7 +27,8 @@ const routes = [
   { path: '/socket', component: Socket },
   { path: '/duel', component: duel },
   { path: '/duel_resultat', component: duel_resultat },
-  { path: '/admin', component: Admin },
+  { path: '/admin/users', component: Admin },
+  { path: '/admin/collection/:userId', component: AdminCollection },
   { path: '/creation_echange', component: creation_echange },
 ];
 

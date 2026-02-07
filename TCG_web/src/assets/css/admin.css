@@ -65,11 +65,82 @@ div.playerCardScroller {
 
 div.playerDetails {
     padding: 20px;
-    background-color: rgb(var(--blanc100));
+    background-color: #AAA;
     height: 85vh;
     overflow-y: auto;
     position: fixed;
-    top: 15vh;
+    top: 20vh;
     right: 5vw;
+    width: 25vw;
+    height:70vh;
+    border-radius: 30px;
+    box-shadow: #444 0px 0px 10px;
 }
 
+div.playerDetails > p {
+    text-align: center;
+}
+
+button.deleteButton {
+    background-color: rgb(228, 0, 0);
+    border:none;
+    box-shadow: #444 0px 0px 5px;
+}
+
+button.deleteButton:hover {
+    background-color: rgb(202, 0, 0);
+    cursor: pointer;
+}
+
+p#roleSelect, p#roleDisplay {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #E9E9ED;
+    padding: 0 10px;
+    height: 40px;
+    border-radius: 100px;
+    font-size: 1.3rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+p#roleSelect strong, p#roleDisplay strong {
+    font-weight: bold;
+    color: #333;
+    border-right: 1px solid #333;
+    padding-right: 10px;
+    height: 40px;
+    text-align: center;
+    line-height:40px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.3rem;
+}
+
+p#roleSelect select {
+    border: none;
+    background: none;
+    font-size: 1rem;
+    color: #333;
+}
+
+div.changePassword fieldset{
+    gap: 10px;
+    margin: 20px 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.changePassword label {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 1.2rem;
+    justify-content: space-between;
+}
+
+div.changePassword input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
