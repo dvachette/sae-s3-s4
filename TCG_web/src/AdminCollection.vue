@@ -2,7 +2,7 @@
     import carte_membre from './Composants/carte_membre.vue';
     import carte_familier from './Composants/carte_familier.vue';
     import carte_terrain from './Composants/carte_terrain.vue';
-    import CardCounter from './Composants/CardCounter.vue';
+    import CardCounter from './Composants/EditeableNumeric.vue';
     import { ref, onMounted } from 'vue';
     import config from "./config.json";
     import { useRouter } from 'vue-router';
@@ -113,9 +113,9 @@ import CheckAdmin from './Composants/CheckAdmin.vue';
     <div class="scrollContainer">
         <div class="content">
             <div class="cardContainer" v-for="card in cardsToDisplay" :key="card.cardId">
-                <carte_membre v-if="card._class === 'member'" :data="card" largeur="15vw"/>
-                <carte_familier v-else-if="card._class === 'pet'" :data="card" largeur="15vw"/>
-                <carte_terrain v-else-if="card._class === 'arena'" :data="card" largeur="15vw"/>
+                <carte_membre v-if="card._class === 'member'" :data="card" largeur="17vw"/>
+                <carte_familier v-else-if="card._class === 'pet'" :data="card" largeur="17vw"/>
+                <carte_terrain v-else-if="card._class === 'arena'" :data="card" largeur="17vw"/>
                 <CardCounter :value="card.quantity || 0" :cardId="card.cardId" @update:count="updateQuantity" />
             </div>
         </div>

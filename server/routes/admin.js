@@ -265,3 +265,27 @@ export function adminSetUserCollection(request, response) {
     targetUser.setCardQuantity(cardId, quantity);
     response.json({ success: true, message: 'User collection updated successfully' });
 }
+
+export function adminUpdateUserBalance(request, response) {
+    const userId = request.session.userId;
+    
+    if (!userId) {
+        response.status(401).json({ error: 'Unauthorized' });
+        return;
+    }
+    const user = User.fromId(userId);
+    if (!user || !user.isAdmin()) {
+        response.status(403).json({ error: 'Forbidden' });
+        return;
+    }
+
+    const { targetUserId, newBalance } = request.body;
+    const targetUser = User.fromId(targetUserId);
+    if (!targetUser) {
+        response.status(404).json({ error: 'User not found' });
+        return;
+    }
+
+    targetUser.setKeys(newBalance);
+    response.json({ success: true, message: 'User balance updated successfully' });
+}

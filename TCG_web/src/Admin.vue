@@ -6,12 +6,14 @@
             <h1>Administration - Gestion des utilisateurs</h1>
             <img src="@/assets/imgs/logoTCG.png" alt="Icône Admin"/>
         </header>
-        <input type="search" placeholder="Rechercher un joueur..."/>
+        <nav>
+            <input type="search" placeholder="Rechercher un joueur..." v-model="searchTerm"/>
+        </nav>
         <div id="adminContent">
             <div class="playerCardScroller">
                 <div class="playerCardsContainer">
                     <CarteJoueurAdmin
-                        v-for="player in users"
+                        v-for="player in displayedUsers"
                         :key="player.userId"
                         :playerid="player.userId"
                         :playerPicture="player.profilePicture"
@@ -25,6 +27,10 @@
             </div>
             <div class="playerDetails detailsFilled" v-else>
                 <h2>Détails du joueur #{{ selectedUser.userId }}</h2>
+                <div class="editKeys">
+                    <EditeableNumeric :value="selectedUser.balance" @update:count="changeBalance"/>
+                    <img src="@/assets/imgs/Clef.png" alt="Icône Clé" class="keyIcon"/>
+                </div>
                 <EditeableField :modelValue="selectedUser.username" label="Pseudo" @validateEdit="validateUsernameEdit"/> 
                 <EditeableField :modelValue="selectedUser.email" label="Email" @validateEdit="validateEmailEdit"/>
                 <p id="roleDisplay" v-if="selectedUser.role === 'deleted'"><strong>Rôle :</strong> {{ selectedUser.role }}</p>
@@ -46,7 +52,6 @@
                     </fieldset>
                 </div>
                 <button id="manageCollection" v-if="selectedUser.role !== 'deleted'" @click="goToManageCollection">Gérer la collection</button>
-                <button id="manageFriends" v-if="selectedUser.role !== 'deleted'">Gérer les amis</button>
                 <button class="deleteButton" id="deleteButton" v-if="selectedUser.role !== 'deleted'" @click="deleteUser">Supprimer le joueur</button>
             </div>
         </div>
@@ -60,12 +65,40 @@
     import config from "./config.json";
     import EditeableField from './Composants/EditeableField.vue';
     import CheckAdmin from './Composants/CheckAdmin.vue';
+    import EditeableNumeric from './Composants/EditeableNumeric.vue';
     const users = ref([]);
+    const searchTerm = ref('');
+    const displayedUsers = computed(() => {
+        const term = searchTerm.value.toLowerCase();
+        console.log("Filtering users with term:", term);
+        return users.value.filter(user => user.name.toLowerCase().includes(term) || user.email.toLowerCase().includes(term));
+    }); 
+
     const selectedUser = ref(null);
     const availableRoles = ['user', 'admin']; // Rôles disponibles
     const newPassword = ref('');
     const newPasswordConfirm = ref('');
     const passwordsMatch = computed(() => newPassword.value === newPasswordConfirm.value && newPassword.value !== '' && isPasswordStrong(newPassword.value));
+    async function changeBalance(amount, _) {
+        console.log(`Changing balance to ${amount}`)
+        const response = await fetch(`${config.hosts.api}/admin/user/balance`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                targetUserId: selectedUser.value.userId,
+                newBalance: amount
+            })
+        });
+        if (!response.ok) {
+            console.error('Erreur lors de la mise à jour du solde');
+            return;
+        }
+
+    }
+    
     async function fetchOverviewUsersData() {
         try {
             const response = await fetch(`${config.hosts.api}/admin/users`,

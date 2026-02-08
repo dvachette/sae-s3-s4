@@ -443,6 +443,21 @@ class User {
         db.close();
     }
     
+    setKeys(amount) {
+        if (amount < 0) {
+            throw new Error('Le solde ne peut pas être négatif.');
+        }
+        this.balance = amount;
+        const db = new Database('database.db');
+        
+        const updateBalanceQuery = db.prepare(
+            'UPDATE user SET balance = ? WHERE userId = ?'
+        );
+        updateBalanceQuery.run(this.balance, this.userId);
+        
+        db.close();
+    }
+
     addKeys(amount) {
         this.balance += amount;
         const db = new Database('database.db');
@@ -632,7 +647,7 @@ class User {
 
     static getAllUsers() {
         const db = new Database('database.db');
-        const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture FROM user');
+        const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture, balance FROM user');
         const users = getAllUsersQuery.all();
         db.close();
         return users;
