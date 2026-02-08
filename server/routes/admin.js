@@ -41,7 +41,7 @@ export function isAdmin(request, response) {
         return;
     } 
     const user = User.fromId(userId);
-    if (!user || !user.isAdmin) {
+    if (!user || !user.isAdmin()) {
         response.status(403).json({ error: 'Forbidden' });
         return;
     }

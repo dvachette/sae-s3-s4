@@ -171,3 +171,6 @@ div.editKeys {
 div.editKeys div {
     flex:1;
 }
+img.imgBtn {
+    cursor: pointer;
+}

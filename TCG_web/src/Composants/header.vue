@@ -18,6 +18,8 @@
     <router-link to="/social" class="link" active-class="active"
       ><h1>Social</h1></router-link
     >
+    <router-link v-if="isAdmin" to="/admin/users" class="link" active-class="active"
+      ><h1>Admin</h1></router-link>
     <router-link to="/profil" active-class="active" class="p_profil"
       ><img :src="pp" alt="Logo du site" id="photo_p"
     /></router-link>
@@ -25,8 +27,9 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-
+import router from '@/router';
+import { ref, watch, onMounted } from 'vue';
+import config from '@/config.json';
 const props = defineProps({trigger: Number});
 
 watch(
@@ -40,6 +43,7 @@ watch(
 const pp = ref('/src/assets/imgs/logoTCG.png');
 
 const user = ref(JSON.parse(sessionStorage.getItem('userData')));
+const isAdmin = ref(false)
 function loadUserData() {
   user.value = JSON.parse(sessionStorage.getItem('userData'));
   pp.value =
@@ -48,7 +52,31 @@ function loadUserData() {
       : 'src/assets/imgs/logoTCG.png';
 }
 
+
 loadUserData();
+
+onMounted(async () => {
+  await checkAdminStatus();
+});
+
+async function checkAdminStatus() {
+const response = await fetch(`${config.hosts.api}/admin/isAdmin`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include' // Inclure les cookies pour l'authentification
+  });
+  if (!response.ok) {
+    console.error('Erreur lors de la vérification du rôle admin');
+    isAdmin.value = false;
+  } else {
+    const data = await response.json();
+    console.log('Statut admin récupéré :', data.isAdmin);
+    isAdmin.value = data.isAdmin;
+  }
+}
+
 </script>
 
 <style scoped>

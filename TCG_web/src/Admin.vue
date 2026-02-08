@@ -3,7 +3,7 @@
     <AdminChoixPP v-if="onPPManage" @cancel="closePPChangePopup" :userData="selectedUser" @validate="changePP"/>
     <div class="adminPanel">
         <header id="adminHeader">
-            <img src="@/assets/imgs/logoTCG.png" alt="Logo TCG"/>
+            <img src="@/assets/imgs/logoTCG.png" alt="Logo TCG" @click="backToUserSpace" title="Retour à l'espace utilisateur" class="imgBtn"/>
             <h1>Administration - Gestion des utilisateurs</h1>
             <img src="@/assets/imgs/logoTCG.png" alt="Icône Admin"/>
         </header>
@@ -84,6 +84,10 @@
     const newPasswordConfirm = ref('');
     const passwordsMatch = computed(() => newPassword.value === newPasswordConfirm.value && newPassword.value !== '' && isPasswordStrong(newPassword.value));
     
+    function backToUserSpace() {
+        window.location.href = '/booster';
+    }
+
     function openPPChangePopup() {
         onPPManage.value = true;
     }
