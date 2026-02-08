@@ -119,6 +119,7 @@ app.delete('/admin/user', adminRoutes.adminDeleteUser);
 app.get('/admin/cards', adminRoutes.adminGetAllCards);
 app.put('/admin/user/collection', adminRoutes.adminSetUserCollection);
 app.put('/admin/user/balance', adminRoutes.adminUpdateUserBalance);
+app.put('/admin/user/profilePicture', adminRoutes.adminChangeUserPP);
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
 
 const wss = new ws.WebSocketServer({server}); // Serveur WebSocket sur le port 8080

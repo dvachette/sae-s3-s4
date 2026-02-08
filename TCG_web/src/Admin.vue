@@ -1,5 +1,6 @@
 <template>
     <CheckAdmin />
+    <AdminChoixPP v-if="onPPManage" @cancel="closePPChangePopup" :userData="selectedUser" @validate="changePP"/>
     <div class="adminPanel">
         <header id="adminHeader">
             <img src="@/assets/imgs/logoTCG.png" alt="Logo TCG"/>
@@ -52,6 +53,7 @@
                     </fieldset>
                 </div>
                 <button id="manageCollection" v-if="selectedUser.role !== 'deleted'" @click="goToManageCollection">Gérer la collection</button>
+                <button id="changePP" @click="openPPChangePopup" v-if="selectedUser.role !== 'deleted'">Changer la photo de profil</button>
                 <button class="deleteButton" id="deleteButton" v-if="selectedUser.role !== 'deleted'" @click="deleteUser">Supprimer le joueur</button>
             </div>
         </div>
@@ -66,6 +68,7 @@
     import EditeableField from './Composants/EditeableField.vue';
     import CheckAdmin from './Composants/CheckAdmin.vue';
     import EditeableNumeric from './Composants/EditeableNumeric.vue';
+    import AdminChoixPP from './Composants/AdminChoixPP.vue';
     const users = ref([]);
     const searchTerm = ref('');
     const displayedUsers = computed(() => {
@@ -74,11 +77,43 @@
         return users.value.filter(user => user.name.toLowerCase().includes(term) || user.email.toLowerCase().includes(term));
     }); 
 
+    const onPPManage = ref(false);
     const selectedUser = ref(null);
     const availableRoles = ['user', 'admin']; // Rôles disponibles
     const newPassword = ref('');
     const newPasswordConfirm = ref('');
     const passwordsMatch = computed(() => newPassword.value === newPasswordConfirm.value && newPassword.value !== '' && isPasswordStrong(newPassword.value));
+    
+    function openPPChangePopup() {
+        onPPManage.value = true;
+    }
+
+    function closePPChangePopup() {
+        onPPManage.value = false;
+    }
+
+    async function changePP(newPP) {
+        console.log(`Changing profile picture to ${newPP}`);
+        const response = await fetch(`${config.hosts.api}/admin/user/profilePicture`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                targetUserId: selectedUser.value.userId,
+                newPP: newPP
+            })
+        });
+        if (!response.ok) {
+            console.error('Erreur lors de la mise à jour de la photo de profil');
+            return;
+        }
+        selectedUser.value.profilePicture = newPP; // Mettre à jour localement pour refléter le changement immédiatement
+        users.value = users.value.map(user => user.userId === selectedUser.value.userId ? { ...user, profilePicture: newPP } : user); // Mettre à jour la liste des utilisateurs pour refléter le changement
+        closePPChangePopup();
+    }
+
     async function changeBalance(amount, _) {
         console.log(`Changing balance to ${amount}`)
         const response = await fetch(`${config.hosts.api}/admin/user/balance`, {
@@ -99,6 +134,7 @@
 
     }
     
+
     async function fetchOverviewUsersData() {
         try {
             const response = await fetch(`${config.hosts.api}/admin/users`,
