@@ -18,5 +18,5 @@ const pourcentage = (((props.niv % 5)*100)/5)+"%"
 </script>
 
 <style scoped>
-@import '../assets/css/barre_progress_carte.css';
+@import '@/assets/css/barre_progress_carte.css';
 </style>

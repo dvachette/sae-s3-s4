@@ -8,6 +8,14 @@ main {
   align-items: center;
 }
 
+
+main div img.carte_ajout {
+  width: 140px;
+  height: 100%;
+  object-fit: cover;
+}
+
+
 main > img {
   position: absolute;
   width: 100%;

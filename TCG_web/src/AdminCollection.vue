@@ -102,9 +102,9 @@ import CheckAdmin from './Composants/CheckAdmin.vue';
 <template>
     <CheckAdmin />
     <header id="adminHeader">
-            <img src="@/assets/imgs/logoTCG.png" alt="Logo TCG"/>
+            <img src="/assets/imgs/logoTCG.png" alt="Logo TCG"/>
             <h1>Administration - Gestion de la collection de l'utilisateur #{{ userId }}</h1>
-            <img src="@/assets/imgs/logoTCG.png" alt="Icône Admin"/>
+            <img src="/assets/imgs/logoTCG.png" alt="Icône Admin"/>
     </header>
     <nav>
         <a href="/admin/users">&lt; Retour à la gestion des utilisateurs</a>
@@ -123,13 +123,26 @@ import CheckAdmin from './Composants/CheckAdmin.vue';
 </template>
 
 <style scoped>
-    
     header {
-        z-index: 10;
-        position:absolute;
-        top:0;
-        height:10vh;
-    }
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(
+        90deg,
+        rgb(var(--orange400)),
+        rgb(var(--orange500))
+        );
+    z-index: 10;
+}
+
+header > img {
+    height: 12vh
+}
     .scrollContainer {
         width: 100%;
         height: 80vh;
@@ -166,5 +179,8 @@ import CheckAdmin from './Composants/CheckAdmin.vue';
         border: 1px solid #ccc;
         border-radius: 20px;
         width: 300px;
+    }
+    header img {
+        height: 80%;
     }
 </style>

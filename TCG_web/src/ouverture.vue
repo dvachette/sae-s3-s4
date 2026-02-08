@@ -8,7 +8,7 @@
       @ended="onVideoEnd"
       @play="recupBooster"
     >
-      <source src="@/assets/vidéos/boosteranim.mp4" type="video/mp4" />
+      <source src="/assets/vidéos/boosteranim.mp4" type="video/mp4" />
     </video>
   </div>
 
@@ -50,14 +50,14 @@ import { ref, watch, markRaw, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import Stack from '@/Composants/Stack.vue';
 import carte_membre from '@/Composants/carte_membre.vue';
-import carte_familier from './Composants/carte_familier.vue';
-import carte_terrain from './Composants/carte_terrain.vue';
-import nouv_clef from './Composants/nouv_clef.vue';
-import clef from './Composants/clef.vue';
-import carteBooster from './carte-booster.vue';
-import router from './router';
+import carte_familier from '@/Composants/carte_familier.vue';
+import carte_terrain from '@/Composants/carte_terrain.vue';
+import nouv_clef from '@/Composants/nouv_clef.vue';
+import clef from '@/Composants/clef.vue';
+import carteBooster from '@/carte-booster.vue';
+import router from '@/router';
 import config from '@/config.json';
-const showVideo = ref(true); // ← Remettez true pour la vidéo
+const showVideo = ref(true); 
 const introVideo = ref(null);
 const allCardsGone = ref(false);
 const cartesCollectees = ref([]);

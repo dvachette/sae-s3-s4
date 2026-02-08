@@ -51,7 +51,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
   data: Object,
@@ -59,9 +59,6 @@ const props = defineProps({
 });
 
 // chargement des images
-const images = import.meta.glob('../assets/imgs/carte/perso/**/*.png', {
-  eager: true,
-});
 
 // ===== partie haute =====
 const nom = computed(() => props.data.name);
@@ -71,8 +68,7 @@ const id = computed(()=> props.data.cardId);
 
 const imgCarte = computed(
   () =>
-    images[`../assets/imgs/carte/perso/${id.value}.png`]
-      ?.default
+    `/assets/imgs/carte/perso/${id.value}.png`
 );
 
 // ===== attaques =====
@@ -95,7 +91,7 @@ const mandat = computed(() => props.data.mandat);
 
 const imgMandat = computed(
   () =>
-    images[`../assets/imgs/carte/perso/mandats/${mandat.value}.png`]?.default
+    `/assets/imgs/carte/perso/mandats/${mandat.value}.png`
 );
 
 const dateMandat = computed(() => {
@@ -127,14 +123,12 @@ const faiblesse = computed(() => poles[props.data.faiblesse[0]]);
 
 const imgForce = computed(
   () =>
-    images[`../assets/imgs/carte/perso/faiblessesForces/${force.value}.png`]
-      ?.default
+    `/assets/imgs/carte/perso/faiblessesForces/${force.value}.png`
 );
 
 const imgFaiblesse = computed(
   () =>
-    images[`../assets/imgs/carte/perso/faiblessesForces/${faiblesse.value}.png`]
-      ?.default
+    `/assets/imgs/carte/perso/faiblessesForces/${faiblesse.value}.png`
 );
 
 // ===== fond =====
@@ -142,8 +136,7 @@ const imgFond = computed(() => {
   const types = props.data.type;
 
   if (types.length === 1) {
-    return images[`../assets/imgs/carte/perso/fonds/fond_${types[0].name}.png`]
-      ?.default;
+    return `/assets/imgs/carte/perso/fonds/fond_${types[0].name}.png`
   }
 
   let txtTypes = '';
@@ -151,11 +144,10 @@ const imgFond = computed(() => {
     txtTypes += types[i].name.slice(0, 4);
   }
 
-  return images[`../assets/imgs/carte/perso/fonds/fond_${txtTypes}.png`]
-    ?.default;
+  return `/assets/imgs/carte/perso/fonds/fond_${txtTypes}.png`
 });
 </script>
 
 <style scoped>
-@import '../assets/css/carteMembre.css';
+@import '@/assets/css/carteMembre.css';
 </style>

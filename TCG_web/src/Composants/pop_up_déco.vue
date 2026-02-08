@@ -8,7 +8,8 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+</script>
 
 <style>
 @import '@/assets/css/pop_up_déco.css';

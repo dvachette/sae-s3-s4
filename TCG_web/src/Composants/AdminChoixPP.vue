@@ -1,6 +1,5 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
-import config from '@/config.json';
 const emit = defineEmits(['validate', 'cancel']);
 const selected = ref(null);
 const { userData } = defineProps({
@@ -24,24 +23,24 @@ for (let elem of userData.collection) {
     switch (elem.card._class) {
         case 'member':
             collection_images.value.push(
-                `/src/assets/imgs/carte/perso/${elem.card.cardId}.png`,
+                `/assets/imgs/carte/perso/${elem.card.cardId}.png`,
             );
             break;
         case 'pet':
             collection_images.value.push(
-                `/src/assets/imgs/carte/pet/${elem.card.cardId}.png`,
+                `/assets/imgs/carte/pet/${elem.card.cardId}.png`,
             );
             break;
         case 'arena':
             collection_images.value.push(
-                `/src/assets/imgs/carte/arena/carre/${elem.card.cardId}.png`,
+                `/assets/imgs/carte/arena/carre/${elem.card.cardId}.png`,
             );
             break;
         default:
             break;
     }
 }
-selected.value = userData.profilePicture ? userData.profilePicture : '/src/assets/imgs/logoTCG.png'
+selected.value = userData.profilePicture ? userData.profilePicture : '/assets/imgs/logoTCG.png'
 </script>
 
 <template>

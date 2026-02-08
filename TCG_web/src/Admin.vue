@@ -3,9 +3,9 @@
     <AdminChoixPP v-if="onPPManage" @cancel="closePPChangePopup" :userData="selectedUser" @validate="changePP"/>
     <div class="adminPanel">
         <header id="adminHeader">
-            <img src="@/assets/imgs/logoTCG.png" alt="Logo TCG" @click="backToUserSpace" title="Retour à l'espace utilisateur" class="imgBtn"/>
+            <img src="/assets/imgs/logoTCG.png" alt="Logo TCG" @click="backToUserSpace" title="Retour à l'espace utilisateur" class="imgBtn"/>
             <h1>Administration - Gestion des utilisateurs</h1>
-            <img src="@/assets/imgs/logoTCG.png" alt="Icône Admin"/>
+            <img src="/assets/imgs/logoTCG.png" alt="Icône Admin"/>
         </header>
         <nav>
             <input type="search" placeholder="Rechercher un joueur..." v-model="searchTerm"/>
@@ -30,7 +30,7 @@
                 <h2>Détails du joueur #{{ selectedUser.userId }}</h2>
                 <div class="editKeys">
                     <EditeableNumeric :value="selectedUser.balance" @update:count="changeBalance"/>
-                    <img src="@/assets/imgs/Clef.png" alt="Icône Clé" class="keyIcon"/>
+                    <img src="/assets/imgs/Clef.png" alt="Icône Clé" class="keyIcon"/>
                 </div>
                 <EditeableField :modelValue="selectedUser.username" label="Pseudo" @validateEdit="validateUsernameEdit"/> 
                 <EditeableField :modelValue="selectedUser.email" label="Email" @validateEdit="validateEmailEdit"/>
@@ -62,13 +62,12 @@
 
 <script setup>
     import { ref, onMounted, computed } from 'vue';
-    import '@/assets/css/admin.css';
-    import CarteJoueurAdmin from './Composants/CarteJoueurAdmin.vue';
-    import config from "./config.json";
-    import EditeableField from './Composants/EditeableField.vue';
-    import CheckAdmin from './Composants/CheckAdmin.vue';
-    import EditeableNumeric from './Composants/EditeableNumeric.vue';
-    import AdminChoixPP from './Composants/AdminChoixPP.vue';
+    import CarteJoueurAdmin from '@/Composants/CarteJoueurAdmin.vue';
+    import config from "@/config.json";
+    import EditeableField from '@/Composants/EditeableField.vue';
+    import CheckAdmin from '@/Composants/CheckAdmin.vue';
+    import EditeableNumeric from '@/Composants/EditeableNumeric.vue';
+    import AdminChoixPP from '@/Composants/AdminChoixPP.vue';
     const users = ref([]);
     const searchTerm = ref('');
     const displayedUsers = computed(() => {
@@ -309,3 +308,6 @@
         await fetchOverviewUsersData();
     });
 </script>
+<style scoped>
+    @import '@/assets/css/admin.css';
+</style>

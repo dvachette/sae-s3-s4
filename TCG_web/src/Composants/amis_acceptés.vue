@@ -4,7 +4,7 @@
     <p>{{ nom_ami }}</p>
     <div class="ami_option">
       <img
-        src="@/assets/imgs/croix_blanche.png"
+        src="/assets/imgs/croix_blanche.png"
         alt="croix"
         @click="$emit('appel_pop_up')"
       />
@@ -13,8 +13,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 const props = defineProps({
   nom_ami: String,
   profile_picture: String,

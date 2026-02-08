@@ -1,6 +1,6 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
-    <img src="@/assets/imgs/carte/pet/fond_familier.png" alt="carte" />
+    <img src="/assets/imgs/carte/pet/fond_familier.png" alt="carte" />
   <img :src="imgFamilier" alt="imgCarte" />
     <div id="haut_carte">
       <p id="nom">{{ nom }}</p>
@@ -23,7 +23,6 @@
 
 <script setup>
   import { computed } from 'vue';
-const images = import.meta.glob('../assets/imgs/carte/pet/*.png', { eager: true });
 
 const props = defineProps({
   data: Object,
@@ -37,11 +36,11 @@ const effet = computed(() => props.data.modifierText);
 const id = computed(() => props.data.cardId);
 
 //partie image
-const imgFamilier = computed(() => images['../assets/imgs/carte/pet/'+id.value+'.png']?.default);
+const imgFamilier = computed(() => '/assets/imgs/carte/pet/'+id.value+'.png');
 
 
 </script>
 
 <style scoped>
-@import '../assets/css/carteFamilier.css';
+@import '@/assets/css/carteFamilier.css';
 </style>

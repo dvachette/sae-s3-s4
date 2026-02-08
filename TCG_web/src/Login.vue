@@ -1,6 +1,6 @@
 <template>
   <header id="headerConnexion">
-    <img src="@/assets/imgs/logoTCG.png" alt="Logo du site" />
+    <img src="/assets/imgs/logoTCG.png" alt="Logo du site" />
     <h1>Bienvenue sur BDE INFO TCG</h1>
   </header>
 
@@ -75,10 +75,9 @@ export default {
 
 </script>
 <script setup>
-import { ref } from 'vue';
 import config from '@/config.json';
 </script>
 
 <style scoped>
-@import './assets/css/styleConnexion.css';
+@import '@/assets/css/styleConnexion.css';
 </style>

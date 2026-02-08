@@ -3,7 +3,7 @@
 
 <script setup>
     import { onBeforeMount } from 'vue';
-    import config from '../config.json';
+    import config from '@/config.json';
     onBeforeMount(async () => {
         const response = await fetch(`${config.hosts.api}/admin/isAdmin`, {
             method: 'GET',

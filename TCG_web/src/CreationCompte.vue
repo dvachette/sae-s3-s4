@@ -1,6 +1,6 @@
 <template>
   <header id="headerCreation">
-    <img src="@/assets/imgs/logoTCG.png" alt="Logo du site" />
+    <img src="/assets/imgs/logoTCG.png" alt="Logo du site" />
     <h1>Bienvenue sur BDE INFO TCG</h1>
   </header>
 
@@ -85,5 +85,5 @@ export default {
 </script>
 
 <style scoped>
-@import './assets/css/creationCompte.css';
+@import '@/assets/css/creationCompte.css';
 </style>

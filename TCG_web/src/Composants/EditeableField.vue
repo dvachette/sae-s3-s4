@@ -49,9 +49,9 @@
         <strong>{{ label }}</strong>
         <span v-if="!onEdit" @click="startEditing">{{ editedValue }}</span>
         <input v-else type="text" v-model="editedValue" :size="editedValue.length || 1"/>
-        <button v-if="!onEdit" @click="startEditing"><img src="@/assets/imgs/Petit_crayon.png"></button>
-        <button v-if="onEdit" @click="validate"><img src="@/assets/imgs/check_dark.png"></button>
-        <button v-if="onEdit" @click="cancelEditing"><img src="@/assets/imgs/croix_dark.png"></button>
+        <button v-if="!onEdit" @click="startEditing"><img src="/assets/imgs/Petit_crayon.png"></button>
+        <button v-if="onEdit" @click="validate"><img src="/assets/imgs/check_dark.png"></button>
+        <button v-if="onEdit" @click="cancelEditing"><img src="/assets/imgs/croix_dark.png"></button>
     </p>
     
     

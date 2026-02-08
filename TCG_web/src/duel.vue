@@ -6,7 +6,7 @@
       <div class="membre_carte" v-if="echangeCarte === false">
         <Carte_membre largeur="25vw" :data="carteSurvolé" :isPreview="true">
           <img
-            :src="`src/assets/imgs/effets/${effect.type}.png`"
+            :src="`/assets/imgs/effets/${effect.type}.png`"
             alt="status"
             class="imgicontype"
             v-for="effect of carteSurvolé.statusEffects"
@@ -99,6 +99,7 @@
               :data="combatState.opposant.familier"
               @mouseenter="familierSurvolé = combatState.opposant.familier"
               @mouseleave="familierSurvolé = null"
+              v-if="combatState.opposant.familier"
             />
           </div>
           <Carte_membre
@@ -109,7 +110,7 @@
             @mouseleave="carteSurvolé = null"
           >
             <img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.opposant.main.carte1.statusEffects"
@@ -129,7 +130,7 @@
             @mouseleave="carteSurvolé = null"
           >
             <img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.opposant.main.carte2.statusEffects"
@@ -149,7 +150,7 @@
             @mouseleave="carteSurvolé = null"
           >
             <img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.opposant.main.carteActive
@@ -170,7 +171,7 @@
             @mouseleave="carteSurvolé = null"
           >
             <img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.opposant.main.carte4.statusEffects"
@@ -190,7 +191,7 @@
             @mouseleave="carteSurvolé = null"
           >
             <img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.opposant.main.carte5.statusEffects"
@@ -211,6 +212,7 @@
               :data="combatState.moi.familier"
               @mouseenter="familierSurvolé = combatState.moi.familier"
               @mouseleave="familierSurvolé = null"
+              v-if="combatState.moi.familier"
             />
           </div>
           <Carte_membre
@@ -223,7 +225,7 @@
             :class="{ change_carte: echangeCarte }"
           >
             <img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.moi.main.carte1.statusEffects"
@@ -244,7 +246,7 @@
             @click="swap_cartes(1)"
             :class="{ change_carte: echangeCarte }"
             ><img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.moi.main.carte2.statusEffects"
@@ -264,7 +266,7 @@
             @mouseleave="carteSurvolé = null"
             :class="{ change_carte: echangeCarte }"
             ><img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.moi.main.carteActive.statusEffects"
@@ -285,7 +287,7 @@
             @click="swap_cartes(3)"
             :class="{ change_carte: echangeCarte }"
             ><img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.moi.main.carte4.statusEffects"
@@ -306,7 +308,7 @@
             @click="swap_cartes(4)"
             :class="{ change_carte: echangeCarte }"
             ><img
-              :src="`src/assets/imgs/effets/${effect.type}.png`"
+              :src="`/assets/imgs/effets/${effect.type}.png`"
               alt="status"
               class="imgicontype"
               v-for="effect of combatState.moi.main.carte5.statusEffects"
@@ -337,7 +339,7 @@
               @click="echangeCarte = true"
               v-if="echangeCarte == false"
             >
-              <img src="@/assets/imgs/echange.png" alt="echange" />
+              <img src="/assets/imgs/echange.png" alt="echange" />
             </button>
             <button id="annuler_echange" @click="echangeCarte = false" v-else>
               annuler échange
@@ -347,7 +349,7 @@
       </div>
       <div class="stats">
         <div class="temps">
-          <img src="@/assets/imgs/Sablier.png" alt="echange" />
+          <img src="/assets/imgs/Sablier.png" alt="echange" />
           <p>30sec</p>
           <button @click="skipTurn" v-if="combatState.monTour">Passer</button>
         </div>
@@ -365,11 +367,10 @@
 
 <script setup>
 import { reactive, computed, ref } from 'vue';
-import Carte_membre from './Composants/carte_membre.vue';
-import Carte_familier from './Composants/carte_familier.vue';
-import verifLogin from './Composants/verifLogin.vue';
-import Vie_cartes from './Composants/vie_cartes.vue';
-import pop_up_abandon from './Composants/pop_up_abandon.vue';
+import Carte_membre from '@/Composants/carte_membre.vue';
+import Carte_familier from '@/Composants/carte_familier.vue';
+import Vie_cartes from '@/Composants/vie_cartes.vue';
+import pop_up_abandon from '@/Composants/pop_up_abandon.vue';
 import config from '@/config.json';
 import {
   EtatCombat,
@@ -378,8 +379,8 @@ import {
   CarteMembre,
   CarteFamilier,
   Attaque,
-} from './types/duel';
-import VerifLogin from './Composants/verifLogin.vue';
+} from '@/types/duel';
+import VerifLogin from '@/Composants/verifLogin.vue';
 import { useRouter } from 'vue-router';
 
 
@@ -398,7 +399,7 @@ const familierSurvolé = ref(null);
 const echangeCarte = ref(false);
 const afficher_abandon = ref(false);
 const backgroundImageSrc = ref(
-  'src/assets/imgs/combat_feyssine.png'
+  '/assets/imgs/combat_feyssine.png'
 );
 const router = useRouter();
 
@@ -406,7 +407,7 @@ const router = useRouter();
 
 function resetBackground() {
   console.log('Erreur de chargement de l\'image de fond, réinitialisation à l\'image par défaut.');
-  backgroundImageSrc.value = 'src/assets/imgs/combat_feyssine.png';
+  backgroundImageSrc.value = '/assets/imgs/combat_feyssine.png';
 }
 
 let deckMembre = ref(null);
@@ -662,7 +663,7 @@ function onLoginSuccess() {
         if (message.type === 'duel_start') {
           adversaire.value = true;
           backgroundImageSrc.value =
-            `src/assets/imgs/carte/arena/fond/${message.combatState.moi.terrain.cardId}.png`;
+            `/assets/imgs/carte/arena/fond/${message.combatState.moi.terrain.cardId}.png`;
         }
 
         console.log('État du combat mis à jour:', combatState);
@@ -760,5 +761,5 @@ function closeSocket() {
 </script>
 
 <style scoped>
-@import './assets/css/duel.css';
+@import '@/assets/css/duel.css';
 </style>

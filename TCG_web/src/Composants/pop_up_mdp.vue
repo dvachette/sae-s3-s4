@@ -1,4 +1,3 @@
-const user = ref('');
 
 <template>
   <div class="pageChangement">

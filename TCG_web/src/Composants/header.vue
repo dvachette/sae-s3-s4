@@ -1,7 +1,7 @@
 <template>
   <header>
     <router-link to="/booster"
-      ><img src="@/assets/imgs/logoTCG.png" alt="Logo du site"
+      ><img src="/assets/imgs/logoTCG.png" alt="Logo du site"
     /></router-link>
     <router-link to="/booster" class="link" active-class="active"
       ><h1>Booster</h1></router-link
@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-import router from '@/router';
 import { ref, watch, onMounted } from 'vue';
 import config from '@/config.json';
 const props = defineProps({trigger: Number});
@@ -40,7 +39,7 @@ watch(
   }
 );
 
-const pp = ref('/src/assets/imgs/logoTCG.png');
+const pp = ref('/assets/imgs/logoTCG.png');
 
 const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 const isAdmin = ref(false)
@@ -49,7 +48,7 @@ function loadUserData() {
   pp.value =
     user.value.profilePicture !== null
       ? user.value.profilePicture
-      : 'src/assets/imgs/logoTCG.png';
+      : '/assets/imgs/logoTCG.png';
 }
 
 
@@ -80,5 +79,5 @@ const response = await fetch(`${config.hosts.api}/admin/isAdmin`, {
 </script>
 
 <style scoped>
-@import '../assets/css/header.css';
+@import '@/assets/css/header.css';
 </style>
