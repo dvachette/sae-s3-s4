@@ -24,7 +24,7 @@ const tradeRoutes= require('./routes/trade.js');// Importation des routes trade
 const deckRoutes= require('./routes/deck.js');// Importation des routes deck
 const duelUtils = require('./socket/duel.js'); // Importation des utilitaires de duel
 const shopRoutes = require('./routes/shop.js'); // Importation des routes shop
-
+const adminRoutes = require('./routes/admin.js'); // Importation des routes admin
 dotenv.config(); // Chargement des variables d'environnement depuis le fichier .env
 
 const PORT = process.env.PORT || 3000; // Définition du port d'écoute du serveur
@@ -104,6 +104,22 @@ app.post("/deck/replaceCard", deckRoutes.replaceCardInDeck);
 app.get('/shop', shopRoutes.getShop);
 app.post('/shop/buy', shopRoutes.buyOffer);
 
+
+// * ROUTES ADMIN
+
+app.get('/admin/users', adminRoutes.adminGetAllUsers);
+app.get('/admin/isAdmin', adminRoutes.isAdmin);
+// Use /
+app.get('/admin/userDetails/:userId', adminRoutes.adminGetUserDetails);
+app.put('/admin/user/pseudo', adminRoutes.adminUpdatePseudo);
+app.put('/admin/user/password', adminRoutes.adminUpdatePassword);
+app.put('/admin/user/role', adminRoutes.adminUpdateRole);
+app.put('/admin/user/email', adminRoutes.adminUpdateEmail);
+app.delete('/admin/user', adminRoutes.adminDeleteUser);
+app.get('/admin/cards', adminRoutes.adminGetAllCards);
+app.put('/admin/user/collection', adminRoutes.adminSetUserCollection);
+app.put('/admin/user/balance', adminRoutes.adminUpdateUserBalance);
+app.put('/admin/user/profilePicture', adminRoutes.adminChangeUserPP);
 // Démarrer le serveur sur le port spécifié (Environnement de developpement, pas en production)
 
 const wss = new ws.WebSocketServer({server}); // Serveur WebSocket sur le port 8080

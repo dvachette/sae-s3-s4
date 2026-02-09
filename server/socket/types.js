@@ -39,6 +39,7 @@ export class CombatState {
     
     init(){
         for(let player of [this.player1,this.player2]){
+            if (!player.familier) continue;
             const effetsFamilierJoueur = player.familier.modifier;
             if (!effetsFamilierJoueur) continue;
             console.log("Effets du familier :",effetsFamilierJoueur);

@@ -8,38 +8,38 @@
       <div class="jour fait" id="j1">
         <p>Jour 1</p>
         <p>20</p>
-        <img src="@/assets/imgs/Clef.png" alt="clé" />
+        <img src="/assets/imgs/Clef.png" alt="clé" />
       </div>
       <div class="jour actif" id="j2">
         <p>Jour 2</p>
-        <img src="@/assets/imgs/carte/carte_inconnue.png" alt="" />
+        <img src="/assets/imgs/carte/carte_inconnue.png" alt="" />
       </div>
       <div class="jour" id="j3">
         <p>Jour 3</p>
-        <img src="@/assets/imgs/booster.png" alt="booster" class="Booster" />
+        <img src="/assets/imgs/booster.png" alt="booster" class="Booster" />
       </div>
       <div class="jour" id="j4">
         <p>Jour 4</p>
-        <img src="@/assets/imgs/carte/carte_inconnue.png" alt="carteInconnue" />
+        <img src="/assets/imgs/carte/carte_inconnue.png" alt="carteInconnue" />
       </div>
       <div class="jour" id="j5">
         <p>Jour 5</p>
         <p>70</p>
-        <img src="@/assets/imgs/cles.png" alt="clés" />
+        <img src="/assets/imgs/cles.png" alt="clés" />
       </div>
       <div class="jour" id="j6">
         <p>Jour 6</p>
-        <img src="@/assets/imgs/carte/carte_inconnue.png" alt="carteInconnue" />
+        <img src="/assets/imgs/carte/carte_inconnue.png" alt="carteInconnue" />
       </div>
       <div class="jour" id="j7">
         <p>Jour 7</p>
         <p>3</p>
-        <img src="@/assets/imgs/booster.png" alt="booster" class="Booster" />
+        <img src="/assets/imgs/booster.png" alt="booster" class="Booster" />
       </div>
     </div>
     <div class="Booster_page">
       <router-link to="/ouverture"
-        ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
+        ><img src="/assets/imgs/booster.png" alt="booster" class="Booster"
       /></router-link>
       <p>{{ timerText }}</p>
       <router-link :to="'/ouverture?buy=true'" v-if="nbCles >= 100"
@@ -95,5 +95,5 @@ function updateUserData() {
 </script>
 
 <style scoped>
-@import './assets/css/booster.css';
+@import '@/assets/css/booster.css';
 </style>

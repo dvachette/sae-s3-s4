@@ -11,7 +11,7 @@
           <p>Carte demandée</p>
           <img
             v-if="!carteDemandee"
-            src="@/assets/imgs/carte/carte_ajout.png"
+            src="/assets/imgs/carte/carte_ajout.png"
             alt="Carte_à_Ajouter"
             @click="ajout_carte(0, $event)"
             @dragover.prevent
@@ -50,7 +50,7 @@
           <div class="les_cartes_don">
             <img
               v-if="!carteaDonnee1"
-              src="@/assets/imgs/carte/carte_ajout.png"
+              src="/assets/imgs/carte/carte_ajout.png"
               alt="Carte_à_Ajouter"
               @click="ajout_carte(1, $event)"
               @dragover.prevent
@@ -85,7 +85,7 @@
             />
             <img
               v-if="!carteaDonnee2"
-              src="@/assets/imgs/carte/carte_ajout.png"
+              src="/assets/imgs/carte/carte_ajout.png"
               alt="Carte_à_Ajouter"
               @click="ajout_carte(2, $event)"
               @dragover.prevent
@@ -120,7 +120,7 @@
             />
             <img
               v-if="!carteaDonnee3"
-              src="@/assets/imgs/carte/carte_ajout.png"
+              src="/assets/imgs/carte/carte_ajout.png"
               alt="Carte_à_Ajouter"
               @click="ajout_carte(3, $event)"
               @dragover.prevent
@@ -215,7 +215,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import config from '@/config.json';
 import MonHeader from '@/Composants/header.vue';
 import Carte_membre from '@/Composants/carte_membre.vue';
@@ -368,5 +368,5 @@ async function validerEchange() {
 </script>
 
 <style scoped>
-@import '../assets/css/creation_echange.css';
+@import '@/assets/css/creation_echange.css';
 </style>

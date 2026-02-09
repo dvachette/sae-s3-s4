@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-    import '@/assets/css/carteAdmin.css';
     import { defineProps, computed } from 'vue';
     const { playerid, playerPicture } = defineProps({
         playerid: Number,
@@ -17,7 +16,7 @@
     });
 
     const pictureURLDisplay = computed(() => {
-        return playerPicture ? playerPicture : 'src/assets/imgs/logoTCG.png';
+        return playerPicture ? playerPicture : '/assets/imgs/logoTCG.png';
     });
 
     const playerIdDisplay = computed(() => {
@@ -34,3 +33,7 @@
 
 
 </script>
+
+<style scoped>
+    @import '@/assets/css/carteAdmin.css';
+</style>

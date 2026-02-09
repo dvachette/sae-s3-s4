@@ -3,7 +3,7 @@
     <img :src="profile_picture" alt="Profile Picture" class="pp_amis"/>
     <p>{{ nom_ami }}</p>
     <div class="annuler" @click="annuler_demande">
-      <img src="@/assets/imgs/croix_blanche.png" alt="croix" />
+      <img src="/assets/imgs/croix_blanche.png" alt="croix" />
     </div>
   </div>
 </template>

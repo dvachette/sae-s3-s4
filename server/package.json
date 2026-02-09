@@ -4,8 +4,10 @@
   "description": "Serveur de la SAE",
   "main": "index.js",
   "scripts": {
+    "build": "echo \"No build step needed for the server\"",
     "test": "node tests/tests.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

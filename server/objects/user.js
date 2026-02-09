@@ -21,8 +21,9 @@ class User {
     acceptedTrades;
     deck;
     profilePicture;
+    role;
     
-    constructor(userId, username, email, lastBoosterOpening, balance, profilePicture) {
+    constructor(userId, username, email, lastBoosterOpening, balance, profilePicture, role) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -37,6 +38,7 @@ class User {
         this.acceptedTrades = [];
         this.deck = null;
         this.profilePicture = profilePicture;
+        this.role = role;
     }
     
     static fromRow(row) {
@@ -46,7 +48,8 @@ class User {
             row.email,
             row.lastBoosterOppening,
             row.balance,
-            row.profilePicture
+            row.profilePicture,
+            row.profileType
         );
         
         // Récupération de la collection de l'utilisateur
@@ -107,7 +110,6 @@ class User {
                 }
             }
         }
-        console.log(JSON.stringify(user.collection));
         // Récupération du deck de l'utilisateur
         const deckCard1 = user.collection.find(item => item.card.cardId === row.card1Id)?.card || null;
         const deckCard2 = user.collection.find(item => item.card.cardId === row.card2Id)?.card || null;
@@ -116,8 +118,6 @@ class User {
         const deckCard5 = user.collection.find(item => item.card.cardId === row.card5Id)?.card || null;
         const petCard = user.collection.find(item => item.card.cardId === row.petId)?.card || null;
         const arenaCard = user.collection.find(item => item.card.cardId === row.arenaId)?.card || null;
-        console.log(row.card1Id, row.card2Id, row.card3Id, row.card4Id, row.card5Id, row.petId, row.arenaId);
-        console.log(deckCard1, deckCard2, deckCard3, deckCard4, deckCard5, petCard, arenaCard);
         const deckCards = [deckCard1, deckCard2, deckCard3, deckCard4, deckCard5];
         user.deck = new Deck(deckCards, petCard, arenaCard);
         return user;
@@ -135,7 +135,7 @@ class User {
         if (row) {
             return User.fromRow(row);
         } else {
-            user.pendingFriendRequests.push(request);
+            return null;
         }
     }
     
@@ -234,7 +234,6 @@ class User {
             );
             updateQuery.run(this.username, this.email, this.profilePicture, this.userId);
         }
-        console.log(this.username);
         
         db.close();
     }
@@ -418,9 +417,6 @@ class User {
     }
     
     addCardToCollection(cardId, quantity) {
-        console.log("ADD CARD TO COLLECTION");
-        this.collection.map(item => console.log(item ? item.card : null));
-        console.log("CARD ID TO ADD :", cardId, "QUANTITY :", quantity);
         const existingCard = this.collection.find(
             (item) =>item ? item.card.cardId === cardId : null
         );
@@ -430,7 +426,6 @@ class User {
             const newCard = new Collection(cardId, 1, quantity);
             this.collection.push(newCard);
         }
-        console.log(existingCard);
         const db = new Database('database.db');
         
         if (existingCard) {
@@ -448,6 +443,21 @@ class User {
         db.close();
     }
     
+    setKeys(amount) {
+        if (amount < 0) {
+            throw new Error('Le solde ne peut pas être négatif.');
+        }
+        this.balance = amount;
+        const db = new Database('database.db');
+        
+        const updateBalanceQuery = db.prepare(
+            'UPDATE user SET balance = ? WHERE userId = ?'
+        );
+        updateBalanceQuery.run(this.balance, this.userId);
+        
+        db.close();
+    }
+
     addKeys(amount) {
         this.balance += amount;
         const db = new Database('database.db');
@@ -486,6 +496,52 @@ class User {
     }
     
     setCardQuantity(cardId, quantity) {
+        if (quantity < 0) {
+            throw new Error('La quantité ne peut pas être négative.');
+        }
+        if (quantity === 0) {
+            const db = new Database('database.db');
+            const deleteQuery = db.prepare(
+                'DELETE FROM collection WHERE userId = ? AND cardId = ?'
+            );
+            deleteQuery.run(this.userId, cardId);
+            this.collection = this.collection.filter(
+                (item) => item.card.cardId !== cardId
+            );
+            // Vérifier si la carte est dans le deck et la retirer si c'est le cas
+            const isDeletedCardInDeckQuery = db.prepare(
+                'SELECT card1Id, card2Id, card3Id, card4Id, card5Id, petId, arenaId FROM user WHERE userId = ?'
+            );
+            const deckRow = isDeletedCardInDeckQuery.get(this.userId);
+            const deckCardIds = [deckRow.card1Id, deckRow.card2Id, deckRow.card3Id, deckRow.card4Id, deckRow.card5Id];
+            let deckUpdated = false;
+            for (let i = 0; i < deckCardIds.length; i++) {
+                if (deckCardIds[i] === cardId) {
+                    const updateDeckQuery = db.prepare(
+                        `UPDATE user SET card${i + 1}Id = NULL WHERE userId = ?`
+                    );
+                    updateDeckQuery.run(this.userId);
+                    deckUpdated = true;
+                }
+            }
+            if (deckRow.petId === cardId) {
+                const updatePetQuery = db.prepare(
+                    'UPDATE user SET petId = NULL WHERE userId = ?'
+                );
+                updatePetQuery.run(this.userId);
+                deckUpdated = true;
+            }
+            if (deckRow.arenaId === cardId) {
+                const updateArenaQuery = db.prepare(
+                    'UPDATE user SET arenaId = NULL WHERE userId = ?'
+                );
+                updateArenaQuery.run(this.userId);
+                deckUpdated = true;
+            }
+            
+            db.close();
+            return;
+        }
         const existingCard = this.collection.find(
             (item) => item.card.cardId === cardId
         );
@@ -498,9 +554,7 @@ class User {
             updateQuery.run(quantity, this.userId, cardId);
             db.close();
         } else {
-            throw new Error(
-                "L'utilisateur ne possède pas cette carte dans sa collection."
-            );
+            this.addCardToCollection(cardId, quantity);
         }
     }
     
@@ -589,6 +643,36 @@ class User {
         const amisQuery = db.prepare("SELECT COUNT(friendId) AS total FROM Friends WHERE (senderId = ? or receiverId = ?) and status = 'accepted'") ;
         const amis = amisQuery.get(this.userId, this.userId).total ;
         return { totalCartes : totalCards , totalPossedees : cards, totalParties : partiesJouees, totalVictoires : partiesGagnees, totalAmis : amis};
+    }
+
+    static getAllUsers() {
+        const db = new Database('database.db');
+        const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture, balance FROM user');
+        const users = getAllUsersQuery.all();
+        db.close();
+        return users;
+    }
+
+    isAdmin() {
+        const db = new Database('database.db');
+        const getUserProfileTypeQuery = db.prepare('SELECT profileType FROM user WHERE userId = ?');
+        const row = getUserProfileTypeQuery.get(this.userId);
+        db.close();
+        console.log(`User ${this.userId} profile type: ${row.profileType}`);
+        return row.profileType === 'admin';
+    }
+
+
+    setRole(role) {
+        const validRoles = ['user', 'admin'];
+        if (!validRoles.includes(role)) {
+            throw new Error('Rôle invalide. Les rôles valides sont : user, admin.');
+        }
+        const db = new Database('database.db');
+        const updateRoleQuery = db.prepare('UPDATE user SET profileType = ? WHERE userId = ?');
+        updateRoleQuery.run(role, this.userId);
+        this.role = role;
+        db.close();
     }
 }
 
