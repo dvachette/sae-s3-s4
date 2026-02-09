@@ -647,7 +647,7 @@ class User {
 
     static getAllUsers() {
         const db = new Database('database.db');
-        const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture, balance FROM user');
+        const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture, balance, email FROM user');
         const users = getAllUsersQuery.all();
         db.close();
         return users;

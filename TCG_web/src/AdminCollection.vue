@@ -6,7 +6,7 @@
     import { ref, onMounted } from 'vue';
     import config from "./config.json";
     import { useRouter } from 'vue-router';
-import CheckAdmin from './Composants/CheckAdmin.vue';
+    import CheckAdmin from './Composants/CheckAdmin.vue';
     const cards = ref([]);
     const cardsToDisplay = ref([]);
     const userData = ref(null); 
