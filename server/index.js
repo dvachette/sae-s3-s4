@@ -49,7 +49,7 @@ app.use(
 // Autorisation des requêtes CORS sur localhost:5173 (port par défaut de Vite)
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173', // Autoriser les requêtes provenant de cette origine
+    origin: process.env.FRONTEND || 'http://localhost:5173', // Autoriser les requêtes provenant de cette origine
     credentials: true // Autoriser l'envoi de cookies avec les requêtes CORS
 }));
 app.use(express.json()); // Outil pour parser le JSON dans les requêtes entrantes
