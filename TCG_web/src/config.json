@@ -1,6 +1,6 @@
 {
     "hosts": {
-        "api":"https://sae-s3-s4.onrender.com",
-        "socket":"wss://sae-s3-s4.onrender.com"
+        "api":"https://bdeinfo-tcg-backend.dvachette.fr",
+        "socket":"wss://bdeinfo-tcg-backend.dvachette.fr"
     }
 }
