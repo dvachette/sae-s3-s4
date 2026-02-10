@@ -1,6 +1,6 @@
 {
     "hosts": {
-        "api":"https://bdeinfo-tcg-backend.dvachette.fr",
-        "socket":"wss://bdeinfo-tcg-backend.dvachette.fr"
+        "api":"http://dvachette.fr:3000",
+        "socket":"ws://dvachette.fr:3000"
     }
 }
