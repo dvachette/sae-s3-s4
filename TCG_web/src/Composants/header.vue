@@ -52,7 +52,8 @@ function loadUserData() {
 }
 
 
-loadUserData();
+setTimeout(loadUserData, 2000); // Charger les données de l'utilisateur après un délai de 1 seconde
+
 
 onMounted(async () => {
   await checkAdminStatus();
