@@ -38,13 +38,13 @@
     <div class="gestion_soi">
       <div class="pp" @click="afficher_pp = true">
         <img :src="pp" alt="pp" />
-        <img src="@/assets/imgs/Appareil_photo.png" alt="edit" />
+        <img src="/assets/imgs/Appareil_photo.png" alt="edit" />
       </div>
       <div class="pseudo">
         <p>Pseudo : {{ pseudo }}</p>
 
         <img
-          src="@/assets/imgs/Petit_crayon.png"
+          src="/assets/imgs/Petit_crayon.png"
           alt="edit"
           @click="afficher_pseudo = true"
           class="edit-pseudo-icon"
@@ -54,7 +54,7 @@
         <p>Mail : {{ mail }}</p>
 
         <img
-          src="@/assets/imgs/Petit_crayon.png"
+          src="/assets/imgs/Petit_crayon.png"
           alt="edit"
           @click="afficher_mail = true"
           class="edit-mail-icon"
@@ -65,13 +65,13 @@
 
 
         <img
-          src="@/assets/imgs/Petit_crayon.png"
+          src="/assets/imgs/Petit_crayon.png"
           alt="edit"
           @click="afficher_mdp = true"
           class="edit-icon"
         />
         </div>
-        <div class="historiques">
+        <div class="historiques hidden_param">
           <router-link to="/social" class="h_combat" active-class="active"
             ><p>historique des combats</p></router-link
           >
@@ -83,10 +83,12 @@
         <button id="Supprimer" @click="afficher_suppr = true">Supprimer le compte</button>
     </div>
     <div class="param_stats">
-      <h2>Paramètres :</h2>
-      <label><input type="checkbox" name="apparence" value="pôle">Thème Sombre</input></label>
-      <label><input type="checkbox" name="musique" value="pôle">Musique active</input></label>
-      <label><input type="checkbox" name="effets" value="pôle">Effets Sonores</input></label>
+      <div class="hidden_param">
+        <h2 class="hidden_param">Paramètres :</h2>
+        <label class="hidden_param"><input class="hidden_param" type="checkbox" name="apparence" value="pôle">Thème Sombre</input></label>
+        <label class="hidden_param"><input class="hidden_param" type="checkbox" name="musique" value="pôle">Musique active</input></label>
+        <label class="hidden_param"><input class="hidden_param" type="checkbox" name="effets" value="pôle">Effets Sonores</input></label>
+      </div>
       <h2>Statistiques :</h2>
       <p>Cartes possédées : {{cartesPossedees}}/{{cartesTotal}}</p>
       <p>Parties jouées : {{parties}}</p>
@@ -100,13 +102,13 @@
 import VerifLogin from '@/Composants/verifLogin.vue';
 import MonHeader from '@/Composants/header.vue';
 import { ref, computed, nextTick } from 'vue'
-import { loadRouteLocation, useRouter } from 'vue-router';
-import pop_up_suppression from './Composants/pop_up_suppression.vue';
-import pop_up_mdp from './Composants/pop_up_mdp.vue';
-import pop_up_mail from './Composants/pop_up_mail.vue';
-import pop_up_pseudo from './Composants/pop_up_pseudo.vue';
-import Pop_up_déco from './Composants/pop_up_déco.vue';
-import choix_pp from './choix_pp.vue';
+import { useRouter } from 'vue-router';
+import pop_up_suppression from '@/Composants/pop_up_suppression.vue';
+import pop_up_mdp from '@/Composants/pop_up_mdp.vue';
+import pop_up_mail from '@/Composants/pop_up_mail.vue';
+import pop_up_pseudo from '@/Composants/pop_up_pseudo.vue';
+import Pop_up_déco from '@/Composants/pop_up_déco.vue';
+import choix_pp from '@/choix_pp.vue';
 import config from '@/config.json'
 
 const password = ref('motdepasse123')
@@ -122,7 +124,7 @@ const cartesTotal = ref('');
 const parties = ref('');
 const victoires = ref('');
 const amis = ref('');
-const pp = ref('@/assets/imgs/logoTCG.png');
+const pp = ref('/assets/imgs/logoTCG.png');
 const afficher_pp = ref(false) ;
 const updateHeaderTrigger = ref(0);
 
@@ -183,7 +185,7 @@ function loadUserData() {
   parties.value = user.value ? user.value.stats.totalParties : '0' ;
   victoires.value = user.value ? user.value.stats.totalVictoires : '0' ;
   amis.value = user.value ? user.value.stats.totalAmis : '0' ;
-  pp.value = user.value.profilePicture !== null ? user.value.profilePicture : 'src/assets/imgs/logoTCG.png' ;
+  pp.value = user.value.profilePicture !== null ? user.value.profilePicture : '/assets/imgs/logoTCG.png' ;
   updateHeaderTrigger.value++;
 }
 
@@ -251,5 +253,5 @@ async function supprimerCompte() {
 </script>
 
 <style scoped>
-@import './assets/css/profil.css';
+@import '@/assets/css/profil.css';
 </style>

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <img :src="background" alt="echange" @error="background.value = '/src/assets/imgs/combat_feyssine.png'"/>
+    <img :src="background" alt="echange" @error="background = '/assets/imgs/combat_feyssine.png'"/>
     <div class="mes_cartes">
       <div
         class="carteMembreDeck"
@@ -9,8 +9,9 @@
       >
         <img
           v-if="!carte"
-          src="@/assets/imgs/carte/carte_ajout.png"
+          src="/assets/imgs/carte/carte_ajout.png"
           alt="Carte_à_Ajouter"
+          class="carte_ajout"
         />
 
         <Carte_membre v-else :data="carte" largeur="140px" />
@@ -22,9 +23,10 @@
       />
       <img
         v-else
-        src="@/assets/imgs/carte/carte_ajout.png"
+        src="/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="familier"
+        class="carte_ajout"
       />
     </div>
     <div class="resultat">
@@ -41,7 +43,7 @@
       <div class="infos">
         <div class="personnes">
           <div class="mes_infos">
-            <img :src="myPP" alt="Logo du site" />
+            <img :src="myPP" alt="Mon image de profil" />
             <p>{{ myName }}</p>
           </div>
           <div class="autres_infos">
@@ -54,7 +56,7 @@
       <div class="récompenses" v-if="victoire">
         <p>Récompenses :</p>
         <div class="nb_clefs">
-          <img src="@/assets/imgs/cles.png" alt="booster" />
+          <img src="/assets/imgs/cles.png" alt="booster" />
           <p>x12</p>
         </div>
       </div>
@@ -71,8 +73,9 @@
       >
         <img
           v-if="!carte"
-          src="@/assets/imgs/carte/carte_ajout.png"
+          src="/assets/imgs/carte/carte_ajout.png"
           alt="Carte_à_Ajouter"
+          class="carte_ajout"
         />
 
         <Carte_membre v-else :data="carte" largeur="140px" />
@@ -84,9 +87,11 @@
       />
       <img
         v-else
-        src="@/assets/imgs/carte/carte_ajout.png"
+        src="/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="familier"
+        class="carte_ajout"
+
       />
     </div>
   </main>
@@ -94,8 +99,8 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import Carte_membre from './Composants/carte_membre.vue';
-import Carte_familier from './Composants/carte_familier.vue';
+import Carte_membre from '@/Composants/carte_membre.vue';
+import Carte_familier from '@/Composants/carte_familier.vue';
 const victoire = ref(false);
 const mon_score = ref(5);
 const son_score = ref(2);
@@ -109,12 +114,12 @@ const duelResult = ref(JSON.parse(sessionStorage.getItem('duelResult')));
 const deckMembre = userData.value.deck.cards;
 const deckFamilier = userData.value.deck.pet;
 const combatState = duelResult.value.combatState;
-const background = combatState.moi.terrain ? `/src/assets/imgs/carte/arena/fond/${combatState.moi.terrain.cardId}.png` : '/src/assets/imgs/combat_feyssine.png'; 
+const background = combatState.moi.terrain ? `/assets/imgs/carte/arena/fond/${combatState.moi.terrain.cardId}.png` : '/assets/imgs/combat_feyssine.png'; 
 victoire.value = duelResult.value.victoire;
 hisName.value = combatState.opposant.playerName;
-hisPP.value = combatState.opposant.profilePicture;
+hisPP.value = combatState.opposant.profilePicture || '/assets/imgs/logoTCG.png';
 myName.value = userData.value.username;
-myPP.value = userData.value.profilePicture;
+myPP.value = userData.value.profilePicture || '/assets/imgs/logoTCG.png';
 mon_score.value = duelResult.value.mon_score;
 son_score.value = duelResult.value.son_score;
 switch (duelResult.value.reason) {
@@ -165,5 +170,5 @@ const familiers = computed(() => {
 </script>
 
 <style scoped>
-@import './assets/css/duel_resultat.css';
+@import '@/assets/css/duel_resultat.css';
 </style>

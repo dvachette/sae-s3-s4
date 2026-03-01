@@ -27,9 +27,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import carte_membre from '@/Composants/carte_membre.vue';
-import carte_familier from './Composants/carte_familier.vue';
-import carte_terrain from './Composants/carte_terrain.vue';
-import Barre_progress from './Composants/barre_progress_carte.vue';
+import carte_familier from '@/Composants/carte_familier.vue';
+import carte_terrain from '@/Composants/carte_terrain.vue';
+import Barre_progress from '@/Composants/barre_progress_carte.vue';
 
 const props = defineProps({
   carteProps: Object,
@@ -52,5 +52,5 @@ console.log('quantité : ', quantity.value);
 </script>
 
 <style scoped>
-@import '@/assets/css/carte_booster.css';
+  @import '@/assets/css/carte_booster.css';
 </style>

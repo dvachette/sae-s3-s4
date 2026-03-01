@@ -5,16 +5,15 @@
       <p>{{ nom_ami }}</p>
     </div>
     <div class="accepter" @click="accept_ami">
-      <img src="@/assets/imgs/check_blanc.png" alt="check" />
+      <img src="/assets/imgs/check_blanc.png" alt="check" />
     </div>
     <div class="refuser" @click="refus_ami">
-      <img src="@/assets/imgs/croix_blanche.png" alt="croix" />
+      <img src="/assets/imgs/croix_blanche.png" alt="croix" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import config from '@/config.json';
 const props = defineProps({
   nom_ami: String,

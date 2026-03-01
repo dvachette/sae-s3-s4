@@ -65,7 +65,7 @@
         class="nouv_ami"
         @click.stop="rechercheAmi"
       >
-        <img src="@/assets/imgs/ajout_ami.png" ref="nouvel ami" />
+        <img src="/assets/imgs/ajout_ami.png" ref="nouvel ami" />
         <p>Ajouter des ami.e.s</p>
       </div>
       <div class="recherche_ami" v-if="chercheAmi == true" @click.stop>
@@ -75,7 +75,7 @@
           :key="p_trouvés.userId"
           :nom_ami="p_trouvés.name"
           :id_ami="p_trouvés.userId"
-          :profile_picture="p_trouvés.profilePicture || 'src/assets/imgs/logoTCG.png'"
+          :profile_picture="p_trouvés.profilePicture || '/assets/imgs/logoTCG.png'"
           @demander="demander_ami"
         />
       </div>
@@ -83,7 +83,7 @@
         v-for="m_ami in amis"
         :key="m_ami.userId"
         :nom_ami="m_ami.name"
-        :profile_picture="m_ami.profilePicture || 'src/assets/imgs/logoTCG.png'"
+        :profile_picture="m_ami.profilePicture || '/assets/imgs/logoTCG.png'"
         @appel_pop_up="
           afficher_supprami = true;
           nom_ami_selectionne = m_ami.name;
@@ -98,7 +98,7 @@
         :key="demande.fromUserId"
         :nom_ami="demande.fromUserName"
         :ami_id="demande.fromUserId"
-        :profile_picture="demande.fromUserProfilePicture || 'src/assets/imgs/logoTCG.png'"
+        :profile_picture="demande.fromUserProfilePicture || '/assets/imgs/logoTCG.png'"
         @accepter="demande_ami_acceptee"
         @refuser="demande_ami_refusee"
       />
@@ -110,7 +110,7 @@
         :key="demande.toUserId"
         :nom_ami="demande.toUserName"
         :ami_id="demande.toUserId"
-        :profile_picture="demande.toUserProfilePicture || 'src/assets/imgs/logoTCG.png'"
+        :profile_picture="demande.toUserProfilePicture || '/assets/imgs/logoTCG.png'"
         @annuler="annuler_demande"
       />
     </div>
@@ -120,7 +120,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import mes_echanges from '@/Composants/mes_echange.vue';
-import echange from '@/Composants/echange.vue';
 import new_echange from '@/Composants/new_echange.vue';
 import amis_acceptés from '@/Composants/amis_acceptés.vue';
 import amis_demandes from '@/Composants/amis_demandes.vue';
@@ -299,5 +298,5 @@ function fermerAnnulerEchange() {
 </script>
 
 <style scoped>
-@import './assets/css/social.css';
+@import '@/assets/css/social.css';
 </style>

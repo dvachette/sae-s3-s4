@@ -7,6 +7,10 @@ main {
   font-family: 'Mako';
 }
 
+.hidden_param{
+  display: none!important;
+}
+
 div > p {
   font-size: 1.2rem;
 }
@@ -215,7 +219,7 @@ div > p {
 .param_stats {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   margin-top: 0;
   font-size: 1.5rem;
   color: rgb(var(--onyx));
@@ -228,11 +232,13 @@ div > p {
 
 .param_stats > h2 {
   padding-top: 2vh;
+  font-size: 3rem;
 }
 
 .param_stats > p {
   margin-top: 0px;
   margin-bottom: 0px;
+  font-size: 2rem;
 }
 
 input[type='checkbox'] {

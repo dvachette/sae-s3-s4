@@ -3,11 +3,11 @@
   <MonHeader />
   <main>
   <div class="pop_up_ff" v-if="afficher_ff == true" @click="detecte_click_ff">
-    <img src="@/assets/imgs/Force_et_faiblesse.png" alt="forces et faiblesses"></img>
+    <img src="/assets/imgs/Force_et_faiblesse.png" alt="forces et faiblesses"></img>
   </div>
     <div class="page_combat" :style="{ '--hPage': hmain }">
       <div class="F_f">
-        <img src="@/assets/imgs/ff_logo.png" alt="Page F/f" />
+        <img src="/assets/imgs/ff_logo.png" alt="Page F/f" />
         <button @click="afficher_ff = true">Forces et faiblesses</button>
       </div>
       <div class="lancement_partie">
@@ -30,7 +30,7 @@
       >
         <img
           v-if="!carte"
-          src="@/assets/imgs/carte/carte_ajout.png"
+          src="/assets/imgs/carte/carte_ajout.png"
           alt="Carte_à_Ajouter"
           :id="index"
           @click="echangeDeck(carte, $event)"
@@ -52,7 +52,7 @@
       />
       <img
         v-else
-        src="@/assets/imgs/carte/carte_ajout.png"
+        src="/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="familier"
         @click="echangeDeck(deckFamilier, $event)"
@@ -62,7 +62,7 @@
       <Carte_terrain v-if="deckTerrain" :data="deckTerrain" largeur="200px" @click="echangeDeck(deckTerrain, $event)" @dragover.prevent @drop="endDragImageCarteOnArenaSlot()"/>
       <img
         v-else
-        src="@/assets/imgs/carte/carte_ajout.png"
+        src="/assets/imgs/carte/carte_ajout.png"
         alt="Carte_à_Ajouter"
         id="terrain"
         @click="echangeDeck(deckTerrain, $event)"
@@ -130,9 +130,9 @@ import { ref, computed, watch } from 'vue';
 import clef from '@/Composants/clef.vue';
 import config from '@/config.json';
 import MonHeader from '@/Composants/header.vue';
-import Carte_membre from './Composants/carte_membre.vue';
-import Carte_familier from './Composants/carte_familier.vue';
-import Carte_terrain from './Composants/carte_terrain.vue';
+import Carte_membre from '@/Composants/carte_membre.vue';
+import Carte_familier from '@/Composants/carte_familier.vue';
+import Carte_terrain from '@/Composants/carte_terrain.vue';
 import verifLogin from '@/Composants/verifLogin.vue';
 
 const vh = ref(window.innerHeight / 100); //obtenir 1% de la hauteur de la fenetre, en px
@@ -148,9 +148,9 @@ const deckTerrain = computed(()=>{return userData.value.deck.arena;});
 let afficher_ff = ref(false);
 const terrainCarre = computed(() => {
   if (deckTerrain.value) { 
-      return `/src/assets/imgs/carte/arena/carre/${deckTerrain.value.cardId}.png`;
+      return `/assets/imgs/carte/arena/carre/${deckTerrain.value.cardId}.png`;
   } else {
-      return `/src/assets/imgs/ff_logo.png`;
+      return `/assets/imgs/Combat.png`;
   }
 }); 
 
@@ -163,7 +163,7 @@ watch(terrainCarre, (newVal) => {
 
 const onImageError = () => {
   console.log("Erreur de chargement de l'image, image de remplacement utilisée.");
-  imageSrc.value = '/src/assets/imgs/Combat.png'
+  imageSrc.value = '/assets/imgs/Combat.png'
 }
 
 const collection = computed(() => {
@@ -354,5 +354,5 @@ async function echangeDeck(carte, evt){
 </script>
 
 <style scoped>
-@import './assets/css/combat.css';
+  @import '@/assets/css/combat.css';
 </style>

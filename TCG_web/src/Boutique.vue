@@ -5,7 +5,7 @@
     <div class="la_boutique">
       <div class="le_booster">
         <router-link to="/ouverture"
-          ><img src="@/assets/imgs/booster.png" alt="booster" class="Booster"
+          ><img src="/assets/imgs/booster.png" alt="booster" class="Booster"
         /></router-link>
         <p>{{ timerText }}</p>
         <router-link :to="'/ouverture?buy=true'" v-if="nbCles >= 100"
@@ -124,5 +124,5 @@ function updateUserData() {
 </script>
 
 <style scoped>
-@import './assets/css/boutique.css';
+@import '@/assets/css/boutique.css';
 </style>

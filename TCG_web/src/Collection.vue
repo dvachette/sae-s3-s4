@@ -95,10 +95,10 @@
 import { ref,computed } from 'vue';
 
 import MonHeader from '@/Composants/header.vue';
-import Carte_membre from './Composants/carte_membre.vue';
-import Carte_familier from './Composants/carte_familier.vue';
-import Carte_terrain from './Composants/carte_terrain.vue';
-import Barre_progress from './Composants/barre_progress_carte.vue';
+import Carte_membre from '@/Composants/carte_membre.vue';
+import Carte_familier from '@/Composants/carte_familier.vue';
+import Carte_terrain from '@/Composants/carte_terrain.vue';
+import Barre_progress from '@/Composants/barre_progress_carte.vue';
 import VerifLogin from '@/Composants/verifLogin.vue';
 
 const userData = ref(JSON.parse(sessionStorage.getItem('userData'))); //OK
@@ -253,5 +253,5 @@ const options = ref([
 </script>
 
 <style scoped>
-@import './assets/css/collection.css';
+@import '@/assets/css/collection.css';
 </style>

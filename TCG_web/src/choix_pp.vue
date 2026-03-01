@@ -34,7 +34,7 @@ import { ref, defineEmits } from 'vue';
 import config from '@/config.json';
 
 const selected = ref(null);
-const pp = ref('/src/assets/imgs/logoTCG.png');
+const pp = ref('/assets/imgs/logoTCG.png');
 
 const user = ref(JSON.parse(sessionStorage.getItem('userData')));
 
@@ -46,24 +46,24 @@ function loadUserData() {
   pp.value =
     user.value.profilePicture !== null
       ? user.value.profilePicture
-      : 'src/assets/imgs/logoTCG.png';
+      : '/assets/imgs/logoTCG.png';
   collection_images.value = [];
   for (let elem of user.value.collection) {
     console.log(elem.card.cardId);
     switch (elem.card._class) {
       case 'member':
         collection_images.value.push(
-          `/src/assets/imgs/carte/perso/${elem.card.cardId}.png`,
+          `/assets/imgs/carte/perso/${elem.card.cardId}.png`,
         );
         break;
       case 'pet':
         collection_images.value.push(
-          `/src/assets/imgs/carte/pet/${elem.card.cardId}.png`,
+          `/assets/imgs/carte/pet/${elem.card.cardId}.png`,
         );
         break;
       case 'arena':
         collection_images.value.push(
-          `/src/assets/imgs/carte/arena/carre/${elem.card.cardId}.png`,
+          `/assets/imgs/carte/arena/carre/${elem.card.cardId}.png`,
         );
         break;
       default:
@@ -98,5 +98,5 @@ async function changementPP() {
 </script>
 
 <style scoped>
-@import './assets/css/choix_pp.css';
+@import '@/assets/css/choix_pp.css';
 </style>

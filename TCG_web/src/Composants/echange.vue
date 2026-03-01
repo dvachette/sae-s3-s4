@@ -176,5 +176,5 @@ async function obtenirCartes() {
 </script>
 
 <style scoped>
-@import '@/assets/css/echange.css';
+  @import '@/assets/css/echange.css';
 </style>

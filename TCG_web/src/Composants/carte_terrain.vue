@@ -1,6 +1,6 @@
 <template>
   <div class="carte" :style="{ '--w': largeur }">
-    <img src="@/assets/imgs/carte/arena/fond_terrain.png" alt="carte" />
+    <img src="/assets/imgs/carte/arena/fond_terrain.png" alt="carte" />
     <img :src="imgTerrain" alt="imgCarte" />
     
     <div id="haut_carte">
@@ -19,7 +19,6 @@
 
 <script setup>
 import {computed } from 'vue';
-const images = import.meta.glob('../assets/imgs/carte/arena/cartes/*.png', { eager: true });
 
 const props = defineProps({
   data: Object,
@@ -32,10 +31,10 @@ const desc = computed(() => props.data.description);
 const id = computed(() => props.data.cardId);
 
 //partie image
-const imgTerrain = computed(() => images['../assets/imgs/carte/arena/cartes/'+id.value+'.png']?.default);
+const imgTerrain = computed(() => '/assets/imgs/carte/arena/cartes/'+id.value+'.png');
 
 </script>
 
 <style scoped>
-@import '../assets/css/carteTerrain.css';
+@import '@/assets/css/carteTerrain.css';
 </style>

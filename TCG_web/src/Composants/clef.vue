@@ -1,7 +1,7 @@
 <template>
   <div class="clef">
     <p>{{ props.cles }}</p>
-    <img src="@/assets/imgs/Clef.png" alt="Lot de clefs" />
+    <img src="/assets/imgs/Clef.png" alt="Lot de clefs" />
   </div>
 </template>
 
@@ -16,7 +16,7 @@
   });
 </script>
 <style scoped>
-@import '../assets/css/style_clef.css';
+@import '@/assets/css/style_clef.css';
 </style>
 
 

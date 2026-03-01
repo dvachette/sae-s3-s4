@@ -36,5 +36,5 @@ const progressColor = computed(() => {
 </script>
 
 <style scoped>
-@import '../assets/css/vie_cartes.css';
+@import '@/assets/css/vie_cartes.css';
 </style>
