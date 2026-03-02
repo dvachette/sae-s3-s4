@@ -119,6 +119,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import echange from '@/Composants/echange.vue';
 import mes_echanges from '@/Composants/mes_echange.vue';
 import new_echange from '@/Composants/new_echange.vue';
 import amis_acceptés from '@/Composants/amis_acceptés.vue';
