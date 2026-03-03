@@ -40,7 +40,7 @@ class Trade {
     }
 
     static fromId(id) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getTradeByIdQuery = db.prepare('SELECT * FROM traderequest WHERE tradeId = ?');
         const row = getTradeByIdQuery.get(id);
@@ -55,7 +55,7 @@ class Trade {
     }
 
     static fromUserId(userId) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getTradesByUserIdQuery = db.prepare('SELECT * FROM traderequest WHERE senderId = ?');
         const rows = getTradesByUserIdQuery.all(userId);
@@ -70,7 +70,7 @@ class Trade {
     }
 
     static acceptedByUserId(userId) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getAcceptedTradesByUserIdQuery = db.prepare('SELECT * FROM traderequest WHERE receiverId = ? AND acceptedCardId IS NOT NULL');
         const rows = getAcceptedTradesByUserIdQuery.all(userId);
@@ -101,7 +101,7 @@ class Trade {
             asker.addCardToCollection(cardId, -1);
         }
 
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const createTradeQuery = db.prepare(`
             INSERT INTO traderequest (senderId, offeredCard1ID, offeredCard2ID, offeredCard3ID, requestedCardId, expirationDate)
@@ -124,7 +124,7 @@ class Trade {
     }
 
     cancel() {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const user = User.fromId(this.senderId);
 
         for (const cardId of this.offeredCards.map(card => card.cardId)) {
@@ -138,7 +138,7 @@ class Trade {
     }
 
     accept(receiverId, acceptedCardId) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const sender = User.fromId(this.senderId);
         const receiver = User.fromId(receiverId);
         

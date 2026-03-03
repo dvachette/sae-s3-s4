@@ -53,7 +53,7 @@ class User {
         );
         
         // Récupération de la collection de l'utilisateur
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const getCollectionQuery = db.prepare(
             'SELECT * FROM collection WHERE userId = ?'
@@ -80,7 +80,7 @@ class User {
         for (const friendRow of friendsRows) {
             if (friendRow.status === 'accepted') {
                 const friendId = (friendRow.senderId === user.userId) ? friendRow.receiverId : friendRow.senderId;
-                const friendNamePPQuery = new Database("database.db").prepare('SELECT name, profilePicture FROM user WHERE userId = ?');
+                const friendNamePPQuery = new Database("var/database.db").prepare('SELECT name, profilePicture FROM user WHERE userId = ?');
                 const friendNamePPRow = friendNamePPQuery.get(friendId);    
                 user.friends.push({userId: friendId, name: friendNamePPRow.name, profilePicture: friendNamePPRow.profilePicture});
             } else if (friendRow.status === 'pending') {
@@ -125,7 +125,7 @@ class User {
     }
     
     static fromId(id) {
-        const db = new Database("database.db");
+        const db = new Database("var/database.db");
         
         const getUserByIdQuery = db.prepare('SELECT * FROM user WHERE userId = ?');
         const row = getUserByIdQuery.get(id);
@@ -141,7 +141,7 @@ class User {
     
     
     static fromEmail(email) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const getUserByEmailQuery = db.prepare(
             'SELECT * FROM user WHERE email = ?'
@@ -156,7 +156,7 @@ class User {
     }
     
     static fromUsername(username) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const getUserByUsernameQuery = db.prepare(
             'SELECT * FROM user WHERE name = ?'
@@ -173,7 +173,7 @@ class User {
     }
     
     static async login(email, password) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const user = User.fromEmail(email);
         const getUserPasswordQuery = db.prepare(
             'SELECT password FROM user WHERE email = ?'
@@ -188,7 +188,7 @@ class User {
     }
     
     static async register(username, email, password) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const insertUserQuery = db.prepare(
             'INSERT INTO user (name, email, password) VALUES (?, ?, ?)'
@@ -210,7 +210,7 @@ class User {
     }
     
     static search(query) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const fetchUserQuery = db.prepare(
             'SELECT name, userId, profilePicture FROM user WHERE name LIKE ?'
         );
@@ -220,7 +220,7 @@ class User {
     }
     
     save() {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         if(this.password){
             const updateUserQuery = db.prepare(
@@ -268,7 +268,7 @@ class User {
         // Remplaces son mot de passe par DELETED
         this.passwordHash = 'DELETED';
         this.save();
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const deleteUserQuery = db.prepare(
             'UPDATE user SET profileType = ? WHERE userId = ?'
@@ -299,7 +299,7 @@ class User {
                 );
             }
         }
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const insertFriendRequestQuery = db.prepare(
             'INSERT INTO friends (senderId, receiverId, status) VALUES (?, ?, ?)'
@@ -325,7 +325,7 @@ class User {
             throw new Error("Cet utilisateur n'est pas dans votre liste d'amis.");
         }
         
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const deleteFriendQuery = db.prepare(
             'DELETE FROM friends WHERE (senderId = ? AND receiverId = ?) OR (senderId = ? AND receiverId = ?)'
@@ -344,7 +344,7 @@ class User {
         if (!requestExists) {
             throw new Error("Aucune demande d'ami entrante de cet utilisateur.");
         }
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const updateFriendRequestQuery = db.prepare(
             'UPDATE friends SET status = ? WHERE senderId = ? AND receiverId = ?'
@@ -365,7 +365,7 @@ class User {
         if (!requestExists) {
             throw new Error("Aucune demande d'ami entrante de cet utilisateur.");
         }
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const deleteFriendRequestQuery = db.prepare(
             'DELETE FROM friends WHERE senderId = ? AND receiverId = ?'
@@ -385,7 +385,7 @@ class User {
         if (!requestExists) {
             throw new Error("Aucune demande d'ami envoyée à cet utilisateur.");
         }
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const deleteFriendRequestQuery = db.prepare(
             'DELETE FROM friends WHERE senderId = ? AND receiverId = ?'
@@ -403,7 +403,7 @@ class User {
     
     delayBeforeNextBooster() {
         const now = Math.floor(Date.now() / 1000); // Temps actuel en secondes
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const getLastBoosterOpeningQuery = db.prepare(
             'SELECT lastBoosterOppening FROM user WHERE userId = ?'
         );
@@ -426,7 +426,7 @@ class User {
             const newCard = new Collection(cardId, 1, quantity);
             this.collection.push(newCard);
         }
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         if (existingCard) {
             const updateQuery = db.prepare(
@@ -448,7 +448,7 @@ class User {
             throw new Error('Le solde ne peut pas être négatif.');
         }
         this.balance = amount;
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const updateBalanceQuery = db.prepare(
             'UPDATE user SET balance = ? WHERE userId = ?'
@@ -460,7 +460,7 @@ class User {
 
     addKeys(amount) {
         this.balance += amount;
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const updateBalanceQuery = db.prepare(
             'UPDATE user SET balance = ? WHERE userId = ?'
@@ -475,7 +475,7 @@ class User {
             throw new Error('Solde insuffisant.');
         }
         this.balance -= amount;
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         
         const updateBalanceQuery = db.prepare(
             'UPDATE user SET balance = ? WHERE userId = ?'
@@ -487,7 +487,7 @@ class User {
     
     resetBoosterOpeningDate() {
         this.lastBoosterOpening = Math.floor(Date.now() / 1000);
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const updateLastBoosterOpeningQuery = db.prepare(
             'UPDATE user SET lastBoosterOppening = ? WHERE userId = ?'
         );
@@ -500,7 +500,7 @@ class User {
             throw new Error('La quantité ne peut pas être négative.');
         }
         if (quantity === 0) {
-            const db = new Database('database.db');
+            const db = new Database('var/database.db');
             const deleteQuery = db.prepare(
                 'DELETE FROM collection WHERE userId = ? AND cardId = ?'
             );
@@ -547,7 +547,7 @@ class User {
         );
         if (existingCard) {
             existingCard.quantity = quantity;
-            const db = new Database('database.db');
+            const db = new Database('var/database.db');
             const updateQuery = db.prepare(
                 'UPDATE collection SET quantity = ? WHERE userId = ? AND cardId = ?'
             );
@@ -598,7 +598,7 @@ class User {
                     cardId,
                     currentLevel + 1
                 );
-                const db = new Database('database.db');
+                const db = new Database('var/database.db');
                 const updateCollectionQuery = db.prepare(
                     'UPDATE collection SET level = ? WHERE userId = ? AND cardId = ?'
                 );
@@ -617,7 +617,7 @@ class User {
     }
 
     logCombat(opponentId, didWin) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const insertCombatQuery = db.prepare(
             'INSERT INTO Historique_des_combats (GagnantId, PerdantId, date) VALUES (?, ?, ?)'
         );
@@ -631,7 +631,7 @@ class User {
     }
 
     getStats() {
-        const db = new Database('database.db') ;
+        const db = new Database('var/database.db') ;
         const totalCardQuery = db.prepare('SELECT COUNT(cardId) AS total FROM Card') ;
         const totalCards = totalCardQuery.get().total ;
         const cardQuery = db.prepare('SELECT COUNT(cardId) AS total FROM Collection WHERE userId = ?');
@@ -646,7 +646,7 @@ class User {
     }
 
     static getAllUsers() {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const getAllUsersQuery = db.prepare('SELECT userId, name, profilePicture, balance, email FROM user');
         const users = getAllUsersQuery.all();
         db.close();
@@ -654,7 +654,7 @@ class User {
     }
 
     isAdmin() {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const getUserProfileTypeQuery = db.prepare('SELECT profileType FROM user WHERE userId = ?');
         const row = getUserProfileTypeQuery.get(this.userId);
         db.close();
@@ -668,7 +668,7 @@ class User {
         if (!validRoles.includes(role)) {
             throw new Error('Rôle invalide. Les rôles valides sont : user, admin.');
         }
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
         const updateRoleQuery = db.prepare('UPDATE user SET profileType = ? WHERE userId = ?');
         updateRoleQuery.run(role, this.userId);
         this.role = role;

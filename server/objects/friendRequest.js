@@ -22,7 +22,7 @@ class FriendRequest {
     static fromRow(row) {
         const req = new FriendRequest(row.requestId, row.senderId, row.receiverId, null, null, row.status);
         // Get names from database
-        const db = new database('database.db');
+        const db = new database('var/database.db');
         const getUserStmt = db.prepare('SELECT name, profilePicture FROM user WHERE userId = ?');
         const fromUser = getUserStmt.get(row.senderId);
         const toUser = getUserStmt.get(row.receiverId);

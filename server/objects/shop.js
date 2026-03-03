@@ -1,7 +1,7 @@
 const Database = require("better-sqlite3")
 const User = require("./user.js");
 
-const db = new Database("database.db");
+const db = new Database("var/database.db");
 class Offer {
     constructor(id, cost, weight, image, content, maxUsage) {
         this.id = id;

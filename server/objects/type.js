@@ -18,7 +18,7 @@ class Type{
     }
 
     static fromId(id){
-        const db=new Database("database.db");
+        const db=new Database("var/database.db");
 
         const getTypeByIdQuery = db.prepare('SELECT * FROM Type WHERE typeId = ?');
         const row = getTypeByIdQuery.get(id);
