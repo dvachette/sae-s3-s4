@@ -73,6 +73,9 @@ function proposeTrade(request, response) {
     if (offeredCardId2) removeCardsQuery.run(userId, offeredCardId2);
     if (offeredCardId3) removeCardsQuery.run(userId, offeredCardId3);
 
+
+    console.log(`Utilisateur ${userId} a proposé un échange : demande la carte ${askedCardId} en offrant les cartes ${offeredCardId1}, ${offeredCardId2}, ${offeredCardId3}. Expire le ${expirationDate.toLocaleString()}`);
+
     return response.status(200).send({ message: 'Proposition d\'échange envoyée avec succès.' });
 }
 /**

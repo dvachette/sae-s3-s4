@@ -252,6 +252,7 @@ async function obtenirMesEchanges() {
     );
     const data = await response.json();
     if (response.ok) {
+      console.log('Mes échanges : ', data);
       listeMesEchanges.value = data;
     } else {
       console.error(data);
