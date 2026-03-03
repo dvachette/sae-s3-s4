@@ -31,7 +31,7 @@ class Card {
         const Attack = require('./attacks.js');
 
 
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getCardByIdQuery = db.prepare('SELECT * FROM card WHERE cardId = ?');
         const row = getCardByIdQuery.get(id);
@@ -73,7 +73,7 @@ class Card {
     }
 
     static getAll() {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getAllCardsQuery = db.prepare('SELECT * FROM card');
         const rows = getAllCardsQuery.all();

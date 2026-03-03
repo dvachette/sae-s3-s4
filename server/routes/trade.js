@@ -37,7 +37,7 @@ function proposeTrade(request, response) {
         return response.status(400).send({ error: 'Paramètres manquants.' });
     }
 
-    const db = new Database('database.db');
+    const db = new Database('var/database.db');
     
     // Vérifier si l'utilisateur possède les cartes offertes
     const userId = request.session.userId;
@@ -96,7 +96,7 @@ function getTrades(request, response) {
         return response.status(401).send({ error: 'Utilisateur non authentifié.' });
     }
 
-    const db = new Database('database.db');
+    const db = new Database('var/database.db');
     const userId = request.session.userId;
 
     // Récupérer les propositions d'échanges des amis de l'utilisateur
@@ -146,7 +146,7 @@ function acceptTrade(request, response) {
         return response.status(400).send({ error: 'Paramètres manquants.' });
     }
     
-    const db = new Database('database.db');
+    const db = new Database('var/database.db');
     const userId = request.session.userId;
     const user = User.fromId(userId);
     // Vérifier que l'échange existe
@@ -223,7 +223,7 @@ function deleteTrade(request,response){
         return response.status(400).send({ error: 'Paramètres manquants.' });
     }
     const tradeRequestId = request.body.tradeRequestId;
-    const db = new Database('database.db');
+    const db = new Database('var/database.db');
     const userId = request.session.userId;
     const user = User.fromId(userId);
     // Vérifier que l'échange existe
@@ -272,7 +272,7 @@ function getSelfTradeRequests(request, response) {
         return response.status(401).send({ error: 'Utilisateur non authentifié.' });
     }
 
-    const db = new Database('database.db');
+    const db = new Database('var/database.db');
     const userId = request.session.userId;
 
     // Récupérer les propositions d'échanges des amis de l'utilisateur

@@ -26,7 +26,7 @@ class Member extends Card {
     }
     
     static fromId(id, level) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getCardByIdQuery = db.prepare('SELECT * FROM card WHERE cardId = ?');
         const cardRow = getCardByIdQuery.get(id);

@@ -14,7 +14,7 @@ class Deck {
     }
 
     static fromUserId(userId) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const getDeckQuery = db.prepare('SELECT card1Id, card2Id, card3Id, card4Id, card5Id, petId, arenaId FROM user WHERE userId = ?');
         const row = getDeckQuery.get(userId);
@@ -86,7 +86,7 @@ class Deck {
     }
 
     saveToDatabase(userId) {
-        const db = new Database('database.db');
+        const db = new Database('var/database.db');
 
         const updateDeckQuery = db.prepare('UPDATE user SET card1Id = ?, card2Id = ?, card3Id = ?, card4Id = ?, card5Id = ?, petId = ?, arenaId = ? WHERE userId = ?');
         updateDeckQuery.run(
