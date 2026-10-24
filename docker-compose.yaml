@@ -8,6 +8,8 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
+    volumes:
+      - ./server/var:/app/var
   
   frontend:
     build: ./TCG_web
